@@ -13,8 +13,8 @@ class PublishContainer extends Component {
 		return (
 			<div className="container">
 				<section className="row text-center">
-					<div className="col-sm-12" style={{marginTop: "80px"}}>
-						<h4 className="m0 text-thin">Welcome to Alexandria Publisher</h4><small>Please fill in the fields below</small>
+					<div className="col-sm-12" style={{marginTop: "20px"}}>
+						<h4 className="m0 text-thin">Welcome to the Alexandria Publisher</h4><small>Please fill in the fields below</small>
 					</div>
 					<div className="container">
 						<div style={{marginTop: "60px"}}>

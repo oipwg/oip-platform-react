@@ -28,7 +28,7 @@ class App extends Component {
 				<div>
 					<Navbar />
 
-					/* The switch will render the last Route if no others are found (aka 404 page.) */
+					{/* The switch will render the last Route if no others are found (aka 404 page.) */}
 					<Switch>
 						<Route exact path="/" component={Homepage} />
 
@@ -41,7 +41,7 @@ class App extends Component {
 						<Route path="/game/:id" render={props => <ContentPage type="game" {...props} />} />
 						<Route path="/code/:id" render={props => <ContentPage type="code" {...props} />} />
 
-						<Route exact path="/user/publish" component={PublishContainer} />
+						<Route exact path="/user/upload" component={PublishContainer} />
 
 						<Route component={NoMatch} />
 					</Switch>
