@@ -38,6 +38,7 @@
 	display: block; 
 	z-index: -1; 
 	position: static;
+	overflow: scroll;
 }
 
 .paywall-container {
@@ -140,4 +141,8 @@
 	background-color: #ffffff;
 	padding-top:3px;
 	border-top: 1px #000;
+}
+
+.markdownContainer > div > p > img {
+	max-width: 100%;
 }

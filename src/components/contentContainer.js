@@ -3,17 +3,23 @@ import React, { Component } from 'react';
 import AudioContainer from './audioContainer.js';
 import VideoPlayer from './videoPlayer.js';
 import ImageContainer from './imageContainer.js';
+import MarkdownContainer from './markdownContainer.js';
+import GameContainer from './gameContainer.js';
 import PDFViewer from './pdfViewer.js';
+import CodeContainer from './codeContainer.js';
 
 class ContentContainer extends Component {
 	render() {
 		return (
 			<div className="content-container">
-				<div id='content' className="content">
+				<div id='content' className="content" style={this.props.type == 'text' ? {backgroundColor: "#fff"} : {}}>
 					{ this.props.type ==  'audio' ? <AudioContainer /> : '' }
 					{ this.props.type ==  'video' ? <VideoPlayer /> : '' }
 					{ this.props.type ==  'img' ? <ImageContainer url="/assets/img/bob-ross.jpg" /> : '' }
+					{ this.props.type ==  'text' ? <MarkdownContainer /> : '' }
 					{ this.props.type ==  'pdf' ? <PDFViewer url="../../pdf/bitcoin.pdf" /> : '' }
+					{ this.props.type ==  'game' ? <GameContainer url="http://gabrielecirulli.github.io/2048/" /> : '' }
+					{ this.props.type ==  'code' ? <CodeContainer /> : '' }
 				</div>
 				<div id='paywall' style={{display:"none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">

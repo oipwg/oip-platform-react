@@ -23,7 +23,9 @@ class App extends Component {
     	<Router forceRefresh={!supportsHistory} >
       		<div>
       			<Navbar />
+
 	      		<Route exact path="/" component={Homepage} />
+
 	      		<Route path="/audio/:id" render={props => <ContentPage type="audio" {...props} />} />
 	      		<Route path="/video/:id" render={props => <ContentPage type="video" {...props} />} />
 	      		<Route path="/img/:id" render={props => <ContentPage type="img" {...props} />} />
@@ -31,7 +33,8 @@ class App extends Component {
 	      		<Route path="/pdf/:id" render={props => <ContentPage type="pdf" {...props} />} />
 	      		<Route path="/web/:id" render={props => <ContentPage type="web" {...props} />} />
 	      		<Route path="/game/:id" render={props => <ContentPage type="game" {...props} />} />
-	      		<Route path="/code/:id" render={props => <ContentPage type="game" {...props} />} />
+	      		<Route path="/code/:id" render={props => <ContentPage type="code" {...props} />} />
+
 	      		<MiniMusicPlayer display="false" />
 	      	</div>
     	</Router>
