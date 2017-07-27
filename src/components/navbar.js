@@ -29,7 +29,7 @@ class Navbar extends Component {
 						</li>
 					</ul>
 				</div>
-				<button className="btn btn-sm btn-outline-warning" style={{marginRight: "10px"}}><span className="icon icon-upload-to-cloud"></span> Upload</button>
+				<Link to="/user/publish"><button className="btn btn-sm btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
 				<div>
 					<div className="btn-group">
 						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="btn btn-outline-white" style={{marginLeft: "10px", padding:"0px"}}><img className="rounded-circle" src="/assets/img/sky.jpg" style={{width:"30px",height:"30px"}} /></button>

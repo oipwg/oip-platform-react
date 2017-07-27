@@ -8,6 +8,7 @@ import Navbar from './components/navbar.js';
 import Homepage from './components/homepage.js';
 import MiniMusicPlayer from './components/miniMusicPlayer.js';
 import ContentPage from './components/contentPage.js';
+import PublishContainer from './components/publishContainer.js';
 
 import {
   BrowserRouter as Router,
@@ -34,6 +35,9 @@ class App extends Component {
 	      		<Route path="/web/:id" render={props => <ContentPage type="web" {...props} />} />
 	      		<Route path="/game/:id" render={props => <ContentPage type="game" {...props} />} />
 	      		<Route path="/code/:id" render={props => <ContentPage type="code" {...props} />} />
+
+	      		<Route exact path="/user/publish" component={PublishContainer} />
+
 
 	      		<MiniMusicPlayer display="false" />
 	      	</div>
