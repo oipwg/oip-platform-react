@@ -32,8 +32,7 @@ class Navbar extends Component {
 				<Link to="/user/publish"><button className="btn btn-sm btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
 				<div>
 					<div className="btn-group">
-						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="btn btn-outline-white" style={{marginLeft: "10px", padding:"0px"}}><img className="rounded-circle" src="/assets/img/sky.jpg" style={{width:"30px",height:"30px"}} /></button>
-						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="btn btn-outline-white" style={{color: "#fff", padding: "8px"}}>OstlerDev</button>
+						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}><div ><img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} /><span style={{paddingLeft: "5px"}}>NASA Archive</span></div></button>
 						<div className="dropdown-menu">
 							<a className="dropdown-item narrow" href="#"><span className="icon icon-classic-computer"></span> My Artifacts</a>
 							<a className="dropdown-item narrow" href="#"><span className="icon icon-line-graph"></span> Analytics <span className="badge badge-info">beta</span></a>
@@ -43,7 +42,7 @@ class Navbar extends Component {
 							<div className="dropdown-divider"></div>
 							<a className="dropdown-item narrow" href="#"><span className="icon icon-log-out"></span> Logout</a>
 						</div>
-						<button className="btn btn-outline-success" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>503</span> bits</button>
+						<button className="btn btn-outline-success" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>15,623</span> bits</button>
 					</div>
 				</div>
 			</nav>
