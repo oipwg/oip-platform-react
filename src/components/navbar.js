@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import {
+  Link
+} from 'react-router-dom'
+
 class Navbar extends Component {
 	render() {
 		return (
@@ -7,9 +11,9 @@ class Navbar extends Component {
 				<button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 					<span className="navbar-toggler-icon"></span>
 				</button>
-				<a className="navbar-brand" href="index.html">
+				<Link className="navbar-brand" to="/">
 					<img src="/assets/img/logo-full.png" width="auto" height="32px" className="d-inline-block align-top" alt="" />
-				</a>
+				</Link>
 
 				<div className="collapse navbar-collapse" id="navbarsExampleDefault">
 					<ul className="navbar-nav mr-auto alexandria-nav">

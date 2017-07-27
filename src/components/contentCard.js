@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 
+import {
+  Link
+} from 'react-router-dom'
+
 class ContentCard extends Component {
 	render() {
 		return (
-			<a href="video.html" className="col-3 no-link-styling">
+			<Link to="/video/6hash" className="col-3 no-link-styling">
 				<div className="card" style={{marginBottom: "0px"}}>
 					<div style={{marginBottom:"-30px"}}>
 						<button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px"}}>
@@ -19,7 +23,7 @@ class ContentCard extends Component {
 						<button className="btn btn-sm btn-outline-secondary view-btn">{this.props.views} Views</button>
 					</div>
 				</div>
-			</a>
+			</Link>
 		);
 	}
 }
