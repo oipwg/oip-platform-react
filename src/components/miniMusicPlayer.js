@@ -24,7 +24,7 @@ class MiniMusicPlayer extends Component {
 						</div>
 					</div>
 					<div className="col-6" style={{padding: "4px 20px", display:"flex"}}>
-						<img className="rounded" src="assets/img/album-artwork.jpg" width="40px" height="40px" />
+						<img className="rounded" src="/assets/img/album-artwork.jpg" width="40px" height="40px" />
 						<div style={{padding: "0px 10px"}}>
 							<div style={{fontWeight:"700",fontSize:"14px"}}>Tiny Human</div>
 							<div style={{color: "#555",fontSize:"12px"}}>Imogen Heap - Tiny Human</div>

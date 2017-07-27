@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
+import PDFViewer from './pdfViewer.js';
+
 class ContentContainer extends Component {
 	render() {
 		return (
 			<div className="content-container">
 				<div id='content' className="content">
-					<iframe style={{width:"100%", height:"100%", overflow: "hidden"}} frameBorder="0" src="/assets/other/ViewerJS/#../../pdf/bitcoin.pdf"></iframe>
+					<PDFViewer url="../../pdf/bitcoin.pdf" />
 				</div>
 				<div id='paywall' style={{display:"none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">
