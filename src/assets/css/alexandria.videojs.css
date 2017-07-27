@@ -242,7 +242,8 @@
 }
 
 .video-js .vjs-big-play-button {
-    background-color: rgba(196,0,0,0.82);
+    background-color: #fff;
+    color: #000;
     font-size: 2.5em;
     border-radius: 21%;
     height: 1.4em !important;
@@ -251,7 +252,7 @@
 }
 
 .video-js:hover .vjs-big-play-button,.video-js .vjs-big-play-button:focus,.video-js .vjs-big-play-button:active {
-    background-color: rgba(196,0,0,0.4)
+    background-color: #ccc;
 }
 
 .video-js .vjs-loading-spinner {
@@ -269,7 +270,7 @@
 }
 
 .video-js .vjs-play-progress,.video-js  .vjs-volume-level {
-    background-color: rgba(156,0,0,0.82)
+    background-color: #5cb85c
 }
 
 .video-js  .vjs-progress-holder {

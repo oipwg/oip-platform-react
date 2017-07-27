@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
 import PDFViewer from './pdfViewer.js';
+import VideoPlayer from './videoPlayer.js';
 
 class ContentContainer extends Component {
 	render() {
+		// <PDFViewer url="../../pdf/bitcoin.pdf" />
 		return (
 			<div className="content-container">
 				<div id='content' className="content">
-					<PDFViewer url="../../pdf/bitcoin.pdf" />
+					<VideoPlayer />
 				</div>
 				<div id='paywall' style={{display:"none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">
@@ -23,7 +25,7 @@ class ContentContainer extends Component {
 									or
 								</div>
 								<div className="col-5">
-									<button className="btn btn-outline-danger" style={{float:"left", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "0px"}}></span>Watch an Ad</button>
+									<button className="btn btn-outline-danger" style={{float:"left", marginRight: "25px", marginLeft: "-25px", padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "0px"}}></span>Watch an Ad</button>
 								</div>
 							</div>
 							<a href="#"><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
