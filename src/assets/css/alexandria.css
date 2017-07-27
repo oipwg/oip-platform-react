@@ -92,8 +92,12 @@
 	border-color: #fff;
 }
 
-.btn-outline-white:hover {
+.btn-outline-white:hover, .btn-outline-white:active{
 	background-color: rgba(255,255,255,0.2);
+}
+
+.btn-secondary.active {
+	background-color: rgba(255,255,255,0.4);
 }
 
 .btn-white {
