@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 
-import PDFViewer from './pdfViewer.js';
+import AudioContainer from './audioContainer.js';
 import VideoPlayer from './videoPlayer.js';
+import ImageContainer from './imageContainer.js';
+import PDFViewer from './pdfViewer.js';
 
 class ContentContainer extends Component {
 	render() {
-		// <PDFViewer url="../../pdf/bitcoin.pdf" />
 		return (
 			<div className="content-container">
 				<div id='content' className="content">
-					<VideoPlayer />
+					{ this.props.type ==  'audio' ? <AudioContainer /> : '' }
+					{ this.props.type ==  'video' ? <VideoPlayer /> : '' }
+					{ this.props.type ==  'img' ? <ImageContainer url="/assets/img/bob-ross.jpg" /> : '' }
+					{ this.props.type ==  'pdf' ? <PDFViewer url="../../pdf/bitcoin.pdf" /> : '' }
 				</div>
 				<div id='paywall' style={{display:"none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">

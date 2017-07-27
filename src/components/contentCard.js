@@ -7,7 +7,7 @@ import {
 class ContentCard extends Component {
 	render() {
 		return (
-			<Link to="/video/6hash" className="col-3 no-link-styling">
+			<Link to={"/" + this.props.type +  "/6hash"} className="col-3 no-link-styling">
 				<div className="card" style={{marginBottom: "0px"}}>
 					<div style={{marginBottom:"-30px"}}>
 						<button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px"}}>

@@ -24,7 +24,14 @@ class App extends Component {
       		<div>
       			<Navbar />
 	      		<Route exact path="/" component={Homepage} />
-	      		<Route path="/video/:id" component={ContentPage} />
+	      		<Route path="/audio/:id" render={props => <ContentPage type="audio" {...props} />} />
+	      		<Route path="/video/:id" render={props => <ContentPage type="video" {...props} />} />
+	      		<Route path="/img/:id" render={props => <ContentPage type="img" {...props} />} />
+	      		<Route path="/text/:id" render={props => <ContentPage type="text" {...props} />} />
+	      		<Route path="/pdf/:id" render={props => <ContentPage type="pdf" {...props} />} />
+	      		<Route path="/web/:id" render={props => <ContentPage type="web" {...props} />} />
+	      		<Route path="/game/:id" render={props => <ContentPage type="game" {...props} />} />
+	      		<Route path="/code/:id" render={props => <ContentPage type="game" {...props} />} />
 	      		<MiniMusicPlayer display="false" />
 	      	</div>
     	</Router>

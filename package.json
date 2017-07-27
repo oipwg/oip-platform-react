@@ -7,7 +7,9 @@
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.2",
     "react-scripts": "1.0.10",
-    "video.js": "^6.2.4"
+    "react-wavesurfer": "^0.8.3",
+    "video.js": "^6.2.4",
+    "wavesurfer.js": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
