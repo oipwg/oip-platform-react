@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 
-import ContentCard from './contentCard.js';
+import ContentContainer from './contentContainer.js'
+import ContentInfo from './contentInfo.js'
+import ContentComments from './contentComments.js'
+import ContentCard from './contentCard.js'
 
-class Homepage extends Component {
+class ContentPage extends Component {
 	render() {
 		let suggestedContent = [
 			{
@@ -13,7 +16,7 @@ class Homepage extends Component {
 				views: "13,418",
 				thumbnail: "/assets/img/apollo-11-poster.jpg",
 				creatorName: "NASA Archive",
-				creatorImg: "assets/img/nasa.jpg",
+				creatorImg: "/assets/img/nasa.jpg",
 			},{
 				paid: true,
 				title: "Tiny Human",
@@ -64,25 +67,34 @@ class Homepage extends Component {
 			}
 		]
 		return (
-			<div className="container" style={{marginTop: "100px", marginBottom:"200px"}}>
-				<h4 style={{marginBottom: "25px"}}>Suggested Content</h4>
-				<div className="row">
-					{suggestedContent.map(function(content, i){
-						return <ContentCard 
-							paid={content.paid}
-							title={content.title}
-							length={content.length}
-							icon={content.icon}
-							views={content.views}
-							thumbnail={content.thumbnail}
-							creatorName={content.creatorName}
-							creatorImg={content.creatorImg}
-						/>
-					})}
+			<div>
+				<ContentContainer />
+				<div className="container">
+					<div className="row">
+						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
+							<ContentInfo />
+							<br />
+							<ContentComments />
+						</div>
+						<div id='suggested' class="col-12 col-md-3" style={{marginTop: "30px"}}>
+							{suggestedContent.map(function(content, i){
+								return <ContentCard 
+									paid={content.paid}
+									title={content.title}
+									length={content.length}
+									icon={content.icon}
+									views={content.views}
+									thumbnail={content.thumbnail}
+									creatorName={content.creatorName}
+									creatorImg={content.creatorImg}
+								/>
+							})}
+						</div>
+					</div>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default Homepage;
+export default ContentPage;

@@ -23,6 +23,35 @@
 	background-color:rgba(0,0,0,0.3);
 }
 
+.content-container {
+	background-color: #000; 
+	width: 100%; 
+	height: 720px; 
+	margin-top: 54px;
+}
+
+.content-container .content {
+	width: 100%; 
+	height: 720px; 
+	margin-left: auto; 
+	margin-right: auto; 
+	display: block; 
+	z-index: -1; 
+	position: static;
+}
+
+.paywall-container {
+	margin: 0px auto; 
+	width: 100%; 
+	height: 720px; 
+	margin-top: -720px; 
+	padding: 10px; 
+	z-index: 100;
+	position: relative;
+	color: #fff;
+	background-color:rgba(0,0,0,0.5);
+}
+
 .view-btn {
 	float:right;
 	margin-right:-10px;

@@ -4,7 +4,7 @@ class ContentCard extends Component {
 	render() {
 		return (
 			<a href="video.html" className="col-3 no-link-styling">
-				<div className="card" style={{marginBottom: "15px"}}>
+				<div className="card" style={{marginBottom: "0px"}}>
 					<div style={{marginBottom:"-30px"}}>
 						<button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px"}}>
 							{ this.props.paid ? <span className="icon icon-credit" style={{color: "#5cb85c"}}></span> : ''}

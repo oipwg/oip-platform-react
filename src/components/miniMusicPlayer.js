@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class MiniMusicPlayer extends Component {
 	render() {
 		return (
-			<nav className="navbar fixed-bottom mini-audio-player">
+			<nav className="navbar fixed-bottom mini-audio-player" style={ this.props.display ? {display:"none"} : {}}>
 				<div className="row">
 					<div className="col-6">
 						<div className="row">

@@ -8,7 +8,7 @@ class Navbar extends Component {
 					<span className="navbar-toggler-icon"></span>
 				</button>
 				<a className="navbar-brand" href="index.html">
-					<img src="assets/img/logo-full.png" width="auto" height="32px" className="d-inline-block align-top" alt="" />
+					<img src="/assets/img/logo-full.png" width="auto" height="32px" className="d-inline-block align-top" alt="" />
 				</a>
 
 				<div className="collapse navbar-collapse" id="navbarsExampleDefault">
@@ -28,7 +28,7 @@ class Navbar extends Component {
 				<button className="btn btn-sm btn-outline-warning" style={{marginRight: "10px"}}><span className="icon icon-upload-to-cloud"></span> Upload</button>
 				<div>
 					<div className="btn-group">
-						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="btn btn-outline-white" style={{marginLeft: "10px", padding:"0px"}}><img className="rounded-circle" src="assets/img/sky.jpg" style={{width:"30px",height:"30px"}} /></button>
+						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="btn btn-outline-white" style={{marginLeft: "10px", padding:"0px"}}><img className="rounded-circle" src="/assets/img/sky.jpg" style={{width:"30px",height:"30px"}} /></button>
 						<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="btn btn-outline-white" style={{color: "#fff", padding: "8px"}}>OstlerDev</button>
 						<div className="dropdown-menu">
 							<a className="dropdown-item narrow" href="#"><span className="icon icon-classic-computer"></span> My Artifacts</a>
