@@ -12,7 +12,7 @@ class ContentContainer extends Component {
 	render() {
 		return (
 			<div className="content-container">
-				<div id='content' className="content" style={this.props.type == 'text' ? {backgroundColor: "#fff"} : {}}>
+				<div id='content' className="content" style={this.props.type == 'text' ? {backgroundColor: "#fff", display: "inline"} : {display: "inline"}}>
 					{ this.props.type ==  'audio' ? <AudioContainer /> : '' }
 					{ this.props.type ==  'video' ? <VideoPlayer /> : '' }
 					{ this.props.type ==  'img' ? <ImageContainer url="/assets/img/bob-ross.jpg" /> : '' }
