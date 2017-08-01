@@ -19,6 +19,10 @@ import Homepage from './components/homepage.js';
 import MiniMusicPlayer from './components/miniMusicPlayer.js';
 import ContentPage from './components/contentPage.js';
 import PublishContainer from './components/publishContainer.js';
+import SidebarContainer from './components/sidebarContainer.js';
+import MyArtifactsContainer from './components/myArtifactsContainer.js';
+import AnalyticsContainer from './components/analyticsContainer.js';
+import WalletContainer from './components/walletContainer.js';
 import SettingsContainer from './components/settingsContainer.js';
 
 class App extends Component {
@@ -51,8 +55,7 @@ class App extends Component {
 						<Route path="/game/:id" render={props => <ContentPage type="game" {...props} />} />
 						<Route path="/code/:id" render={props => <ContentPage type="code" {...props} />} />
 
-						<Route exact path="/user/upload" component={PublishContainer} />
-						<Route exact path="/user/settings" component={SettingsContainer} />
+						<Route path="/user/:page" component={UserPage} />
 
 						{/* The switch will render the last Route if no others are found (aka 404 page.) */}
 						<Route component={NoMatch} />
@@ -66,11 +69,33 @@ class App extends Component {
 	}
 }
 
-const NoMatch = ({ location }) => (
+const NoMatch = ({ match }) => (
 	<div className="container justify-content-center text-center">
 		<h1 style={{marginTop: "75px", fontSize: "120px"}}>404</h1>
-		<h3>No match for <code>{location.pathname}</code></h3>
+		{match ? <h3>No match for <code>{match.pathname}</code></h3> : "Page not found"}
 	</div>
+)
+
+const UserPage = ({ match }) => (
+	<SidebarContainer>
+		{(() => {
+			console.log(match.params.page);
+			switch(match.params.page){
+				case "artifacts":
+					return <MyArtifactsContainer />
+				case "analytics":
+					return <AnalyticsContainer />
+				case "upload":
+					return <PublishContainer />
+				case "wallet":
+					return <WalletContainer />
+				case "settings":
+					return <SettingsContainer />
+				default:
+					return <NoMatch />
+			}
+		})()}
+	</SidebarContainer>
 )
 
 export default App;

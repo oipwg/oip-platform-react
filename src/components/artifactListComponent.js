@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class WalletContainer extends Component {
+class ArtifactListComponent extends Component {
 	render() {
 		return (
 			<div className="container">
-				<h1>Wallet</h1>
+				<h1>My Artifacts</h1>
 			</div>
 		);
 	}
 }
 
-export default WalletContainer;
+export default ArtifactListComponent;

@@ -20,6 +20,21 @@
 	display: block;
 }
 
+.artifact-list-card {
+	max-height: 250px; 
+	width: auto; 
+	object-fit: cover;
+}
+
+.tint-a-bit {
+	background-color:rgba(0,0,0,0.7);
+}
+
+.btn-bits-bg:hover, .btn-bits-bg:active {
+	color: rgba(92,184,92,1);
+	background-color: rgba(92,184,92,0.2);
+}
+
 .content-card-img {
 	max-height: 125px; 
 	width: auto; 
@@ -853,5 +868,9 @@ td.unpin {
 
 .icon-pad-right {
  	padding-right: 6px;
+ }
+
+ .btn-margin-right {
+ 	margin-right: 5px;
  }
 
