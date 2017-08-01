@@ -7,7 +7,7 @@ class AudioContainer extends Component {
 		return (
 			<div className="container" style={{paddingTop: "20px"}}>
 				<div className="row">
-					<div className="col-4"><img src="/assets/img/album-artwork.jpg" style={{width: "100%", height: "auto"}} /></div>
+					<div className="col-4"><img src="/assets/img/album-artwork.jpg" style={{width: "100%", height: "auto"}} alt="" /></div>
 					<div className="col-8" style={{paddingTop: "50px"}}>
 						<WaveSurferPlayer />
 						<div id="waveform-timeline" style={{marginBottom: "10px"}}></div>

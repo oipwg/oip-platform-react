@@ -31,7 +31,7 @@ class ContentComments extends Component {
 							<button className="btn btn-sm btn-outline-danger"><span className="icon icon-emoji-sad"></span> Report</button>
 						</div>
 						<div className="media mt-3">
-							<a className="d-flex pr-3" href="#">
+							<a className="d-flex pr-3" href="">
 								<img className="rounded-circle" src="/assets/img/devon.jpg" alt="" style={{width: "50px", height: "50px"}} />
 							</a>
 							<div className="media-body">

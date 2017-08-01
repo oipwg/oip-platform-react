@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // https://github.com/mspae/react-wavesurfer
 import Wavesurfer from 'react-wavesurfer';
 
-class WaveSurferPlayer extends React.Component {
+class WaveSurferPlayer extends Component {
 	constructor(props) {
 		super(props);
 

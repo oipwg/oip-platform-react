@@ -22,14 +22,14 @@ class PublishContainer extends Component {
 										<div className="col-2"><div className="type-circle web-icon"></div>Web</div>
 									</div>
 									<ul className="nav nav-pills" role="tablist" id="subtypePills">
-										<li className="active" onClick="changeArtifactType('music')"><a href="#music" data-toggle="tab">Basic</a></li>
-										<li onClick="changeArtifactType('song')"><a href="#video" data-toggle="tab">Song</a></li>
-										<li onClick="changeArtifactType('album')"><a href="#video" data-toggle="tab">Album</a></li>
-										<li onClick="changeArtifactType('podcast')"><a href="#podcast" data-toggle="tab">Podcast</a></li>
-										<li onClick="changeArtifactType('book')"><a href="#book" data-toggle="tab">Book</a></li>
-										<li onClick="changeArtifactType('movie')"><a href="#movie" data-toggle="tab">Movie</a></li>
-										<li onClick="changeArtifactType('thing')"><a href="#thing" data-toggle="tab">Thing</a></li>
-										<li onClick="changeArtifactType('html')"><a href="#html" data-toggle="tab">HTML</a></li>
+										<li className="active" ><a href="#music" data-toggle="tab">Basic</a></li>
+										<li><a href="#video" data-toggle="tab">Song</a></li>
+										<li><a href="#video" data-toggle="tab">Album</a></li>
+										<li><a href="#podcast" data-toggle="tab">Podcast</a></li>
+										<li><a href="#book" data-toggle="tab">Book</a></li>
+										<li><a href="#movie" data-toggle="tab">Movie</a></li>
+										<li><a href="#thing" data-toggle="tab">Thing</a></li>
+										<li><a href="#html" data-toggle="tab">HTML</a></li>
 									</ul>
 								</div>
 								<div className="publish-section" id='metainfo'>
@@ -90,10 +90,10 @@ class PublishContainer extends Component {
 											<span style={{fontSize: "1.5em", fontWeight: "100", marginRight: "10px"}}>I want my Artifact to be:</span>
 											<div className="btn-group" data-toggle="buttons">
 												<label className="btn btn-outline-primary active" id='freeRadioLabel'>
-													<input id='freeRadio' type="radio" name="free" autoComplete="off"  /> Free
+													<input id='freeRadio' type="radio" name="free" autoComplete="off" /> Free
 												</label>
 												<label className="btn btn-outline-success" id='paidRadioLabel'>
-													<input id='paidRadio' type="radio" name="free" autoComplete="off" onClick="$('#paymentInfo').show();"  /> Paid 
+													<input id='paidRadio' type="radio" name="free" autoComplete="off" /> Paid 
 												</label>
 											</div>
 										</center>
@@ -107,14 +107,14 @@ class PublishContainer extends Component {
 												</div>
 												<h5 className="text-center" style={{marginTop: "20px"}}>Advanced</h5>
 												<div className="form-group row text-right">
-													<label for="example-text-input" className="col-3 col-form-label">Promoter</label>
+													<label htmlFor="example-text-input" className="col-3 col-form-label">Promoter</label>
 													<div className="col-3">
 														<div className="input-group">
 															<input id="promoter" type="text" className="form-control" />
 															<span className="input-group-addon" style={{paddingLeft: "5px", paddingRight: "5px"}}>%</span>
 														</div>
 													</div>
-													<label for="example-text-input" className="col-3 col-form-label">Retailer</label>
+													<label htmlFor="example-text-input" className="col-3 col-form-label">Retailer</label>
 													<div className="col-3">
 														<div className="input-group">
 															<input id="retailer" type="text" className="form-control" />
@@ -134,18 +134,18 @@ class PublishContainer extends Component {
 																		<img style={{height: "30px"}} src="/assets/img/Bitcoin.svg" alt="" />
 																	</button>
 																	<div className="dropdown-menu">
-																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href="" onClick="PhoenixUI.changePaymentAddressType(this);return false;"><img style={{height: "30px"}} src="/assets/img/Bitcoin.svg" alt="" /> <span> Bitcoin</span></a>
-																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href="" onClick="PhoenixUI.changePaymentAddressType(this);return false;"><img style={{height: "30px"}} src="/assets/img/FLOflat2.png" alt="" /> <span> Florincoin</span></a>
-																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href="" onClick="PhoenixUI.changePaymentAddressType(this);return false;"><img style={{height: "30px"}} src="/assets/img/Litecoin.svg" alt="" /> <span> Litecoin</span></a>
+																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href=""><img style={{height: "30px"}} src="/assets/img/Bitcoin.svg" alt="" /> <span> Bitcoin</span></a>
+																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href=""><img style={{height: "30px"}} src="/assets/img/FLOflat2.png" alt="" /> <span> Florincoin</span></a>
+																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href=""><img style={{height: "30px"}} src="/assets/img/Litecoin.svg" alt="" /> <span> Litecoin</span></a>
 																	</div>
 																</div>
-																<input type="text" className="form-control" onInput="PhoenixUI.onPaymentAddressChange(this);" />
+																<input type="text" className="form-control" />
 																<span className="input-group-addon">
-																	<input type="radio" name="mainAddressRadio" checked />
+																	<input type="radio" name="mainAddressRadio" />
 																</span>
 															</div>
 															<div className="col-1">
-																<button className="btn btn-outline-success" style={{height: "80%", marginLeft: "-20px", marginTop: "3px"}} onClick="PhoenixUI.addPaymentAddress(this);">+</button>
+																<button className="btn btn-outline-success" style={{height: "80%", marginLeft: "-20px", marginTop: "3px"}}>+</button>
 															</div>
 														</div>
 													</div>
@@ -204,7 +204,7 @@ class PublishContainer extends Component {
 											<tbody id="mediaTable">
 												<tr>
 													<td><span className="icon icon-beamed-note" style={{color: "#000", width: "auto", height: "100%"}}></span></td>
-													<td className="text-left"> <input type="text" className="form-control" name="dispName" value="Display Name" /></td>
+													<td className="text-left"> <input type="text" className="form-control" name="dispName" value="Display Name" onChange={function(){}} /></td>
 													<td>3.2MB</td>
 													<td style={{width: "100%"}}>
 														<div className="row form-control dual-selector">

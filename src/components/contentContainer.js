@@ -12,7 +12,7 @@ class ContentContainer extends Component {
 	render() {
 		return (
 			<div className="content-container">
-				<div id='content' className="content" style={this.props.type == 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
+				<div id='content' className="content" style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
 					{ this.props.type ===  'audio' ? <AudioContainer /> : '' }
 					{ this.props.type ===  'video' ? <VideoPlayer /> : '' }
 					{ this.props.type ===  'img' ? <ImageContainer url="/assets/img/bob-ross.jpg" /> : '' }
@@ -38,7 +38,7 @@ class ContentContainer extends Component {
 									<button className="btn btn-outline-danger" style={{float:"left", marginRight: "25px", marginLeft: "-25px", padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "0px"}}></span>Watch an Ad</button>
 								</div>
 							</div>
-							<a href="#"><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
+							<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 						</div>
 					</div>
 				</div>
