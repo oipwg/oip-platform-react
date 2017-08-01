@@ -1,7 +1,8 @@
 {
   "name": "alexandria-boostrap-react",
-  "version": "0.1.0",
-  "private": true,
+  "homepage": "https://alexandria.io",
+  "author": "Skylar Ostler <me@skylarostler.com>",
+  "version": "1.0.0",
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "react": "^15.6.1",

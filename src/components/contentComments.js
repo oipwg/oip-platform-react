@@ -11,7 +11,7 @@ class ContentComments extends Component {
 					<button className="btn btn-sm btn-outline-info">Post</button>
 				</div>
 				<div className="media" style={{marginTop: "25px"}}>
-					<img className="d-flex mr-3 rounded-circle" src="/assets/img/bitspill.png" alt="Generic placeholder image" style={{width: "50px", height: "50px"}} />
+					<img className="d-flex mr-3 rounded-circle" src="/assets/img/bitspill.png" alt="" style={{width: "50px", height: "50px"}} />
 					<div className="media-body">
 						<h5 className="mt-0">bitspill</h5>
 						Generic text about this game being great!
@@ -22,7 +22,7 @@ class ContentComments extends Component {
 					</div>
 				</div>
 				<div className="media" style={{marginTop: "25px"}}>
-					<img className="d-flex mr-3 rounded-circle" src="/assets/img/tyler.png" alt="Generic placeholder image" style={{width: "50px", height: "50px"}} />
+					<img className="d-flex mr-3 rounded-circle" src="/assets/img/tyler.png" alt="" style={{width: "50px", height: "50px"}} />
 					<div className="media-body">
 						<h5 className="mt-0">theowenmorris <button className="btn btn-sm btn-success" style={{padding: "3px",marginLeft: "10px"}}>25 bits</button></h5>
 						Perfect. Just perfect.
@@ -32,7 +32,7 @@ class ContentComments extends Component {
 						</div>
 						<div className="media mt-3">
 							<a className="d-flex pr-3" href="#">
-								<img className="rounded-circle" src="/assets/img/devon.jpg" alt="Generic placeholder image" style={{width: "50px", height: "50px"}} />
+								<img className="rounded-circle" src="/assets/img/devon.jpg" alt="" style={{width: "50px", height: "50px"}} />
 							</a>
 							<div className="media-body">
 								<h5 className="mt-0">Devon James</h5>
@@ -46,7 +46,7 @@ class ContentComments extends Component {
 					</div>
 				</div>
 				<div className="media" style={{marginTop: "25px"}}>
-					<img className="d-flex mr-3 rounded-circle" src="/assets/img/vxn.png" alt="Generic placeholder image" style={{width: "50px", height: "50px"}} />
+					<img className="d-flex mr-3 rounded-circle" src="/assets/img/vxn.png" alt="" style={{width: "50px", height: "50px"}} />
 					<div className="media-body">
 						<h5 className="mt-0">vxn <button className="btn btn-sm btn-success" style={{padding: "3px",marginLeft: "10px"}}>50 bits</button></h5>
 						Quite lovely

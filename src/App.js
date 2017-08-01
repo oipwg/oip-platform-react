@@ -1,4 +1,12 @@
+// Import React components
 import React, { Component } from 'react';
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch
+} from 'react-router-dom'
+import { CSSTransitionGroup } from 'react-transition-group'
+
 
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,13 +19,7 @@ import Homepage from './components/homepage.js';
 import MiniMusicPlayer from './components/miniMusicPlayer.js';
 import ContentPage from './components/contentPage.js';
 import PublishContainer from './components/publishContainer.js';
-
-import {
-	BrowserRouter as Router,
-	Route,
-	Switch,
-	Link
-} from 'react-router-dom'
+import SettingsContainer from './components/settingsContainer.js';
 
 class App extends Component {
 	render() {
@@ -26,9 +28,17 @@ class App extends Component {
 		return (
 			<Router forceRefresh={!supportsHistory} >
 				<div>
+					{/* This is to add transitions to the app, fade, etc. */}
+					<CSSTransitionGroup
+						transitionName="fade"
+						transitionEnterTimeout={300}
+						transitionLeaveTimeout={300}
+					/>
+
+					{/* Include all components that need to be rendered above the main container content */}
 					<Navbar />
 
-					{/* The switch will render the last Route if no others are found (aka 404 page.) */}
+					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
 						<Route exact path="/" component={Homepage} />
 
@@ -42,10 +52,13 @@ class App extends Component {
 						<Route path="/code/:id" render={props => <ContentPage type="code" {...props} />} />
 
 						<Route exact path="/user/upload" component={PublishContainer} />
+						<Route exact path="/user/settings" component={SettingsContainer} />
 
+						{/* The switch will render the last Route if no others are found (aka 404 page.) */}
 						<Route component={NoMatch} />
 					</Switch>
 
+					{/* Include all components that need to be rendered after the main container content */}
 					<MiniMusicPlayer display="false" />
 				</div>
 			</Router>

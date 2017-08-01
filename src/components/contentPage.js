@@ -88,7 +88,7 @@ class ContentPage extends Component {
 					<div className="row">
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
 							{suggestedContent.map(function(content, i){
-								if (content.type == type){
+								if (content.type === type){
 									return <ContentInfo 
 										paid={content.paid}
 										title={content.title}
@@ -101,6 +101,8 @@ class ContentPage extends Component {
 										type={content.type}
 										description={content.description}
 									/>
+								} else {
+									return null;
 								}
 							})}
 							<br />

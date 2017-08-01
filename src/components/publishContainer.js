@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
 
-import AudioContainer from './audioContainer.js';
-import VideoPlayer from './videoPlayer.js';
-import ImageContainer from './imageContainer.js';
-import MarkdownContainer from './markdownContainer.js';
-import GameContainer from './gameContainer.js';
-import PDFViewer from './pdfViewer.js';
-import CodeContainer from './codeContainer.js';
-
 class PublishContainer extends Component {
 	render() {
 		return (
@@ -30,14 +22,14 @@ class PublishContainer extends Component {
 										<div className="col-2"><div className="type-circle web-icon"></div>Web</div>
 									</div>
 									<ul className="nav nav-pills" role="tablist" id="subtypePills">
-										<li className="active" onclick="changeArtifactType('music')"><a href="#music" data-toggle="tab">Basic</a></li>
-										<li onclick="changeArtifactType('song')"><a href="#video" data-toggle="tab">Song</a></li>
-										<li onclick="changeArtifactType('album')"><a href="#video" data-toggle="tab">Album</a></li>
-										<li onclick="changeArtifactType('podcast')"><a href="#podcast" data-toggle="tab">Podcast</a></li>
-										<li onclick="changeArtifactType('book')"><a href="#book" data-toggle="tab">Book</a></li>
-										<li onclick="changeArtifactType('movie')"><a href="#movie" data-toggle="tab">Movie</a></li>
-										<li onclick="changeArtifactType('thing')"><a href="#thing" data-toggle="tab">Thing</a></li>
-										<li onclick="changeArtifactType('html')"><a href="#html" data-toggle="tab">HTML</a></li>
+										<li className="active" onClick="changeArtifactType('music')"><a href="#music" data-toggle="tab">Basic</a></li>
+										<li onClick="changeArtifactType('song')"><a href="#video" data-toggle="tab">Song</a></li>
+										<li onClick="changeArtifactType('album')"><a href="#video" data-toggle="tab">Album</a></li>
+										<li onClick="changeArtifactType('podcast')"><a href="#podcast" data-toggle="tab">Podcast</a></li>
+										<li onClick="changeArtifactType('book')"><a href="#book" data-toggle="tab">Book</a></li>
+										<li onClick="changeArtifactType('movie')"><a href="#movie" data-toggle="tab">Movie</a></li>
+										<li onClick="changeArtifactType('thing')"><a href="#thing" data-toggle="tab">Thing</a></li>
+										<li onClick="changeArtifactType('html')"><a href="#html" data-toggle="tab">HTML</a></li>
 									</ul>
 								</div>
 								<div className="publish-section" id='metainfo'>
@@ -73,7 +65,7 @@ class PublishContainer extends Component {
 														<input type="text" className="form-control" id="recordLabel" placeholder="Record Label" />
 													</div>
 													<div className="col-12 form-group" id="artifactDescriptionGroup">
-														<textarea row="3" className="form-control" id="description" placeholder="Album Description"></textarea>
+														<textarea rows="3" className="form-control" id="description" placeholder="Album Description"></textarea>
 													</div>
 												</div>
 											</div>
@@ -98,10 +90,10 @@ class PublishContainer extends Component {
 											<span style={{fontSize: "1.5em", fontWeight: "100", marginRight: "10px"}}>I want my Artifact to be:</span>
 											<div className="btn-group" data-toggle="buttons">
 												<label className="btn btn-outline-primary active" id='freeRadioLabel'>
-													<input id='freeRadio' type="radio" name="free" id="artifactFreeBtn" autocomplete="off" onclick="" checked /> Free
+													<input id='freeRadio' type="radio" name="free" autoComplete="off"  /> Free
 												</label>
 												<label className="btn btn-outline-success" id='paidRadioLabel'>
-													<input id='paidRadio' type="radio" name="free" id="artifactPaidBtn" autocomplete="off" onclick="$('#paymentInfo').show();" unchecked /> Paid 
+													<input id='paidRadio' type="radio" name="free" autoComplete="off" onClick="$('#paymentInfo').show();"  /> Paid 
 												</label>
 											</div>
 										</center>
@@ -109,23 +101,23 @@ class PublishContainer extends Component {
 											<div className="col-6">
 												<h5 className="text-center">Suggested Tips</h5>
 												<div className="row">
-													<div className="col"><input type="text" className="form-control col" id="tip1" placeholder="$0.01" oninput="PhoenixUI.onTipsInput(this);" /></div>
-													<div className="col"><input type="text" className="form-control col" id="tip2" placeholder="$0.10" oninput="PhoenixUI.onTipsInput(this);" /></div>
-													<div className="col"><input type="text" className="form-control col" id="tip3" placeholder="$1" oninput="PhoenixUI.onTipsInput(this);" /></div>
+													<div className="col"><input type="text" className="form-control col" id="tip1" placeholder="$0.01" /></div>
+													<div className="col"><input type="text" className="form-control col" id="tip2" placeholder="$0.10" /></div>
+													<div className="col"><input type="text" className="form-control col" id="tip3" placeholder="$1" /></div>
 												</div>
 												<h5 className="text-center" style={{marginTop: "20px"}}>Advanced</h5>
 												<div className="form-group row text-right">
 													<label for="example-text-input" className="col-3 col-form-label">Promoter</label>
 													<div className="col-3">
 														<div className="input-group">
-															<input id="promoter" type="text" className="form-control" oninput="PhoenixUI.onAdvancedInput(this);" />
+															<input id="promoter" type="text" className="form-control" />
 															<span className="input-group-addon" style={{paddingLeft: "5px", paddingRight: "5px"}}>%</span>
 														</div>
 													</div>
 													<label for="example-text-input" className="col-3 col-form-label">Retailer</label>
 													<div className="col-3">
 														<div className="input-group">
-															<input id="retailer" type="text" className="form-control" oninput="PhoenixUI.onAdvancedInput(this);" />
+															<input id="retailer" type="text" className="form-control" />
 															<span className="input-group-addon" style={{paddingLeft: "5px", paddingRight: "5px"}}>%</span>
 														</div>
 													</div>
@@ -139,21 +131,21 @@ class PublishContainer extends Component {
 															<div className="input-group col-11" style={{marginBottom: "5px"}}>
 																<div className="input-group-btn has-danger">
 																	<button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																		<img style={{height: "30px"}} src="/assets/img/Bitcoin.svg" />
+																		<img style={{height: "30px"}} src="/assets/img/Bitcoin.svg" alt="" />
 																	</button>
 																	<div className="dropdown-menu">
-																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href="" onclick="PhoenixUI.changePaymentAddressType(this);return false;"><img style={{height: "30px"}} src="/assets/img/Bitcoin.svg" /> <span> Bitcoin</span></a>
-																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href="" onclick="PhoenixUI.changePaymentAddressType(this);return false;"><img style={{height: "30px"}} src="/assets/img/FLOflat2.png" /> <span> Florincoin</span></a>
-																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href="" onclick="PhoenixUI.changePaymentAddressType(this);return false;"><img style={{height: "30px"}} src="/assets/img/Litecoin.svg" /> <span> Litecoin</span></a>
+																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href="" onClick="PhoenixUI.changePaymentAddressType(this);return false;"><img style={{height: "30px"}} src="/assets/img/Bitcoin.svg" alt="" /> <span> Bitcoin</span></a>
+																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href="" onClick="PhoenixUI.changePaymentAddressType(this);return false;"><img style={{height: "30px"}} src="/assets/img/FLOflat2.png" alt="" /> <span> Florincoin</span></a>
+																		<a style={{paddingLeft: "-10px"}} className="dropdown-item" href="" onClick="PhoenixUI.changePaymentAddressType(this);return false;"><img style={{height: "30px"}} src="/assets/img/Litecoin.svg" alt="" /> <span> Litecoin</span></a>
 																	</div>
 																</div>
-																<input type="text" className="form-control" oninput="PhoenixUI.onPaymentAddressChange(this);" />
+																<input type="text" className="form-control" onInput="PhoenixUI.onPaymentAddressChange(this);" />
 																<span className="input-group-addon">
 																	<input type="radio" name="mainAddressRadio" checked />
 																</span>
 															</div>
 															<div className="col-1">
-																<button className="btn btn-outline-success" style={{height: "80%", marginLeft: "-20px", marginTop: "3px"}} onclick="PhoenixUI.addPaymentAddress(this);">+</button>
+																<button className="btn btn-outline-success" style={{height: "80%", marginLeft: "-20px", marginTop: "3px"}} onClick="PhoenixUI.addPaymentAddress(this);">+</button>
 															</div>
 														</div>
 													</div>
@@ -236,7 +228,7 @@ class PublishContainer extends Component {
 										<div className="upload-area" id="mediaDrop" style={{paddingBottom: "5px"}}>
 											<span className="icon icon-upload-to-cloud" style={{color: "#000", width: "auto", height: "100%"}}></span>
 										</div>
-										<label className="custom-file text-left" style={{marginTop: "10px", float: "right", marginTop: "-40px", marginRight: "0px"}}>
+										<label className="custom-file text-left" style={{float: "right", marginTop: "-40px", marginRight: "0px"}}>
 											<input type="file" name="mediaFiles" id="mediaFiles" multiple accept="audio/*" className="custom-file-input" />
 											<span className="custom-file-control"></span>
 										</label>

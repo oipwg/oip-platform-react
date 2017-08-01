@@ -48,7 +48,7 @@ class Navbar extends Component {
 					<Link to="/user/upload/"><button className="btn btn-sm btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
 					<div>
 						<ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="btn-group">
-							<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}><div><img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} /><span style={{paddingLeft: "5px"}}>NASA Archive</span></div></DropdownToggle>
+							<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}><div><img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} alt="" /><span style={{paddingLeft: "5px"}}>NASA Archive</span></div></DropdownToggle>
 							<DropdownMenu>
 								<Link to="/user/artifacts/"><DropdownItem><span className="icon icon-classic-computer"></span> My Artifacts</DropdownItem></Link>
 								<Link to="/user/analytics/"><DropdownItem><span className="icon icon-line-graph"></span> Analytics <span className="badge badge-info">beta</span></DropdownItem></Link>

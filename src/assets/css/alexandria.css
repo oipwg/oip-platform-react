@@ -1,3 +1,15 @@
+/* CSS for React-Router to animate transitions */
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+
+/* CSS to run the Alexandria Stack */
 .alexandria-nav {
 	list-style: none;
 	width: 100%; 
@@ -21,6 +33,10 @@
 	padding-right:5px;
 	margin-bottom:-5px;
 	background-color:rgba(0,0,0,0.3);
+}
+
+.content-card-xinfo-offset {
+	margin-bottom:-7px;
 }
 
 .content-container {
@@ -834,4 +850,8 @@ td.unpin {
 
 .publish .publish-progress p {
   color: #fff; }
+
+.icon-pad-right {
+ 	padding-right: 6px;
+ }
 

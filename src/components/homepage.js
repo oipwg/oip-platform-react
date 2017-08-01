@@ -6,6 +6,7 @@ class Homepage extends Component {
 	render() {
 		let suggestedContent = [
 			{
+				key: 1,
 				type: "video",
 				paid: true,
 				title: "Apollo 11 - When Man land...",
@@ -17,6 +18,7 @@ class Homepage extends Component {
 				creatorImg: "/assets/img/nasa.jpg",
 				description: "Apollo 11 was the spaceflight that landed the first two humans on the Moon. Mission commander Neil Armstrong and pilot Buzz Aldrin, both American, landed the lunar module Eagle on July 20, 1969, at 20:18 UTC. Armstrong became the first to step onto the lunar surface six hours later on July 21 at 02:56:15 UTC; Aldrin joined him about 20 minutes later..."
 			},{
+				key: 2,
 				type: "audio",
 				paid: true,
 				title: "Tiny Human",
@@ -28,6 +30,7 @@ class Homepage extends Component {
 				creatorImg: "/assets/img/imogen-heap.jpg",
 				description: ""
 			},{
+				key: 3,
 				type: "game",
 				title: "2048",
 				icon: "game-controller",
@@ -37,6 +40,7 @@ class Homepage extends Component {
 				creatorImg: "/assets/img/gabriele.jpg",
 				description: "HOW TO PLAY: Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!"
 			},{
+				key: 4,
 				type: "pdf",
 				title: "Bitcoin Whitepaper",
 				length: "9 pages",
@@ -47,6 +51,7 @@ class Homepage extends Component {
 				creatorImg: "/assets/img/bitcoin.png",
 				description: "Bitcoin uses peer-to-peer technology to operate with no central authority or banks; managing transactions and the issuing of bitcoins is carried out collectively by the network. Bitcoin is open-source; its design is public, nobody owns or controls Bitcoin and everyone can take part. Through many of its unique properties, Bitcoin allows exciting uses that could not be covered by any previous payment system."
 			},{
+				key: 5,
 				type: "text",
 				paid: true,
 				title: "Markdown/Text",
@@ -56,6 +61,7 @@ class Homepage extends Component {
 				creatorName: "OstlerDev",
 				creatorImg: "/assets/img/sky.jpg",
 			},{
+				key: 6,
 				type: "img",
 				title: "Mountain Retreat",
 				icon: "image",
@@ -65,6 +71,7 @@ class Homepage extends Component {
 				creatorImg: "/assets/img/bobr.jpg",
 				description: "Robert Norman Ross was an American painter, art instructor, and television host. He was the creator and host of The Joy of Painting, an instructional television program that aired from 1983 to 1994 on ..."
 			},{
+				key: 7,
 				type: "code",
 				paid: true,
 				title: "Javascript Plugin",
@@ -82,6 +89,7 @@ class Homepage extends Component {
 				<div className="row">
 					{suggestedContent.map(function(content, i){
 						return <ContentCard 
+							key={content.key}
 							paid={content.paid}
 							title={content.title}
 							length={content.length}
