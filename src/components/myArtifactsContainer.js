@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 import MyArtifactListComponent from './myArtifactListComponent.js'
 
