@@ -24,6 +24,8 @@ import MyArtifactsContainer from './components/myArtifactsContainer.js';
 import AnalyticsContainer from './components/analyticsContainer.js';
 import WalletContainer from './components/walletContainer.js';
 import SettingsContainer from './components/settingsContainer.js';
+import ViewArtifactContainer from './components/viewArtifactContainer.js';
+import EditArtifactContainer from './components/editArtifactContainer.js';
 
 class App extends Component {
 	render() {
@@ -55,6 +57,8 @@ class App extends Component {
 						<Route path="/game/:id" render={props => <ContentPage type="game" {...props} />} />
 						<Route path="/code/:id" render={props => <ContentPage type="code" {...props} />} />
 
+						<Route path="/user/:page/:type/:id" component={UserPage} />
+						<Route path="/user/:page/:type" component={UserPage} />
 						<Route path="/user/:page" component={UserPage} />
 
 						{/* The switch will render the last Route if no others are found (aka 404 page.) */}
@@ -72,17 +76,24 @@ class App extends Component {
 const NoMatch = ({ match }) => (
 	<div className="container justify-content-center text-center">
 		<h1 style={{marginTop: "75px", fontSize: "120px"}}>404</h1>
-		{match ? <h3>No match for <code>{match.pathname}</code></h3> : "Page not found"}
+		{match.pathname ? <h3>No match for <code>{match.pathname}</code></h3> : "Page not found"}
 	</div>
 )
 
 const UserPage = ({ match }) => (
 	<SidebarContainer>
 		{(() => {
-			console.log(match.params.page);
+			console.log(match.params);
 			switch(match.params.page){
 				case "artifacts":
-					return <MyArtifactsContainer />
+					switch(match.params.type){
+						case 'view':
+							return <ViewArtifactContainer />
+						case 'edit':
+							return <EditArtifactContainer />
+						default:
+							return <MyArtifactsContainer />
+					}
 				case "analytics":
 					return <AnalyticsContainer />
 				case "upload":

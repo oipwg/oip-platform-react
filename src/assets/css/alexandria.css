@@ -35,6 +35,21 @@
 	background-color: rgba(92,184,92,0.2);
 }
 
+.btn-info-light-bg:hover, .btn-danger-light-bg:active {
+	color: #e4f7fd;
+	background-color: rgba(91,192,222,0.4);
+}
+
+.btn-warning-light-bg:hover, .btn-danger-light-bg:active {
+	color: #f9e9d3;
+	background-color: rgba(240,173,78,0.4);
+}
+
+.btn-danger-light-bg:hover, .btn-danger-light-bg:active {
+	color: #fddbda;
+	background-color: rgba(217,83,79,0.4);
+}
+
 .content-card-img {
 	max-height: 125px; 
 	width: auto; 

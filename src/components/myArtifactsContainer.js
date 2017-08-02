@@ -88,12 +88,14 @@ class MyArtifactsContainer extends Component {
 			}
 		]
 
+		console.log(this.props.match);
+
 		return (
 			<div className="container">
 				<h1>My Artifacts</h1>
 				<hr />
 				{suggestedContent.map(function(artifact, i){
-					return <MyArtifactListComponent artifact={artifact} />
+					return <MyArtifactListComponent key={i} artifact={artifact} />
 				})}
 			</div>
 		);
