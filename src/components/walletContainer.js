@@ -15,25 +15,26 @@ class WalletContainer extends Component {
 						</div>
 					</div>
 					<div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-						<div className="card">
-							<div className="card-block">
+						<div className="card wallet-top-card">
+							<div className="card-img-overlay">
 								<h4 className="card-title"><img style={{height: "30px"}} src="/assets/img/Bitcoin.svg" alt="" /> Bitcoin</h4>
 								<p className="card-text">134,143 bits</p>
 							</div>
 						</div>
 					</div>
 					<div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-						<div className="card">
-							<div className="card-block">
+						<div className="card wallet-top-card">
+							<div className="card-img-overlay">
 								<h4 className="card-title"><img style={{height: "30px"}} src="/assets/img/Litecoin.svg" alt="" /> Litecoin</h4>
 								<p className="card-text">13.84 LTC</p>
 							</div>
 						</div>
 					</div>
 					<div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
-						<div className="card">
-							<div className="card-block">
-								<h4 className="card-title"><img style={{height: "30px"}} src="/assets/img/FLOflat2.png" alt="" /> Florincoin</h4>
+						<div className="card wallet-top-card">
+							<img className="card-img" src="/assets/img/FLOflat2.png" alt="" />
+							<div className="card-img-overlay tint-a-bit">
+								<h4 className="card-title">Florincoin</h4>
 								<p className="card-text">34,984 bits</p>
 							</div>
 						</div>

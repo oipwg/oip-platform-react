@@ -26,6 +26,11 @@
 	object-fit: cover;
 }
 
+.wallet-top-card {
+	max-height: 250px; 
+	object-fit: contain;
+}
+
 .tint-a-bit {
 	background-color:rgba(0,0,0,0.7);
 }
