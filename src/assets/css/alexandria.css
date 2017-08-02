@@ -154,6 +154,7 @@
 	color: #292b2c;
 	cursor: pointer; 
 	cursor: hand;
+	margin-bottom: 10px;
 }
 
 .no-link-styling:hover {

@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
+import { Input, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 import MyArtifactListComponent from './myArtifactListComponent.js'
 
 class MyArtifactsContainer extends Component {
+	constructor(props) {
+		super(props);
+
+		this.toggle = this.toggle.bind(this);
+		this.state = {
+			dropdownOpen: false
+		};
+	}
+
+	toggle() {
+		this.setState({
+			dropdownOpen: !this.state.dropdownOpen
+		});
+	}
+
 	render() {
 		let suggestedContent = [
 			{
@@ -94,9 +110,32 @@ class MyArtifactsContainer extends Component {
 			<div className="container">
 				<h1>My Artifacts</h1>
 				<hr />
-				{suggestedContent.map(function(artifact, i){
-					return <MyArtifactListComponent key={i} artifact={artifact} />
-				})}
+				<div className="row">
+					<div className="col-xl-9 col-lg-9 col-12 form-inline">
+						<div className="input-group" style={{width: "100%"}}>
+							<input type="text" className="form-control" placeholder="Search..." />
+							<span className="input-group-btn"><button className="btn btn-secondary" type="button">Search</button></span>
+						</div>
+					</div>
+					<div className="col-xl-3 col-lg-3 col-12">
+						<ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+							<DropdownToggle caret>
+								<span className="icon icon-list"></span> Sort By: Upload Time
+							</DropdownToggle>
+							<DropdownMenu>
+								<DropdownItem>Upload Time</DropdownItem>
+								<DropdownItem>View Count</DropdownItem>
+								<DropdownItem>Bits Earned</DropdownItem>
+							</DropdownMenu>
+						</ButtonDropdown>
+					</div>
+				</div>
+				<hr />
+				<div className="row">
+					{suggestedContent.map(function(artifact, i){
+						return <MyArtifactListComponent key={i} artifact={artifact} />
+					})}
+				</div>
 			</div>
 		);
 	}

@@ -7,7 +7,7 @@ import {
 class MyArtifactListComponent extends Component {
 	render() {
 		return (
-			<div className="col-12">
+			<div className="col-xl-6 col-12">
 				<div className="card card-inverse" style={{borderRadius: "0.35rem", marginBottom: "2px"}} >
 					<img className="card-img artifact-list-card" src={this.props.artifact.thumbnail} alt="" style={{borderRadius: "0.35rem"}} />
 					<div className="card-img-overlay tint-a-bit" style={{borderRadius: "0.35rem"}}>
