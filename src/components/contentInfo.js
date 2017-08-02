@@ -19,9 +19,9 @@ class ContentInfo extends Component {
 					<div className="media-body">
 						<h5 className="mt-0" style={{paddingTop: "15px", marginLeft: "-10px"}}>{this.props.creator} <div className="btn-group"><button className="btn btn-sm btn-warning" style={{marginLeft: "10px"}}><span className="icon-pin icon"></span>Followed</button><button className="btn btn-sm btn-outline-secondary" disabled>3,954 Followers</button></div>
 							<div style={{float: "right"}}>
-								<button className="btn btn-sm btn-outline-info"><span className="icon-forward icon"></span> Share</button>
-								<button className="btn btn-sm btn-outline-success"><span className="icon-wallet icon"></span> Tip</button>
-								<button className="btn btn-sm btn-outline-danger"><span className="icon-emoji-sad icon"></span> Report</button>
+								<button className="btn btn-sm btn-outline-info btn-margin-right"><span className="icon-forward icon"></span> Share</button>
+								<button className="btn btn-sm btn-outline-success btn-margin-right"><span className="icon-wallet icon"></span> Tip</button>
+								<button className="btn btn-sm btn-outline-danger">...</button>
 							</div>
 						</h5>
 					</div>

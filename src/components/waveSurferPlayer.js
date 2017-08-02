@@ -39,7 +39,7 @@ class WaveSurferPlayer extends Component {
 					onPosChange={this.handlePosChange}
 					playing={this.state.playing}
 					options={{
-						waveColor: linGrad,
+						waveColor: linGrad.toString(),
 						progressColor: 'rgba(92,184,92,0.6)',
 						cursorColor: '#fff',
 						barWidth: 3

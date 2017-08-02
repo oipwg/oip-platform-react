@@ -45,7 +45,7 @@ class Navbar extends Component {
 							</li>
 						</ul>
 					</div>
-					<Link to="/user/upload/"><button className="btn btn-sm btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
+					<Link to="/user/upload/"><button className="btn btn-sm btn-warning-light-bg btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
 					<div>
 						<ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="btn-group">
 							<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}><div><img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} alt="" /><span style={{paddingLeft: "5px"}}>NASA Archive</span></div></DropdownToggle>

@@ -14,8 +14,8 @@ class AudioContainer extends Component {
 						<div className="btn-group d-flex justify-content-center">
 							<button className="btn btn-sm btn-outline-secondary btn-white"><span className="icon icon-controller-jump-to-start"></span></button>
 							<button className="btn btn-sm btn-outline-secondary btn-white"><span className="icon icon-controller-fast-backward"></span></button>
-							<button className="btn btn-sm btn-outline-secondary btn-white" onclick="wavesurfer.play();"><span className="icon icon-controller-play"></span></button>
-							<button className="btn btn-sm btn-outline-secondary btn-white" onclick="wavesurfer.pause();"><span className="icon icon-controller-paus"></span></button>
+							<button className="btn btn-sm btn-outline-secondary btn-white"><span className="icon icon-controller-play"></span></button>
+							<button className="btn btn-sm btn-outline-secondary btn-white"><span className="icon icon-controller-paus"></span></button>
 							<button className="btn btn-sm btn-outline-secondary btn-white"><span className="icon icon-controller-fast-forward"></span></button>
 							<button className="btn btn-sm btn-outline-secondary btn-white"><span className="icon icon-controller-next"></span></button>
 						</div>

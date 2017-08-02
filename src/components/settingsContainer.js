@@ -8,6 +8,7 @@ class SettingsContainer extends Component {
 				<hr />
 				<div className="row">
 					<div className="col-12">
+						<p>Drop-down currency selector in user menu. Include USD, BTC, Bits, EUR, RMB, JPY, GBP, CHF, CAD & AUD - initially default to Bits or USD in an A/B test</p>
 						<div className="form-group">
 							<label htmlFor="exampleInputEmail1">Email address</label>
 							<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
