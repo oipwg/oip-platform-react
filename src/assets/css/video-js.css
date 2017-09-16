@@ -289,11 +289,25 @@
   height: 100%; }
 
 .video-js .vjs-tech {
-  position: absolute;
-  top: 0;
-  left: 0;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	margin: 0px auto;
   width: 100%;
   height: 100%; }
+
+@media (min-width: 850px) { 
+	.video-js {
+		height: 100%;
+		width: auto;
+	}
+}
+@media (max-width: 850px) { 
+	.video-js {
+		height: auto;
+		width: 100%;
+	}
+}
 
 body.vjs-full-window {
   padding: 0;

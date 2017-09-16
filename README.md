@@ -22,6 +22,9 @@ To test this application, you will need to preform the following commands.
 - [ ] Share Modal
 - [ ] Tip Modal
 - [ ] Report Modal
+- [ ] Tradebot Modal
+- [ ] Payment UI
+- [ ] Coinbase Buy Widget
 - [ ] Audio Artifact implement similar to Mini-player (Artwork, Songname, Artist Name)
 - [ ] Audio Artifact unlimited Playlist
 - [ ] Playlists
@@ -38,3 +41,6 @@ To test this application, you will need to preform the following commands.
 - [ ] Register User page
 - [ ] Login page
 - [ ] Publisher
+- [ ] About Page
+- [ ] Tip the Developers page
+- [ ] Markdown for descriptions?

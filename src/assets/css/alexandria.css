@@ -9,6 +9,14 @@
   transition: opacity 250ms ease-in;
 }
 
+.descriptionShort {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
 /* CSS to run the Alexandria Stack */
 .alexandria-nav {
 	list-style: none;
@@ -74,10 +82,21 @@
 	margin-bottom:-7px;
 }
 
+@media (min-width: 1300px) { 
+	.content-container {
+		height: 720px;
+		width: 100%;
+	}
+}
+@media (max-width: 1300px) { 
+	.content-container {
+		height: auto;
+		width: 100%;
+	}
+}
+
 .content-container {
 	background-color: #000; 
-	width: 100%; 
-	height: 720px; 
 }
 
 .content-container .content {

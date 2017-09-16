@@ -10,18 +10,22 @@ import CodeContainer from './codeContainer.js';
 
 class ContentContainer extends Component {
 	render() {
+		let type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
+
+		let paid = false;
+
 		return (
 			<div className="content-container">
-				<div id='content' className="content" style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
-					{ this.props.type ===  'audio' ? <AudioContainer /> : '' }
-					{ this.props.type ===  'video' ? <VideoPlayer /> : '' }
-					{ this.props.type ===  'img' ? <ImageContainer url="/assets/img/bob-ross.jpg" /> : '' }
-					{ this.props.type ===  'text' ? <MarkdownContainer /> : '' }
-					{ this.props.type ===  'pdf' ? <PDFViewer url="../../pdf/bitcoin.pdf" /> : '' }
-					{ this.props.type ===  'game' ? <GameContainer url="http://gabrielecirulli.github.io/2048/" /> : '' }
-					{ this.props.type ===  'code' ? <CodeContainer /> : '' }
+				<div id='content' className={ paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
+					{ type ===  'Audio' ? <AudioContainer /> : '' }
+					{ type ===  'Video' ? <VideoPlayer artifact={this.props.artifact} /> : '' }
+					{ type ===  'Image' ? <ImageContainer url="/assets/img/bob-ross.jpg" /> : '' }
+					{ type ===  'Text' ? <MarkdownContainer /> : '' }
+					{ type ===  'Software' ? <PDFViewer url="../../pdf/bitcoin.pdf" /> : '' }
+					{ type ===  'Web' ? <GameContainer url="http://gabrielecirulli.github.io/2048/" /> : '' }
+					{ type ===  'code' ? <CodeContainer /> : '' }
 				</div>
-				<div id='paywall' style={{display:"none"}}>
+				<div id='paywall' style={paid ? "" : {display: "none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">
 						<div>
 							<h4 style={{marginBottom: "0px"}}>To Access this Content</h4>
@@ -29,7 +33,7 @@ class ContentContainer extends Component {
 							<br/>
 							<div className="row" style={{marginTop: "15px"}}>
 								<div className="col-5">
-									<button className="btn btn-outline-success" style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}} onclick="unlockContent()"><span className="icon icon-wallet"	style={{marginRight: "5px"}}></span>Pay 3 bits</button>
+									<button className="btn btn-outline-success" style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet"	style={{marginRight: "5px"}}></span>Pay 3 bits</button>
 								</div>
 								<div className="col-2" style={{paddingTop: "5px"}}>
 									or
@@ -46,5 +50,17 @@ class ContentContainer extends Component {
 		);
 	}
 }
+
+/*
+<div className="col-5">
+	<button className="btn btn-outline-success" style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}} onclick="unlockContent()"><span className="icon icon-wallet"	style={{marginRight: "5px"}}></span>Pay 3 bits</button>
+</div>
+<div className="col-2" style={{paddingTop: "5px"}}>
+	or
+</div>
+<div className="col-5">
+	<button className="btn btn-outline-danger" style={{float:"left", marginRight: "25px", marginLeft: "-25px", padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "0px"}}></span>Watch an Ad</button>
+</div>
+*/
 
 export default ContentContainer;

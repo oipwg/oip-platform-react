@@ -27,9 +27,12 @@ import SettingsContainer from './components/settingsContainer.js';
 import ViewArtifactContainer from './components/viewArtifactContainer.js';
 import EditArtifactContainer from './components/editArtifactContainer.js';
 
+var importedDemoContent = require('./demoContent.js').demoContent
+
 class App extends Component {
 	render() {
 		const supportsHistory = 'pushState' in window.history;
+		let demoContent = importedDemoContent;
 
 		return (
 			<Router forceRefresh={!supportsHistory} >
@@ -46,16 +49,18 @@ class App extends Component {
 
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
-						<Route exact path="/" component={Homepage} />
+						<Route exact path="/" render={props => <Homepage suggestedContent={demoContent} {...props} />} />
 
-						<Route path="/audio/:id" render={props => <ContentPage type="audio" {...props} />} />
-						<Route path="/video/:id" render={props => <ContentPage type="video" {...props} />} />
-						<Route path="/img/:id" render={props => <ContentPage type="img" {...props} />} />
-						<Route path="/text/:id" render={props => <ContentPage type="text" {...props} />} />
-						<Route path="/pdf/:id" render={props => <ContentPage type="pdf" {...props} />} />
-						<Route path="/web/:id" render={props => <ContentPage type="web" {...props} />} />
-						<Route path="/game/:id" render={props => <ContentPage type="game" {...props} />} />
-						<Route path="/code/:id" render={props => <ContentPage type="code" {...props} />} />
+						<Route path="/:id" render={props => <ContentPage all={demoContent} suggestedContent={demoContent} {...props} />} />
+
+						<Route path="/Audio/:id" render={props => <ContentPage artifact={demoContent[0]} suggestedContent={demoContent} {...props} />} />
+						<Route path="/Video/:id" render={props => <ContentPage artifact={demoContent[1]} suggestedContent={demoContent} {...props} />} />
+						<Route path="/img/:id" render={props => <ContentPage artifact={demoContent[2]} suggestedContent={demoContent}  {...props} />} />
+						<Route path="/text/:id" render={props => <ContentPage artifact={demoContent[3]} suggestedContent={demoContent}  {...props} />} />
+						<Route path="/pdf/:id" render={props => <ContentPage artifact={demoContent[4]} suggestedContent={demoContent} {...props} />} />
+						<Route path="/web/:id" render={props => <ContentPage artifact={demoContent[5]} suggestedContent={demoContent} {...props} />} />
+						<Route path="/game/:id" render={props => <ContentPage artifact={demoContent[6]} suggestedContent={demoContent} {...props} />} />
+						<Route path="/code/:id" render={props => <ContentPage artifact={demoContent[7]} suggestedContent={demoContent} {...props} />} />
 
 						<Route path="/user/:page/:type/:id" component={UserPage} />
 						<Route path="/user/:page/:type" component={UserPage} />
