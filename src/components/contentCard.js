@@ -4,8 +4,6 @@ import {
   Link
 } from 'react-router-dom'
 
-import streamToArray from 'stream-to-array'
-
 import IPFS_MAIN from 'ipfs'
 const ipfs = new IPFS_MAIN()
 
@@ -123,7 +121,7 @@ class ContentCard extends Component {
 					<img className="card-img-top content-card-img" src={this.state.src} alt="" />
 					<div style={{marginBottom:"115px", marginTop: "-145px"}}>
 						<button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px", border: "none", backgroundColor: "rgba(0,0,0,0.5)"}}>
-							{ paid ? <span className="icon icon-credit" style={{color: "#5cb85c"}}></span> : ''}
+							{ paid ? <span className="icon icon-credit" style={{color: "rgb(63, 255, 63)"}}></span> : ''}
 							<span className={"icon icon-" + icon}></span>
 						</button>
 					</div>
