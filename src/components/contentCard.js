@@ -135,7 +135,7 @@ class ContentCard extends Component {
 			<Link to={"/" + txid.substring(0,6) } onClick={function(){window.scrollTo(0, 0)}} className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 no-link-styling">
 				<div className="card">
 					<img className="card-img-top content-card-img" src={this.state.src} alt="" />
-					<div style={{marginBottom:"95px", marginTop: "-125px"}}>
+					<div style={{marginBottom:"115px", marginTop: "-145px"}}>
 						<button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px", border: "none", backgroundColor: "rgba(0,0,0,0.5)"}}>
 							{ paid ? <span className="icon icon-credit" style={{color: "#5cb85c"}}></span> : ''}
 							<span className={"icon icon-" + icon}></span>

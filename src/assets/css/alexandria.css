@@ -64,10 +64,10 @@
 }
 
 .content-card-img {
-	height: 125px; 
+	height: 145px; 
 	width: auto; 
 	object-fit: cover;
-	background-color: rgba(0,0,0,0.2);
+	background-color: #fff;
 }
 
 .content-card-xinfo {
