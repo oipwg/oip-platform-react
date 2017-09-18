@@ -64,9 +64,10 @@
 }
 
 .content-card-img {
-	max-height: 125px; 
+	height: 125px; 
 	width: auto; 
 	object-fit: cover;
+	background-color: rgba(0,0,0,0.2);
 }
 
 .content-card-xinfo {
@@ -215,6 +216,12 @@
 	background-color: #ffffff;
 	padding-top:3px;
 	border-top: 1px #000;
+}
+
+.markdownContainer {
+	background-color: #fff;
+    padding: 50px;
+    overflow: scroll;
 }
 
 .markdownContainer > div > p > img {

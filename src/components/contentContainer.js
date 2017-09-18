@@ -10,7 +10,13 @@ import CodeContainer from './codeContainer.js';
 
 class ContentContainer extends Component {
 	render() {
-		let type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
+		let type, subtype;
+		
+		if (this.props.artifact){
+			type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
+			subtype = this.props.artifact['oip-041'].artifact.type.split('-')[1];
+		}
+		
 
 		let paid = false;
 
@@ -19,11 +25,11 @@ class ContentContainer extends Component {
 				<div id='content' className={ paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
 					{ type ===  'Audio' ? <AudioContainer /> : '' }
 					{ type ===  'Video' ? <VideoPlayer artifact={this.props.artifact} /> : '' }
-					{ type ===  'Image' ? <ImageContainer url="/assets/img/bob-ross.jpg" /> : '' }
-					{ type ===  'Text' ? <MarkdownContainer /> : '' }
-					{ type ===  'Software' ? <PDFViewer url="../../pdf/bitcoin.pdf" /> : '' }
-					{ type ===  'Web' ? <GameContainer url="http://gabrielecirulli.github.io/2048/" /> : '' }
-					{ type ===  'code' ? <CodeContainer /> : '' }
+					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} /> : '' }
+					{ (type ===  'Text'  && subtype != 'PDF') ? <MarkdownContainer artifact={this.props.artifact} /> : '' }
+					{ (type ===  'Text' && subtype === 'PDF') ? <PDFViewer artifact={this.props.artifact} /> : '' }
+					{ type ===  'Web' ? <GameContainer artifact={this.props.artifact} /> : '' }
+					{ type ===  'code' ? <CodeContainer artifact={this.props.artifact} /> : '' }
 				</div>
 				<div id='paywall' style={paid ? "" : {display: "none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">

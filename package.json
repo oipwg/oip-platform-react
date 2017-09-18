@@ -4,7 +4,9 @@
   "author": "Skylar Ostler <me@skylarostler.com>",
   "version": "1.0.0",
   "dependencies": {
+    "axios": "^0.16.2",
     "bootstrap": "^4.0.0-alpha.6",
+    "ipfs": "^0.26.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-markdown": "^2.5.0",

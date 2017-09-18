@@ -2,24 +2,29 @@ import React, { Component } from 'react';
 
 class ContentInfo extends Component {
 	render() {
-		let paid = false;
+		let thumbnail, creator, title, description = "", type, subtype, files, mainHash;
 
-		let thumbnail;
-
-		let txid = this.props.artifact.txid;
-		let creator = this.props.artifact.publisherName;
-		let title = this.props.artifact['oip-041'].artifact.info.title;
-		let description = this.props.artifact['oip-041'].artifact.info.description;
-		let type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
-		let subtype = this.props.artifact['oip-041'].artifact.type.split('-')[1];
-		let files = this.props.artifact['oip-041'].artifact.storage.files;
-		let mainHash = this.props.artifact['oip-041'].artifact.storage.location;
-
+		if (this.props.artifact){
+			creator = this.props.artifact.publisherName;
+			title = this.props.artifact['oip-041'].artifact.info.title;
+			description = this.props.artifact['oip-041'].artifact.info.description;
+			type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
+			subtype = this.props.artifact['oip-041'].artifact.type.split('-')[1];
+			files = this.props.artifact['oip-041'].artifact.storage.files;
+			mainHash = this.props.artifact['oip-041'].artifact.storage.location;
+		}
+		
 		let views = 123;
 
-		for (var i = 0; i < files.length; i++){
-			if (files[i].type === "Image" && !thumbnail)
-				thumbnail = files[i];
+		let paid = false;
+		if (files){
+			for (var i = 0; i < files.length; i++){
+				if (files[i].sugPlay || files[i].sugBuy)
+					paid = true;
+				
+				if (files[i].type === "Image" && !thumbnail)
+					thumbnail = files[i];
+			}
 		}
 
 		let thumbnailURL = "";
@@ -60,7 +65,7 @@ class ContentInfo extends Component {
 			<div>
 				<div className="row">
 					<div className="col-10">
-						<h2 style={{paddingLeft: "20px"}}><span className={"icon icon-" + icon} style={{marginRight:"10px"}}></span>{title}</h2>
+						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}><span className={"icon icon-" + icon} style={{marginRight:"10px"}}></span>{title}</h3>
 					</div>
 					<div className="col-2">
 						<div style={{float: "right", marginTop: "2px"}}>

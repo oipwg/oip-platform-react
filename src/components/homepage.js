@@ -13,6 +13,7 @@ class Homepage extends Component {
 				<div className="row">
 					{this.props.suggestedContent.map(function(artJSON, i){
 						return <ContentCard 
+							key = {i}
 							artifact = {artJSON}
 						/>
 					})}

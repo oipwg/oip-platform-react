@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import videojs from 'video.js';
 
+// import VideoStream from 'videostream';
+
 import '../assets/css/video-js.css';
 import '../assets/css/alexandria.videojs.css';
+
+import IPFS_MAIN from 'ipfs'
+const ipfs = new IPFS_MAIN()
 
 class VideoPlayer extends Component {
 	componentDidMount() {
@@ -26,10 +31,10 @@ class VideoPlayer extends Component {
 		let videoURL = "";
 
 		if (thumbnail){
-			thumbnailURL = "https://gateway.ipfs.io/ipfs/" + mainHash + "/" + thumbnail.fname;
+			thumbnailURL = "https://gateway.ipfs.io/ipfs/" + mainHash + "/" + encodeURIComponent(thumbnail.fname);
 		}
 		if (mainVideo){
-			videoURL = "https://gateway.ipfs.io/ipfs/" + mainHash + "/" + mainVideo.fname;
+			videoURL = "https://gateway.ipfs.io/ipfs/" + mainHash + "/" + encodeURIComponent(mainVideo.fname);
 		}
 
 		var options = {}
@@ -38,19 +43,24 @@ class VideoPlayer extends Component {
 		options.poster = thumbnailURL ? thumbnailURL : "";
 		options.controls = true;
 		options.preload = "auto";
+		options.chromecast = {
+			appId:'B49D4F18',
+			metadata:{
+				title: this.props.artifact['oip-041'].artifact.info.title,
+				subtitle:this.props.artifact['oip-041'].artifact.info.description ? this.props.artifact['oip-041'].artifact.info.description : "",
+			}
+		}
 		options.sources = [{src: videoURL, type: 'video/mp4'}];
 
 		// instantiate video.js
 		this.player = videojs(this.videoNode, options, function onPlayerReady() {
 			// console.log('onPlayerReady', this);
-			var mainWidth = this.player().el_.offsetWidth;
-			var videoWidth = this.children_[0].offsetWidth;
-
-			var offset = (mainWidth - videoWidth) / 2;
-
-			this.children_[0].style['margin-right'] = offset;
-			this.children_[0].style['margin-left'] = offset;
 		});
+		// let _this = this;
+
+		// ipfs.files.cat(thumbnailURL, function (err, file) {
+		// 	var videostream = VideoStream(file, _this.videoNode);				
+		// })
 	}
 
 	// destroy player on unmount

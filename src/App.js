@@ -6,7 +6,7 @@ import {
 	Switch
 } from 'react-router-dom'
 import { CSSTransitionGroup } from 'react-transition-group'
-
+import axios from 'axios';
 
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
@@ -27,12 +27,37 @@ import SettingsContainer from './components/settingsContainer.js';
 import ViewArtifactContainer from './components/viewArtifactContainer.js';
 import EditArtifactContainer from './components/editArtifactContainer.js';
 
-var importedDemoContent = require('./demoContent.js').demoContent
-
 class App extends Component {
+	componentDidMount(){
+		let _this = this;
+		let apiURL = "https://api.alexandria.io/alexandria/v2/media/get/all";
+
+		this.serverRequest = axios
+		.get(apiURL)
+		.then(function(result) { 
+			let jsonResult = result.data;
+			var supportedArtifacts = [];
+			for (var x = jsonResult.length -1; x >= 0; x--){
+				if (jsonResult[x]['oip-041']){
+					if (jsonResult[x]['oip-041'].artifact.type.split('-').length === 2){
+						supportedArtifacts.push(jsonResult[x]);
+					}
+				}
+			}   
+			_this.setState({
+				supportedArtifacts: supportedArtifacts
+			});
+		});
+	}
+	componentWillUnmount() {
+		this.serverRequest.abort();
+	}
+	constructor(props) {
+		super(props);
+		this.state = {supportedArtifacts: []};
+	}
 	render() {
 		const supportsHistory = 'pushState' in window.history;
-		let demoContent = importedDemoContent;
 
 		return (
 			<Router forceRefresh={!supportsHistory} >
@@ -49,10 +74,11 @@ class App extends Component {
 
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
-						<Route exact path="/" render={props => <Homepage suggestedContent={demoContent} {...props} />} />
+						<Route exact path="/" render={props => <Homepage suggestedContent={this.state.supportedArtifacts} {...props} />} />
 
-						<Route path="/:id" render={props => <ContentPage all={demoContent} suggestedContent={demoContent} {...props} />} />
+						<Route path="/:id" render={props => <ContentPage all={this.state.supportedArtifacts} suggestedContent={this.state.supportedArtifacts.slice(0,10)} {...props} />} />
 
+						{/*
 						<Route path="/Audio/:id" render={props => <ContentPage artifact={demoContent[0]} suggestedContent={demoContent} {...props} />} />
 						<Route path="/Video/:id" render={props => <ContentPage artifact={demoContent[1]} suggestedContent={demoContent} {...props} />} />
 						<Route path="/img/:id" render={props => <ContentPage artifact={demoContent[2]} suggestedContent={demoContent}  {...props} />} />
@@ -65,6 +91,7 @@ class App extends Component {
 						<Route path="/user/:page/:type/:id" component={UserPage} />
 						<Route path="/user/:page/:type" component={UserPage} />
 						<Route path="/user/:page" component={UserPage} />
+						*/}
 
 						{/* The switch will render the last Route if no others are found (aka 404 page.) */}
 						<Route component={NoMatch} />
