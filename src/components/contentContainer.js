@@ -10,16 +10,18 @@ import CodeContainer from './codeContainer.js';
 
 class ContentContainer extends Component {
 	render() {
-		let type, subtype;
-		
+		let type, subtype, paid = false;
+
 		if (this.props.artifact){
 			type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
 			subtype = this.props.artifact['oip-041'].artifact.type.split('-')[1];
+
+			let files = this.props.artifact['oip-041'].artifact.storage.files;
+			for (var i = 0; i < files.length; i++){
+				if (files[i].sugPlay || files[i].sugBuy)
+					paid = true;
+			}
 		}
-		
-
-		let paid = false;
-
 		return (
 			<div className="content-container">
 				<div id='content' className={ paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
@@ -31,7 +33,7 @@ class ContentContainer extends Component {
 					{ type ===  'Web' ? <GameContainer artifact={this.props.artifact} /> : '' }
 					{ type ===  'code' ? <CodeContainer artifact={this.props.artifact} /> : '' }
 				</div>
-				<div id='paywall' style={paid ? "" : {display: "none"}}>
+				<div id='paywall' style={paid ? {} : {display: "none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">
 						<div>
 							<h4 style={{marginBottom: "0px"}}>To Access this Content</h4>
