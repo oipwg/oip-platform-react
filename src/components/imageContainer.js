@@ -11,7 +11,7 @@ class ImageContainer extends Component {
 		let mainHash = this.props.artifact['oip-041'].artifact.storage.location;
 
 		for (var i = 0; i < files.length; i++){
-			if (files[i].type === "Image" && !thumbnail)
+			if (files[i].type === "Image" && !files[i].sugPlay && !thumbnail)
 				thumbnail = files[i];
 		}
 
@@ -19,35 +19,30 @@ class ImageContainer extends Component {
 
 		if (thumbnail){
 			thumbnailURL = mainHash + "/" + thumbnail.fname;
+
+			let _this = this;
+
+			ipfs.files.cat(thumbnailURL, function (err, file) {
+				let stream = file;
+				let chunks = [];
+				if (stream){
+					stream.on('data', function(chunk) {
+						chunks.push(chunk);
+
+						var reader  = new FileReader();
+
+						reader.addEventListener("load", function () {
+							if (reader.result && reader.result != "data:")
+								_this.setState({ src: reader.result });
+						}, false);
+
+						if (chunks) {
+							reader.readAsDataURL(new Blob(chunks));
+						}
+					});
+				}	
+			})
 		}
-
-		if (thumbnailURL === ""){
-			thumbnailURL = "QmQhoySfbL9j4jbDRSsZaeu3DACVBYW1o9vgs8aZAc5bLP/alexandria-default-posterframe.png";
-		}
-
-		let _this = this;
-
-		ipfs.files.cat(thumbnailURL, function (err, file) {
-			let stream = file;
-			let chunks = [];
-			if (stream){
-				stream.on('data', function(chunk) {
-					chunks.push(chunk);
-
-					var reader  = new FileReader();
-
-					reader.addEventListener("load", function () {
-						if (reader.result && reader.result != "data:")
-							_this.setState({ src: reader.result });
-					}, false);
-
-					if (chunks) {
-						reader.readAsDataURL(new Blob(chunks));
-					}
-				});
-			}
-				
-		})
 	}
 	componentWillUnmount() {
 		if (this.serverRequest){

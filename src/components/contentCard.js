@@ -17,7 +17,7 @@ class ContentCard extends Component {
 		let mainHash = this.props.artifact['oip-041'].artifact.storage.location;
 
 		for (var i = 0; i < files.length; i++){
-			if (files[i].type === "Image" && !thumbnail)
+			if (files[i].type === "Image" && !files[i].sugPlay && !thumbnail)
 				thumbnail = files[i];
 		}
 
@@ -73,8 +73,6 @@ class ContentCard extends Component {
 	}
 
 	render() {
-		let thumbnail;
-
 		let txid = this.props.artifact.txid;
 		let title = this.props.artifact['oip-041'].artifact.info.title;
 		let type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
@@ -87,21 +85,9 @@ class ContentCard extends Component {
 			for (var i = 0; i < files.length; i++){
 				if (files[i].sugPlay || files[i].sugBuy)
 					paid = true;
-
-				if (files[i].type === "Image" && !thumbnail)
-					thumbnail = files[i];
 			}
 		}
 
-		let thumbnailURL = "";
-
-		if (thumbnail){
-			thumbnailURL = "https://gateway.ipfs.io/ipfs/" + mainHash + "/" + encodeURIComponent(thumbnail.fname);
-		}
-
-		if (thumbnailURL === ""){
-			thumbnailURL = "https://gateway.ipfs.io/ipfs/QmQhoySfbL9j4jbDRSsZaeu3DACVBYW1o9vgs8aZAc5bLP/alexandria-default-posterframe.png"
-		}
 
 		let icon;
 
