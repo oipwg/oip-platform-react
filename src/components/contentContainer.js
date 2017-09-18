@@ -36,7 +36,7 @@ class ContentContainer extends Component {
 				<div id='paywall' style={paid ? {} : {display: "none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">
 						<div>
-							<h4 style={{marginBottom: "0px"}}>To Access this Content</h4>
+							<h4 style={{marginBottom: "0px"}}>To Access this {subtype === "Basic" ? type : subtype}</h4>
 							<span>please</span>
 							<br/>
 							<div className="row" style={{marginTop: "15px"}}>
