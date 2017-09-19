@@ -2,53 +2,14 @@ import React, { Component } from 'react';
 
 class ContentInfo extends Component {
 	render() {
-		let creator, title, description = "", type, files;
+		let creator, title, description = "", icon, views = 123, userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
 
 		if (this.props.artifact){
-			creator = this.props.artifact.publisherName;
-			title = this.props.artifact['oip-041'].artifact.info.title;
-			description = this.props.artifact['oip-041'].artifact.info.description;
-			type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
-			files = this.props.artifact['oip-041'].artifact.storage.files;
+			creator = this.props.Core.Artifact.getArtist(this.props.artifact);
+			title = this.props.Core.Artifact.getTitle(this.props.artifact);
+			description = this.props.Core.Artifact.getDescription(this.props.artifact);
+			icon = this.props.Core.Artifact.getEntypoIconForType(this.props.artifact);
 		}
-		
-		let views = 123;
-
-		let paid = false;
-		if (files){
-			for (var i = 0; i < files.length; i++){
-				if (files[i].sugPlay || files[i].sugBuy)
-					paid = true;
-			}
-		}
-
-		let icon;
-
-		switch(type){
-			case "Audio":
-				icon = "beamed-note";
-				break;
-			case "Video":
-				icon = "clapperboard";
-				break;
-			case "Image":
-				icon = "image";
-				break;
-			case "Text":
-				icon = "text";
-				break;
-			case "Software":
-				icon = "code";
-				break;
-			case "Web":
-				icon = "code";
-				break;
-			default:
-				icon = "";
-				break;
-		}
-
-		let userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
 
 		return (
 			<div>

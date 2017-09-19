@@ -15,8 +15,7 @@ class AudioContainer extends Component {
 
 		console.log(thumbnailURL);
 
-		let _this = this;
-		if (thumbnailURL != ""){
+		if (thumbnailURL !== ""){
 			if (this.props.Core){
 				let _this = this;
 				this.props.Core.getThumbnailFromIPFS(thumbnailURL, function(srcData){
@@ -29,8 +28,6 @@ class AudioContainer extends Component {
 		}
 	}
 	render() {
-		let artifact = this.props.artifact;
-
 		return (
 			<div className="container" style={{paddingTop: "20px"}}>
 				<div className="row">

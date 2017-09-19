@@ -8,8 +8,6 @@ class AudioListContainer extends Component {
 		}]};
 	}
 	render() {
-		let artifact = this.props.artifact;
-
 		return (
 			<div className="row" style={{marginTop: "20px"}}>
 				<div className="col-6">

@@ -11,7 +11,33 @@ import CodeContainer from './codeContainer.js';
 class ContentContainer extends Component {
 	constructor(props){
 		super(props);
-		this.state = {paid: false}
+
+		let files = props.Core.Artifact.getFiles(props.artifact);
+		let paid = false;
+		for (let i = 0; i < files.length; i++){
+			if (files[i].sugPlay !== 0 || files[i].sugBuy !== 0)
+				paid = true;
+		}
+
+		this.state = {paid: paid};
+	}
+	componentDidMount(){
+		if (this.props.artifact){
+			let files = this.props.artifact['oip-041'].artifact.storage.files;
+			for (let i = 0; i < files.length; i++){
+				if (files[i].sugPlay !== 0 || files[i].sugBuy !== 0)
+					this.setState({paid: true});
+			}
+		}
+	}
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.artifact){
+			let files = nextProps.artifact['oip-041'].artifact.storage.files;
+			for (let i = 0; i < files.length; i++){
+				if (files[i].sugPlay !== 0 || files[i].sugBuy !== 0)
+					this.setState({paid: true});
+			}
+		}
 	}
 	render() {
 		let type, subtype, textAccess = "Access";
@@ -20,18 +46,13 @@ class ContentContainer extends Component {
 			type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
 			subtype = this.props.artifact['oip-041'].artifact.type.split('-')[1];
 
-			let files = this.props.artifact['oip-041'].artifact.storage.files;
-			for (let i = 0; i < files.length; i++){
-				if (files[i].sugPlay || files[i].sugBuy)
-					this.setState({paid: true});
-			}
-
 			if (type === "Video" || type === "Image"){
 				textAccess = "View"
 			} else if (type === "Audio"){
 				textAccess = "Listen to"
 			}
 		}
+		let _this = this;
 		return (
 			<div className="content-container">
 				<div id='content' className={ this.state.paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
@@ -51,7 +72,7 @@ class ContentContainer extends Component {
 							<br/>
 							<div className="row" style={{marginTop: "15px"}}>
 								<div className="col-5">
-									<button className="btn btn-outline-success" style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet"	style={{marginRight: "5px"}}></span>Pay 3 bits</button>
+									<button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet"	style={{marginRight: "5px"}}></span>Pay 3 bits</button>
 								</div>
 								<div className="col-2" style={{paddingTop: "5px"}}>
 									or

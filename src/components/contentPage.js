@@ -27,7 +27,7 @@ class ContentPage extends Component {
 				<div className="container">
 					<div className="row">
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
-							<ContentInfo artifact={artifact} />
+							<ContentInfo artifact={artifact} Core={this.props.Core} />
 							<br />
 							<ContentComments />
 						</div>

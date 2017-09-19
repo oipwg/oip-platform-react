@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import videojs from 'video.js';
 
-// import VideoStream from 'videostream';
-
 import '../assets/css/video-js.css';
 import '../assets/css/alexandria.videojs.css';
-
-import IPFS_MAIN from 'ipfs'
-const ipfs = new IPFS_MAIN()
 
 class VideoPlayer extends Component {
 	componentDidMount() {
@@ -17,12 +12,10 @@ class VideoPlayer extends Component {
 		let files = this.props.artifact['oip-041'].artifact.storage.files;
 		let mainHash = this.props.artifact['oip-041'].artifact.storage.location;
 
-		for (var i = 0; i < files.length; i++){
+		for (let i = 0; i < files.length; i++){
 			if (files[i].type === "Video" && !mainVideo)
 				mainVideo = files[i];
-		}
 
-		for (var i = 0; i < files.length; i++){
 			if (files[i].type === "Image" && !thumbnail)
 				thumbnail = files[i];
 		}
