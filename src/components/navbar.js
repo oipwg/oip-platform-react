@@ -23,15 +23,12 @@ class Navbar extends Component {
 	render() {
 		return (
 			<div>
-				<nav className="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-					<button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-						<span className="navbar-toggler-icon"></span>
-					</button>
+				<nav className="navbar navbar-dark bg-dark fixed-top">
 					<Link className="navbar-brand" to="/">
 						<img src="/assets/img/logo-full.png" width="auto" height="32px" className="d-inline-block align-top" alt="" />
 					</Link>
 
-					<div className="collapse navbar-collapse" id="navbarsExampleDefault">
+					<div id="navbarsExampleDefault">
 						<ul className="navbar-nav mr-auto alexandria-nav">
 							<li style={{display:"inline-block"}}>
 								<form className="form-inline">
@@ -45,8 +42,8 @@ class Navbar extends Component {
 							</li>
 						</ul>
 					</div>
-					<Link to="/user/upload/"><button className="btn btn-sm btn-warning-light-bg btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
 					<div>
+						<Link to="/user/upload/"><button className="btn btn-sm btn-warning-light-bg btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
 						<ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="btn-group">
 							<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}><div><img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} alt="" /><span style={{paddingLeft: "5px"}}>NASA Archive</span></div></DropdownToggle>
 							<DropdownMenu>
