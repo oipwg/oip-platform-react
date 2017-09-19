@@ -71,6 +71,10 @@ class App extends Component {
 					<Switch>
 						<Route exact path="/" render={props => <Homepage suggestedContent={this.state.supportedArtifacts} Core={Core} {...props} />} />
 
+						<Route path="/user/:page/:type/:id" component={UserPage} />
+						<Route path="/user/:page/:type" component={UserPage} />
+						<Route path="/user/:page" component={UserPage} />
+						
 						<Route path="/:id" render={props => <ContentPage all={this.state.supportedArtifacts} Core={Core} suggestedContent={this.state.supportedArtifacts.slice(0,10)} {...props} />} />
 
 						{/*
@@ -83,10 +87,6 @@ class App extends Component {
 						<Route path="/game/:id" render={props => <ContentPage artifact={demoContent[6]} suggestedContent={demoContent} {...props} />} />
 						<Route path="/code/:id" render={props => <ContentPage artifact={demoContent[7]} suggestedContent={demoContent} {...props} />} />
 						*/}
-
-						<Route path="/user/:page/:type/:id" component={UserPage} />
-						<Route path="/user/:page/:type" component={UserPage} />
-						<Route path="/user/:page" component={UserPage} />
 
 						{/* The switch will render the last Route if no others are found (aka 404 page.) */}
 						<Route component={NoMatch} />
