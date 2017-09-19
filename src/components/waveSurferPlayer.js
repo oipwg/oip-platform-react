@@ -31,10 +31,11 @@ class WaveSurferPlayer extends Component {
 		linGrad.addColorStop(0.5, 'rgba(255, 255, 255, 1.000)');
 		linGrad.addColorStop(0.5, 'rgba(183, 183, 183, 1.000)');
 
+		console.log(this.props.url);
 		return (
 			<div>
 				<Wavesurfer
-					audioFile={'/assets/audio/tiny-human.mp3'}
+					audioFile={this.props.url}
 					pos={this.state.pos}
 					onPosChange={this.handlePosChange}
 					playing={this.state.playing}

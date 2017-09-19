@@ -6,9 +6,12 @@ import AudioListContainer from './audioListContainer.js';
 class AudioContainer extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {songs: [{
-			src: ""
-		}]};
+		this.state = {
+			songs: [{
+				src: ""
+			}],
+			currentSongURL: ""
+		};
 	}
 	componentDidMount(){
 		let thumbnailURL = this.props.Core.Artifact.getThumbnail(this.props.artifact);
@@ -26,6 +29,15 @@ class AudioContainer extends Component {
 				})
 			}
 		}
+
+		let songs = this.props.Core.Artifact.getSongs(this.props.artifact);
+
+		for (let i = 0; i < songs.length; i++){
+			if (this.state.currentSongURL === ""){
+				let ipfsURL = this.props.Core.util.buildIPFSURL(songs[i].location, songs[i].fname);
+				this.setState({currentSongURL: ipfsURL});
+			}
+		}
 	}
 	render() {
 		return (
@@ -33,7 +45,7 @@ class AudioContainer extends Component {
 				<div className="row">
 					<div className="col-4"><img src={this.state.songs[0].src} style={{width: "100%", height: "auto", maxWidth: "200px", maxHeight: "200px"}} alt="" /></div>
 					<div className="col-8" style={{paddingTop: "50px"}}>
-						<WaveSurferPlayer />
+						<WaveSurferPlayer url={this.state.currentSongURL} />
 						<div id="waveform-timeline" style={{marginBottom: "10px"}}></div>
 						<div className="btn-group d-flex justify-content-center">
 							<button className="btn btn-sm btn-outline-secondary btn-white"><span className="icon icon-controller-jump-to-start"></span></button>
