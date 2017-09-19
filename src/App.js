@@ -6,7 +6,8 @@ import {
 	Switch
 } from 'react-router-dom'
 import { CSSTransitionGroup } from 'react-transition-group'
-import axios from 'axios';
+
+import Core from 'alexandria-core';
 
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
@@ -30,31 +31,25 @@ import EditArtifactContainer from './components/editArtifactContainer.js';
 class App extends Component {
 	componentDidMount(){
 		let _this = this;
-		let apiURL = "https://api.alexandria.io/alexandria/v2/media/get/all";
 
-		this.serverRequest = axios
-		.get(apiURL)
-		.then(function(result) { 
-			let jsonResult = result.data;
-			var supportedArtifacts = [];
-			for (var x = jsonResult.length -1; x >= 0; x--){
-				if (jsonResult[x]['oip-041']){
-					if (jsonResult[x]['oip-041'].artifact.type.split('-').length === 2){
-						supportedArtifacts.push(jsonResult[x]);
-					}
-				}
-			}   
+		Core.getSupportedArtifacts(function(supportedArtifacts){
 			_this.setState({
 				supportedArtifacts: supportedArtifacts
 			});
-		});
+		})
+
+		Core.getIPFS(function(ipfs){
+			_this.setState({
+				ipfs: ipfs
+			})
+		})
 	}
 	componentWillUnmount() {
 		this.serverRequest.abort();
 	}
 	constructor(props) {
 		super(props);
-		this.state = {supportedArtifacts: []};
+		this.state = {supportedArtifacts: [], ipfs: {}};
 	}
 	render() {
 		const supportsHistory = 'pushState' in window.history;
@@ -74,9 +69,9 @@ class App extends Component {
 
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
-						<Route exact path="/" render={props => <Homepage suggestedContent={this.state.supportedArtifacts} {...props} />} />
+						<Route exact path="/" render={props => <Homepage suggestedContent={this.state.supportedArtifacts} Core={Core} {...props} />} />
 
-						<Route path="/:id" render={props => <ContentPage all={this.state.supportedArtifacts} suggestedContent={this.state.supportedArtifacts.slice(0,10)} {...props} />} />
+						<Route path="/:id" render={props => <ContentPage all={this.state.supportedArtifacts} Core={Core} suggestedContent={this.state.supportedArtifacts.slice(0,10)} {...props} />} />
 
 						{/*
 						<Route path="/Audio/:id" render={props => <ContentPage artifact={demoContent[0]} suggestedContent={demoContent} {...props} />} />
@@ -87,11 +82,11 @@ class App extends Component {
 						<Route path="/web/:id" render={props => <ContentPage artifact={demoContent[5]} suggestedContent={demoContent} {...props} />} />
 						<Route path="/game/:id" render={props => <ContentPage artifact={demoContent[6]} suggestedContent={demoContent} {...props} />} />
 						<Route path="/code/:id" render={props => <ContentPage artifact={demoContent[7]} suggestedContent={demoContent} {...props} />} />
+						*/}
 
 						<Route path="/user/:page/:type/:id" component={UserPage} />
 						<Route path="/user/:page/:type" component={UserPage} />
 						<Route path="/user/:page" component={UserPage} />
-						*/}
 
 						{/* The switch will render the last Route if no others are found (aka 404 page.) */}
 						<Route component={NoMatch} />

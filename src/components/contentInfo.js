@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 
 class ContentInfo extends Component {
 	render() {
-		let thumbnail, creator, title, description = "", type, subtype, files, mainHash;
+		let creator, title, description = "", type, files;
 
 		if (this.props.artifact){
 			creator = this.props.artifact.publisherName;
 			title = this.props.artifact['oip-041'].artifact.info.title;
 			description = this.props.artifact['oip-041'].artifact.info.description;
 			type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
-			subtype = this.props.artifact['oip-041'].artifact.type.split('-')[1];
 			files = this.props.artifact['oip-041'].artifact.storage.files;
-			mainHash = this.props.artifact['oip-041'].artifact.storage.location;
 		}
 		
 		let views = 123;
@@ -21,16 +19,7 @@ class ContentInfo extends Component {
 			for (var i = 0; i < files.length; i++){
 				if (files[i].sugPlay || files[i].sugBuy)
 					paid = true;
-				
-				if (files[i].type === "Image" && !thumbnail)
-					thumbnail = files[i];
 			}
-		}
-
-		let thumbnailURL = "";
-
-		if (thumbnail){
-			thumbnailURL = "https://gateway.ipfs.io/ipfs/" + mainHash + "/" + thumbnail.fname;
 		}
 
 		let icon;

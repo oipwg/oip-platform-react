@@ -9,34 +9,44 @@ import PDFViewer from './pdfViewer.js';
 import CodeContainer from './codeContainer.js';
 
 class ContentContainer extends Component {
+	constructor(props){
+		super(props);
+		this.state = {paid: false}
+	}
 	render() {
-		let type, subtype, paid = false;
+		let type, subtype, textAccess = "Access";
 
 		if (this.props.artifact){
 			type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
 			subtype = this.props.artifact['oip-041'].artifact.type.split('-')[1];
 
 			let files = this.props.artifact['oip-041'].artifact.storage.files;
-			for (var i = 0; i < files.length; i++){
+			for (let i = 0; i < files.length; i++){
 				if (files[i].sugPlay || files[i].sugBuy)
-					paid = true;
+					this.setState({paid: true});
+			}
+
+			if (type === "Video" || type === "Image"){
+				textAccess = "View"
+			} else if (type === "Audio"){
+				textAccess = "Listen to"
 			}
 		}
 		return (
 			<div className="content-container">
-				<div id='content' className={ paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
-					{ type ===  'Audio' ? <AudioContainer /> : '' }
+				<div id='content' className={ this.state.paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
+					{ type ===  'Audio' ? <AudioContainer artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Video' ? <VideoPlayer artifact={this.props.artifact} /> : '' }
-					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} /> : '' }
-					{ (type ===  'Text'  && subtype != 'PDF') ? <MarkdownContainer artifact={this.props.artifact} /> : '' }
+					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} paid={this.state.paid} Core={this.props.Core} /> : '' }
+					{ (type ===  'Text'  && subtype !== 'PDF') ? <MarkdownContainer artifact={this.props.artifact} /> : '' }
 					{ (type ===  'Text' && subtype === 'PDF') ? <PDFViewer artifact={this.props.artifact} /> : '' }
 					{ type ===  'Web' ? <GameContainer artifact={this.props.artifact} /> : '' }
 					{ type ===  'code' ? <CodeContainer artifact={this.props.artifact} /> : '' }
 				</div>
-				<div id='paywall' style={paid ? {} : {display: "none"}}>
+				<div id='paywall' style={this.state.paid ? {} : {display: "none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">
 						<div>
-							<h4 style={{marginBottom: "0px"}}>To Access this {subtype === "Basic" ? type : subtype}</h4>
+							<h4 style={{marginBottom: "0px"}}>To {textAccess} this {subtype === "Basic" ? type : subtype}</h4>
 							<span>please</span>
 							<br/>
 							<div className="row" style={{marginTop: "15px"}}>

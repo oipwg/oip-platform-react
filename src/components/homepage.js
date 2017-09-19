@@ -7,6 +7,8 @@ class Homepage extends Component {
 		if (!this.props.suggestedContent)
 			this.props.suggestedContent = [];
 
+		let _this = this;
+
 		return (
 			<div className="container" style={{marginTop: "100px", marginBottom:"200px"}}>
 				<h4 style={{marginBottom: "25px"}}>Suggested Content</h4>
@@ -15,6 +17,7 @@ class Homepage extends Component {
 						return <ContentCard 
 							key = {i}
 							artifact = {artJSON}
+							Core = {_this.props.Core}
 						/>
 					})}
 				</div>

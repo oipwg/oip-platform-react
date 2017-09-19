@@ -18,10 +18,12 @@ class ContentPage extends Component {
 				}
 			}
 		}
-		
+
+		let _this = this;
+
 		return (
 			<div>
-				<ContentContainer artifact={artifact} />
+				<ContentContainer artifact={artifact} Core={this.props.Core} />
 				<div className="container">
 					<div className="row">
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
@@ -34,6 +36,7 @@ class ContentPage extends Component {
 								return <ContentCard 
 									key={i}
 									artifact={content}
+									Core={_this.props.Core}
 								/>
 							})}
 						</div>

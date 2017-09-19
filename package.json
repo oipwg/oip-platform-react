@@ -16,6 +16,7 @@
     "react-transition-group": "^1.2.0",
     "react-wavesurfer": "^0.8.3",
     "reactstrap": "^4.8.0",
+    "redux": "^3.7.2",
     "video.js": "^6.2.4",
     "wavesurfer.js": "^1.4.0"
   },
