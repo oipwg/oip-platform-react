@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 // https://github.com/mspae/react-wavesurfer
 import Wavesurfer from 'react-wavesurfer';
+require("wavesurfer.js")
 
 class WaveSurferPlayer extends Component {
 	constructor(props) {
@@ -31,7 +32,8 @@ class WaveSurferPlayer extends Component {
 		linGrad.addColorStop(0.5, 'rgba(255, 255, 255, 1.000)');
 		linGrad.addColorStop(0.5, 'rgba(183, 183, 183, 1.000)');
 
-		console.log(this.props.url);
+		console.log(this.props.url)
+
 		return (
 			<div>
 				<Wavesurfer

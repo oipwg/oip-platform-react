@@ -72,7 +72,7 @@ class ContentContainer extends Component {
 							<br/>
 							<div className="row" style={{marginTop: "15px"}}>
 								<div className="col-5">
-									<button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet"	style={{marginRight: "5px"}}></span>Pay 3 bits</button>
+									<button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet" style={{marginRight: "5px"}}></span>Pay 3 bits</button>
 								</div>
 								<div className="col-2" style={{paddingTop: "5px"}}>
 									or

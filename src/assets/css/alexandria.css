@@ -920,4 +920,7 @@ td.unpin {
  .btn-margin-right {
  	margin-right: 5px;
  }
-
+.canvas-goo {
+  -webkit-filter: url("#goo");
+  filter: url("#goo");
+}
