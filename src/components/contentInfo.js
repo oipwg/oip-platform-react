@@ -5,7 +5,7 @@ class ContentInfo extends Component {
 		let creator, title, description = "", icon, views = 123, userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
 
 		if (this.props.artifact){
-			creator = this.props.Core.Artifact.getArtist(this.props.artifact);
+			creator = this.props.Core.Artifact.getPublisherName(this.props.artifact);
 			title = this.props.Core.Artifact.getTitle(this.props.artifact);
 			description = this.props.Core.Artifact.getDescription(this.props.artifact);
 			icon = this.props.Core.Artifact.getEntypoIconForType(this.props.artifact);
