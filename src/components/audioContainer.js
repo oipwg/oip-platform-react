@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 import ColorThief from 'color-thief-standalone'
 
-import AudioVisualizerBars from './audioVisualizerBars.js';
-import AudioListContainer from './audioListContainer.js';
-
 class AudioContainer extends Component {
 	constructor(props) {
 		super(props);
@@ -154,8 +151,6 @@ class AudioContainer extends Component {
         audioSrc.connect(analyser);
         audioSrc.connect(context.destination);
         analyser.connect(context.destination);
-
-        let color = this.state.mainColor;
 
         let _this = this;
         let getLatestColorState = function(){
