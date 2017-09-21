@@ -13,7 +13,7 @@ class ImageContainer extends Component {
 		let _this = this;
 		if (thumbnailURL !== ""){
 			if (this.props.Core){
-				this.props.Core.getThumbnailFromIPFS(thumbnailURL, function(srcData){
+				this.props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
 					try {
 						_this.setState({ src: srcData });
 					} catch(e) { }
@@ -30,7 +30,7 @@ class ImageContainer extends Component {
 			let _this = this;
 			if (thumbnailURL !== ""){
 				if (nextProps.Core){
-					nextProps.Core.getThumbnailFromIPFS(thumbnailURL, function(srcData){
+					nextProps.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
 						try {
 							_this.setState({ src: srcData });
 						} catch(e) { }

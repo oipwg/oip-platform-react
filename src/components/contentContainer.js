@@ -4,7 +4,7 @@ import AudioContainer from './audioContainer.js';
 import VideoPlayer from './videoPlayer.js';
 import ImageContainer from './imageContainer.js';
 import MarkdownContainer from './markdownContainer.js';
-import GameContainer from './gameContainer.js';
+import HTMLContainer from './htmlContainer.js';
 import PDFViewer from './pdfViewer.js';
 import CodeContainer from './codeContainer.js';
 
@@ -12,30 +12,47 @@ class ContentContainer extends Component {
 	constructor(props){
 		super(props);
 
-		let files = props.Core.Artifact.getFiles(props.artifact);
-		let paid = false;
-		for (let i = 0; i < files.length; i++){
-			if (files[i].sugPlay !== 0 || files[i].sugBuy !== 0)
-				paid = true;
-		}
-
-		this.state = {paid: paid};
+		this.state = {paid: false, btcPrice: 3500, mainFileSugPlay: 0, bitPrice: 1};
 	}
 	componentDidMount(){
 		if (this.props.artifact){
-			let files = this.props.artifact['oip-041'].artifact.storage.files;
-			for (let i = 0; i < files.length; i++){
-				if (files[i].sugPlay !== 0 || files[i].sugBuy !== 0)
-					this.setState({paid: true});
+			if (this.props.Core){
+				let paid = this.props.Core.Artifact.paid(this.props.artifact);
+				let mainFileSugPlay = this.props.Core.Artifact.getMainFileSugPlay(this.props.artifact, this.props.Core.Artifact.getType(this.props.artifact));
+
+				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay});
+				let _this = this;
+
+				this.props.Core.util.calculateBTCCost(mainFileSugPlay, function(btc_price){
+					let bitPrice = _this.props.Core.util.convertBTCtoBits(btc_price);
+					console.log(bitPrice);
+					bitPrice = parseFloat(bitPrice.toFixed(1));
+					console.log(bitPrice);
+					bitPrice = Math.ceil(bitPrice);
+					console.log(bitPrice);
+					_this.setState({bitPrice: bitPrice});
+				})
 			}
 		}
 	}
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.artifact){
-			let files = nextProps.artifact['oip-041'].artifact.storage.files;
-			for (let i = 0; i < files.length; i++){
-				if (files[i].sugPlay !== 0 || files[i].sugBuy !== 0)
-					this.setState({paid: true});
+			if (nextProps.Core){
+				let paid = nextProps.Core.Artifact.paid(nextProps.artifact);
+				let mainFileSugPlay = nextProps.Core.Artifact.getMainFileSugPlay(nextProps.artifact, nextProps.Core.Artifact.getType(nextProps.artifact));
+
+				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay});
+				let _this = this;
+				console.log(mainFileSugPlay);
+				nextProps.Core.util.calculateBTCCost(mainFileSugPlay, function(btc_price){
+					console.log(btc_price)
+					let bitPrice = _this.props.Core.util.convertBTCtoBits(btc_price);
+					console.log(bitPrice);
+					bitPrice = parseFloat(bitPrice.toFixed(1));
+					console.log(bitPrice);
+					bitPrice = Math.ceil(bitPrice);
+					_this.setState({bitPrice: bitPrice});
+				})
 			}
 		}
 	}
@@ -46,7 +63,9 @@ class ContentContainer extends Component {
 			type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
 			subtype = this.props.artifact['oip-041'].artifact.type.split('-')[1];
 
-			if (type === "Video" || type === "Image"){
+			if (type === "Video"){
+				textAccess = "Watch"
+			} else if (type === "Image"){
 				textAccess = "View"
 			} else if (type === "Audio"){
 				textAccess = "Listen to"
@@ -61,7 +80,7 @@ class ContentContainer extends Component {
 					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} paid={this.state.paid} Core={this.props.Core} /> : '' }
 					{ (type ===  'Text'  && subtype !== 'PDF') ? <MarkdownContainer artifact={this.props.artifact} /> : '' }
 					{ (type ===  'Text' && subtype === 'PDF') ? <PDFViewer artifact={this.props.artifact} /> : '' }
-					{ type ===  'Web' ? <GameContainer artifact={this.props.artifact} /> : '' }
+					{ type ===  'Web' ? <HTMLContainer artifact={this.props.artifact} Core={this.props.Core}  /> : '' }
 					{ type ===  'code' ? <CodeContainer artifact={this.props.artifact} /> : '' }
 				</div>
 				<div id='paywall' style={this.state.paid ? {} : {display: "none"}}>
@@ -72,7 +91,7 @@ class ContentContainer extends Component {
 							<br/>
 							<div className="row" style={{marginTop: "15px"}}>
 								<div className="col-5">
-									<button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet" style={{marginRight: "5px"}}></span>Pay 3 bits</button>
+									<button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet" style={{marginRight: "5px"}}></span>Pay {this.state.bitPrice} bit{this.state.bitPrice === 1 ? "" : "s"}</button>
 								</div>
 								<div className="col-2" style={{paddingTop: "5px"}}>
 									or

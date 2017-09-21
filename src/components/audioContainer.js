@@ -31,14 +31,14 @@ class AudioContainer extends Component {
 		this.toHHMMSS = this.toHHMMSS.bind(this);
 	}
 	componentDidMount(){
-		let thumbnailURL = this.props.Core.Artifact.getThumbnail(this.props.artifact);
+		let thumbnailURL = this.props.Core.Artifact.Network.getThumbnail(this.props.artifact);
 
 		console.log(thumbnailURL);
 
 		if (thumbnailURL !== ""){
 			if (this.props.Core){
 				let _this = this;
-				this.props.Core.getThumbnailFromIPFS(thumbnailURL, function(srcData){
+				this.props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
 					console.log("data");
 					try {
 						_this.setState({songs: [{ src: srcData }]});

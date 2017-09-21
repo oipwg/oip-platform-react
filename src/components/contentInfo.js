@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
+import ContentExtraInfo from './contentExtraInfo.js';
+
 class ContentInfo extends Component {
 	render() {
-		let creator, title, description = "", icon, views = 123, userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
+		let creator, title, icon, views = 123, userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
 
 		if (this.props.artifact){
 			creator = this.props.Core.Artifact.getPublisherName(this.props.artifact);
 			title = this.props.Core.Artifact.getTitle(this.props.artifact);
-			description = this.props.Core.Artifact.getDescription(this.props.artifact);
 			icon = this.props.Core.Artifact.getEntypoIconForType(this.props.artifact);
 		}
 
@@ -35,11 +36,7 @@ class ContentInfo extends Component {
 						</h5>
 					</div>
 				</div>
-				<p style={{textIndent: "40px", marginTop: "10px"}}>{description.length > 350 ? description.substring(0,350) + "..." : description}</p>
-				<div className="" style={{width: "100%", marginTop: "-5px"}}>
-					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />
-					<button className="btn btn-sm btn-outline-secondary" style={{borderColor: "#333", color: "#333", margin: "0px auto", display:"block", backgroundColor:"#fff"}}>See More</button>
-				</div>
+				<ContentExtraInfo artifact={this.props.artifact} Core={this.props.Core} />
 			</div>
 		);
 	}

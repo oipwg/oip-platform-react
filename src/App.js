@@ -32,16 +32,10 @@ class App extends Component {
 	componentDidMount(){
 		let _this = this;
 
-		Core.getSupportedArtifacts(function(supportedArtifacts){
+		Core.Data.getSupportedArtifacts(function(supportedArtifacts){
 			_this.setState({
 				supportedArtifacts: supportedArtifacts
 			});
-		})
-
-		Core.getIPFS(function(ipfs){
-			_this.setState({
-				ipfs: ipfs
-			})
 		})
 	}
 	componentWillUnmount() {
@@ -49,7 +43,7 @@ class App extends Component {
 	}
 	constructor(props) {
 		super(props);
-		this.state = {supportedArtifacts: [], ipfs: {}};
+		this.state = {supportedArtifacts: []};
 	}
 	render() {
 		const supportsHistory = 'pushState' in window.history;
