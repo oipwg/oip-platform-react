@@ -75,6 +75,9 @@ class AudioContainer extends Component {
 
 		this.createVisualization()
 	}
+	componentWillUnmount(){
+		this.createVisualization = undefined;
+	}
 	toggleAudio(event){
 		if (this.state.playing){
 			this.refs.audio.pause();
@@ -172,10 +175,10 @@ class AudioContainer extends Component {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
             // console.log(freqData)
             ctx.fillStyle = getLatestColorState();
-            let bars = 256;
+            let bars = 200;
             for (var i = 0; i < bars; i++) {
                 let bar_x = i * 3;
-                let bar_width = 2;
+                let bar_width = 3;
                 let bar_height = -(freqData[i] / 2);
                 ctx.fillRect(bar_x, canvas.height, bar_width, bar_height)
             }
