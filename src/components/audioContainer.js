@@ -52,7 +52,12 @@ class AudioContainer extends Component {
 		return true;
 	}
 	startVisualizationLoop() {
-		this.context = new AudioContext();
+		if('webkitAudioContext' in window) {
+			this.context = new window.webkitAudioContext();
+		} else {
+			this.context = new AudioContext();
+		}
+		
         this.analyser = this.context.createAnalyser();
         this.canvas = this.refs.analyzerCanvas;
         this.ctx = this.canvas.getContext('2d');
@@ -86,7 +91,7 @@ class AudioContainer extends Component {
         if (this.audio.currentTime > 0)
         	this.setState({mainSongProgress: this.audio.currentTime / this.audio.duration * 100, currentTime: this.audio.currentTime, currentDuration: this.audio.duration, playing: !this.audio.paused})
 
-		this.frameId = window.requestAnimationFrame( this.visualizationLoop )
+		this._frameId = window.requestAnimationFrame( this.visualizationLoop )
 	}
 	updateThumbnail(props){
 		let thumbnailURL = "";
@@ -105,14 +110,10 @@ class AudioContainer extends Component {
 					try {
 						_this.setState({songs: [{ src: srcData }]});
 
-						let pic = new Image();
-						pic.onload = function(){
-							let colorThief = new ColorThief();
-							let palette = colorThief.getPalette(pic, 2);
-							_this.setState({bgColor: "rgb(" + palette[0].join(',') + ")"})
-							_this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
-						}
-						pic.src = srcData;
+						let colorThief = new ColorThief();
+						let palette = colorThief.getPalette(_this.refs.image, 2);
+						_this.setState({bgColor: "rgb(" + palette[0].join(',') + ")"})
+						_this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
 					} catch(e) { }
 				})
 			}
@@ -216,7 +217,7 @@ class AudioContainer extends Component {
                 </audio>
                 <div style={{marginTop: "100px"}}>
                 	<h3 className="text-center" style={{color: this.state.mainColor}}>{this.state.currentSongTitle} - {this.state.currentSongArtist}</h3>
-					<img src={this.state.songs[0].src} style={{width: "100%", height: "auto", maxWidth: "200px", maxHeight: "200px", margin: "40px auto", display: "block"}} alt="" />
+					<img ref="image" src={this.state.songs[0].src} style={{width: "100%", height: "auto", maxWidth: "200px", maxHeight: "200px", margin: "40px auto", display: "block"}} alt="" />
 				</div>
 				<div style={{width:"102%", height: "200px", position: "absolute", bottom: "10px", marginLeft: "-10px"}}>
 					<canvas
