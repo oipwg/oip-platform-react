@@ -45,11 +45,8 @@ class ContentContainer extends Component {
 				let _this = this;
 				console.log(mainFileSugPlay);
 				nextProps.Core.util.calculateBTCCost(mainFileSugPlay, function(btc_price){
-					console.log(btc_price)
 					let bitPrice = _this.props.Core.util.convertBTCtoBits(btc_price);
-					console.log(bitPrice);
 					bitPrice = parseFloat(bitPrice.toFixed(1));
-					console.log(bitPrice);
 					bitPrice = Math.ceil(bitPrice);
 					_this.setState({bitPrice: bitPrice});
 				})
@@ -76,10 +73,10 @@ class ContentContainer extends Component {
 			<div className="content-container">
 				<div id='content' className={ this.state.paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
 					{ type ===  'Audio' ? <AudioContainer artifact={this.props.artifact} Core={this.props.Core} /> : '' }
-					{ type ===  'Video' ? <VideoPlayer artifact={this.props.artifact} /> : '' }
+					{ type ===  'Video' ? <VideoPlayer artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} paid={this.state.paid} Core={this.props.Core} /> : '' }
 					{ (type ===  'Text'  && subtype !== 'PDF') ? <MarkdownContainer artifact={this.props.artifact} /> : '' }
-					{ (type ===  'Text' && subtype === 'PDF') ? <PDFViewer artifact={this.props.artifact} /> : '' }
+					{ (type ===  'Text' && subtype === 'PDF') ? <PDFViewer artifact={this.props.artifact} Core={this.props.Core}  /> : '' }
 					{ type ===  'Web' ? <HTMLContainer artifact={this.props.artifact} Core={this.props.Core}  /> : '' }
 					{ type ===  'code' ? <CodeContainer artifact={this.props.artifact} /> : '' }
 				</div>
