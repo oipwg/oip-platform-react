@@ -48,7 +48,15 @@ class AudioContainer extends Component {
 		this.updateThumbnail(nextProps);
 		this.updateSong(nextProps);
 	}
-	shouldComponentUpdate(){
+	shouldComponentUpdate(nextProps, nextState){
+		if (this.props.paid && !nextProps.paid){
+			this.refs.audio.play()
+		}
+
+		if (this.props.artifact != nextProps.artifact){
+			this.setState({currentTime: 0, currentDuration: 0})
+		}
+
 		return true;
 	}
 	startVisualizationLoop() {
@@ -100,13 +108,10 @@ class AudioContainer extends Component {
 			thumbnailURL = props.Core.Artifact.getThumbnail(props.artifact);
 		}
 
-		console.log(thumbnailURL);
-
 		if (thumbnailURL !== ""){
 			if (props.Core){
 				let _this = this;
 				props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
-					console.log("data");
 					try {
 						_this.setState({songs: [{ src: srcData }]});
 
@@ -132,7 +137,6 @@ class AudioContainer extends Component {
 				firstSong = songs[i];
 				let ipfsURL = props.Core.util.buildIPFSURL(songs[i].location, songs[i].fname);
 				let title = props.Core.Artifact.getTitle(props.artifact);
-				console.log(props.artifact);
 				let artist = props.Core.Artifact.getArtist(props.artifact);
 				this.setState({currentSongURL: ipfsURL, currentSongTitle: title, currentSongArtist: artist});
 			}
@@ -208,7 +212,7 @@ class AudioContainer extends Component {
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden"}}>
                 <audio
                     ref="audio"
-                    autoPlay={true}
+                    autoPlay={false}
                     controls={true}
                     //this is the link to my song url feel free to use it or replace it with your own
                     src={this.state.currentSongURL}

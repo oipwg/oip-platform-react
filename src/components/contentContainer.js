@@ -72,7 +72,7 @@ class ContentContainer extends Component {
 		return (
 			<div className="content-container">
 				<div id='content' className={ this.state.paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
-					{ type ===  'Audio' ? <AudioContainer artifact={this.props.artifact} Core={this.props.Core} /> : '' }
+					{ type ===  'Audio' ? <AudioContainer paid={this.state.paid} artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Video' ? <VideoPlayer artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} paid={this.state.paid} Core={this.props.Core} /> : '' }
 					{ (type ===  'Text'  && subtype !== 'PDF') ? <MarkdownContainer artifact={this.props.artifact} /> : '' }
