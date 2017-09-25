@@ -5,63 +5,85 @@ import '../assets/css/video-js.css';
 import '../assets/css/alexandria.videojs.css';
 
 class VideoPlayer extends Component {
-	componentDidMount() {
-		let thumbnail;
-		let mainVideo;
-
-		let files = this.props.artifact['oip-041'].artifact.storage.files;
-		let mainHash = this.props.artifact['oip-041'].artifact.storage.location;
-
-		for (let i = 0; i < files.length; i++){
-			if (files[i].type === "Video" && !mainVideo)
-				mainVideo = files[i];
-
-			if (files[i].type === "Image" && !thumbnail)
-				thumbnail = files[i];
-		}
-
-		let thumbnailURL = "";
-		let videoURL = "";
-
-		if (thumbnail){
-			thumbnailURL = "https://gateway.ipfs.io/ipfs/" + mainHash + "/" + encodeURIComponent(thumbnail.fname);
-		}
-		if (mainVideo){
-			videoURL = "https://gateway.ipfs.io/ipfs/" + mainHash + "/" + encodeURIComponent(mainVideo.fname);
-		}
-
-		var options = {}
-
-		options.autoplay = false;
-		options.poster = thumbnailURL ? thumbnailURL : "";
-		options.controls = true;
-		options.preload = "auto";
-		options.chromecast = {
-			appId:'B49D4F18',
-			metadata:{
-				title: this.props.artifact['oip-041'].artifact.info.title,
-				subtitle:this.props.artifact['oip-041'].artifact.info.description ? this.props.artifact['oip-041'].artifact.info.description : "",
-			}
-		}
-		options.sources = [{src: videoURL, type: 'video/mp4'}];
-
-		// instantiate video.js
-		this.player = videojs(this.videoNode, options, function onPlayerReady() {
-			// console.log('onPlayerReady', this);
-		});
-		// let _this = this;
-
-		// ipfs.files.cat(thumbnailURL, function (err, file) {
-		// 	var videostream = VideoStream(file, _this.videoNode);				
-		// })
+	constructor(props){
+		super(props);
+		this.createVideoPlayer = this.createVideoPlayer.bind(this);
+		this.updateVideoPlayer = this.updateVideoPlayer.bind(this);
 	}
-
-	// destroy player on unmount
+	componentDidMount() {
+		this.createVideoPlayer();
+	}
+	shouldComponentUpdate(nextProps, nextState){
+		if (this.props.artifact === nextProps.artifact){
+			return false;
+		} else {
+			return true;
+		}
+	}
+	componentDidUpdate() {
+		console.log("update");
+		this.updateVideoPlayer();
+	}
 	componentWillUnmount() {
 		if (this.player) {
 			try {
 				this.player.dispose()
 			} catch(e){}
+		}
+	}
+	createVideoPlayer() {
+		if (this.props.artifact){
+			let mainVideo = this.props.Core.Artifact.getMainFile(this.props.artifact);
+			let videoURL = this.props.Core.util.buildIPFSURL(mainVideo);
+			let thumbnail = this.props.Core.Artifact.getThumbnail(this.props.artifact);
+			let thumbnailURL = this.props.Core.util.buildIPFSURL(thumbnail);
+
+			var options = {}
+
+			options.autoplay = false;
+			options.poster = thumbnailURL ? thumbnailURL : "";
+			options.controls = true;
+			options.preload = "auto";
+			options.chromecast = {
+				appId:'B49D4F18',
+				metadata:{
+					title: this.props.artifact['oip-041'].artifact.info.title,
+					subtitle:this.props.artifact['oip-041'].artifact.info.description ? this.props.artifact['oip-041'].artifact.info.description : "",
+				}
+			}
+			options.sources = [{src: videoURL, type: 'video/mp4'}];
+
+			// instantiate video.js
+			this.player = videojs(this.videoNode, options, function onPlayerReady() {
+				// console.log('onPlayerReady', this);
+			});
+		}
+	}
+	updateVideoPlayer(){
+		if (this.props.artifact){
+			let mainVideo = this.props.Core.Artifact.getMainFile(this.props.artifact);
+			let videoURL = this.props.Core.util.buildIPFSURL(mainVideo);
+			let thumbnail = this.props.Core.Artifact.getThumbnail(this.props.artifact);
+			let thumbnailURL = this.props.Core.util.buildIPFSURL(thumbnail);
+
+			var options = {}
+
+			options.autoplay = false;
+			options.poster = thumbnailURL ? thumbnailURL : "";
+			options.controls = true;
+			options.preload = "auto";
+			options.chromecast = {
+				appId:'B49D4F18',
+				metadata:{
+					title: this.props.artifact['oip-041'].artifact.info.title,
+					subtitle:this.props.artifact['oip-041'].artifact.info.description ? this.props.artifact['oip-041'].artifact.info.description : "",
+				}
+			}
+			options.sources = [{src: videoURL, type: 'video/mp4'}];
+
+			// instantiate video.js
+			this.player.poster(options.poster);
+			this.player.src(options.sources);
 		}
 	}
 	render() {
