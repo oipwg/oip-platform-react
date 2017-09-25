@@ -19,26 +19,88 @@ class AudioContainer extends Component {
 			lastProgBarDisable: 0,
 			currentTime: 0,
 			currentDuration: 0,
-			playing: false
+			playing: false,
+			updateVisualization: true
 		};
 
-		this.createVisualization = this.createVisualization.bind(this)
 		this.onProgressBarClick = this.onProgressBarClick.bind(this)
 		this.enableProgressBarScrub = this.enableProgressBarScrub.bind(this)
 		this.disableProgressBarScrub = this.disableProgressBarScrub.bind(this)
 		this.singleProgressBarScrub = this.singleProgressBarScrub.bind(this)
+		this.updateThumbnail = this.updateThumbnail.bind(this)
+		this.updateSong = this.updateSong.bind(this)
 		this.toggleAudio = this.toggleAudio.bind(this)
 		this.toHHMMSS = this.toHHMMSS.bind(this);
+
+		this.startVisualizationLoop = this.startVisualizationLoop.bind(this);
+		this.stopVisualizationLoop = this.stopVisualizationLoop.bind(this);
+		this.visualizationLoop = this.visualizationLoop.bind(this);
 	}
 	componentDidMount(){
-		let thumbnailURL = this.props.Core.Artifact.Network.getThumbnail(this.props.artifact);
+		this.updateThumbnail(this.props);
+		this.updateSong(this.props);
+		this.startVisualizationLoop();
+	}
+	componentWillUnmount(){
+		this.stopVisualizationLoop();
+	}
+	componentWillReceiveProps(nextProps){
+		this.updateThumbnail(nextProps);
+		this.updateSong(nextProps);
+	}
+	shouldComponentUpdate(){
+		return true;
+	}
+	startVisualizationLoop() {
+		this.context = new AudioContext();
+        this.analyser = this.context.createAnalyser();
+        this.canvas = this.refs.analyzerCanvas;
+        this.ctx = this.canvas.getContext('2d');
+        this.audio = this.refs.audio;
+        this.audio.crossOrigin = "anonymous";
+        this.audioSrc = this.context.createMediaElementSource(this.audio);
+        this.audioSrc.connect(this.analyser);
+        this.audioSrc.connect(this.context.destination);
+        this.analyser.connect(this.context.destination);
+
+		if( !this._frameId ) {
+			this._frameId = window.requestAnimationFrame( this.visualizationLoop );
+		}
+	}
+	stopVisualizationLoop(){
+		window.cancelAnimationFrame( this._frameId );
+	}
+	visualizationLoop(){
+		let freqData = new Uint8Array(this.analyser.frequencyBinCount)
+        this.analyser.getByteFrequencyData(freqData)
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.fillStyle = this.state.mainColor;
+        let bars = 200;
+        for (var i = 0; i < bars; i++) {
+            let bar_x = i * 3;
+            let bar_width = 3;
+            let bar_height = -(freqData[i] / 2);
+            this.ctx.fillRect(bar_x, this.canvas.height, bar_width, bar_height)
+        }
+        
+        if (this.audio.currentTime > 0)
+        	this.setState({mainSongProgress: this.audio.currentTime / this.audio.duration * 100, currentTime: this.audio.currentTime, currentDuration: this.audio.duration, playing: !this.audio.paused})
+
+		this.frameId = window.requestAnimationFrame( this.visualizationLoop )
+	}
+	updateThumbnail(props){
+		let thumbnailURL = "";
+
+		if (props.artifact){
+			thumbnailURL = props.Core.Artifact.getThumbnail(props.artifact);
+		}
 
 		console.log(thumbnailURL);
 
 		if (thumbnailURL !== ""){
-			if (this.props.Core){
+			if (props.Core){
 				let _this = this;
-				this.props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
+				props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
 					console.log("data");
 					try {
 						_this.setState({songs: [{ src: srcData }]});
@@ -54,26 +116,26 @@ class AudioContainer extends Component {
 					} catch(e) { }
 				})
 			}
+		} else {
+			this.setState({bgColor: "#000"})
+			this.setState({mainColor: "#fff"})
+			this.setState({songs: [{ src: "" }]});
 		}
-
-		let songs = this.props.Core.Artifact.getSongs(this.props.artifact);
+	}
+	updateSong(props){
+		let songs = props.Core.Artifact.getSongs(props.artifact);
 
 		let firstSong;
 		for (let i = 0; i < songs.length; i++){
 			if (!firstSong){
 				firstSong = songs[i];
-				let ipfsURL = this.props.Core.util.buildIPFSURL(songs[i].location, songs[i].fname);
-				let title = this.props.Core.Artifact.getTitle(this.props.artifact);
-				console.log(this.props.artifact);
-				let artist = this.props.Core.Artifact.getArtist(this.props.artifact);
+				let ipfsURL = props.Core.util.buildIPFSURL(songs[i].location, songs[i].fname);
+				let title = props.Core.Artifact.getTitle(props.artifact);
+				console.log(props.artifact);
+				let artist = props.Core.Artifact.getArtist(props.artifact);
 				this.setState({currentSongURL: ipfsURL, currentSongTitle: title, currentSongArtist: artist});
 			}
 		}
-
-		this.createVisualization()
-	}
-	componentWillUnmount(){
-		this.createVisualization = undefined;
 	}
 	toggleAudio(event){
 		if (this.state.playing){
@@ -140,47 +202,6 @@ class AudioContainer extends Component {
 	    	return minutes+':'+seconds;
 	    }
 	}
-	createVisualization(){
-        let context = new AudioContext();
-        let analyser = context.createAnalyser();
-        let canvas = this.refs.analyzerCanvas;
-        let ctx = canvas.getContext('2d');
-        let audio = this.refs.audio;
-        audio.crossOrigin = "anonymous";
-        let audioSrc = context.createMediaElementSource(audio);
-        audioSrc.connect(analyser);
-        audioSrc.connect(context.destination);
-        analyser.connect(context.destination);
-
-        let _this = this;
-        let getLatestColorState = function(){
-        	return _this.state.mainColor;
-        }
-        let updateSongProgress = function(){
-        	try {
-        		if (audio.currentTime > 0)
-        			_this.setState({mainSongProgress: audio.currentTime / audio.duration * 100, currentTime: audio.currentTime, currentDuration: audio.duration, playing: !audio.paused})
-        	} catch(e) {}
-        }
-
-        function renderFrame(){
-            let freqData = new Uint8Array(analyser.frequencyBinCount)
-            requestAnimationFrame(renderFrame)
-            analyser.getByteFrequencyData(freqData)
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
-            // console.log(freqData)
-            ctx.fillStyle = getLatestColorState();
-            let bars = 200;
-            for (var i = 0; i < bars; i++) {
-                let bar_x = i * 3;
-                let bar_width = 3;
-                let bar_height = -(freqData[i] / 2);
-                ctx.fillRect(bar_x, canvas.height, bar_width, bar_height)
-            }
-            updateSongProgress();
-        };
-        renderFrame()
-    }
 	render() {
 		return (
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden"}}>
