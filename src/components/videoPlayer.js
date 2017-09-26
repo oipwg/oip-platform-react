@@ -14,6 +14,10 @@ class VideoPlayer extends Component {
 		this.createVideoPlayer();
 	}
 	shouldComponentUpdate(nextProps, nextState){
+		if (this.props.artifact === nextProps.artifact && this.props.paid && !nextProps.paid){
+			this.player.play()
+		}
+
 		if (this.props.artifact === nextProps.artifact){
 			return false;
 		} else {
