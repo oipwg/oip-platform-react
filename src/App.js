@@ -63,7 +63,7 @@ class App extends Component {
 
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
-						<Route exact path="/" render={props => <Homepage suggestedContent={this.state.supportedArtifacts.slice(0,25)} Core={Core} {...props} />} />
+						<Route exact path="/" render={props => <Homepage suggestedContent={this.state.supportedArtifacts} Core={Core} {...props} />} />
 
 						<Route path="/user/:page/:type/:id" component={UserPage} />
 						<Route path="/user/:page/:type" component={UserPage} />
