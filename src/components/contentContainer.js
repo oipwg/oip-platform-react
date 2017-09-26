@@ -12,7 +12,9 @@ class ContentContainer extends Component {
 	constructor(props){
 		super(props);
 
-		this.state = {paid: false, btcPrice: 3500, mainFileSugPlay: 0, bitPrice: 1};
+		this.state = {paid: false, btcPrice: 3500, mainFileSugPlay: 0, bitPrice: 1, viewString: "Pay 1 Bit"};
+
+		this.setPricingString = this.setPricingString.bind(this);
 	}
 	componentDidMount(){
 		if (this.props.artifact){
@@ -21,17 +23,8 @@ class ContentContainer extends Component {
 				let mainFileSugPlay = this.props.Core.Artifact.getMainFileSugPlay(this.props.artifact, this.props.Core.Artifact.getType(this.props.artifact));
 
 				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay});
-				let _this = this;
-
-				this.props.Core.util.calculateBTCCost(mainFileSugPlay, function(btc_price){
-					let bitPrice = _this.props.Core.util.convertBTCtoBits(btc_price);
-					console.log(bitPrice);
-					bitPrice = parseFloat(bitPrice.toFixed(1));
-					console.log(bitPrice);
-					bitPrice = Math.ceil(bitPrice);
-					console.log(bitPrice);
-					_this.setState({bitPrice: bitPrice});
-				})
+				
+				this.setPricingString("usd", mainFileSugPlay);
 			}
 		}
 	}
@@ -42,15 +35,24 @@ class ContentContainer extends Component {
 				let mainFileSugPlay = nextProps.Core.Artifact.getMainFileSugPlay(nextProps.artifact, nextProps.Core.Artifact.getType(nextProps.artifact));
 
 				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay});
-				let _this = this;
-				console.log(mainFileSugPlay);
-				nextProps.Core.util.calculateBTCCost(mainFileSugPlay, function(btc_price){
-					let bitPrice = _this.props.Core.util.convertBTCtoBits(btc_price);
-					bitPrice = parseFloat(bitPrice.toFixed(1));
-					bitPrice = Math.ceil(bitPrice);
-					_this.setState({bitPrice: bitPrice});
-				})
+				
+				this.setPricingString("usd", mainFileSugPlay);
 			}
+		}
+	}
+	setPricingString(currency, amount_usd){
+		if (currency === "usd"){
+			this.setState({viewString: "Pay $" + parseFloat(amount_usd.toFixed(3))})
+		} else if (currency === "btc_bits"){
+			let _this = this;
+			this.props.Core.util.calculateBTCCost(amount_usd, function(btc_price){
+				let bitPrice = _this.props.Core.util.convertBTCtoBits(btc_price);
+				bitPrice = parseFloat(bitPrice.toFixed(1));
+				bitPrice = Math.ceil(bitPrice);
+				_this.setState({viewString: "Pay " + bitPrice + " bit" + (bitPrice === 1 ? "" : "s")});
+			})
+		} else {
+			this.setState({viewString: "Unsupported Currency for Pricing"});
 		}
 	}
 	render() {
@@ -88,7 +90,7 @@ class ContentContainer extends Component {
 							<br/>
 							<div className="row" style={{marginTop: "15px"}}>
 								<div className="col-5">
-									<button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet" style={{marginRight: "5px"}}></span>Pay {this.state.bitPrice} bit{this.state.bitPrice === 1 ? "" : "s"}</button>
+									<button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>
 								</div>
 								<div className="col-2" style={{paddingTop: "5px"}}>
 									or

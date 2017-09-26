@@ -49,11 +49,11 @@ class AudioContainer extends Component {
 		this.updateSong(nextProps);
 	}
 	shouldComponentUpdate(nextProps, nextState){
-		if (this.props.paid && !nextProps.paid){
+		if (this.props.artifact === nextProps.artifact && this.props.paid && !nextProps.paid){
 			this.refs.audio.play()
 		}
 
-		if (this.props.artifact != nextProps.artifact){
+		if (this.props.artifact !== nextProps.artifact){
 			this.setState({currentTime: 0, currentDuration: 0})
 		}
 
