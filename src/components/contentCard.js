@@ -37,7 +37,7 @@ class ContentCard extends Component {
 		let title = this.props.Core.Artifact.getTitle(this.props.artifact);
 		let txid = this.props.Core.Artifact.getTXID(this.props.artifact);
 		let paid = this.props.Core.Artifact.paid(this.props.artifact);
-		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.artifact);
+		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.props.artifact));
 
 		let userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
 

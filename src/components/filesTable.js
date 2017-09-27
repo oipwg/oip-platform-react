@@ -6,28 +6,19 @@ class FilesTable extends Component {
 			<div>
 				<table className="table table-sm table-striped table-bordered text-center table-hover table-responsive table-inverse" style={{width: "100%", verticalAlign: "middle"}}>
 					<tbody>
-						<tr>
-							<th scope="row"><span className="icon icon-clapperboard" style={{margin: "auto", display: "table", marginTop: "4px"}}></span></th>
-							<td style={{verticalAlign: "middle"}}>Trailer</td>
-							<td style={{verticalAlign: "middle"}}>Super Cool Trailer!</td>
-							<td style={{verticalAlign: "middle", width: "230px"}}>
-								<div style={{margin: "auto"}}>
-									<span>Play: </span><button className="btn btn-sm btn-outline-success">$0.001</button>
-									<span style={{paddingLeft: "10px"}}>Buy: </span><button className="btn btn-sm btn-outline-success">$0.01</button>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row"><span className="icon icon-image" style={{margin: "auto", display: "table", marginTop: "4px"}}></span></th>
-							<td style={{verticalAlign: "middle"}}>Thumbnail</td>
-							<td style={{verticalAlign: "middle"}}>thumbnail.png</td>
-							<td style={{verticalAlign: "middle", width: "230px"}}>
-								<div style={{margin: "auto"}}>
-									<span>View: </span><button className="btn btn-sm btn-outline-info">Free</button>
-									<span style={{paddingLeft: "10px"}}>Buy: </span><button className="btn btn-sm btn-outline-success">$0.001</button>
-								</div>
-							</td>
-						</tr>
+						{this.props.files.map(function(file, i){
+							return <tr>
+										<th scope="row"><span className={"icon icon-" + file.icon} style={{margin: "auto", display: "table", marginTop: "4px"}}></span></th>
+										<td style={{verticalAlign: "middle"}}>{file.subtype ? file.subtype : file.type}</td>
+										<td style={{verticalAlign: "middle"}}>{file.dname ? file.dname : file.fname}</td>
+										<td style={{verticalAlign: "middle", width: "230px"}}>
+											<div style={{margin: "auto"}}>
+												<span>Play: </span><button className={file.sugPlay ? "btn btn-sm btn-outline-success" : "btn btn-sm btn-outline-info"}>{file.sugPlay ? "$" + file.sugPlay : "Free"}</button>
+												<span style={{paddingLeft: "10px"}}>Buy: </span><button className={file.sugBuy ? "btn btn-sm btn-outline-success" : "btn btn-sm btn-outline-info"}>{file.sugBuy ? "$" + file.sugBuy : "Free"}</button>
+											</div>
+										</td>
+									</tr>
+						})}
 					</tbody>
 				</table>
 			</div>

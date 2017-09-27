@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as LivePhotosKit from 'livephotoskit';
 
 class ImageContainer extends Component {
 	componentDidMount(){
@@ -17,7 +16,7 @@ class ImageContainer extends Component {
 				this.props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
 					try {
 						_this.setState({ src: srcData });
-						LivePhotosKit.Player(_this.refs.image);
+						// LivePhotosKit.Player(_this.refs.image);
 					} catch(e) { }
 				})
 			}

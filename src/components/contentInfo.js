@@ -9,7 +9,7 @@ class ContentInfo extends Component {
 		if (this.props.artifact){
 			creator = this.props.Core.Artifact.getPublisherName(this.props.artifact);
 			title = this.props.Core.Artifact.getTitle(this.props.artifact);
-			icon = this.props.Core.Artifact.getEntypoIconForType(this.props.artifact);
+			icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.props.artifact));
 		}
 
 		return (
