@@ -150,7 +150,6 @@
 }
 .table td, .table th {
 	border-top: none;
-	color: #fff;
 }
 
 .view-btn {
@@ -594,12 +593,12 @@ td.unpin {
   text-align: center; }
 
 /* Table */
-.table > thead > tr > th {
+/*.table > thead > tr > th {
   vertical-align: bottom;
   border-bottom: 1px solid #DDD; }
 
 .table > tbody > tr > td {
-  border-top: 1px solid #efefef; }
+  border-top: 1px solid #efefef; }*/
 
 /* Tabs */
 .tab-pane {

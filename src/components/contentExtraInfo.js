@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import FilesTable from './filesTable.js';
+
 class ContentExtraInfo extends Component {
 	render() {
 		let description = "";
@@ -13,6 +15,7 @@ class ContentExtraInfo extends Component {
 			<div>
 				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published on: <strong>September 21st, 2017</strong></p>
 				<p style={{textIndent: "40px", marginTop: "10px"}}>{description}</p>
+				<FilesTable artifact={this.props.artifact} />
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
 					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />
 					<button className="btn btn-sm btn-outline-secondary" style={{borderColor: "#333", color: "#333", margin: "0px auto", display:"block", backgroundColor:"#fff"}}>See Less</button>
