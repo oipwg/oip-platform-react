@@ -9,6 +9,7 @@
     "bootstrap": "4.0.0-beta",
     "color-thief-standalone": "^1.0.3",
     "ipfs": "^0.26.0",
+    "livephotoskit": "^1.5.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-markdown": "^2.5.0",
