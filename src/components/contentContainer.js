@@ -12,7 +12,7 @@ class ContentContainer extends Component {
 	constructor(props){
 		super(props);
 
-		this.state = {paid: false, btcPrice: 3500, mainFileSugPlay: 0, bitPrice: 1, viewString: "Pay 1 Bit"};
+		this.state = {paid: false, btcPrice: 3500, mainFileSugPlay: 0, bitPrice: 1, viewString: "1 Bit", buyString: "", mainFileSugBuy: 0};
 
 		this.setPricingString = this.setPricingString.bind(this);
 	}
@@ -21,10 +21,11 @@ class ContentContainer extends Component {
 			if (this.props.Core){
 				let paid = this.props.Core.Artifact.paid(this.props.artifact);
 				let mainFileSugPlay = this.props.Core.Artifact.getMainFileSugPlay(this.props.artifact, this.props.Core.Artifact.getType(this.props.artifact));
+				let mainFileSugBuy = this.props.Core.Artifact.getMainFileSugBuy(this.props.artifact, this.props.Core.Artifact.getType(this.props.artifact));
 
-				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay});
+				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay, mainFileSugBuy: mainFileSugBuy});
 				
-				this.setPricingString("usd", mainFileSugPlay);
+				this.setPricingString("usd", mainFileSugPlay, mainFileSugBuy);
 			}
 		}
 	}
@@ -33,26 +34,33 @@ class ContentContainer extends Component {
 			if (nextProps.Core){
 				let paid = nextProps.Core.Artifact.paid(nextProps.artifact);
 				let mainFileSugPlay = nextProps.Core.Artifact.getMainFileSugPlay(nextProps.artifact, nextProps.Core.Artifact.getType(nextProps.artifact));
+				let mainFileSugBuy = nextProps.Core.Artifact.getMainFileSugBuy(nextProps.artifact, nextProps.Core.Artifact.getType(nextProps.artifact));
 
-				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay});
+				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay, mainFileSugBuy: mainFileSugBuy});
 				
-				this.setPricingString("usd", mainFileSugPlay);
+				this.setPricingString("usd", mainFileSugPlay, mainFileSugBuy);
 			}
 		}
 	}
-	setPricingString(currency, amount_usd){
+	setPricingString(currency, view_amount_usd, buy_amount_usd){
 		if (currency === "usd"){
-			this.setState({viewString: "Pay $" + parseFloat(amount_usd.toFixed(3))})
+			this.setState({viewString: "$" + parseFloat(view_amount_usd.toFixed(3)), buyString: "$" + parseFloat(buy_amount_usd.toFixed(3))})
 		} else if (currency === "btc_bits"){
 			let _this = this;
-			this.props.Core.util.calculateBTCCost(amount_usd, function(btc_price){
+			this.props.Core.util.calculateBTCCost(view_amount_usd, function(btc_price){
 				let bitPrice = _this.props.Core.util.convertBTCtoBits(btc_price);
 				bitPrice = parseFloat(bitPrice.toFixed(1));
 				bitPrice = Math.ceil(bitPrice);
-				_this.setState({viewString: "Pay " + bitPrice + " bit" + (bitPrice === 1 ? "" : "s")});
+				_this.setState({viewString: bitPrice + " bit" + (bitPrice === 1 ? "" : "s")});
+			})
+			this.props.Core.util.calculateBTCCost(buy_amount_usd, function(btc_price){
+				let bitPrice = _this.props.Core.util.convertBTCtoBits(btc_price);
+				bitPrice = parseFloat(bitPrice.toFixed(1));
+				bitPrice = Math.ceil(bitPrice);
+				_this.setState({buyString: bitPrice + " bit" + (bitPrice === 1 ? "" : "s")});
 			})
 		} else {
-			this.setState({viewString: "Unsupported Currency for Pricing"});
+			this.setState({viewString: "Unsupported Currency for Pricing", buyString: "Unsupported Currency for Pricing"});
 		}
 	}
 	render() {
@@ -84,20 +92,14 @@ class ContentContainer extends Component {
 				</div>
 				<div id='paywall' style={this.state.paid ? {} : {display: "none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">
-						<div>
+						<div style={{width: "80%"}}>
 							<h4 style={{marginBottom: "0px"}}>To {textAccess} this {subtype === "Basic" ? type : subtype}</h4>
 							<span>please</span>
 							<br/>
-							<div className="row" style={{marginTop: "15px"}}>
-								<div className="col-5">
-									<button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}}><span className="icon icon-wallet" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>
-								</div>
-								<div className="col-2" style={{paddingTop: "5px"}}>
-									or
-								</div>
-								<div className="col-5">
-									<button className="btn btn-outline-danger" style={{float:"left", marginRight: "25px", marginLeft: "-25px", padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "0px"}}></span>Watch an Ad</button>
-								</div>
+							<div className="col-12 text-center" style={{marginTop: "15px"}}>
+								<span></span><button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{padding: "5px"}}>View: <span className="icon icon-wallet" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>
+								<span style={{padding: "0px 10px"}}></span>
+								<span></span><button className="btn btn-outline-success" style={{padding: "5px"}}>Buy: <span className="icon icon-wallet" style={{marginRight: "5px"}}></span>{this.state.buyString}</button>
 							</div>
 							<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 						</div>

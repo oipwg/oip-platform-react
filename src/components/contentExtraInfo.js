@@ -12,6 +12,8 @@ class ContentExtraInfo extends Component {
 
 			for (var i = files.length - 1; i >= 0; i--) {
 				files[i].icon = this.props.Core.Artifact.getEntypoIconForType(files[i].type);
+				files[i].sugPlay = files[i].sugPlay / this.props.Core.Artifact.getScale(this.props.artifact);
+				files[i].sugBuy = files[i].sugBuy / this.props.Core.Artifact.getScale(this.props.artifact);
 			}
 		}
 
