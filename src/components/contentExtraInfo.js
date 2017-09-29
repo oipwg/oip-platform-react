@@ -14,6 +14,16 @@ class ContentExtraInfo extends Component {
 				files[i].icon = this.props.Core.Artifact.getEntypoIconForType(files[i].type);
 				files[i].sugPlay = files[i].sugPlay / this.props.Core.Artifact.getScale(this.props.artifact);
 				files[i].sugBuy = files[i].sugBuy / this.props.Core.Artifact.getScale(this.props.artifact);
+
+				let playDecimal = files[i].sugPlay - parseInt(files[i].sugPlay);
+				let buyDecimal = files[i].sugBuy - parseInt(files[i].sugBuy);
+
+				if (playDecimal.toString().length === 3){
+					files[i].sugPlay = files[i].sugPlay.toString() + "0";
+				}
+				if (buyDecimal.toString().length === 3){
+					files[i].sugBuy = files[i].sugBuy.toString() + "0";
+				}
 			}
 		}
 

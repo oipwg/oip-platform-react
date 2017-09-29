@@ -44,7 +44,20 @@ class ContentContainer extends Component {
 	}
 	setPricingString(currency, view_amount_usd, buy_amount_usd){
 		if (currency === "usd"){
-			this.setState({viewString: "$" + parseFloat(view_amount_usd.toFixed(3)), buyString: "$" + parseFloat(buy_amount_usd.toFixed(3))})
+			let sugPlay = parseFloat(view_amount_usd.toFixed(3));
+			let sugBuy = parseFloat(buy_amount_usd.toFixed(3));
+
+			let playDecimal = sugPlay - parseInt(sugPlay);
+			let buyDecimal = sugBuy - parseInt(sugBuy);
+
+			if (playDecimal.toString().length === 3){
+				sugPlay = sugPlay.toString() + "0";
+			}
+			if (buyDecimal.toString().length === 3){
+				sugBuy = sugBuy.toString() + "0";
+			}
+
+			this.setState({viewString: "$" + sugPlay, buyString: "$" + sugBuy})
 		} else if (currency === "btc_bits"){
 			let _this = this;
 			this.props.Core.util.calculateBTCCost(view_amount_usd, function(btc_price){
@@ -97,9 +110,9 @@ class ContentContainer extends Component {
 							<span>please</span>
 							<br/>
 							<div className="col-12 text-center" style={{marginTop: "15px"}}>
-								<span></span><button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{padding: "5px"}}>View: <span className="icon icon-wallet" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>
+								<span></span><button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>
 								<span style={{padding: "0px 10px"}}></span>
-								<span></span><button className="btn btn-outline-success" style={{padding: "5px"}}>Buy: <span className="icon icon-wallet" style={{marginRight: "5px"}}></span>{this.state.buyString}</button>
+								<span></span><button className="btn btn-outline-success" style={{padding: "5px"}}><span className="icon icon-download" style={{marginRight: "5px"}}></span>{this.state.buyString}</button>
 							</div>
 							<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 						</div>

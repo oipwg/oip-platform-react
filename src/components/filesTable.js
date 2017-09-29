@@ -13,8 +13,8 @@ class FilesTable extends Component {
 										<td style={{verticalAlign: "middle"}}>{file.dname ? file.dname : file.fname}</td>
 										<td style={{verticalAlign: "middle", width: "230px"}}>
 											<div style={{margin: "auto"}}>
-												<span>Play: </span><button className={file.sugPlay ? "btn btn-sm btn-outline-success" : "btn btn-sm btn-outline-info"}>{file.sugPlay ? "$" + file.sugPlay : "Free"}</button>
-												<span style={{paddingLeft: "10px"}}>Buy: </span><button className={file.sugBuy ? "btn btn-sm btn-outline-success" : "btn btn-sm btn-outline-info"}>{file.sugBuy ? "$" + file.sugBuy : "Free"}</button>
+												<span></span><button className={file.sugPlay ? "btn btn-sm btn-outline-success" : "btn btn-sm btn-outline-info"}><span className="icon icon-controller-play"></span> {file.sugPlay ? "$" + file.sugPlay : "Free"}</button>
+												<span style={{paddingLeft: "10px"}}></span><button className={file.sugBuy ? "btn btn-sm btn-outline-success" : "btn btn-sm btn-outline-info"}><span className="icon icon-download"></span> {file.sugBuy ? "$" + file.sugBuy : "Free"}</button>
 											</div>
 										</td>
 									</tr>
