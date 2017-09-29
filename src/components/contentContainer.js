@@ -30,7 +30,7 @@ class ContentContainer extends Component {
 		}
 	}
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.artifact){
+		if (nextProps.artifact && this.props.artifact !== nextProps.artifact){
 			if (nextProps.Core){
 				let paid = nextProps.Core.Artifact.paid(nextProps.artifact);
 				let mainFileSugPlay = nextProps.Core.Artifact.getMainFileSugPlay(nextProps.artifact, nextProps.Core.Artifact.getType(nextProps.artifact));

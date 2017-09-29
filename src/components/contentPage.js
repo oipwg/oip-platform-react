@@ -6,28 +6,45 @@ import ContentComments from './contentComments.js'
 import ContentCard from './contentCard.js'
 
 class ContentPage extends Component {
-	render() {
-		var artifact = this.props.artifact;
+	constructor(props){
+		super(props);
 
-		if (!artifact){
-			if (this.props.all){
-				for (var i = 0; i < this.props.all.length; i++){
-					if (this.props.all[i].txid.substring(0,6) === this.props.match.params.id){
-						artifact = this.props.all[i];
+		this.state = {
+			artifact: undefined
+		}
+		this.setArtifact = this.setArtifact.bind(this);
+	}
+	ComponentDidMount(){
+		this.setArtifact(this.props);
+	}
+	componentWillReceiveProps(nextProps){
+		this.setArtifact(nextProps);
+	}
+	setArtifact(props){
+		let artifact = props.artifact;
+
+		if (!props.artifact){
+			if (props.all){
+				for (var i = 0; i < props.all.length; i++){
+					if (props.all[i].txid.substring(0,6) === props.match.params.id){
+						artifact = props.all[i];
 					}
 				}
 			}
 		}
 
+		this.setState({artifact: artifact});
+	}
+	render() {
 		let _this = this;
 
 		return (
 			<div>
-				<ContentContainer artifact={artifact} Core={this.props.Core} />
+				<ContentContainer artifact={this.state.artifact} Core={this.props.Core} />
 				<div className="container">
 					<div className="row">
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
-							<ContentInfo artifact={artifact} Core={this.props.Core} />
+							<ContentInfo artifact={this.state.artifact} Core={this.props.Core} />
 							<br />
 							<ContentComments />
 						</div>

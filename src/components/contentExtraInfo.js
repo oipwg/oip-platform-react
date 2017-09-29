@@ -3,35 +3,66 @@ import React, { Component } from 'react';
 import FilesTable from './filesTable.js';
 
 class ContentExtraInfo extends Component {
-	render() {
-		let description = "", files = [];
+	constructor(props){
+		super(props);
 
-		if (this.props.artifact){
-			description = this.props.Core.Artifact.getDescription(this.props.artifact);
-			files = this.props.Core.Artifact.getFiles(this.props.artifact);
-
-			for (var i = files.length - 1; i >= 0; i--) {
-				files[i].icon = this.props.Core.Artifact.getEntypoIconForType(files[i].type);
-				files[i].sugPlay = files[i].sugPlay / this.props.Core.Artifact.getScale(this.props.artifact);
-				files[i].sugBuy = files[i].sugBuy / this.props.Core.Artifact.getScale(this.props.artifact);
-
-				let playDecimal = files[i].sugPlay - parseInt(files[i].sugPlay);
-				let buyDecimal = files[i].sugBuy - parseInt(files[i].sugBuy);
-
-				if (playDecimal.toString().length === 3){
-					files[i].sugPlay = files[i].sugPlay.toString() + "0";
-				}
-				if (buyDecimal.toString().length === 3){
-					files[i].sugBuy = files[i].sugBuy.toString() + "0";
-				}
-			}
+		this.state = {
+			description: "",
+			files: []
 		}
 
+		this.setDescriptionAndFiles = this.setDescriptionAndFiles.bind(this);
+	}
+	ComponentDidMount(){
+		this.setDescriptionAndFiles(this.props);
+	}
+	componentWillReceiveProps(nextProps){
+		if (this.props.artifact !== nextProps.artifact){
+			this.setDescriptionAndFiles(nextProps);
+		}
+	}
+	setDescriptionAndFiles(props){
+		let description = "", files = [], tmpFiles = [];
+
+		if (props.artifact){
+			description = props.Core.Artifact.getDescription(props.artifact);
+			files = props.Core.Artifact.getFiles(props.artifact);
+
+			for (var i = files.length - 1; i >= 0; i--) {
+				tmpFiles[i] = {};
+				tmpFiles[i].icon = props.Core.Artifact.getEntypoIconForType(files[i].type);
+				let sugPlay = files[i].sugPlay / props.Core.Artifact.getScale(props.artifact);
+				let sugBuy = files[i].sugBuy / props.Core.Artifact.getScale(props.artifact);
+
+				console.log(props.Core.Artifact.getScale(props.artifact));
+
+				let playDecimal = sugPlay - parseInt(sugPlay);
+				let buyDecimal = sugBuy - parseInt(sugBuy);
+
+				if (playDecimal.toString().length === 3){
+					sugPlay = sugPlay.toString() + "0";
+				}
+				if (buyDecimal.toString().length === 3){
+					sugBuy = sugBuy.toString() + "0";
+				}
+
+				tmpFiles[i].fname = files[i].fname;
+				tmpFiles[i].dname = files[i].dname;
+				tmpFiles[i].type = files[i].type;
+				tmpFiles[i].subtype = files[i].subtype;
+				tmpFiles[i].sugPlay = sugPlay;
+				tmpFiles[i].sugBuy = sugBuy;
+			}
+			console.log(props.Core.Artifact.getFiles(props.artifact));
+			this.setState({description: description, files: tmpFiles})
+		}
+	}
+	render() {
 		return (
 			<div>
 				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published on: <strong>September 21st, 2017</strong></p>
-				<p style={{textIndent: "40px", marginTop: "10px"}}>{description}</p>
-				<FilesTable files={files} />
+				<p style={{textIndent: "40px", marginTop: "10px"}}>{this.state.description}</p>
+				<FilesTable files={this.state.files} />
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
 					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />
 					<button className="btn btn-sm btn-outline-secondary" style={{borderColor: "#333", color: "#333", margin: "0px auto", display:"block", backgroundColor:"#fff"}}>See Less</button>
