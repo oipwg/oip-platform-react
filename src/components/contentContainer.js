@@ -111,7 +111,7 @@ class ContentContainer extends Component {
 							<br/>
 							<div className="col-12 text-center" style={{marginTop: "15px"}}>
 								<span></span><button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>
-								<span style={{padding: "0px 10px"}}></span>
+								<span style={{padding: "0px 3px"}}></span>
 								<span></span><button className="btn btn-outline-success" style={{padding: "5px"}}><span className="icon icon-download" style={{marginRight: "5px"}}></span>{this.state.buyString}</button>
 							</div>
 							<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
