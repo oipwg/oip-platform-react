@@ -3,31 +3,49 @@ import React, { Component } from 'react';
 import ContentExtraInfo from './contentExtraInfo.js';
 
 class ContentInfo extends Component {
-	render() {
-		let creator, title, icon, views = 123, userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
+	constructor(props){
+		super(props);
 
-		if (this.props.artifact){
-			creator = this.props.Core.Artifact.getPublisherName(this.props.artifact);
-			title = this.props.Core.Artifact.getTitle(this.props.artifact);
-			icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.props.artifact));
+		this.state = {
+			creator: "",
+			title: "",
+			icon: "",
+			views: 123,
+			profilePicture: "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png" 
 		}
 
+		this.updateState = this.updateState.bind(this);
+	}
+	componentDidMount(){
+		this.updateState(this.props);
+	}
+	componentWillUpdate(nextProps){
+		this.updateState(nextProps);
+	}
+	updateState(props){
+		let creator = props.Core.Artifact.getPublisherName(props.artifact);
+		let title = props.Core.Artifact.getTitle(props.artifact);
+		let icon = props.Core.Artifact.getEntypoIconForType(props.Core.Artifact.getType(props.artifact));
+
+		this.setState({creator: creator, title: title, icon: icon});
+	}
+	render() {
 		return (
 			<div>
 				<div className="row">
 					<div className="col-10">
-						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}><span className={"icon icon-" + icon} style={{marginRight:"10px"}}></span>{title}</h3>
+						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}><span className={"icon icon-" + this.state.icon} style={{marginRight:"10px"}}></span>{this.state.title}</h3>
 					</div>
 					<div className="col-2">
 						<div style={{float: "right", marginTop: "2px"}}>
-							<button className="btn btn-outline-secondary">{views} Views</button>
+							<button className="btn btn-outline-secondary">{this.state.views} Views</button>
 						</div>
 					</div>
 				</div>
 				<div className="media">
-					<img className="d-flex mr-3 rounded-circle" src={userIcon} alt="" style={{width: "50px", height: "50px"}} />
+					<img className="d-flex mr-3 rounded-circle" src={this.state.profilePicture} alt="" style={{width: "50px", height: "50px"}} />
 					<div className="media-body">
-						<h5 className="mt-0" style={{paddingTop: "15px", marginLeft: "-10px"}}>{creator} <div className="btn-group"><button className="btn btn-sm btn-warning" style={{marginLeft: "10px"}}><span className="icon-pin icon"></span>Followed</button><button className="btn btn-sm btn-outline-secondary" disabled>3,954 Followers</button></div>
+						<h5 className="mt-0" style={{paddingTop: "15px", marginLeft: "-10px"}}>{this.state.creator} <div className="btn-group"><button className="btn btn-sm btn-warning" style={{marginLeft: "10px"}}><span className="icon-pin icon"></span>Followed</button><button className="btn btn-sm btn-outline-secondary" disabled>3,954 Followers</button></div>
 							<div style={{float: "right"}}>
 								<button className="btn btn-sm btn-outline-info btn-margin-right"><span className="icon-forward icon"></span> Share</button>
 								<button className="btn btn-sm btn-outline-success btn-margin-right"><span className="icon-wallet icon"></span> Tip</button>

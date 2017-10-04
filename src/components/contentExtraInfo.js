@@ -15,7 +15,7 @@ class ContentExtraInfo extends Component {
 
 		this.setDescriptionAndFiles(this.props);
 	}
-	ComponentWillMount(){
+	componentWillMount(){
 		this.setDescriptionAndFiles(this.props);
 	}
 	componentWillReceiveProps(nextProps){
