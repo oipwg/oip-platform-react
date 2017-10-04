@@ -36,7 +36,13 @@ class ContentExtraInfo extends Component {
 				let sugPlay = files[i].sugPlay / props.Core.Artifact.getScale(props.artifact);
 				let sugBuy = files[i].sugBuy / props.Core.Artifact.getScale(props.artifact);
 
-				console.log(props.Core.Artifact.getScale(props.artifact));
+				if (isNaN(sugPlay)){
+					sugPlay = 0;
+				}
+
+				if (isNaN(sugBuy)){
+					sugBuy = 0;
+				}
 
 				let playDecimal = sugPlay - parseInt(sugPlay);
 				let buyDecimal = sugBuy - parseInt(sugBuy);
@@ -52,6 +58,8 @@ class ContentExtraInfo extends Component {
 				tmpFiles[i].dname = files[i].dname;
 				tmpFiles[i].type = files[i].type;
 				tmpFiles[i].subtype = files[i].subtype;
+				tmpFiles[i].disPlay = files[i].disPlay;
+				tmpFiles[i].disBuy = files[i].disBuy;
 				tmpFiles[i].sugPlay = sugPlay;
 				tmpFiles[i].sugBuy = sugBuy;
 			}

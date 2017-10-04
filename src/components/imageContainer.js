@@ -9,6 +9,8 @@ class ImageContainer extends Component {
 		} else {
 			thumbnailURL = this.props.Core.Artifact.getFirstImage(this.props.artifact);
 		}
+		console.log(this.props.artifact)
+		console.log(thumbnailURL);
 
 		let _this = this;
 		if (thumbnailURL !== ""){
@@ -29,18 +31,23 @@ class ImageContainer extends Component {
 			this.setState({src: ""});
 		}
 
-		if (!nextProps.paid){
+		if (nextProps.paid){
+			thumbnailURL = nextProps.Core.Artifact.getThumbnail(nextProps.artifact);
+		} else {
 			thumbnailURL = nextProps.Core.Artifact.getFirstImage(nextProps.artifact);
+		}
 
-			let _this = this;
-			if (thumbnailURL !== ""){
-				if (nextProps.Core){
-					nextProps.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
-						try {
-							_this.setState({ src: srcData });
-						} catch(e) { }
-					})
-				}
+		console.log(thumbnailURL);
+
+		let _this = this;
+		if (thumbnailURL !== ""){
+			if (nextProps.Core){
+				nextProps.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
+					try {
+						_this.setState({ src: srcData });
+						// LivePhotosKit.Player(_this.refs.image);
+					} catch(e) { }
+				})
 			}
 		}
 	}

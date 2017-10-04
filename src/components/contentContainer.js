@@ -12,7 +12,7 @@ class ContentContainer extends Component {
 	constructor(props){
 		super(props);
 
-		this.state = {paid: false, btcPrice: 3500, mainFileSugPlay: 0, bitPrice: 1, viewString: "1 Bit", buyString: "", mainFileSugBuy: 0};
+		this.state = {paid: false, btcPrice: 3500, mainFileSugPlay: 0, bitPrice: 1, viewString: "1 Bit", buyString: "", mainFileSugBuy: 0, disPlay: false, disBuy: false};
 
 		this.setPricingString = this.setPricingString.bind(this);
 	}
@@ -22,8 +22,12 @@ class ContentContainer extends Component {
 				let paid = this.props.Core.Artifact.paid(this.props.artifact);
 				let mainFileSugPlay = this.props.Core.Artifact.getMainFileSugPlay(this.props.artifact, this.props.Core.Artifact.getType(this.props.artifact));
 				let mainFileSugBuy = this.props.Core.Artifact.getMainFileSugBuy(this.props.artifact, this.props.Core.Artifact.getType(this.props.artifact));
+				let mainFileDisPlay = this.props.Core.Artifact.getMainFileDisPlay(this.props.artifact, this.props.Core.Artifact.getType(this.props.artifact));
+				let mainFileDisBuy = this.props.Core.Artifact.getMainFileDisBuy(this.props.artifact, this.props.Core.Artifact.getType(this.props.artifact));
 
-				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay, mainFileSugBuy: mainFileSugBuy});
+				console.log(mainFileDisBuy,mainFileDisPlay);
+
+				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay, mainFileSugBuy: mainFileSugBuy, disPlay: mainFileDisPlay, disBuy: mainFileDisBuy});
 				
 				this.setPricingString("usd", mainFileSugPlay, mainFileSugBuy);
 			}
@@ -35,8 +39,10 @@ class ContentContainer extends Component {
 				let paid = nextProps.Core.Artifact.paid(nextProps.artifact);
 				let mainFileSugPlay = nextProps.Core.Artifact.getMainFileSugPlay(nextProps.artifact, nextProps.Core.Artifact.getType(nextProps.artifact));
 				let mainFileSugBuy = nextProps.Core.Artifact.getMainFileSugBuy(nextProps.artifact, nextProps.Core.Artifact.getType(nextProps.artifact));
+				let mainFileDisPlay = nextProps.Core.Artifact.getMainFileDisPlay(nextProps.artifact, nextProps.Core.Artifact.getType(nextProps.artifact));
+				let mainFileDisBuy = nextProps.Core.Artifact.getMainFileDisBuy(nextProps.artifact, nextProps.Core.Artifact.getType(nextProps.artifact));
 
-				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay, mainFileSugBuy: mainFileSugBuy});
+				this.setState({paid: paid, mainFileSugPlay: mainFileSugPlay, mainFileSugBuy: mainFileSugBuy, disPlay: mainFileDisPlay, disBuy: mainFileDisBuy});
 				
 				this.setPricingString("usd", mainFileSugPlay, mainFileSugBuy);
 			}
@@ -46,6 +52,14 @@ class ContentContainer extends Component {
 		if (currency === "usd"){
 			let sugPlay = parseFloat(view_amount_usd.toFixed(3));
 			let sugBuy = parseFloat(buy_amount_usd.toFixed(3));
+
+			if (isNaN(sugPlay)){
+				sugPlay = 0;
+			}
+			
+			if (isNaN(sugBuy)){
+				sugBuy = 0;
+			}
 
 			let playDecimal = sugPlay - parseInt(sugPlay);
 			let buyDecimal = sugBuy - parseInt(sugBuy);
@@ -107,7 +121,7 @@ class ContentContainer extends Component {
 		let _this = this;
 		return (
 			<div className="content-container">
-				<div id='content' className={ this.state.paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {display: "inline"}}>
+				<div id='content' className={ this.state.paid ? "content blur" : "content"} style={this.props.type === 'text' ? {backgroundColor: "#fff"} : {}}>
 					{ type ===  'Audio' ? <AudioContainer paid={this.state.paid} artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Video' ? <VideoPlayer paid={this.state.paid} artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} paid={this.state.paid} Core={this.props.Core} /> : '' }
@@ -123,9 +137,9 @@ class ContentContainer extends Component {
 							<span>please</span>
 							<br/>
 							<div className="col-12 text-center" style={{marginTop: "15px"}}>
-								<span></span><button className={this.state.viewString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={function(){_this.setState({paid: false})}} style={{padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>
+								{this.state.disPlay ? "" : <button className={this.state.viewString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={function(){_this.setState({paid: false})}} style={{padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>}
 								<span style={{padding: "0px 3px"}}></span>
-								<span></span><button className={this.state.buyString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} style={{padding: "5px"}}><span className="icon icon-download" style={{marginRight: "5px"}}></span>{this.state.buyString}</button>
+								{this.state.disBuy ? "" : <button className={this.state.buyString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} style={{padding: "5px"}}><span className="icon icon-download" style={{marginRight: "5px"}}></span>{this.state.buyString}</button>}
 							</div>
 							<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 						</div>
