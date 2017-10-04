@@ -66,7 +66,7 @@ class ContentExtraInfo extends Component {
 				tmpFiles[i].sugBuy = sugBuy;
 			}
 
-			let niceTime = moment(timestamp * 1000).calendar(null, {sameElse: "MMMM DD YYYY"});
+			let niceTime = moment(timestamp * 1000).calendar(null, {sameElse: "MMMM Do YYYY"});
 
 			this.setState({description: description, files: tmpFiles, timestamp: timestamp, niceTime: niceTime})
 		}

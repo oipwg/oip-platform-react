@@ -47,7 +47,7 @@ class ContentInfo extends Component {
 				<div className="media">
 					<img className="d-flex mr-3 rounded-circle" src={this.state.profilePicture} alt="" style={{width: "50px", height: "50px"}} />
 					<div className="media-body">
-						<h5 className="mt-0" style={{paddingTop: "15px", marginLeft: "-10px"}}>{this.state.creator} <div className="btn-group"><button className="btn btn-sm btn-warning" style={{marginLeft: "10px"}}><span className="icon-pin icon"></span>Followed</button><button className="btn btn-sm btn-outline-secondary" disabled>3,954 Followers</button></div>
+						<h5 className="mt-0" style={{paddingTop: "15px", marginLeft: "-10px"}}>{this.state.creator} <div className="btn-group"><button className="btn btn-sm btn-outline-warning" style={{marginLeft: "10px"}}><span className="icon-pin icon"></span>Follow</button><button className="btn btn-sm btn-outline-secondary" disabled>10 Followers</button></div>
 							<div style={{float: "right"}}>
 								<button className="btn btn-sm btn-outline-info btn-margin-right"><span className="icon-forward icon"></span> Share</button>
 								<button className="btn btn-sm btn-outline-success btn-margin-right"><span className="icon-wallet icon"></span> Tip</button>
