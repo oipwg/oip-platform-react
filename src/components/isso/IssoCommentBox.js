@@ -5,7 +5,7 @@ class IssoCommentBox extends Component {
 		return (
 			<div>
 				<textarea rows="3" name="" className="form-control"></textarea>
-				<div className="btn-group" style={{float: "right", marginTop: "-27px"}}>
+				<div className="btn-group" style={{float: "right", marginTop: "-30px"}}>
 					<button className="btn btn-sm btn-outline-success">Tip & Post</button>
 					<button className="btn btn-sm btn-outline-info">Post</button>
 				</div>
