@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import FilesTable from './filesTable.js';
+import moment from 'moment';
 
 class ContentExtraInfo extends Component {
 	constructor(props){
@@ -8,12 +9,12 @@ class ContentExtraInfo extends Component {
 
 		this.state = {
 			description: "",
-			files: []
+			files: [],
+			timestamp: 0,
+			niceTime: ""
 		}
 
 		this.setDescriptionAndFiles = this.setDescriptionAndFiles.bind(this);
-
-		this.setDescriptionAndFiles(this.props);
 	}
 	componentWillMount(){
 		this.setDescriptionAndFiles(this.props);
@@ -24,11 +25,12 @@ class ContentExtraInfo extends Component {
 		}
 	}
 	setDescriptionAndFiles(props){
-		let description = "", files = [], tmpFiles = [];
+		let description = "", files = [], tmpFiles = [], timestamp = 0;
 
 		if (props.artifact){
 			description = props.Core.Artifact.getDescription(props.artifact);
 			files = props.Core.Artifact.getFiles(props.artifact);
+			timestamp = props.Core.Artifact.getTimestamp(props.artifact);
 
 			for (var i = files.length - 1; i >= 0; i--) {
 				tmpFiles[i] = {};
@@ -63,14 +65,16 @@ class ContentExtraInfo extends Component {
 				tmpFiles[i].sugPlay = sugPlay;
 				tmpFiles[i].sugBuy = sugBuy;
 			}
-			console.log(props.Core.Artifact.getFiles(props.artifact));
-			this.setState({description: description, files: tmpFiles})
+
+			let niceTime = moment(timestamp * 1000).calendar(null, {sameElse: "MMMM DD YYYY"});
+
+			this.setState({description: description, files: tmpFiles, timestamp: timestamp, niceTime: niceTime})
 		}
 	}
 	render() {
 		return (
 			<div>
-				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published on: <strong>September 21st, 2017</strong></p>
+				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.state.niceTime}</strong></p>
 				<p style={{textIndent: "40px", marginTop: "10px"}}>{this.state.description}</p>
 				<FilesTable files={this.state.files} />
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
