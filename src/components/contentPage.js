@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import ContentContainer from './contentContainer.js'
 import ContentInfo from './contentInfo.js'
-import ContentComments from './contentComments.js'
+import IssoCommentBox from './isso/IssoCommentBox.js'
+import IssoComments from './isso/IssoComments.js'
 import ContentCard from './contentCard.js'
 
 class ContentPage extends Component {
@@ -13,8 +14,10 @@ class ContentPage extends Component {
 			artifact: undefined
 		}
 		this.setArtifact = this.setArtifact.bind(this);
+
+		this.setArtifact(this.props);
 	}
-	ComponentDidMount(){
+	componentWillMount(){
 		this.setArtifact(this.props);
 	}
 	componentWillReceiveProps(nextProps){
@@ -23,10 +26,11 @@ class ContentPage extends Component {
 	setArtifact(props){
 		let artifact = props.artifact;
 
-		if (!props.artifact){
+		if (!props.artifact || !props.artifact.txid.substring(0,6) === props.match.params.id){
 			if (props.all){
 				for (var i = 0; i < props.all.length; i++){
 					if (props.all[i].txid.substring(0,6) === props.match.params.id){
+						console.log("Yep");
 						artifact = props.all[i];
 					}
 				}
@@ -46,7 +50,12 @@ class ContentPage extends Component {
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
 							<ContentInfo artifact={this.state.artifact} Core={this.props.Core} />
 							<br />
-							<ContentComments />
+							{this.state.artifact ? 
+								<div>
+									<IssoCommentBox Core={this.props.Core} url={this.state.artifact.txid} />
+									<IssoComments Core={this.props.Core} url={this.state.artifact.txid} />
+								</div>
+								: ""}
 						</div>
 						<div id='suggested' className="col-12 col-md-3" style={{marginTop: "30px"}}>
 							{this.props.suggestedContent.map(function(content, i){

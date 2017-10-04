@@ -25,6 +25,10 @@ class ImageContainer extends Component {
 	componentWillReceiveProps(nextProps) {
 		let thumbnailURL = "";
 
+		if (this.props.artifact !== nextProps.artifact){
+			this.setState({src: ""});
+		}
+
 		if (!nextProps.paid){
 			thumbnailURL = nextProps.Core.Artifact.getFirstImage(nextProps.artifact);
 
@@ -47,7 +51,7 @@ class ImageContainer extends Component {
 	render() {
 		return (
 			<div style={{height: "100%", verticalAlign: "middle", display: "flex"}}>
-				<img ref="image" src={this.state.src} style={{width: "auto", maxWidth: "100%", maxHeight:"100%", display: "block",margin: "auto"}} alt="" />
+				<img ref="image" src={this.state.src} style={{width: "auto", maxWidth: "100%", maxHeight:"100%", display: "block",margin: "auto", backgroundColor: "#fff"}} alt="" />
 			</div>
 		);
 	}

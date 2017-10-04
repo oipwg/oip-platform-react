@@ -57,7 +57,20 @@ class ContentContainer extends Component {
 				sugBuy = sugBuy.toString() + "0";
 			}
 
-			this.setState({viewString: "$" + sugPlay, buyString: "$" + sugBuy})
+			let viewString = "";
+			let buyString = "";
+
+			if (sugPlay === 0 || sugPlay === "0")
+				viewString = "Free";
+			else
+				viewString = "$" + sugPlay;
+
+			if (sugBuy === 0 || sugBuy === "0")
+				buyString = "Free";
+			else
+				buyString = "$" + sugBuy;
+
+			this.setState({viewString: viewString, buyString: buyString})
 		} else if (currency === "btc_bits"){
 			let _this = this;
 			this.props.Core.util.calculateBTCCost(view_amount_usd, function(btc_price){
@@ -110,9 +123,9 @@ class ContentContainer extends Component {
 							<span>please</span>
 							<br/>
 							<div className="col-12 text-center" style={{marginTop: "15px"}}>
-								<span></span><button className="btn btn-outline-success" onClick={function(){_this.setState({paid: false})}} style={{padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>
+								<span></span><button className={this.state.viewString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={function(){_this.setState({paid: false})}} style={{padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>
 								<span style={{padding: "0px 3px"}}></span>
-								<span></span><button className="btn btn-outline-success" style={{padding: "5px"}}><span className="icon icon-download" style={{marginRight: "5px"}}></span>{this.state.buyString}</button>
+								<span></span><button className={this.state.buyString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} style={{padding: "5px"}}><span className="icon icon-download" style={{marginRight: "5px"}}></span>{this.state.buyString}</button>
 							</div>
 							<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 						</div>

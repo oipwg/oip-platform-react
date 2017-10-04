@@ -12,8 +12,10 @@ class ContentExtraInfo extends Component {
 		}
 
 		this.setDescriptionAndFiles = this.setDescriptionAndFiles.bind(this);
+
+		this.setDescriptionAndFiles(this.props);
 	}
-	ComponentDidMount(){
+	ComponentWillMount(){
 		this.setDescriptionAndFiles(this.props);
 	}
 	componentWillReceiveProps(nextProps){
