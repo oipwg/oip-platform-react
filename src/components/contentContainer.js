@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import AudioContainer from './audioContainer.js';
 import VideoPlayer from './videoPlayer.js';
 import ImageContainer from './imageContainer.js';
-import MarkdownContainer from './markdownContainer.js';
+import TextViewer from './TextViewer.js';
 import HTMLContainer from './htmlContainer.js';
-import PDFViewer from './pdfViewer.js';
 import CodeContainer from './codeContainer.js';
 
 class ContentContainer extends Component {
@@ -125,8 +124,7 @@ class ContentContainer extends Component {
 					{ type ===  'Audio' ? <AudioContainer paid={this.state.paid} artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Video' ? <VideoPlayer paid={this.state.paid} artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} paid={this.state.paid} Core={this.props.Core} /> : '' }
-					{ (type ===  'Text'  && subtype !== 'PDF') ? <MarkdownContainer artifact={this.props.artifact} /> : '' }
-					{ (type ===  'Text' && subtype === 'PDF') ? <PDFViewer artifact={this.props.artifact} Core={this.props.Core}  /> : '' }
+					{ type ===  'Text' ? <TextViewer artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Web' ? <HTMLContainer artifact={this.props.artifact} Core={this.props.Core}  /> : '' }
 					{ type ===  'code' ? <CodeContainer artifact={this.props.artifact} /> : '' }
 				</div>
