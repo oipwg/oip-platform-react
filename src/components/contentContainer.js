@@ -16,7 +16,7 @@ class ContentContainer extends Component {
 
 		this.setPricingString = this.setPricingString.bind(this);
 	}
-	componentDidMount(){
+	componentWillMount(){
 		if (this.props.artifact){
 			if (this.props.Core){
 				let paid = this.props.Core.Artifact.paid(this.props.artifact);

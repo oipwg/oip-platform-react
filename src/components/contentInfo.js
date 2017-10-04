@@ -20,7 +20,9 @@ class ContentInfo extends Component {
 		this.updateState(this.props);
 	}
 	componentWillUpdate(nextProps){
-		this.updateState(nextProps);
+		if (this.props.artifact !== nextProps.artifact){
+			this.updateState(nextProps);
+		}	
 	}
 	updateState(props){
 		let creator = props.Core.Artifact.getPublisherName(props.artifact);

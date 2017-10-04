@@ -14,8 +14,6 @@ class ContentPage extends Component {
 			artifact: undefined
 		}
 		this.setArtifact = this.setArtifact.bind(this);
-
-		this.setArtifact(this.props);
 	}
 	componentWillMount(){
 		this.setArtifact(this.props);
@@ -30,7 +28,6 @@ class ContentPage extends Component {
 			if (props.all){
 				for (var i = 0; i < props.all.length; i++){
 					if (props.all[i].txid.substring(0,6) === props.match.params.id){
-						console.log("Yep");
 						artifact = props.all[i];
 					}
 				}
