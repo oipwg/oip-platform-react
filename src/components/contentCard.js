@@ -41,8 +41,13 @@ class ContentCard extends Component {
 
 		let userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
 
+		let cardClasses = "col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 no-link-styling";
+
+		if (this.props.size === "large")
+			cardClasses = "col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 no-link-styling"
+
 		return (
-			<Link to={"/" + txid.substring(0,6) } onClick={function(){window.scrollTo(0, 0)}} className="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 no-link-styling">
+			<Link to={"/" + txid.substring(0,6) } onClick={function(){window.scrollTo(0, 0)}} className={cardClasses}>
 				<div className="card">
 					<img className="card-img-top content-card-img" src={this.state.src ? this.state.src : this.state.backupSrc} alt="" />
 					<div style={{marginBottom:"115px", marginTop: "-145px"}}>

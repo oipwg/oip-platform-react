@@ -27,6 +27,7 @@ import WalletContainer from './components/walletContainer.js';
 import SettingsContainer from './components/settingsContainer.js';
 import ViewArtifactContainer from './components/viewArtifactContainer.js';
 import EditArtifactContainer from './components/editArtifactContainer.js';
+import PublisherPage from './components/PublisherPage.js';
 
 class App extends Component {
 	componentDidMount(){
@@ -64,6 +65,7 @@ class App extends Component {
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
 						<Route exact path="/" render={props => <Homepage suggestedContent={this.state.supportedArtifacts} Core={Core} {...props} />} />
+						<Route path="/pub/:id" render={props => <PublisherPage suggestedContent={this.state.supportedArtifacts.slice(0,10)} Core={Core} {...props} />} />
 
 						<Route path="/user/:page/:type/:id" component={UserPage} />
 						<Route path="/user/:page/:type" component={UserPage} />
