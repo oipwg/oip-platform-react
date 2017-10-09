@@ -14,13 +14,17 @@ class PublisherPage extends Component {
 				{/* Artifacts content box */}
 				<div className="container">
 					{/* Profile Info */}
-					<div className="row" style={{height: "100px", overflowY: "hidden"}}>	
+					<div className="row" style={{height: "150px", overflowY: "hidden"}}>	
 						<div className="col-12 col-sm-12 col-md-7 col-lg-5 col-xl-5" style={{height: "100px", padding: "20px"}}>
 							<img style={{height: "100%"}} className="rounded-circle" src="https://static-cdn.jtvnw.net/jtv_user_pictures/bobross-profile_image-0b9dd167a9bb16b5-300x300.jpeg" />
 							<h5 style={{display: "inline", marginLeft: "20px", verticalAlign: "middle"}}>Bob Ross</h5>
 							<div className="btn-group" style={{display: "inline-block", marginTop: "10px", marginBottom: "10px"}}>
 								<button className="btn btn-sm btn-outline-warning" style={{marginLeft: "10px"}}><span className="icon-pin icon"></span>Follow</button>
 								<button className="btn btn-sm btn-outline-secondary" disabled>10 Followers</button>
+							</div>
+							<div className="btn-group" style={{margin: "10px auto"}}>
+								<button className="btn btn-sm btn-outline-success" style={{marginLeft: "10px"}}><span className="icon icon-credit"></span> Support</button>
+								<button className="btn btn-sm btn-outline-success" disabled>12 Monthly Supporters!</button>
 							</div>
 						</div>
 						<div className="col-12 col-sm-12 col-md-5 col-lg-7 col-xl-7" style={{padding: "20px"}}>
