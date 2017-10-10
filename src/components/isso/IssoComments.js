@@ -15,16 +15,23 @@ class IssoComments extends Component {
 		this.getComments = this.getComments.bind(this);
 	}
 	componentDidMount(){
-		this.getComments();
+		this.getComments(this.props);
 	}
-	getComments(){
+	componentWillReceiveProps(nextProps){
+		if (this.props.url !== nextProps.url){
+			this.getComments(nextProps);
+		}
+	}
+	getComments(props){
 		let _this = this;
-		this.props.Core.Comments.get(this.props.url, function(res){
+		props.Core.Comments.get(props.url, function(res){
 			if (res && res.data && res.data.replies)
 				_this.setState({comments: res.data.replies})
+			else
+				_this.setState({comments: []})
 		})
 
-		this.props.Core.Comments.add(this.props.url, "Hi Oliver!", function(res){
+		props.Core.Comments.add(props.url, "Hi Oliver!", function(res){
 			if (res && res.data && res.data.replies)
 				_this.setState({comments: res.data.replies})
 		})
