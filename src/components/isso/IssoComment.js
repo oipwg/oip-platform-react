@@ -20,8 +20,7 @@ class IssoComment extends Component {
 						</a>
 						<span className="note"></span>
 					</div>
-					<div className="text">
-						<p>Hello, World!</p>
+					<div className="text" dangerouslySetInnerHTML={{__html: this.props.comment.text}}>
 					</div>
 					<div className="isso-comment-footer">
 						<span className="votes">{this.props.comment.likes === 0 ? "" : this.props.comment.likes}</span>
@@ -35,6 +34,9 @@ class IssoComment extends Component {
 						<a href="#" className="reply" data-ytta-id="-">Reply</a>
 					</div>
 					<div className="isso-follow-up">
+						{this.props.comment.replies ? this.props.comment.replies.map(function(comment, i){
+							return <IssoComment comment={comment} key={i} />
+						}) : ""}
 					</div>
 				</div>
 			</div>

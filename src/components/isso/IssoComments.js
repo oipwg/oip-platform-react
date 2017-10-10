@@ -20,7 +20,13 @@ class IssoComments extends Component {
 	getComments(){
 		let _this = this;
 		this.props.Core.Comments.get(this.props.url, function(res){
-			_this.setState({comments: res.data.replies})
+			if (res && res.data && res.data.replies)
+				_this.setState({comments: res.data.replies})
+		})
+
+		this.props.Core.Comments.add(this.props.url, "Hi Oliver!", function(res){
+			if (res && res.data && res.data.replies)
+				_this.setState({comments: res.data.replies})
 		})
 	}
 	render() {
