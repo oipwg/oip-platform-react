@@ -44,8 +44,15 @@ class VideoPlayer extends Component {
 
 			var options = {}
 
-			options.autoplay = false;
-			options.poster = thumbnailURL ? thumbnailURL : "";
+			let autoplay = true;
+
+			if (this.props.Core.Artifact.paid(this.props.artifact))
+				autoplay = false;
+
+			options.autoplay = autoplay;
+			if (thumbnail){
+				options.poster = thumbnailURL;
+			}
 			options.controls = true;
 			options.preload = "auto";
 			options.chromecast = {
@@ -72,21 +79,13 @@ class VideoPlayer extends Component {
 
 			var options = {}
 
-			options.autoplay = false;
-			options.poster = thumbnailURL ? thumbnailURL : "";
-			options.controls = true;
-			options.preload = "auto";
-			options.chromecast = {
-				appId:'B49D4F18',
-				metadata:{
-					title: this.props.artifact['oip-041'].artifact.info.title,
-					subtitle:this.props.artifact['oip-041'].artifact.info.description ? this.props.artifact['oip-041'].artifact.info.description : "",
-				}
+			if (thumbnail){
+				options.poster = thumbnailURL;
+				this.player.poster(options.poster);
 			}
 			options.sources = [{src: videoURL, type: 'video/mp4'}];
 
 			// instantiate video.js
-			this.player.poster(options.poster);
 			this.player.src(options.sources);
 		}
 	}
