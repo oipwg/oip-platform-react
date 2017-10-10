@@ -4,7 +4,7 @@
   "author": "Skylar Ostler <me@skylarostler.com>",
   "version": "1.0.0",
   "dependencies": {
-    "alexandria-core": "^1.0.3",
+    "alexandria-core": "^1.0.4",
     "axios": "^0.16.2",
     "bootstrap": "4.0.0-beta",
     "color-thief-standalone": "^1.0.3",
