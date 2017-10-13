@@ -74,8 +74,10 @@ class App extends Component {
 			let _this = this;
 
 			Core.Index.getArtifactFromID(artifact, function(artifact){
+				let mainFile = Core.Artifact.getMainFile(artifact);
 				_this.setState({
-					DisplayedArtifact: artifact
+					DisplayedArtifact: artifact,
+					CurrentFile: mainFile
 				})
 			});
 		} else if (typeof artifact === "Object"){

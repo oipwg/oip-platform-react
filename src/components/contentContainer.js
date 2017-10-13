@@ -105,9 +105,9 @@ class ContentContainer extends Component {
 	render() {
 		let type, subtype, textAccess = "Access";
 
-		if (this.props.artifact){
-			type = this.props.artifact['oip-041'].artifact.type.split('-')[0];
-			subtype = this.props.artifact['oip-041'].artifact.type.split('-')[1];
+		if (this.props.CurrentFile){
+			type = this.props.CurrentFile.type;
+			subtype = this.props.CurrentFile.subtype;
 
 			if (type === "Video"){
 				textAccess = "Watch"
@@ -122,7 +122,7 @@ class ContentContainer extends Component {
 			<div className="content-container">
 				<div id='content' className={ this.state.paid ? "content blur" : "content"} style={this.state.paid  ? {display: "block"} : {display: "inline"}}>
 					{ type ===  'Audio' ? <AudioContainer paid={this.state.paid} artifact={this.props.artifact} Core={this.props.Core} /> : '' }
-					{ type ===  'Video' ? <VideoPlayer paid={this.state.paid} artifact={this.props.artifact} Core={this.props.Core} /> : '' }
+					{ type ===  'Video' ? <VideoPlayer paid={this.state.paid} artifact={this.props.artifact} Core={this.props.Core} CurrentFile={this.props.CurrentFile} /> : '' }
 					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} paid={this.state.paid} Core={this.props.Core} setCurrentFile={this.props.setCurrentFile} CurrentFile={this.props.CurrentFile} /> : '' }
 					{ type ===  'Text' ? <TextViewer artifact={this.props.artifact} Core={this.props.Core} /> : '' }
 					{ type ===  'Web' ? <HTMLContainer artifact={this.props.artifact} Core={this.props.Core}  /> : '' }

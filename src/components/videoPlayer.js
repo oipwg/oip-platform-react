@@ -36,11 +36,10 @@ class VideoPlayer extends Component {
 		}
 	}
 	createVideoPlayer() {
-		if (this.props.artifact){
-			let mainVideo = this.props.Core.Artifact.getMainFile(this.props.artifact);
-			let videoURL = this.props.Core.util.buildIPFSURL(mainVideo);
+		if (this.props.CurrentFile){
+			let videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.CurrentFile));
 			let thumbnail = this.props.Core.Artifact.getThumbnail(this.props.artifact);
-			let thumbnailURL = this.props.Core.util.buildIPFSURL(thumbnail);
+			let thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, thumbnail));
 
 			var options = {}
 
