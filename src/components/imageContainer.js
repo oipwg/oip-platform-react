@@ -2,48 +2,24 @@ import React, { Component } from 'react';
 
 class ImageContainer extends Component {
 	componentDidMount(){
-		let mainFile;
-
-		if (this.props.paid){
-			mainFile = this.props.Core.Artifact.getThumbnail(this.props.artifact);
+		if (this.props.DisplayPaywall){
+			this.loadIntoImage(this.props.artifact, this.props.ThumbnailFile);
 		} else {
-			mainFile = this.props.Core.Artifact.getFirstImage(this.props.artifact);
+			this.loadIntoImage(this.props.artifact, this.props.CurrentFile);
 		}
-
-		this.props.setCurrentFile(mainFile);
-
-		this.loadIntoImage(this.props.artifact, this.props.CurrentFile);
-		// let _this = this;
-		// if (thumbnailURL !== ""){
-		// 	if (this.props.Core){
-		// 		this.props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
-		// 			try {
-		// 				_this.setState({ src: srcData });
-		// 				// LivePhotosKit.Player(_this.refs.image);
-		// 			} catch(e) { }
-		// 		})
-		// 	}
-		// }
 	}
 	componentWillReceiveProps(nextProps) {
 		//console.log(nextProps.ArtifactManager.currentFile);
 		let mainFile;
 
-		if (this.props.artifact !== nextProps.artifact){
-			this.setState({src: ""});
+		if (this.props.CurrentFile !== nextProps.CurrentFile){
+			this.hasUpdated = true;
 		}
 
-		if (nextProps.CurrentFile){
-			console.log(nextProps.CurrentFile);
-			this.loadIntoImage(nextProps.artifact, nextProps.CurrentFile);
+		if (nextProps.DisplayPaywall){
+			this.loadIntoImage(nextProps.artifact, nextProps.ThumbnailFile);
 		} else {
-			if (nextProps.paid){
-				mainFile = nextProps.Core.Artifact.getThumbnail(nextProps.artifact);
-			} else {
-				mainFile = nextProps.Core.Artifact.getFirstImage(nextProps.artifact);
-			}
-
-			this.loadIntoImage(nextProps.artifact, mainFile);
+			this.loadIntoImage(nextProps.artifact, nextProps.CurrentFile);
 		}
 	}
 	constructor(props) {
@@ -54,14 +30,25 @@ class ImageContainer extends Component {
 	}
 	loadIntoImage(artifact, file){
 		if (artifact && file){
+			this.setState({src: ""});
+			
 			let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(artifact, file);
 
+			this.hasUpdated = false;
 			let _this = this;
 			this.props.Core.Network.getThumbnailFromIPFS(ipfsShortURL, function(srcData){
 				try {
 					_this.setState({ src: srcData });
+					_this.hasUpdated = true;
 				} catch(e) { }
 			})
+
+			setTimeout(function(){
+				if (!_this.hasUpdated){
+					let longURL = _this.props.Core.util.buildIPFSURL(ipfsShortURL);
+					_this.setState({ src: longURL });
+				}
+			}, 2 * 1000)
 		}
 	}
 	render() {

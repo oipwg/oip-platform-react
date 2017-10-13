@@ -39,7 +39,16 @@ class ContentPage extends Component {
 
 		return (
 			<div>
-				<ContentContainer artifact={this.props.DisplayedArtifact} Core={this.props.Core} ArtifactManager={ArtifactManager} setCurrentFile={this.props.setCurrentFile} CurrentFile={this.props.CurrentFile} />
+				<ContentContainer 
+					artifact={this.props.DisplayedArtifact} 
+					Core={this.props.Core} 
+					ArtifactManager={ArtifactManager} 
+					setCurrentFile={this.props.setCurrentFile} 
+					CurrentFile={this.props.CurrentFile} 
+					DisplayPaywall={this.props.DisplayPaywall}
+					ThumbnailFile={this.props.ThumbnailFile}
+					setPaywallDisplay={this.props.setPaywallDisplay}
+				/>
 				<div className="container">
 					<div className="row">
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>

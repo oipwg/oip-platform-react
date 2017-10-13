@@ -14,7 +14,7 @@ class VideoPlayer extends Component {
 		this.createVideoPlayer();
 	}
 	shouldComponentUpdate(nextProps, nextState){
-		if (this.props.artifact === nextProps.artifact && this.props.paid && !nextProps.paid){
+		if (this.props.artifact === nextProps.artifact && this.props.DisplayPaywall && !nextProps.DisplayPaywall){
 			this.player.play()
 		}
 
@@ -25,31 +25,35 @@ class VideoPlayer extends Component {
 		}
 	}
 	componentDidUpdate() {
-		console.log("update");
 		this.updateVideoPlayer();
 	}
 	componentWillUnmount() {
 		if (this.player) {
 			try {
-				this.player.dispose()
-			} catch(e){}
+				this.player.reset()
+			} catch(e){
+				console.error(e);
+			}
 		}
 	}
 	createVideoPlayer() {
 		if (this.props.CurrentFile){
 			let videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.CurrentFile));
-			let thumbnail = this.props.Core.Artifact.getThumbnail(this.props.artifact);
-			let thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, thumbnail));
+			let thumbnailURL;
+
+			if (this.props.ThumbnailFile){
+				thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.ThumbnailFile));
+			}
 
 			var options = {}
 
 			let autoplay = true;
 
-			if (this.props.Core.Artifact.paid(this.props.artifact))
+			if (this.props.DisplayPaywall)
 				autoplay = false;
 
 			options.autoplay = autoplay;
-			if (thumbnail){
+			if (this.props.ThumbnailFile){
 				options.poster = thumbnailURL;
 			}
 			options.controls = true;
@@ -71,14 +75,19 @@ class VideoPlayer extends Component {
 	}
 	updateVideoPlayer(){
 		if (this.props.artifact){
-			let mainVideo = this.props.Core.Artifact.getMainFile(this.props.artifact);
-			let videoURL = this.props.Core.util.buildIPFSURL(mainVideo);
-			let thumbnail = this.props.Core.Artifact.getThumbnail(this.props.artifact);
-			let thumbnailURL = this.props.Core.util.buildIPFSURL(thumbnail);
+			let videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.CurrentFile));
+			let thumbnailURL;
+			
+			if (this.props.ThumbnailFile){
+				thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.ThumbnailFile));
+			}
 
 			var options = {}
 
-			if (thumbnail){
+			if (this.props.DisplayPaywall)
+				this.player.pause();
+
+			if (this.props.ThumbnailFile){
 				options.poster = thumbnailURL;
 				this.player.poster(options.poster);
 			}
@@ -86,6 +95,9 @@ class VideoPlayer extends Component {
 
 			// instantiate video.js
 			this.player.src(options.sources);
+
+			if (!this.props.DisplayPaywall)
+				this.player.play();
 		}
 	}
 	render() {

@@ -51,7 +51,9 @@ class App extends Component {
 		this.state = {
 			ArtifactPlaylist: [],
 			DisplayedArtifact: undefined,
+			DisplayPaywall: false,
 			CurrentFile: undefined,
+			ThumbnailFile: undefined,
 			NextFile: undefined,
 			CurrentSuggestedContent: []
 		};
@@ -63,6 +65,9 @@ class App extends Component {
 
 		this.setDisplayedArtifact = this.setDisplayedArtifact.bind(this);
 		this.setCurrentFile = this.setCurrentFile.bind(this);
+		this.setThumbnailFile = this.setThumbnailFile.bind(this);
+		this.setPaywallDisplay = this.setPaywallDisplay.bind(this);
+		this.payForCurrentFile = this.payForCurrentFile.bind(this);
 	}
 	setArtifactPlaylist(playlist){
 
@@ -75,9 +80,13 @@ class App extends Component {
 
 			Core.Index.getArtifactFromID(artifact, function(artifact){
 				let mainFile = Core.Artifact.getMainFile(artifact);
+				let thumbnailFile = Core.Artifact.getThumbnail(artifact);
+				let displayPaywall = Core.Artifact.checkPaidViewFile(mainFile);
 				_this.setState({
 					DisplayedArtifact: artifact,
-					CurrentFile: mainFile
+					CurrentFile: mainFile,
+					ThumbnailFile: thumbnailFile,
+					DisplayPaywall: displayPaywall
 				})
 			});
 		} else if (typeof artifact === "Object"){
@@ -86,12 +95,26 @@ class App extends Component {
 
 	}
 	setCurrentFile(newFile){
-		console.log(newFile);
+		//let displayPaywall = Core.Artifact.checkPaidFile(newFile);
 		this.setState({
-			CurrentFile: newFile
+			CurrentFile: newFile,
+			//DisplayPaywall: displayPaywall
 		});
 	}
+	setPaywallDisplay(boolval){
+		this.setState({
+			DisplayPaywall: boolval
+		})
+	}
 	setNextFile(newFile){
+
+	}
+	setThumbnailFile(newFile){
+		this.setState({
+			ThumbnailFile: newFile
+		})
+	}
+	payForCurrentFile(){
 
 	}
 	render() {
@@ -127,6 +150,9 @@ class App extends Component {
 								Core={Core} 
 								CurrentSuggestedContent={this.state.CurrentSuggestedContent} 
 								CurrentFile={this.state.CurrentFile} 
+								DisplayPaywall={this.state.DisplayPaywall}
+								setPaywallDisplay={this.setPaywallDisplay}
+								ThumbnailFile={this.state.ThumbnailFile}
 								{...props} 
 							/>} 
 						/>
