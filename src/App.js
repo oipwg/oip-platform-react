@@ -35,6 +35,13 @@ class App extends Component {
 	componentDidMount(){
 		let _this = this;
 
+		Core.Index.getSupportedArtifacts(function(mySupportedArtifacts){
+			console.log(mySupportedArtifacts);
+			_this.setState({
+				SupportedArtifacts: mySupportedArtifacts
+			});
+		})
+
 		Core.Index.getSuggestedContent(null, function(mySuggestedContent){
 			console.log(mySuggestedContent);
 			_this.setState({
@@ -55,7 +62,8 @@ class App extends Component {
 			CurrentFile: undefined,
 			ThumbnailFile: undefined,
 			NextFile: undefined,
-			CurrentSuggestedContent: []
+			CurrentSuggestedContent: [],
+			SupportedArtifacts: []
 		};
 
 		this.ArtifactManager = ArtifactManager;
@@ -135,7 +143,7 @@ class App extends Component {
 
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
-						<Route exact path="/" render={props => <Homepage CurrentSuggestedContent={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
+						<Route exact path="/" render={props => <Homepage CurrentSuggestedContent={this.state.SupportedArtifacts.slice(0,100)} Core={Core} {...props} />} />
 						<Route path="/pub/:id" render={props => <PublisherPage CurrentSuggestedContent={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
 
 						<Route path="/user/:page/:type/:id" component={UserPage} />
