@@ -8,7 +8,7 @@ class Homepage extends Component {
 
 		return (
 			<div className="container" style={{marginTop: "100px", marginBottom:"200px"}}>
-				<h4 style={{marginBottom: "25px"}}>Latest Content</h4>
+				<h4 style={{marginBottom: "25px"}}>Latest Artifacts</h4>
 				<div className="row">
 					{this.props.CurrentSuggestedContent.map(function(artJSON, i){
 						return <ContentCard 
