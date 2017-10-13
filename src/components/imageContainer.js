@@ -31,7 +31,7 @@ class ImageContainer extends Component {
 	loadIntoImage(artifact, file){
 		if (artifact && file){
 			this.setState({src: ""});
-			
+
 			let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(artifact, file);
 
 			this.hasUpdated = false;
@@ -53,7 +53,7 @@ class ImageContainer extends Component {
 	}
 	render() {
 		return (
-			<div style={{height: "100%", verticalAlign: "middle", display: "flex"}}>
+			<div style={{height: "100%", verticalAlign: "middle"}}>
 				<img onContextMenu={(e)=>  {e.preventDefault();}} onDragStart={(e)=>  {e.preventDefault();}} ref="image" src={this.state.src} style={{width: "auto", maxWidth: "100%", maxHeight:"100%", display: "block",margin: "auto", backgroundColor: "#fff"}} alt="" />
 			</div>
 		);
