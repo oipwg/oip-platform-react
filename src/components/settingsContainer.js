@@ -1,6 +1,30 @@
 import React, { Component } from 'react';
 
 class SettingsContainer extends Component {
+	constructor(props){
+		super(props);
+
+		this.state = {
+			showNSFW: false
+		}
+
+		this.setSetting = this.setSetting.bind(this);
+		this.showNSFW = this.showNSFW.bind(this);
+		this.hideNSFW = this.hideNSFW.bind(this);
+	}
+	setSetting(jsonLoc, val){
+		let newStateObj = {};
+
+		newStateObj[jsonLoc] = val;
+
+		this.setState(newStateObj);
+	}
+	showNSFW(){
+		this.setSetting("showNSFW", true);
+	}
+	hideNSFW(){
+		this.setSetting("showNSFW", false);
+	}
 	render() {
 		return (
 			<div className="container">
@@ -8,6 +32,18 @@ class SettingsContainer extends Component {
 				<hr />
 				<div className="row">
 					<div className="col-12">
+						<h3>Would you like to see NSFW content?</h3>
+						<div className="btn-group" data-toggle="buttons">
+							<label className={"btn btn-outline-primary " + (this.state.showNSFW ? "" : "active")} ref='hideNSFW' onClick={this.hideNSFW}>
+								<input id='freeRadio' type="radio" name="free" autoComplete="off" /> No! Hide it!
+							</label>
+							<label className={"btn btn-outline-danger " + (this.state.showNSFW ? "active" : "")} ref='showNSFW' onClick={this.showNSFW}>
+								<input id='paidRadio' type="radio" name="free" autoComplete="off" /> Yes, please show it 
+							</label>
+						</div>
+						<br />
+						<hr />
+						<br />
 						<p>Drop-down currency selector in user menu. Include USD, BTC, Bits, EUR, RMB, JPY, GBP, CHF, CAD & AUD - initially default to Bits or USD in an A/B test</p>
 						<div className="form-group">
 							<label htmlFor="exampleInputEmail1">Email address</label>
