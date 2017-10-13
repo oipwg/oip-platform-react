@@ -75,6 +75,7 @@ class VideoPlayer extends Component {
 	}
 	updateVideoPlayer(){
 		if (this.props.artifact){
+			this.player.reset();
 			let videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.CurrentFile));
 			let thumbnailURL;
 			
@@ -84,8 +85,12 @@ class VideoPlayer extends Component {
 
 			var options = {}
 
+			let autoplay = true;
+
 			if (this.props.DisplayPaywall)
-				this.player.pause();
+				autoplay = false;
+
+			this.player.autoplay(autoplay);
 
 			if (this.props.ThumbnailFile){
 				options.poster = thumbnailURL;
