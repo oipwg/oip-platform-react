@@ -56,7 +56,7 @@ class ContentInfo extends Component {
 						</h5>
 					</div>
 				</div>
-				<ContentExtraInfo artifact={this.props.artifact} Core={this.props.Core} />
+				<ContentExtraInfo artifact={this.props.artifact} Core={this.props.Core} setCurrentFile={this.props.setCurrentFile} />
 			</div>
 		);
 	}

@@ -5,7 +5,6 @@ import moment from 'moment'
 
 class IssoComment extends Component {
 	render() {
-		console.log(this.props.comment);
 		return (
 			<div className={this.props.comment.likes === 0 ? "isso-comment isso-no-votes" : "isso-comment"}>
 				<div className="avatar">

@@ -6,12 +6,13 @@ import {
 
 class ContentCard extends Component {
 	componentDidMount(){
-		let thumbnailURL = this.props.Core.Artifact.getThumbnail(this.props.artifact);
+		let thumbnail = this.props.Core.Artifact.getThumbnail(this.props.artifact);
 
-		if (thumbnailURL !== ""){
+		if (thumbnail){
 			if (this.props.Core){
 				this.updateSrc = true;
-				this.props.Core.Network.getThumbnailFromIPFS(thumbnailURL, this.updateSrcCallback)
+				let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(this.props.artifact, thumbnail);
+				this.props.Core.Network.getThumbnailFromIPFS(ipfsShortURL, this.updateSrcCallback)
 			}
 		}
 	}

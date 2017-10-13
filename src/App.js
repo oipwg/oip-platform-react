@@ -29,13 +29,16 @@ import ViewArtifactContainer from './components/viewArtifactContainer.js';
 import EditArtifactContainer from './components/editArtifactContainer.js';
 import PublisherPage from './components/PublisherPage.js';
 
+import ArtifactManager from './modules/ArtifactManager.js';
+
 class App extends Component {
 	componentDidMount(){
 		let _this = this;
 
-		Core.Data.getSupportedArtifacts(function(supportedArtifacts){
+		Core.Index.getSuggestedContent(null, function(mySuggestedContent){
+			console.log(mySuggestedContent);
 			_this.setState({
-				supportedArtifacts: supportedArtifacts
+				CurrentSuggestedContent: mySuggestedContent
 			});
 		})
 	}
@@ -44,7 +47,50 @@ class App extends Component {
 	}
 	constructor(props) {
 		super(props);
-		this.state = {supportedArtifacts: []};
+		
+		this.state = {
+			ArtifactPlaylist: [],
+			DisplayedArtifact: undefined,
+			CurrentFile: undefined,
+			NextFile: undefined,
+			CurrentSuggestedContent: []
+		};
+
+		this.ArtifactManager = ArtifactManager;
+
+		// Start timers and loops to track playing content
+		//this.ArtifactManager.startup();
+
+		this.setDisplayedArtifact = this.setDisplayedArtifact.bind(this);
+		this.setCurrentFile = this.setCurrentFile.bind(this);
+	}
+	setArtifactPlaylist(playlist){
+
+	}
+	setDisplayedArtifact(artifact){
+		console.log(typeof artifact)
+		if (typeof artifact === "string"){
+			// We were passed an artifact ID, get one from Core and pass it to the Artifact Manager
+			let _this = this;
+
+			Core.Index.getArtifactFromID(artifact, function(artifact){
+				_this.setState({
+					DisplayedArtifact: artifact
+				})
+			});
+		} else if (typeof artifact === "Object"){
+			// We were directly passed an Artifact, directly set to state.
+		}
+
+	}
+	setCurrentFile(newFile){
+		console.log(newFile);
+		this.setState({
+			CurrentFile: newFile
+		});
+	}
+	setNextFile(newFile){
+
 	}
 	render() {
 		const supportsHistory = 'pushState' in window.history;
@@ -64,14 +110,24 @@ class App extends Component {
 
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
-						<Route exact path="/" render={props => <Homepage suggestedContent={this.state.supportedArtifacts} Core={Core} {...props} />} />
-						<Route path="/pub/:id" render={props => <PublisherPage suggestedContent={this.state.supportedArtifacts.slice(0,10)} Core={Core} {...props} />} />
+						<Route exact path="/" render={props => <Homepage CurrentSuggestedContent={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
+						<Route path="/pub/:id" render={props => <PublisherPage CurrentSuggestedContent={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
 
 						<Route path="/user/:page/:type/:id" component={UserPage} />
 						<Route path="/user/:page/:type" component={UserPage} />
 						<Route path="/user/:page" component={UserPage} />
 						
-						<Route path="/:id" render={props => <ContentPage all={this.state.supportedArtifacts} Core={Core} suggestedContent={this.state.supportedArtifacts.slice(0,10)} {...props} />} />
+						<Route path="/:id" render={props => 
+							<ContentPage 
+								setCurrentFile={this.setCurrentFile} 
+								setDisplayedArtifact={this.setDisplayedArtifact} 
+								DisplayedArtifact={this.state.DisplayedArtifact} 
+								Core={Core} 
+								CurrentSuggestedContent={this.state.CurrentSuggestedContent} 
+								CurrentFile={this.state.CurrentFile} 
+								{...props} 
+							/>} 
+						/>
 
 						{/*
 						<Route path="/Audio/:id" render={props => <ContentPage artifact={demoContent[0]} suggestedContent={demoContent} {...props} />} />

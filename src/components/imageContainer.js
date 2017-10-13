@@ -2,58 +2,67 @@ import React, { Component } from 'react';
 
 class ImageContainer extends Component {
 	componentDidMount(){
-		let thumbnailURL = "";
+		let mainFile;
 
 		if (this.props.paid){
-			thumbnailURL = this.props.Core.Artifact.getThumbnail(this.props.artifact);
+			mainFile = this.props.Core.Artifact.getThumbnail(this.props.artifact);
 		} else {
-			thumbnailURL = this.props.Core.Artifact.getFirstImage(this.props.artifact);
+			mainFile = this.props.Core.Artifact.getFirstImage(this.props.artifact);
 		}
-		console.log(this.props.artifact)
-		console.log(thumbnailURL);
 
-		let _this = this;
-		if (thumbnailURL !== ""){
-			if (this.props.Core){
-				this.props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
-					try {
-						_this.setState({ src: srcData });
-						// LivePhotosKit.Player(_this.refs.image);
-					} catch(e) { }
-				})
-			}
-		}
+		this.props.setCurrentFile(mainFile);
+
+		this.loadIntoImage(this.props.artifact, this.props.CurrentFile);
+		// let _this = this;
+		// if (thumbnailURL !== ""){
+		// 	if (this.props.Core){
+		// 		this.props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
+		// 			try {
+		// 				_this.setState({ src: srcData });
+		// 				// LivePhotosKit.Player(_this.refs.image);
+		// 			} catch(e) { }
+		// 		})
+		// 	}
+		// }
 	}
 	componentWillReceiveProps(nextProps) {
-		let thumbnailURL = "";
+		//console.log(nextProps.ArtifactManager.currentFile);
+		let mainFile;
 
 		if (this.props.artifact !== nextProps.artifact){
 			this.setState({src: ""});
 		}
 
-		if (nextProps.paid){
-			thumbnailURL = nextProps.Core.Artifact.getThumbnail(nextProps.artifact);
+		if (nextProps.CurrentFile){
+			console.log(nextProps.CurrentFile);
+			this.loadIntoImage(nextProps.artifact, nextProps.CurrentFile);
 		} else {
-			thumbnailURL = nextProps.Core.Artifact.getFirstImage(nextProps.artifact);
-		}
-
-		console.log(thumbnailURL);
-
-		let _this = this;
-		if (thumbnailURL !== ""){
-			if (nextProps.Core){
-				nextProps.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
-					try {
-						_this.setState({ src: srcData });
-						// LivePhotosKit.Player(_this.refs.image);
-					} catch(e) { }
-				})
+			if (nextProps.paid){
+				mainFile = nextProps.Core.Artifact.getThumbnail(nextProps.artifact);
+			} else {
+				mainFile = nextProps.Core.Artifact.getFirstImage(nextProps.artifact);
 			}
+
+			this.loadIntoImage(nextProps.artifact, mainFile);
 		}
 	}
 	constructor(props) {
 		super(props);
 		this.state = {src: ""};
+
+		this.loadIntoImage = this.loadIntoImage.bind(this);
+	}
+	loadIntoImage(artifact, file){
+		if (artifact && file){
+			let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(artifact, file);
+
+			let _this = this;
+			this.props.Core.Network.getThumbnailFromIPFS(ipfsShortURL, function(srcData){
+				try {
+					_this.setState({ src: srcData });
+				} catch(e) { }
+			})
+		}
 	}
 	render() {
 		return (

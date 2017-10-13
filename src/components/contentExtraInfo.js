@@ -76,7 +76,7 @@ class ContentExtraInfo extends Component {
 			<div>
 				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.state.niceTime}</strong></p>
 				<p style={{textIndent: "40px", marginTop: "10px"}}>{this.state.description}</p>
-				<FilesTable files={this.state.files} />
+				<FilesTable files={this.state.files} setCurrentFile={this.props.setCurrentFile} />
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
 					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />
 					<button className="btn btn-sm btn-outline-secondary" style={{borderColor: "#333", color: "#333", margin: "0px auto", display:"block", backgroundColor:"#fff"}}>See Less</button>
