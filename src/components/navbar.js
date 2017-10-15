@@ -11,7 +11,8 @@ class Navbar extends Component {
 
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			dropdownOpen: false
+			dropdownOpen: false,
+			loggedIn: false
 		};
 	}
 
@@ -47,7 +48,7 @@ class Navbar extends Component {
 						</div>
 						<div>
 							<Link to="/user/upload/"><button className="btn btn-sm btn-warning-light-bg btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
-							<ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="btn-group">
+							{this.state.loggedIn ? <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="btn-group">
 								<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}><div><img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} alt="" /><span style={{paddingLeft: "5px"}}>NASA Archive</span></div></DropdownToggle>
 								<DropdownMenu style={this.state.dropdownOpen ? {display: "block"} : {}}>
 									<Link to="/user/artifacts/"><DropdownItem><span className="icon icon-classic-computer"></span> My Artifacts</DropdownItem></Link>
@@ -59,7 +60,7 @@ class Navbar extends Component {
 									<DropdownItem><span className="icon icon-log-out"></span> Logout</DropdownItem>
 								</DropdownMenu>
 								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>15,623</span> bits</Link>
-							</ButtonDropdown>
+							</ButtonDropdown> : <Link to="/login/"><button className="btn btn-outline-white" style={{marginLeft: "10px"}}>Login</button></Link>}
 						</div>
 					</div>
 				</nav>

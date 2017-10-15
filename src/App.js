@@ -16,6 +16,7 @@ import './assets/css/entypo.css';
 import './assets/css/alexandria.css';
 
 import Navbar from './components/navbar.js';
+
 import Homepage from './components/homepage.js';
 import MiniMusicPlayer from './components/miniMusicPlayer.js';
 import ContentPage from './components/contentPage.js';
@@ -28,6 +29,9 @@ import SettingsContainer from './components/settingsContainer.js';
 import ViewArtifactContainer from './components/viewArtifactContainer.js';
 import EditArtifactContainer from './components/editArtifactContainer.js';
 import PublisherPage from './components/PublisherPage.js';
+
+import LoginPage from './components/LoginPage.js';
+import RegisterPage from './components/RegisterPage.js';
 
 import ArtifactManager from './modules/ArtifactManager.js';
 
@@ -144,6 +148,10 @@ class App extends Component {
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
 						<Route exact path="/" render={props => <Homepage CurrentSuggestedContent={this.state.SupportedArtifacts.slice(0,100)} Core={Core} {...props} />} />
+
+						<Route path="/login" component={LoginPage} />
+						<Route path="/register" component={RegisterPage} />
+
 						<Route path="/pub/:id" render={props => <PublisherPage CurrentSuggestedContent={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
 
 						<Route path="/user/:page/:type/:id" component={UserPage} />
