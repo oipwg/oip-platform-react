@@ -104,8 +104,17 @@
 	color: #fff;
 	background-color:rgba(0,0,0,0.8);
 }
-
+.img-container{
+	width: auto;
+	max-width: 100%;
+	display: block;
+	margin: auto;
+	background-color: #fff;
+}
 @media (min-width: 1300px) { 
+	.img-container{
+		height: 100%;
+	}
 	.content-container {
 		height: 720px;
 		width: 100%;
@@ -121,6 +130,9 @@
 	}
 }
 @media (max-width: 1300px) and (min-width: 900px) { 
+	.img-container{
+		max-height: 100%;
+	}
 	.content-container {
 		height: auto;
 		min-height: 500px;

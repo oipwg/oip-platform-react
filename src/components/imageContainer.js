@@ -54,7 +54,7 @@ class ImageContainer extends Component {
 	render() {
 		return (
 			<div style={{height: "100%", verticalAlign: "middle"}}>
-				<img onContextMenu={(e)=>  {e.preventDefault();}} onDragStart={(e)=>  {e.preventDefault();}} ref="image" src={this.state.src} style={{width: "auto", maxWidth: "100%", maxHeight:"100%", display: "block",margin: "auto", backgroundColor: "#fff"}} alt="" />
+				<img className="img-container" onContextMenu={(e)=>  {e.preventDefault();}} onDragStart={(e)=>  {e.preventDefault();}} ref="image" src={this.state.src} style={{width: "auto", maxWidth: "100%", display: "block",margin: "auto", backgroundColor: "#fff"}} alt="" />
 			</div>
 		);
 	}
