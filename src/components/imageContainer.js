@@ -13,6 +13,7 @@ class ImageContainer extends Component {
 		let mainFile;
 
 		if (this.props.CurrentFile !== nextProps.CurrentFile){
+			this.setState({src: ""});
 			this.hasUpdated = true;
 		}
 

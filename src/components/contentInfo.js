@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 import ContentExtraInfo from './contentExtraInfo.js';
+import ShareButton from './ShareButton.js';
+import TipButton from './TipButton.js';
+import ReportButton from './ReportButton.js';
 
 class ContentInfo extends Component {
 	constructor(props){
@@ -49,9 +52,9 @@ class ContentInfo extends Component {
 					<div className="media-body">
 						<h5 className="mt-0" style={{paddingTop: "15px", marginLeft: "-10px"}}>{this.state.creator} <div className="btn-group"><button className="btn btn-sm btn-outline-warning" style={{marginLeft: "10px"}}><span className="icon-pin icon"></span>Follow</button><button className="btn btn-sm btn-outline-secondary" disabled>10 Followers</button></div>
 							<div style={{float: "right"}}>
-								<button className="btn btn-sm btn-outline-info btn-margin-right"><span className="icon-forward icon"></span> Share</button>
-								<button className="btn btn-sm btn-outline-success btn-margin-right"><span className="icon-wallet icon"></span> Tip</button>
-								<button className="btn btn-sm btn-outline-danger">...</button>
+								<ShareButton />
+								<TipButton />
+								<ReportButton />
 							</div>
 						</h5>
 					</div>

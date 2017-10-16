@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import {
+  Link
+} from 'react-router-dom'
+
 class LoginPage extends Component {
 	constructor(props){
 		super(props);
@@ -33,7 +37,7 @@ class LoginPage extends Component {
 							<hr className="colorgraph" />
 							<div className="row">
 								<div className="col-xs-3 col-sm-3 col-md-3 order-2 order-sm-1">
-									<a href="/register" className="btn btn-lg btn-outline-secondary btn-block" data-ytta-id="-">Register</a>
+									<Link to="/register"><button className="btn btn-lg btn-outline-secondary btn-block">Register</button></Link>
 								</div>
 								<div className="col-xs-9 col-sm-9 col-md-9 order-1 order-sm-2">
 									<button id="signin" className="btn btn-lg btn-success btn-block" onclick="tryLogin()">Login</button>

@@ -33,6 +33,10 @@ import PublisherPage from './components/PublisherPage.js';
 import LoginPage from './components/LoginPage.js';
 import RegisterPage from './components/RegisterPage.js';
 
+import DMCAForm from './components/DMCAForm.js';
+
+import SearchPage from './components/SearchPage.js';
+
 import ArtifactManager from './modules/ArtifactManager.js';
 
 class App extends Component {
@@ -151,8 +155,11 @@ class App extends Component {
 
 						<Route path="/login" component={LoginPage} />
 						<Route path="/register" component={RegisterPage} />
+						<Route path="/dmca" component={DMCAForm} />
 
 						<Route path="/pub/:id" render={props => <PublisherPage CurrentSuggestedContent={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
+
+						<Route path="/search/:id" render={props => <SearchPage SearchResults={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
 
 						<Route path="/user/:page/:type/:id" component={UserPage} />
 						<Route path="/user/:page/:type" component={UserPage} />

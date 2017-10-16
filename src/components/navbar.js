@@ -60,7 +60,7 @@ class Navbar extends Component {
 									<DropdownItem><span className="icon icon-log-out"></span> Logout</DropdownItem>
 								</DropdownMenu>
 								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>15,623</span> bits</Link>
-							</ButtonDropdown> : <Link to="/login/"><button className="btn btn-outline-white" style={{marginLeft: "10px"}}>Login</button></Link>}
+							</ButtonDropdown> : <Link to="/login"><button className="btn btn-outline-white" style={{marginLeft: "10px"}}>Login</button></Link>}
 						</div>
 					</div>
 				</nav>

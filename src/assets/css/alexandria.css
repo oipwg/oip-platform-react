@@ -1021,3 +1021,42 @@ td.unpin {
 	background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 	background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
+
+.btn-facebook {
+    background-color: rgba(61, 91, 150, 0.2) !important;
+    border-color: rgb(61, 91, 150);
+    width: 51px;
+    color:#FFFFFF!important;
+}
+
+.btn-twitter {
+    background-color: rgba(51, 153, 204, 0.14) !important;
+    border-color: rgb(51, 153, 204);
+    width: 51px;
+    color:#FFFFFF!important;
+}
+
+.btn-reddit {
+    background-color: rgba(255, 58, 17, 0.2) !important;
+    border-color: rgb(255, 58, 17);
+    padding: 6.5px;
+    width: 51px;
+    color:#FFFFFF!important;
+}
+
+.btn-steem {
+    width: 51px;
+    background-color: rgba(0,184,234,0.1);
+    border-color: #395da0;
+}
+
+.btn-gab {
+    background-color: #ECF5F1 !important;
+    border-color: #85C4A6;
+    width: 51px;
+    color:#FFFFFF!important;
+}
+
+.popover {
+	max-width: 310px !important;
+}

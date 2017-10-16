@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 
+import {
+  Link
+} from 'react-router-dom'
+
+import Recaptcha from 'react-recaptcha';
+
 class RegisterPage extends Component {
 	constructor(props){
 		super(props);
@@ -71,7 +77,7 @@ class RegisterPage extends Component {
 							</div>
 						</div>
 						<div className="row">
-							<div className="g-recaptcha" data-sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}></div>
+							<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}><Recaptcha sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" /></div>
 						</div>
 						<br />
 						<div className="row">
@@ -81,7 +87,7 @@ class RegisterPage extends Component {
 						</div>
 						<hr className="colorgraph" />
 						<div className="row">
-							<div className="col-xs-12 col-md-3 order-2 order-sm-1"><a href="/login" className="btn btn-outline-secondary btn-block btn-lg" data-ytta-id="-">Login</a></div>
+							<div className="col-xs-12 col-md-3 order-2 order-sm-1"><Link to="/login"><button className="btn btn-outline-secondary btn-block btn-lg" data-ytta-id="-">Login</button></Link></div>
 							<div className="col-xs-12 col-md-9 order-1 order-sm-2"><button id="register" className="btn btn-success btn-block btn-lg" onclick="onRegisterClick();" tabIndex="5">Register</button></div>
 						</div>
 					</div>
