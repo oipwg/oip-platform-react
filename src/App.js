@@ -71,7 +71,8 @@ class App extends Component {
 			ThumbnailFile: undefined,
 			NextFile: undefined,
 			CurrentSuggestedContent: [],
-			SupportedArtifacts: []
+			SupportedArtifacts: [],
+			SongList: []
 		};
 
 		this.ArtifactManager = ArtifactManager;
@@ -84,6 +85,7 @@ class App extends Component {
 		this.setThumbnailFile = this.setThumbnailFile.bind(this);
 		this.setPaywallDisplay = this.setPaywallDisplay.bind(this);
 		this.payForCurrentFile = this.payForCurrentFile.bind(this);
+		this.setupArtifact = this.setupArtifact.bind(this);
 	}
 	setArtifactPlaylist(playlist){
 
@@ -95,20 +97,31 @@ class App extends Component {
 			let _this = this;
 
 			Core.Index.getArtifactFromID(artifact, function(artifact){
-				let mainFile = Core.Artifact.getMainFile(artifact);
-				let thumbnailFile = Core.Artifact.getThumbnail(artifact);
-				let displayPaywall = Core.Artifact.checkPaidViewFile(mainFile);
-				_this.setState({
-					DisplayedArtifact: artifact,
-					CurrentFile: mainFile,
-					ThumbnailFile: thumbnailFile,
-					DisplayPaywall: displayPaywall
-				})
+				_this.setupArtifact(artifact);
 			});
 		} else if (typeof artifact === "Object"){
 			// We were directly passed an Artifact, directly set to state.
+			this.setupArtifact(artifact);
 		}
 
+	}
+	setupArtifact(artifact){
+		let mainFile = Core.Artifact.getMainFile(artifact);
+		let thumbnailFile = Core.Artifact.getThumbnail(artifact);
+		let displayPaywall = Core.Artifact.checkPaidViewFile(mainFile);
+		let SongList = [];
+
+		if (Core.Artifact.getType(artifact) === "Audio"){
+			SongList = Core.Artifact.getSongs(artifact);
+		}
+
+		this.setState({
+			DisplayedArtifact: artifact,
+			CurrentFile: mainFile,
+			ThumbnailFile: thumbnailFile,
+			DisplayPaywall: displayPaywall,
+			SongList: SongList
+		})
 	}
 	setCurrentFile(newFile){
 		//let displayPaywall = Core.Artifact.checkPaidFile(newFile);
@@ -176,6 +189,7 @@ class App extends Component {
 								DisplayPaywall={this.state.DisplayPaywall}
 								setPaywallDisplay={this.setPaywallDisplay}
 								ThumbnailFile={this.state.ThumbnailFile}
+								SongList={this.state.SongList}
 								{...props} 
 							/>} 
 						/>

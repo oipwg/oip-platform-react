@@ -48,6 +48,7 @@ class ContentPage extends Component {
 					DisplayPaywall={this.props.DisplayPaywall}
 					ThumbnailFile={this.props.ThumbnailFile}
 					setPaywallDisplay={this.props.setPaywallDisplay}
+					SongList={this.props.SongList}
 				/>
 				<div className="container">
 					<div className="row">

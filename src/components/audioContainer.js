@@ -111,14 +111,18 @@ class AudioContainer extends Component {
 		if (thumbnailURL !== ""){
 			if (props.Core){
 				let _this = this;
-				props.Core.Network.getThumbnailFromIPFS(thumbnailURL, function(srcData){
+				props.Core.Network.getThumbnailFromIPFS(props.Core.util.buildIPFSShortURL(props.artifact, thumbnailURL), function(srcData){
 					try {
 						_this.setState({songs: [{ src: srcData }]});
 
-						let colorThief = new ColorThief();
-						let palette = colorThief.getPalette(_this.refs.image, 2);
-						_this.setState({bgColor: "rgb(" + palette[0].join(',') + ")"})
-						_this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
+						let pic = new Image();
+						pic.onload = function(){
+							let colorThief = new ColorThief();
+							let palette = colorThief.getPalette(_this.refs.image, 2);
+							_this.setState({bgColor: "rgb(" + palette[0].join(',') + ")"})
+							_this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
+						}
+						pic.src = srcData;
 					} catch(e) { }
 				})
 			}
@@ -219,9 +223,49 @@ class AudioContainer extends Component {
                     style={{display: "none"}}
                     >
                 </audio>
-                <div style={{marginTop: "100px"}}>
-                	<h3 className="text-center" style={{color: this.state.mainColor}}>{this.state.currentSongTitle} - {this.state.currentSongArtist}</h3>
-					<img ref="image" src={this.state.songs[0].src} style={{width: "100%", height: "auto", maxWidth: "200px", maxHeight: "200px", margin: "40px auto", display: "block"}} alt="" />
+                <div className="container" style={{height: "90%"}}>
+	                <div className="row" style={{height: "90%"}}>
+		                <div className="col-6" style={{margin: "auto"}}>
+		                	<h3 className="text-center" style={{color: this.state.mainColor}}>
+		                		{this.props.CurrentFile.dname ? this.props.CurrentFile.dname : this.props.CurrentFile.fname} - {this.state.currentSongArtist}
+		                	</h3>
+							<img ref="image" src={this.state.songs[0].src} style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}} alt="" />
+						</div>
+						<div className="col-6" style={{margin: "auto"}}>
+							<div style={{height: "400px", overflowY: "scroll", margin: "auto", maxWidth: "450px"}}>
+								<h3 style={{color: this.state.mainColor, textAlign: "center"}}>
+								</h3>
+								<ul className="list-group">
+									<li className="list-group-item" style={{padding: "5px 30px", display:"flex"}}>
+										<div style={{margin: "auto"}}>
+											<button className="btn btn-sm btn-outline-info"><span className="icon icon-controller-play"></span>Play All: Free</button>
+											<span style={{paddingLeft: "10px"}}></span>
+											<button className="btn btn-sm btn-outline-info"><span className="icon icon-download"></span> Buy All: Free</button>
+										</div> 
+									</li>
+									{this.props.SongList.map(function(song, i){
+										return <li className={i === 0 ? "list-group-item list-group-item-secondary" : "list-group-item"} style={{padding: "0px"}}>
+											<div style={{padding: "4px 5px", display:"flex"}}>
+												<img className="rounded" src={song.albumArtwork} width="40px" height="40px" alt="" />
+												<div style={{padding: "0px 10px", width:"250px"}}>
+													<div style={{fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{song.artist}</div>
+													<div style={{color: "#555",fontSize:"12px", width: "250px", display: "flex"}}>
+														<div style={{width: "180px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{song.dname ? song.dname : song.fname}</div>
+														<div style={{width: "55px", textAlign: "right"}}>1:40</div>
+													</div>
+												</div>
+												<div style={{margin: "auto"}}>
+													<button className="btn btn-sm btn-outline-info"><span className="icon icon-controller-play"></span>Free</button>
+													<span style={{paddingLeft: "10px"}}></span>
+													<button className="btn btn-sm btn-outline-info"><span className="icon icon-download"></span>Free</button>
+												</div>
+											</div>
+										</li>
+									})}
+								</ul>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div style={{width:"102%", height: "200px", position: "absolute", bottom: "10px", marginLeft: "-10px"}}>
 					<canvas

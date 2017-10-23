@@ -116,12 +116,15 @@ class ContentContainer extends Component {
 			} else if (type === "Audio"){
 				textAccess = "Listen to"
 			}
+
+			if (subtype === "F-HD1080")
+				subtype = "Movie"
 		}
 		let _this = this;
 		return (
 			<div className="content-container">
 				<div id='content' className={ this.state.DisplayPaywall ? "content blur" : "content"} style={this.state.DisplayPaywall  ? {display: "block"} : {display: "inline"}}>
-					{ type ===  'Audio' ? <AudioContainer paid={this.state.paid} artifact={this.props.artifact} Core={this.props.Core} /> : '' }
+					{ type ===  'Audio' ? <AudioContainer DisplayPaywall={this.props.DisplayPaywall} artifact={this.props.artifact} Core={this.props.Core} CurrentFile={this.props.CurrentFile} SongList={this.props.SongList} /> : '' }
 					{ type ===  'Video' ? <VideoPlayer DisplayPaywall={this.props.DisplayPaywall} artifact={this.props.artifact} Core={this.props.Core} CurrentFile={this.props.CurrentFile} /> : '' }
 					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} DisplayPaywall={this.props.DisplayPaywall} Core={this.props.Core} CurrentFile={this.props.CurrentFile} ThumbnailFile={this.props.ThumbnailFile} /> : '' }
 					{ type ===  'Text' ? <TextViewer artifact={this.props.artifact} Core={this.props.Core} /> : '' }
@@ -131,8 +134,8 @@ class ContentContainer extends Component {
 				<div id='paywall' style={this.props.DisplayPaywall ? {} : {display: "none"}}>
 					<div className="d-flex align-items-center justify-content-center text-center paywall-container">
 						<div style={{width: "80%"}}>
-							<h4 style={{marginBottom: "0px"}}>To {textAccess} this {subtype === "Basic" ? type : subtype}</h4>
-							<span>please</span>
+							<h4 style={{marginBottom: "0px"}}>To {textAccess} this {(!subtype || subtype === "" || subtype === "Basic") ? type : subtype}</h4>
+							<span>please...</span>
 							<br/>
 							<div className="col-12 text-center" style={{marginTop: "15px"}}>
 								{this.state.disPlay ? "" : <button className={this.state.viewString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={function(){_this.props.setPaywallDisplay(false)}} style={{padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{this.state.viewString}</button>}
