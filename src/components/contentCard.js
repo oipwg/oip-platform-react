@@ -39,6 +39,8 @@ class ContentCard extends Component {
 		let txid = this.props.Core.Artifact.getTXID(this.props.artifact);
 		let paid = this.props.Core.Artifact.paid(this.props.artifact);
 		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.props.artifact));
+		
+		let duration = this.props.Core.Artifact.getDuration(this.props.artifact);
 
 		let userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
 
@@ -57,7 +59,7 @@ class ContentCard extends Component {
 							<span className={"icon icon-" + icon}></span>
 						</button>
 					</div>
-					{this.props.length ? <p className="content-card-xinfo">{this.props.length}</p> : <div className="content-card-xinfo-offset"></div>}
+					{duration ? <p className="content-card-xinfo">{duration}</p> : <div className="content-card-xinfo-offset"></div>}
 					<div className="card-block" style={{padding: "10px",whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
 						<strong style={{}}>{title}</strong>
 						<p style={{marginBottom: "-10px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}><img className="rounded-circle" src={userIcon} width="30" height="30" alt="" style={{marginRight: "3px", marginBottom: "3px"}} /><span style={{paddingTop:"10px"}}>{this.props.artifact.publisherName}</span></p>
