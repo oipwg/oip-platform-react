@@ -117,10 +117,12 @@ class AudioContainer extends Component {
 
 						let pic = new Image();
 						pic.onload = function(){
-							let colorThief = new ColorThief();
-							let palette = colorThief.getPalette(_this.refs.image, 2);
-							_this.setState({bgColor: "rgb(" + palette[0].join(',') + ")"})
-							_this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
+							try {
+								let colorThief = new ColorThief();
+								let palette = colorThief.getPalette(_this.refs.image, 2);
+								_this.setState({bgColor: "rgb(" + palette[0].join(',') + ")"})
+								_this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
+							} catch (e) { }
 						}
 						pic.src = srcData;
 					} catch(e) { }
@@ -250,8 +252,8 @@ class AudioContainer extends Component {
 												<div style={{padding: "0px 10px", width:"250px"}}>
 													<div style={{fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{song.artist}</div>
 													<div style={{color: "#555",fontSize:"12px", width: "250px", display: "flex"}}>
-														<div style={{width: "180px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{song.dname ? song.dname : song.fname}</div>
-														<div style={{width: "55px", textAlign: "right"}}>1:40</div>
+														<div style={{width: "180px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {song.name}</div>
+														<div style={{width: "55px", textAlign: "right"}}>{song.length ? song.length : ""}</div>
 													</div>
 												</div>
 												<div style={{margin: "auto"}}>
