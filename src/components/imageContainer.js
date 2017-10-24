@@ -9,7 +9,7 @@ class ImageContainer extends Component {
 		}
 	}
 	componentWillReceiveProps(nextProps) {
-		if (this.props.CurrentFile !== nextProps.CurrentFile){
+		if (this.props.CurrentFile !== nextProps.CurrentFile || this.props.artifact !== nextProps.artifact){
 			this.setState({src: ""});
 			this.hasUpdated = true;
 		}
@@ -17,7 +17,9 @@ class ImageContainer extends Component {
 		if (nextProps.DisplayPaywall){
 			this.loadIntoImage(nextProps.artifact, nextProps.ThumbnailFile);
 		} else {
-			this.loadIntoImage(nextProps.artifact, nextProps.CurrentFile);
+			if (this.props.CurrentFile !== nextProps.CurrentFile){
+				this.loadIntoImage(nextProps.artifact, nextProps.CurrentFile);
+			}
 		}
 	}
 	constructor(props) {
@@ -41,12 +43,12 @@ class ImageContainer extends Component {
 				} catch(e) { }
 			})
 
-			setTimeout(function(){
-				if (!_this.hasUpdated){
-					let longURL = _this.props.Core.util.buildIPFSURL(ipfsShortURL);
-					_this.setState({ src: longURL });
-				}
-			}, 2 * 1000)
+			// setTimeout(function(){
+			// 	if (!_this.hasUpdated){
+			// 		let longURL = _this.props.Core.util.buildIPFSURL(ipfsShortURL);
+			// 		_this.setState({ src: longURL });
+			// 	}
+			// }, 2 * 1000)
 		}
 	}
 	render() {
