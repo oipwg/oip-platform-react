@@ -134,6 +134,7 @@ class AudioContainer extends Component {
 								let palette = colorThief.getPalette(_this.refs.image, 2);
 								_this.setState({bgColor: "rgb(" + palette[0].join(',') + ")"})
 								_this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
+								pic = undefined;
 							} catch (e) { }
 						}
 						pic.src = srcData;
