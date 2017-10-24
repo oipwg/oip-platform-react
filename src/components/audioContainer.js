@@ -261,7 +261,21 @@ class AudioContainer extends Component {
 							<img ref="image" src={this.state.songs[0].src} style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}} alt="" />
 						</div>
 						<div className="col-6" style={{margin: "auto"}}>
-							<div style={{height: "400px", overflowY: "scroll", margin: "auto", maxWidth: "450px"}}>
+						<style dangerouslySetInnerHTML={{
+							__html: [
+								'.scrollbar::-webkit-scrollbar {',
+								'    background-color: ' + this.state.mainColor + ';',
+								'}',
+								'.scrollbar::-webkit-scrollbar-thumb {',
+								'    background-color: ' + this.state.mainColor + ';',
+								'}',
+								'.scrollbar::-webkit-scrollbar-track {',
+								'    background-color: ' + this.state.bgColor + ';',
+								'}'
+							].join('\n')
+						}}>
+						</style>
+							<div className="scrollbar" style={{height: "400px", overflowY: "scroll", margin: "auto", maxWidth: "450px"}}>
 								<h3 style={{color: this.state.mainColor, textAlign: "center"}}>
 								</h3>
 								<SongList 
@@ -270,6 +284,8 @@ class AudioContainer extends Component {
 									Core={this.props.Core} 
 									CurrentFile={this.props.CurrentFile}
 									setCurrentFile={this.props.setCurrentFile}
+									mainColor={this.state.mainColor}
+									bgColor={this.state.bgColor}
 								/>
 							</div>
 						</div>
