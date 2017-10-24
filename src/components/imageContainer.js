@@ -11,13 +11,13 @@ class ImageContainer extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (this.props.CurrentFile !== nextProps.CurrentFile || this.props.artifact !== nextProps.artifact){
 			this.setState({src: ""});
-			this.hasUpdated = true;
+			this.hasUpdated = false;
 		}
 
 		if (nextProps.DisplayPaywall){
 			this.loadIntoImage(nextProps.artifact, nextProps.ThumbnailFile);
 		} else {
-			if (this.props.CurrentFile !== nextProps.CurrentFile){
+			if (this.props.CurrentFile !== nextProps.CurrentFile || this.props.DisplayPaywall !== nextProps.DisplayPaywall){
 				this.loadIntoImage(nextProps.artifact, nextProps.CurrentFile);
 			}
 		}
@@ -34,12 +34,10 @@ class ImageContainer extends Component {
 
 			let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(artifact, file);
 
-			this.hasUpdated = false;
 			let _this = this;
 			this.props.Core.Network.getThumbnailFromIPFS(ipfsShortURL, function(srcData){
 				try {
 					_this.setState({ src: srcData });
-					_this.hasUpdated = true;
 				} catch(e) { }
 			})
 
