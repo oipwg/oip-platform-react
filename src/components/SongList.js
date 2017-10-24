@@ -18,6 +18,12 @@ class SongList extends Component {
 			hash: publisher
 		})
 	}
+	shouldComponentUpdate(nextProps){
+		if (this.props.CurrentFile !== nextProps.CurrentFile || this.props.SongList !== nextProps.SongList)
+			return true;
+		else
+			return false;
+	}
 	componentDidUpdate(){
 
 	}
