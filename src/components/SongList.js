@@ -32,7 +32,7 @@ class SongList extends Component {
 		let _this = this;
 
 		return (
-			<ul className="list-group">
+			<ul className="list-group" style={{width: "450px"}}>
 				<li className="list-group-item" style={{padding: "5px 30px", display:"flex"}}>
 					<div style={{margin: "auto"}}>
 						<button className="btn btn-sm btn-outline-info"><span className="icon icon-controller-play"></span>Play All: Free</button>
@@ -44,9 +44,9 @@ class SongList extends Component {
 					return <li key={i} className={song.fname === _this.props.CurrentFile.fname ? "list-group-item list-group-item-secondary" : "list-group-item"} style={{padding: "0px"}}>
 						<div style={{padding: "4px 5px", display:"flex"}}>
 							<img className="rounded" src={song.albumArtwork} width="40px" height="40px" alt="" />
-							<div style={{padding: "0px 10px", width:"250px"}}>
+							<div style={{padding: "0px 10px", width:"235px"}}>
 								<div style={{fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{song.artist}</div>
-								<div style={{color: "#555",fontSize:"12px", width: "250px", display: "flex"}}>
+								<div style={{color: "#555",fontSize:"12px", width: "235px", display: "flex"}}>
 									<div style={{width: "180px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {song.name}</div>
 									<div style={{width: "55px", textAlign: "right"}}>{song.length ? song.length : ""}</div>
 								</div>
