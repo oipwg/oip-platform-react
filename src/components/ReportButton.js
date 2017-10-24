@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
-import {
-	Link
-} from 'react-router-dom'
-
 class ReportButton extends Component {
 	constructor(props){
 		super(props);
@@ -21,7 +17,6 @@ class ReportButton extends Component {
 		})
 	}
 	render() {
-		let _this = this;
 		return (
 			<div style={{display: "inline"}}>
 				<Button id="ReportPopover" onClick={this.toggle} className="btn btn-sm btn-outline-dark btn-margin-right">

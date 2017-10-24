@@ -8,7 +8,6 @@ class TextViewer extends Component {
 		let pdf = false;
 
 		let files = this.props.artifact['oip-041'].artifact.storage.files;
-		let mainHash = this.props.artifact['oip-041'].artifact.storage.location;
 
 		for (var i = 0; i < files.length; i++){
 			if (files[i].type === "Text" && (this.props.Core.util.getExtension(files[i].fname) === "pdf" || this.props.Core.util.getExtension(files[i].fname) === "PDF"))

@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
-import {
-	Link
-} from 'react-router-dom'
-
 class TipButton extends Component {
 	constructor(props){
 		super(props);
@@ -25,7 +21,6 @@ class TipButton extends Component {
 		this.toggle();
 	}
 	render() {
-		let _this = this;
 		return (
 			<div style={{display: "inline"}}>
 				<Button id="TipPopover" onClick={this.toggle} className="btn btn-sm btn-outline-success btn-margin-right">

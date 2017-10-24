@@ -99,7 +99,7 @@ class App extends Component {
 			Core.Index.getArtifactFromID(artifact, function(artifact){
 				_this.setupArtifact(artifact);
 			});
-		} else if (typeof artifact === "Object"){
+		} else if (typeof artifact === "object"){
 			// We were directly passed an Artifact, directly set to state.
 			this.setupArtifact(artifact);
 		}

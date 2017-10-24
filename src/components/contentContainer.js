@@ -60,7 +60,9 @@ class ContentContainer extends Component {
 				sugBuy = 0;
 			}
 
+			// eslint-disable-next-line
 			let playDecimal = sugPlay - parseInt(sugPlay);
+			// eslint-disable-next-line
 			let buyDecimal = sugBuy - parseInt(sugBuy);
 
 			if (playDecimal.toString().length === 3){

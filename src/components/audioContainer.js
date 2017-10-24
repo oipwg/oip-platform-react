@@ -89,6 +89,9 @@ class AudioContainer extends Component {
 		window.cancelAnimationFrame( this._frameId );
 	}
 	visualizationLoop(){
+		if (this.refs.audio.crossOrigin !== "anonymous")
+			this.refs.audio.crossOrigin = "anonymous";
+
 		let freqData = new Uint8Array(this.analyser.frequencyBinCount)
         this.analyser.getByteFrequencyData(freqData)
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -238,8 +241,6 @@ class AudioContainer extends Component {
 		}
 	}
 	render() {
-		let paid = this.props.Core.Artifact.paid(this.props.artifact);
-
 		return (
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden"}}>
                 <audio

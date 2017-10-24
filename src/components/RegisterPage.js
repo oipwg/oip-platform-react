@@ -7,11 +7,7 @@ import {
 import Recaptcha from 'react-recaptcha';
 
 class RegisterPage extends Component {
-	constructor(props){
-		super(props);
-	}
 	render() {
-		let _this = this;
 		return (
 			<div className="container">
 				<div className="row justify-content-center">
@@ -82,7 +78,7 @@ class RegisterPage extends Component {
 						<br />
 						<div className="row">
 							<div className="col-12" style={{fontSize: "13.5px", margin: "0px 0px", marginBottom: "-10px"}}>
-								By <strong>Registering</strong>, you agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m" data-ytta-id="-">Terms and Conditions</a>, including our Cookie Use.<p></p>
+								By <strong>Registering</strong>, you agree to the <a href="/terms_and_conditions" data-toggle="modal" data-target="#t_and_c_m" data-ytta-id="-">Terms and Conditions</a>, including our Cookie Use.<p></p>
 							</div>
 						</div>
 						<hr className="colorgraph" />

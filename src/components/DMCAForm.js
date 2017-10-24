@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 
-import {
-  Link
-} from 'react-router-dom'
-
 class DMCAForm extends Component {
-	constructor(props){
-		super(props);
-	}
 	render() {
-		let _this = this;
 		return (
 			<div className="container">
 				<div className="row" style={{marginTop: "100px"}}>

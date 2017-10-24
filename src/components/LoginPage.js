@@ -5,11 +5,7 @@ import {
 } from 'react-router-dom'
 
 class LoginPage extends Component {
-	constructor(props){
-		super(props);
-	}
 	render() {
-		let _this = this;
 		return (
 			<div className="container">
 				<div className="row justify-content-center">

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import Identicons from 'identicons-react';
-
 class SongList extends Component {
 	constructor(props){
 		super(props);

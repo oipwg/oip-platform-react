@@ -9,9 +9,6 @@ class ImageContainer extends Component {
 		}
 	}
 	componentWillReceiveProps(nextProps) {
-		//console.log(nextProps.ArtifactManager.currentFile);
-		let mainFile;
-
 		if (this.props.CurrentFile !== nextProps.CurrentFile){
 			this.setState({src: ""});
 			this.hasUpdated = true;

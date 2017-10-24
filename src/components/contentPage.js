@@ -7,7 +7,7 @@ import IssoComments from './isso/IssoComments.js'
 import ContentCard from './contentCard.js'
 
 import ArtifactManager from '../modules/ArtifactManager.js';
-import PlaylistManager from '../modules/PlaylistManager.js';
+//import PlaylistManager from '../modules/PlaylistManager.js';
 
 class ContentPage extends Component {
 	constructor(props){
