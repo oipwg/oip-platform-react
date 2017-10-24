@@ -33,6 +33,7 @@ class AudioContainer extends Component {
 		this.updateSong = this.updateSong.bind(this)
 		this.toggleAudio = this.toggleAudio.bind(this)
 		this.toHHMMSS = this.toHHMMSS.bind(this);
+		this.nextSong = this.nextSong.bind(this);
 
 		this.startVisualizationLoop = this.startVisualizationLoop.bind(this);
 		this.stopVisualizationLoop = this.stopVisualizationLoop.bind(this);
@@ -103,7 +104,11 @@ class AudioContainer extends Component {
         if (this.audio.currentTime > 0)
         	this.setState({mainSongProgress: this.audio.currentTime / this.audio.duration * 100, currentTime: this.audio.currentTime, currentDuration: this.audio.duration, playing: !this.audio.paused})
 
-		this._frameId = window.requestAnimationFrame( this.visualizationLoop )
+        if (this.audio.currentTime === this.audio.duration){
+        	this.nextSong();
+        } 
+        
+        this._frameId = window.requestAnimationFrame( this.visualizationLoop )
 	}
 	updateThumbnail(props){
 		let thumbnailURL = "";
@@ -216,6 +221,21 @@ class AudioContainer extends Component {
 	    } else {
 	    	return minutes+':'+seconds;
 	    }
+	}
+	nextSong(){
+		let songs = this.props.SongList;
+		let setNextSong = false;
+		let haveSetNextSong = false;
+
+		for (var i = 0; i < songs.length; i++) {
+			if (setNextSong && !haveSetNextSong){
+				this.props.setCurrentFile(songs[i])
+				haveSetNextSong = true;
+			}
+			if (songs[i].fname === this.props.CurrentFile.fname){
+				setNextSong = true;
+			}
+		}
 	}
 	render() {
 		let paid = this.props.Core.Artifact.paid(this.props.artifact);
