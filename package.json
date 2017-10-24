@@ -25,6 +25,8 @@
     "reactstrap": "^5.0.0-alpha.3",
     "redux": "^3.7.2",
     "video.js": "^6.2.4",
+    "videojs-qualityselector": "0.0.1",
+    "videojs-resolution-switcher": "^0.4.2",
     "wavesurfer.js": "^1.4.0"
   },
   "scripts": {

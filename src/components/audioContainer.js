@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import ColorThief from 'color-thief-standalone'
+import ColorThief from 'color-thief-standalone';
+
+import SongList from './SongList.js';
 
 class AudioContainer extends Component {
 	constructor(props) {
@@ -53,8 +55,10 @@ class AudioContainer extends Component {
 			this.refs.audio.play()
 		}
 
-		if (this.props.artifact !== nextProps.artifact){
-			this.setState({currentTime: 0, currentDuration: 0})
+		if (this.props.CurrentFile !== nextProps.CurrentFile){
+			let songURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(nextProps.artifact, nextProps.CurrentFile));
+
+			this.setState({currentTime: 0, currentDuration: 0, currentSongURL: songURL});
 		}
 
 		return true;
@@ -214,11 +218,13 @@ class AudioContainer extends Component {
 	    }
 	}
 	render() {
+		let paid = this.props.Core.Artifact.paid(this.props.artifact);
+
 		return (
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden"}}>
                 <audio
                     ref="audio"
-                    autoPlay={false}
+                    autoPlay={this.props.DisplayPaywall ? false : true}
                     controls={true}
                     //this is the link to my song url feel free to use it or replace it with your own
                     src={this.state.currentSongURL}
@@ -237,34 +243,13 @@ class AudioContainer extends Component {
 							<div style={{height: "400px", overflowY: "scroll", margin: "auto", maxWidth: "450px"}}>
 								<h3 style={{color: this.state.mainColor, textAlign: "center"}}>
 								</h3>
-								<ul className="list-group">
-									<li className="list-group-item" style={{padding: "5px 30px", display:"flex"}}>
-										<div style={{margin: "auto"}}>
-											<button className="btn btn-sm btn-outline-info"><span className="icon icon-controller-play"></span>Play All: Free</button>
-											<span style={{paddingLeft: "10px"}}></span>
-											<button className="btn btn-sm btn-outline-info"><span className="icon icon-download"></span> Buy All: Free</button>
-										</div> 
-									</li>
-									{this.props.SongList.map(function(song, i){
-										return <li className={i === 0 ? "list-group-item list-group-item-secondary" : "list-group-item"} style={{padding: "0px"}}>
-											<div style={{padding: "4px 5px", display:"flex"}}>
-												<img className="rounded" src={song.albumArtwork} width="40px" height="40px" alt="" />
-												<div style={{padding: "0px 10px", width:"250px"}}>
-													<div style={{fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{song.artist}</div>
-													<div style={{color: "#555",fontSize:"12px", width: "250px", display: "flex"}}>
-														<div style={{width: "180px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {song.name}</div>
-														<div style={{width: "55px", textAlign: "right"}}>{song.length ? song.length : ""}</div>
-													</div>
-												</div>
-												<div style={{margin: "auto"}}>
-													<button className="btn btn-sm btn-outline-info"><span className="icon icon-controller-play"></span>Free</button>
-													<span style={{paddingLeft: "10px"}}></span>
-													<button className="btn btn-sm btn-outline-info"><span className="icon icon-download"></span>Free</button>
-												</div>
-											</div>
-										</li>
-									})}
-								</ul>
+								<SongList 
+									SongList={this.props.SongList} 
+									artifact={this.props.artifact} 
+									Core={this.props.Core} 
+									CurrentFile={this.props.CurrentFile}
+									setCurrentFile={this.props.setCurrentFile}
+								/>
 							</div>
 						</div>
 					</div>

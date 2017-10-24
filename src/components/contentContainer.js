@@ -124,7 +124,7 @@ class ContentContainer extends Component {
 		return (
 			<div className="content-container">
 				<div id='content' className={ this.state.DisplayPaywall ? "content blur" : "content"} style={this.state.DisplayPaywall  ? {display: "block"} : {display: "inline"}}>
-					{ type ===  'Audio' ? <AudioContainer DisplayPaywall={this.props.DisplayPaywall} artifact={this.props.artifact} Core={this.props.Core} CurrentFile={this.props.CurrentFile} SongList={this.props.SongList} /> : '' }
+					{ type ===  'Audio' ? <AudioContainer DisplayPaywall={this.props.DisplayPaywall} artifact={this.props.artifact} Core={this.props.Core} CurrentFile={this.props.CurrentFile} SongList={this.props.SongList} setCurrentFile={this.props.setCurrentFile} /> : '' }
 					{ type ===  'Video' ? <VideoPlayer DisplayPaywall={this.props.DisplayPaywall} artifact={this.props.artifact} Core={this.props.Core} CurrentFile={this.props.CurrentFile} /> : '' }
 					{ type ===  'Image' ? <ImageContainer artifact={this.props.artifact} DisplayPaywall={this.props.DisplayPaywall} Core={this.props.Core} CurrentFile={this.props.CurrentFile} ThumbnailFile={this.props.ThumbnailFile} /> : '' }
 					{ type ===  'Text' ? <TextViewer artifact={this.props.artifact} Core={this.props.Core} /> : '' }
