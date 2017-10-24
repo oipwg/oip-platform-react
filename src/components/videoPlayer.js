@@ -14,11 +14,11 @@ class VideoPlayer extends Component {
 		this.createVideoPlayer();
 	}
 	shouldComponentUpdate(nextProps, nextState){
-		if (this.props.artifact === nextProps.artifact && this.props.DisplayPaywall && !nextProps.DisplayPaywall){
+		if (this.props.CurrentFile === nextProps.CurrentFile && this.props.DisplayPaywall && !nextProps.DisplayPaywall){
 			this.player.play()
 		}
 
-		if (this.props.artifact === nextProps.artifact){
+		if (this.props.CurrentFile === nextProps.CurrentFile){
 			return false;
 		} else {
 			return true;
