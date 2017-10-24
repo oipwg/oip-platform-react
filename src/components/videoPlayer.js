@@ -30,6 +30,7 @@ class VideoPlayer extends Component {
 	componentWillUnmount() {
 		if (this.player) {
 			try {
+				this.player.pause()
 				this.player.reset()
 			} catch(e){
 				console.error(e);
