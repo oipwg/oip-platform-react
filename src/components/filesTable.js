@@ -4,7 +4,44 @@ class FilesTable extends Component {
 	constructor(props){
 		super(props);
 
+		this.state = {
+			files: []
+		}
+
 		this.viewFile = this.viewFile.bind(this);
+		this.stripUnimportantFiles = this.stripUnimportantFiles.bind(this);
+	}
+	shouldComponentUpdate(nextProps){
+		return true;
+	}
+	componentWillReceiveProps(nextProps){
+		this.setState({files: nextProps.files});
+
+		if (!nextProps.extendedView)
+			this.stripUnimportantFiles(nextProps.files, nextProps);
+	}
+	componentDidMount(){
+		this.setState({files: this.props.files});
+
+		if (!this.props.extendedView)
+			this.stripUnimportantFiles(this.props.files, this.props);
+	}
+	stripUnimportantFiles(files, props){
+		let newFiles = [];
+
+		console.log(files);
+
+		if (files.length <= 6){
+			for (var i = 0; i < files.length; i++) {
+				if (files[i].subtype !== "cover"){
+					if (!files[i] || !props.CurrentFile || files[i].fname !== props.CurrentFile.fname){
+						newFiles.push(JSON.parse(JSON.stringify(files[i])));
+					}
+				}
+			}
+		}
+			
+		this.setState({files: newFiles});
 	}
 	viewFile(file){
 		this.props.setCurrentFile(file);
@@ -15,7 +52,7 @@ class FilesTable extends Component {
 			<div>
 				<table className="table table-sm table-striped table-bordered text-center table-hover table-responsive table-inverse" style={{width: "100%", verticalAlign: "middle"}}>
 					<tbody>
-						{this.props.files.map(function(file, i){
+						{this.state.files.map(function(file, i){
 							return <tr key={i}>
 										<th scope="row"><span className={"icon icon-" + file.icon} style={{margin: "auto", display: "table", marginTop: "4px"}}></span></th>
 										<td style={{verticalAlign: "middle"}}>{file.subtype ? file.subtype : file.type}</td>

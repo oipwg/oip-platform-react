@@ -53,7 +53,7 @@ class ContentPage extends Component {
 				<div className="container">
 					<div className="row">
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
-							<ContentInfo artifact={this.props.DisplayedArtifact} Core={this.props.Core} ArtifactManager={ArtifactManager} setCurrentFile={this.props.setCurrentFile} />
+							<ContentInfo artifact={this.props.DisplayedArtifact} Core={this.props.Core} ArtifactManager={ArtifactManager} setCurrentFile={this.props.setCurrentFile} CurrentFile={this.props.CurrentFile} />
 							<br />
 							{this.props.DisplayedArtifact ? 
 								<div>

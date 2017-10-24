@@ -43,7 +43,7 @@ class SongList extends Component {
 					</div> 
 				</li>
 				{this.props.SongList.map(function(song, i){
-					return <li className={song.fname === _this.props.CurrentFile.fname ? "list-group-item list-group-item-secondary" : "list-group-item"} style={{padding: "0px"}}>
+					return <li key={i} className={song.fname === _this.props.CurrentFile.fname ? "list-group-item list-group-item-secondary" : "list-group-item"} style={{padding: "0px"}}>
 						<div style={{padding: "4px 5px", display:"flex"}}>
 							<img className="rounded" src={song.albumArtwork} width="40px" height="40px" alt="" />
 							<div style={{padding: "0px 10px", width:"250px"}}>
