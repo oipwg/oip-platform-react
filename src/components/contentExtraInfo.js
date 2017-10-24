@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import FilesTable from './filesTable.js';
 import moment from 'moment';
+import Linkify from 'react-linkify';
 
 class ContentExtraInfo extends Component {
 	constructor(props){
@@ -75,7 +76,7 @@ class ContentExtraInfo extends Component {
 		return (
 			<div>
 				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.state.niceTime}</strong></p>
-				<p style={{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"}}>{this.state.description}</p>
+				<p style={{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"}}><Linkify>{this.state.description}</Linkify></p>
 				<FilesTable files={this.state.files} setCurrentFile={this.props.setCurrentFile} />
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
 					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />
