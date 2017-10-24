@@ -19,8 +19,8 @@ To test this application, you will need to preform the following commands.
 - [ ] Open PDF in new Tab button (PDFViewer) (if free or paid)
 - [ ] Font & Size controls for Ebooks & Text/Markdown
 - [ ] Image Artifact type Full Screen button
-- [ ] Share Modal
-- [ ] Tip Modal
+- [x] Share Modal
+- [x] Tip Modal
 - [ ] Report Modal
 - [ ] Tradebot Modal
 - [ ] Payment UI
@@ -28,8 +28,8 @@ To test this application, you will need to preform the following commands.
 - [ ] Audio Artifact implement similar to Mini-player (Artwork, Songname, Artist Name)
 - [ ] Audio Artifact unlimited Playlist
 - [ ] Playlists
-- [ ] Music Player Controls
-- [ ] Album Buy all button
+- [x] Music Player Controls
+- [x] Album Buy all button
 - [ ] Pin to Play payment button
 - [ ] Wallet Info page
 - [ ] Analytics Page
@@ -39,7 +39,7 @@ To test this application, you will need to preform the following commands.
 - [ ] Tools page (push tx's, raw artifacts, etc)
 - [ ] Logged out state
 - [ ] Register User page
-- [ ] Login page
+- [x] Login page
 - [ ] Publisher
 - [ ] About Page
 - [ ] Tip the Developers page
