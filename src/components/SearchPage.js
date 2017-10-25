@@ -24,7 +24,7 @@ class SearchPage extends Component {
 
 		props.Core.Index.search(props.match.params.id, function(results){
 			console.log(results);
-			_this.setState({searchResults: results});
+			_this.setState({searchResults: results.artifacts});
 		});
 	}
 	render() {

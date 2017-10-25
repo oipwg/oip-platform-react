@@ -255,27 +255,26 @@ class AudioContainer extends Component {
                 </audio>
                 <div className="container" style={{height: "90%"}}>
 	                <div className="row" style={{height: "90%"}}>
-		                <div className="col-6" style={{margin: "auto"}}>
+		                <div className={this.props.SongList.length > 1 ? "col-6" : "col-12"} style={{margin: "auto"}}>
 		                	<h3 className="text-center" style={{color: this.state.mainColor}}>
 		                		{this.props.CurrentFile.dname ? this.props.CurrentFile.dname : this.props.CurrentFile.fname} - {this.state.currentSongArtist}
 		                	</h3>
 							<img ref="image" src={this.state.songs[0].src} style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}} alt="" />
 						</div>
-						<div className="col-6" style={{margin: "auto"}}>
-						<style dangerouslySetInnerHTML={{
-							__html: [
-								'.scrollbar::-webkit-scrollbar {',
-								'    background-color: ' + this.state.mainColor + ';',
-								'}',
-								'.scrollbar::-webkit-scrollbar-thumb {',
-								'    background-color: ' + this.state.mainColor + ';',
-								'}',
-								'.scrollbar::-webkit-scrollbar-track {',
-								'    background-color: ' + this.state.bgColor + ';',
-								'}'
-							].join('\n')
-						}}>
-						</style>
+						{this.props.SongList.length > 1 ? <div className="col-6" style={{margin: "auto"}}>
+							<style dangerouslySetInnerHTML={{
+								__html: [
+									'.scrollbar::-webkit-scrollbar {',
+									'    background-color: ' + this.state.mainColor + ';',
+									'}',
+									'.scrollbar::-webkit-scrollbar-thumb {',
+									'    background-color: ' + this.state.mainColor + ';',
+									'}',
+									'.scrollbar::-webkit-scrollbar-track {',
+									'    background-color: ' + this.state.bgColor + ';',
+									'}'
+								].join('\n')
+							}} />
 							<div className="scrollbar" style={{height: "400px", overflowY: "scroll", margin: "auto", maxWidth: "450px"}}>
 								<h3 style={{color: this.state.mainColor, textAlign: "center"}}>
 								</h3>
@@ -289,7 +288,7 @@ class AudioContainer extends Component {
 									bgColor={this.state.bgColor}
 								/>
 							</div>
-						</div>
+						</div> : ""}
 					</div>
 				</div>
 				<div style={{width:"102%", height: "200px", position: "absolute", bottom: "10px", marginLeft: "-10px"}}>
