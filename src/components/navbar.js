@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 import {
-	Link
+	Link,
+	Redirect
 } from 'react-router-dom'
 
 class Navbar extends Component {
@@ -10,9 +11,15 @@ class Navbar extends Component {
 		super(props);
 
 		this.toggle = this.toggle.bind(this);
+		this.searchForArtifacts = this.searchForArtifacts.bind(this);
+		this.updateTextInput = this.updateTextInput.bind(this);
+		this.handleKeyPress = this.handleKeyPress.bind(this);
+
 		this.state = {
 			dropdownOpen: false,
-			loggedIn: false
+			loggedIn: false,
+			searchTerm: "test",
+			search: false
 		};
 	}
 
@@ -21,9 +28,22 @@ class Navbar extends Component {
 			dropdownOpen: !this.state.dropdownOpen
 		});
 	}
+	searchForArtifacts(){
+		this.setState({search: true});
+	}
+	updateTextInput(e){
+		this.setState({search: false, searchTerm: this.refs.search.value});
+	}
+	handleKeyPress(event){
+		if(event.key == 'Enter'){
+			event.preventDefault();
+			this.searchForArtifacts();
+		}
+	}
 	render() {
 		return (
 			<div>
+				{this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm} /> : ""}
 				<nav className="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
 					<Link className="navbar-brand" to="/">
 						<img src="/assets/img/logo-full.png" width="auto" height="32px" className="d-inline-block align-top" alt="" />
@@ -37,9 +57,9 @@ class Navbar extends Component {
 								<li style={{display:"inline-block"}}>
 									<form className="form-inline">
 										<div className="input-group">
-											<input type="text" className="form-control outline-white" placeholder="Search..." style={{width: "350px"}} />
+											<input ref="search" type="text" className="form-control outline-white" placeholder="Search..." style={{width: "350px"}} onInput={this.updateTextInput} onKeyPress={this.handleKeyPress} />
 											<span className="input-group-btn">
-												<button className="btn btn-outline-white" type="button">Search</button>
+												<button className="btn btn-outline-white" type="button" onClick={this.searchForArtifacts}>Search</button>
 											</span>
 										</div>
 									</form>

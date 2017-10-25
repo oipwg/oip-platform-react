@@ -150,7 +150,10 @@ class App extends Component {
 		const supportsHistory = 'pushState' in window.history;
 
 		return (
-			<Router forceRefresh={!supportsHistory} >
+			<Router 
+				forceRefresh={!supportsHistory} 
+				basename={"/"}
+			>
 				<div>
 					{/* This is to add transitions to the app, fade, etc. */}
 					<CSSTransitionGroup
@@ -160,7 +163,9 @@ class App extends Component {
 					/>
 
 					{/* Include all components that need to be rendered above the main container content */}
-					<Navbar />
+					<Navbar 
+						Core={Core}
+					/>
 
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
