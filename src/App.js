@@ -175,7 +175,7 @@ class App extends Component {
 						<Route path="/register" component={RegisterPage} />
 						<Route path="/dmca" component={DMCAForm} />
 
-						<Route path="/pub/:id" render={props => <PublisherPage CurrentSuggestedContent={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
+						<Route path="/pub/:id" render={props => <PublisherPage suggestedContent={this.state.SupportedArtifacts.slice(0,10)} Core={Core} {...props} />} />
 
 						<Route path="/search/:id" render={props => <SearchPage SearchResults={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
 

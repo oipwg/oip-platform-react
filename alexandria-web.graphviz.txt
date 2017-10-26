@@ -1,0 +1,167 @@
+# http://viz-js.com/
+# render using 
+# Engine: dot
+# Format: svg
+# http://www.graphviz.org/content/cluster
+
+digraph G {
+    size="3,0.4"; ratio=fill;
+    
+    "Alexandria Web" -> "Static Pages";
+    "Alexandria Web" -> "Interactive Pages";
+    
+    "Static Pages" -> "About Page";
+    "Static Pages" -> "Contact Page";
+    
+    "Interactive Pages" -> "User Pages";
+    "Interactive Pages" -> Publisher;
+    "Interactive Pages" -> "Publisher Page";
+    "Interactive Pages" -> Homepage;
+    "Interactive Pages" -> "Artifact View";
+    
+    "User Pages" -> Login;
+    "User Pages" -> Register;
+    "User Pages" -> Settings;
+    
+    Login -> "Remember me btn";
+    Login -> "Error Message on Login Failure";
+    Login -> "2FA Login";
+    Login -> "Reset Password";
+    
+    Register -> "Username";
+    Register -> "Unique Email";
+    Register -> "Password & Confirm Password";
+    Register -> "Password Suggestion";
+    Register -> "Recaptcha for Faucet";
+    Register -> "Accept T&C";
+    
+    Settings -> "Edit Publisher Info";
+    Settings -> "Set Avatar";
+    Settings -> "NSFW Toggle";
+    Settings -> "Currency Selector";
+    
+    Homepage -> "Suggested Content";
+    Homepage -> "Suggested Publishers";
+    Homepage -> "Latest Content";
+    Homepage -> "Publisher Block";
+    
+    "Publisher Block" -> "Avatar & Username";
+    "Publisher Block" -> "Follow Btn + Count";
+    "Publisher Block" -> "Artifacts from Pub";
+    
+    "Artifact View" -> "Content Viewer";
+    "Artifact View" -> "Artifact Info";
+    "Artifact View" -> Comments;
+    "Artifact View" -> "Artifact Suggestions";
+    
+    "Content Viewer" -> "Content Paywall";
+    "Content Viewer" -> "Audio Player";
+    "Content Viewer" -> "Video Player";
+    "Content Viewer" -> "Image View";
+    "Content Viewer" -> "Text View";
+    "Content Viewer" -> "Software View";
+    "Content Viewer" -> "HTML View";
+    
+    "Content Paywall" -> "Blured Background";
+    "Content Paywall" -> "To {view text} this {subtype}";
+    "Content Paywall" -> "Play/Buy Button";
+    "Content Paywall" -> "Watch Ad Button";
+    "Content Paywall" -> "Pin to Play";
+    
+    "Audio Player" -> "Gooey Player";
+    "Audio Player" -> "Current Playing Title";
+    "Audio Player" -> "Album Art (Large)";
+    "Audio Player" -> SongList;
+    
+    "Gooey Player" -> "Play/Pause";
+    "Gooey Player" -> "Song Progress Bar";
+    "Gooey Player" -> "Current Time / Duration";
+    "Gooey Player" -> "Volume Control";
+    "Gooey Player" -> "Colors based on Album Artwork";
+    "Gooey Player" -> "Gooey EQ Visualizer";
+    
+    SongList -> "Album Art (Small)";
+    SongList -> "Title";
+    SongList -> "Track Length";
+    SongList -> "Play/Buy All Buttons";
+    
+    "Video Player" -> "VideoJS Player";
+    "Video Player" -> "VidThumbnail";
+    "Video Player" -> "Multiple Quality Support";
+    
+    "Image View" -> "Large Image Central";
+    "Image View" -> "Full Screen Btn";
+    
+    "Text View" -> "PDF Viewer if PDF";
+    "Text View" -> "Render Markdown Documents";
+    "Text View" -> "Plaintext if none";
+    
+    "Software View" -> "Info about software";
+    "Software View" -> "Purchase License/Software";
+    "Software View" -> "Retreive license? (with pubkey)";
+    
+    "HTML View" -> "Full width iFrame";
+    "HTML View" -> "XSS Concerns?";
+    
+    "Artifact Info" -> "type-icon + title";
+    "Artifact Info" -> "View counter";
+    "Artifact Info" -> "Publisher Avatar & Name";
+    "Artifact Info" -> "Follow Button";
+    "Artifact Info" -> "Follow Count";
+    "Artifact Info" -> "Share Button";
+    "Artifact Info" -> "Tip Button";
+    "Artifact Info" -> "More Button";
+    "Artifact Info" -> "Publish Date";
+    "Artifact Info" -> "Artifact Description";
+    "Artifact Info" -> "File Table";
+    "Artifact Info" -> "See More/See Less";
+    
+    "Publisher Avatar & Name" -> "If none, use Identicons";
+    
+    "Share Button" -> "Share to Facebook";
+    "Share Button" -> "Share to Twitter";
+    "Share Button" -> "Share to Reddit";
+    "Share Button" -> "Share to Steemit";
+    "Share Button" -> "Share to Gab";
+    
+    "More Button" -> "Report/DMCA";
+    
+    "Tip Button" -> "3 tip suggestions";
+    "Tip Button" -> "Custom button/input";
+    
+    "Artifact Description" -> "Add URL's";
+    
+    "File Table" -> "Hide if > 5";
+    
+    "Comments" -> "Tip & Post (Florincoin)";
+    "Comments" -> "Post (isso)";
+    "Comments" -> "Sort by top tip, popularity, most recent";
+    "Comments" -> "Nested commenting";
+    "Comments" -> "Voting system";
+    "Comments" -> "Report Comment";
+    
+    "Artifact Suggestions" -> "Suggest Related";
+    "Artifact Suggestions" -> "Suggest User Most likely";
+    "Artifact Suggestions" -> "Suggest most recent";
+    
+    Publisher -> Wizard;
+    Publisher -> Drafts;
+    Publisher -> "My Artifacts";
+    Publisher -> "Publish Status";
+    
+    "Publisher Page" -> "Avatar & Username ";
+    "Publisher Page" -> "Header Photo";
+    "Publisher Page" -> "Pub Description";
+    "Publisher Page" -> "Artifacts tab";
+    "Publisher Page" -> "Playlists tab";
+    "Publisher Page" -> "About tab";
+    "Publisher Page" -> "Support tab";
+    
+    "Support tab" -> "Support Goal";
+    "Support tab" -> "Support info";
+    "Support tab" -> "Supporter Only Artifacts";
+    "Support tab" -> "Supporter list";
+    "Support tab" -> "Top Supporters";
+    
+    "About Page";
+}

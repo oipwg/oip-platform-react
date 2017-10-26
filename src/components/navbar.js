@@ -22,7 +22,6 @@ class Navbar extends Component {
 			search: false
 		};
 	}
-
 	toggle() {
 		this.setState({
 			dropdownOpen: !this.state.dropdownOpen
@@ -30,6 +29,10 @@ class Navbar extends Component {
 	}
 	searchForArtifacts(){
 		this.setState({search: true});
+		let _this = this;
+		setTimeout(function(){
+			_this.setState({search: false});
+		}, 100)
 	}
 	updateTextInput(e){
 		this.setState({search: false, searchTerm: this.refs.search.value});

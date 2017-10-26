@@ -23,7 +23,6 @@ class SearchPage extends Component {
 		let _this = this;
 
 		props.Core.Index.search(props.match.params.id, function(results){
-			console.log(results);
 			_this.setState({searchResults: results.artifacts});
 		});
 	}
