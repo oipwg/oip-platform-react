@@ -17,11 +17,13 @@ digraph G {
     "Interactive Pages" -> Publisher;
     "Interactive Pages" -> "Publisher Page";
     "Interactive Pages" -> Homepage;
+    "Interactive Pages" -> Search;
     "Interactive Pages" -> "Artifact View";
     
     "User Pages" -> Login;
     "User Pages" -> Register;
     "User Pages" -> Settings;
+    "User Pages" -> Analytics;
     
     Login -> "Remember me btn";
     Login -> "Error Message on Login Failure";
@@ -44,6 +46,9 @@ digraph G {
     Homepage -> "Suggested Publishers";
     Homepage -> "Latest Content";
     Homepage -> "Publisher Block";
+    
+    Search -> "Load Artifacts";
+    Search -> "Load Pub Blocks";
     
     "Publisher Block" -> "Avatar & Username";
     "Publisher Block" -> "Follow Btn + Count";
@@ -88,6 +93,7 @@ digraph G {
     "Video Player" -> "VideoJS Player";
     "Video Player" -> "VidThumbnail";
     "Video Player" -> "Multiple Quality Support";
+    "Video Player" -> "Video Playlist";
     
     "Image View" -> "Large Image Central";
     "Image View" -> "Full Screen Btn";
@@ -117,6 +123,7 @@ digraph G {
     "Artifact Info" -> "See More/See Less";
     
     "Publisher Avatar & Name" -> "If none, use Identicons";
+    "Publisher Avatar & Name" -> "Click takes you to Publisher Page";
     
     "Share Button" -> "Share to Facebook";
     "Share Button" -> "Share to Twitter";
