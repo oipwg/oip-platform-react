@@ -38,7 +38,7 @@ class Navbar extends Component {
 		this.setState({search: false, searchTerm: this.refs.search.value});
 	}
 	handleKeyPress(event){
-		if(event.key == 'Enter'){
+		if(event.key === 'Enter'){
 			event.preventDefault();
 			this.searchForArtifacts();
 		}
