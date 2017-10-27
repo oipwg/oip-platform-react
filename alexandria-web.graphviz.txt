@@ -10,8 +10,14 @@ digraph G {
     "Alexandria Web" -> "Static Pages";
     "Alexandria Web" -> "Interactive Pages";
     
+    "Static Pages" [style=filled, color=LightCoral];
+    "Interactive Pages";
+    
     "Static Pages" -> "About Page";
     "Static Pages" -> "Contact Page";
+    
+    "About Page" [style=filled, color=LightCoral];
+    "Contact Page" [style=filled, color=LightCoral];
     
     "Interactive Pages" -> "User Pages";
     "Interactive Pages" -> Publisher;
@@ -20,15 +26,32 @@ digraph G {
     "Interactive Pages" -> Search;
     "Interactive Pages" -> "Artifact View";
     
+    "User Pages" [style=filled, color=yellow];
+    Publisher [style=filled, color=LightCoral];
+    "Publisher Page" [style=filled, color=yellow];
+    Homepage [style=filled, color=yellow];
+    Search [style=filled, color=yellow];
+    "Artifact View" [style=filled, color=yellow];
+    
     "User Pages" -> Login;
     "User Pages" -> Register;
     "User Pages" -> Settings;
     "User Pages" -> Analytics;
     
+    Login [style=filled, color=yellow];
+    Register [style=filled, color=yellow];
+    Settings [style=filled, color=yellow];
+    Analytics [style=filled, color=LightCoral];
+    
     Login -> "Remember me btn";
     Login -> "Error Message on Login Failure";
     Login -> "2FA Login";
     Login -> "Reset Password";
+    
+    "Remember me btn" [style=filled, color=LightCoral];
+    "Error Message on Login Failure" [style=filled, color=LightCoral];
+    "2FA Login" [style=filled, color=LightCoral];
+    "Reset Password" [style=filled, color=LightCoral];
     
     Register -> "Username";
     Register -> "Unique Email";
@@ -37,27 +60,56 @@ digraph G {
     Register -> "Recaptcha for Faucet";
     Register -> "Accept T&C";
     
+    "Username" [style=filled, color=LightCoral];
+    "Unique Email" [style=filled, color=LightCoral];
+    "Password & Confirm Password" [style=filled, color=LightCoral];
+    "Password Suggestion" [style=filled, color=LightCoral];
+    "Recaptcha for Faucet" [style=filled, color=LightCoral];
+    "Accept T&C" [style=filled, color=LightCoral];
+    
     Settings -> "Edit Publisher Info";
     Settings -> "Set Avatar";
     Settings -> "NSFW Toggle";
     Settings -> "Currency Selector";
+    
+    "Edit Publisher Info" [style=filled, color=LightCoral];
+    "Set Avatar" [style=filled, color=LightCoral];
+    "NSFW Toggle" [style=filled, color=yellow];
+    "Currency Selector" [style=filled, color=LightCoral];
     
     Homepage -> "Suggested Content";
     Homepage -> "Suggested Publishers";
     Homepage -> "Latest Content";
     Homepage -> "Publisher Block";
     
+    "Suggested Content" [style=filled, color=LightCoral]; 
+    "Suggested Publishers" [style=filled, color=LightCoral];
+    "Latest Content" [style=filled, color=green];
+    "Publisher Block" [style=filled, color=LightCoral];
+    
     Search -> "Load Artifacts";
     Search -> "Load Pub Blocks";
+    
+    "Load Artifacts" [style=filled, color=green];
+    "Load Pub Blocks" [style=filled, color=LightCoral];
     
     "Publisher Block" -> "Avatar & Username";
     "Publisher Block" -> "Follow Btn + Count";
     "Publisher Block" -> "Artifacts from Pub";
     
+    "Avatar & Username" [style=filled, color=LightCoral];
+    "Follow Btn + Count" [style=filled, color=LightCoral];
+    "Artifacts from Pub" [style=filled, color=LightCoral];
+    
     "Artifact View" -> "Content Viewer";
     "Artifact View" -> "Artifact Info";
     "Artifact View" -> Comments;
     "Artifact View" -> "Artifact Suggestions";
+    
+    "Content Viewer" [style=filled, color=yellow];
+    "Artifact Info" [style=filled, color=yellow];
+    Comments [style=filled, color=yellow];
+    "Artifact Suggestions" [style=filled, color=yellow];
     
     "Content Viewer" -> "Content Paywall";
     "Content Viewer" -> "Audio Player";
@@ -67,16 +119,35 @@ digraph G {
     "Content Viewer" -> "Software View";
     "Content Viewer" -> "HTML View";
     
+    "Content Paywall" [style=filled, color=yellow];
+    "Audio Player" [style=filled, color=yellow];
+    "Video Player" [style=filled, color=yellow];
+    "Image View" [style=filled, color=yellow];
+    "Text View" [style=filled, color=yellow];
+    "Software View" [style=filled, color=LightCoral];
+    "HTML View" [style=filled, color=yellow];
+    
     "Content Paywall" -> "Blured Background";
     "Content Paywall" -> "To {view text} this {subtype}";
     "Content Paywall" -> "Play/Buy Button";
     "Content Paywall" -> "Watch Ad Button";
     "Content Paywall" -> "Pin to Play";
     
+    "Blured Background" [style=filled, color=yellow];
+    "To {view text} this {subtype}" [style=filled, color=green];
+    "Play/Buy Button" [style=filled, color=green];
+    "Watch Ad Button" [style=filled, color=LightCoral];
+    "Pin to Play" [style=filled, color=LightCoral];
+    
     "Audio Player" -> "Gooey Player";
     "Audio Player" -> "Current Playing Title";
     "Audio Player" -> "Album Art (Large)";
     "Audio Player" -> SongList;
+    
+    "Gooey Player" [style=filled, color=green];
+    "Current Playing Title" [style=filled, color=green];
+    "Album Art (Large)" [style=filled, color=green];
+    SongList [style=filled, color=green];
     
     "Gooey Player" -> "Play/Pause";
     "Gooey Player" -> "Song Progress Bar";
@@ -85,32 +156,64 @@ digraph G {
     "Gooey Player" -> "Colors based on Album Artwork";
     "Gooey Player" -> "Gooey EQ Visualizer";
     
+    "Play/Pause" [style=filled, color=green];
+    "Song Progress Bar" [style=filled, color=green];
+    "Current Time / Duration" [style=filled, color=green];
+    "Volume Control" [style=filled, color=yellow];
+    "Colors based on Album Artwork" [style=filled, color=green];
+    "Gooey EQ Visualizer" [style=filled, color=green];
+    
     SongList -> "Album Art (Small)";
     SongList -> "Title";
     SongList -> "Track Length";
     SongList -> "Play/Buy All Buttons";
+    
+    "Album Art (Small)" [style=filled, color=green];
+    "Title" [style=filled, color=green];
+    "Track Length" [style=filled, color=green];
+    "Play/Buy All Buttons" [style=filled, color=yellow];
     
     "Video Player" -> "VideoJS Player";
     "Video Player" -> "VidThumbnail";
     "Video Player" -> "Multiple Quality Support";
     "Video Player" -> "Video Playlist";
     
+    "VideoJS Player" [style=filled, color=green];
+    "VidThumbnail" [style=filled, color=green];
+    "Multiple Quality Support" [style=filled, color=LightCoral];
+    "Video Playlist" [style=filled, color=LightCoral];
+    
     "Image View" -> "Large Image Central";
     "Image View" -> "Full Screen Btn";
+    
+    "Large Image Central" [style=filled, color=green];
+    "Full Screen Btn" [style=filled, color=LightCoral];
     
     "Text View" -> "PDF Viewer if PDF";
     "Text View" -> "Render Markdown Documents";
     "Text View" -> "Plaintext if none";
     
+    "PDF Viewer if PDF" [style=filled, color=yellow];
+    "Render Markdown Documents" [style=filled, color=yellow];
+    "Plaintext if none" [style=filled, color=LightCoral];
+    
     "Software View" -> "Info about software";
     "Software View" -> "Purchase License/Software";
     "Software View" -> "Retreive license? (with pubkey)";
     
+    "Info about software" [style=filled, color=LightCoral];
+    "Purchase License/Software" [style=filled, color=LightCoral];
+    "Retreive license? (with pubkey)" [style=filled, color=LightCoral];
+    
     "HTML View" -> "Full width iFrame";
     "HTML View" -> "XSS Concerns?";
     
+    "Full width iFrame" [style=filled, color=yellow];
+    "XSS Concerns?" [style=filled, color=LightCoral];
+    
     "Artifact Info" -> "type-icon + title";
     "Artifact Info" -> "View counter";
+    "Artifact Info" -> "Analytics ";
     "Artifact Info" -> "Publisher Avatar & Name";
     "Artifact Info" -> "Follow Button";
     "Artifact Info" -> "Follow Count";
@@ -122,8 +225,25 @@ digraph G {
     "Artifact Info" -> "File Table";
     "Artifact Info" -> "See More/See Less";
     
+    "type-icon + title" [style=filled, color=yellow];
+    "View counter" [style=filled, color=yellow];
+    "Analytics " [style=filled, color=LightCoral];
+    "Publisher Avatar & Name" [style=filled, color=yellow];
+    "Follow Button" [style=filled, color=LightCoral];
+    "Follow Count" [style=filled, color=LightCoral];
+    "Share Button" [style=filled, color=yellow];
+    "Tip Button" [style=filled, color=yellow];
+    "More Button" [style=filled, color=yellow];
+    "Publish Date" [style=filled, color=green];
+    "Artifact Description" [style=filled, color=green];
+    "File Table" [style=filled, color=green];
+    "See More/See Less" [style=filled, color=green];
+    
     "Publisher Avatar & Name" -> "If none, use Identicons";
     "Publisher Avatar & Name" -> "Click takes you to Publisher Page";
+    
+    "If none, use Identicons" [style=filled, color=green];
+    "Click takes you to Publisher Page" [style=filled, color=LightCoral];
     
     "Share Button" -> "Share to Facebook";
     "Share Button" -> "Share to Twitter";
@@ -131,14 +251,29 @@ digraph G {
     "Share Button" -> "Share to Steemit";
     "Share Button" -> "Share to Gab";
     
+    "Share to Facebook" [style=filled, color=LightCoral];
+    "Share to Twitter" [style=filled, color=LightCoral];
+    "Share to Reddit" [style=filled, color=LightCoral];
+    "Share to Steemit" [style=filled, color=LightCoral];
+    "Share to Gab" [style=filled, color=LightCoral];
+    
     "More Button" -> "Report/DMCA";
+    
+    "Report/DMCA" [style=filled, color=yellow];
     
     "Tip Button" -> "3 tip suggestions";
     "Tip Button" -> "Custom button/input";
     
+    "3 tip suggestions" [style=filled, color=yellow];
+    "Custom button/input" [style=filled, color=LightCoral];
+    
     "Artifact Description" -> "Add URL's";
     
+    "Add URL's" [style=filled, color=green];
+    
     "File Table" -> "Hide if > 5";
+    
+    "Hide if > 5" [style=filled, color=green];
     
     "Comments" -> "Tip & Post (Florincoin)";
     "Comments" -> "Post (isso)";
@@ -147,14 +282,30 @@ digraph G {
     "Comments" -> "Voting system";
     "Comments" -> "Report Comment";
     
+    "Tip & Post (Florincoin)" [style=filled, color=LightCoral];
+    "Post (isso)" [style=filled, color=LightCoral];
+    "Sort by top tip, popularity, most recent" [style=filled, color=LightCoral];
+    "Nested commenting" [style=filled, color=yellow];
+    "Voting system" [style=filled, color=LightCoral];
+    "Report Comment" [style=filled, color=LightCoral];
+    
     "Artifact Suggestions" -> "Suggest Related";
     "Artifact Suggestions" -> "Suggest User Most likely";
     "Artifact Suggestions" -> "Suggest most recent";
+    
+    "Suggest Related" [style=filled, color=LightCoral];
+    "Suggest User Most likely" [style=filled, color=LightCoral];
+    "Suggest most recent" [style=filled, color=green];
     
     Publisher -> Wizard;
     Publisher -> Drafts;
     Publisher -> "My Artifacts";
     Publisher -> "Publish Status";
+    
+    Wizard [style=filled, color=LightCoral];
+    Drafts [style=filled, color=LightCoral];
+    "My Artifacts" [style=filled, color=LightCoral];
+    "Publish Status" [style=filled, color=LightCoral];
     
     "Publisher Page" -> "Avatar & Username ";
     "Publisher Page" -> "Header Photo";
@@ -164,11 +315,23 @@ digraph G {
     "Publisher Page" -> "About tab";
     "Publisher Page" -> "Support tab";
     
+    "Avatar & Username " [style=filled, color=yellow];
+    "Header Photo" [style=filled, color=yellow];
+    "Pub Description" [style=filled, color=yellow];
+    "Artifacts tab" [style=filled, color=LightCoral];
+    "Playlists tab" [style=filled, color=LightCoral];
+    "About tab" [style=filled, color=LightCoral];
+    "Support tab" [style=filled, color=LightCoral];
+    
     "Support tab" -> "Support Goal";
     "Support tab" -> "Support info";
     "Support tab" -> "Supporter Only Artifacts";
     "Support tab" -> "Supporter list";
     "Support tab" -> "Top Supporters";
     
-    "About Page";
+    "Support Goal" [style=filled, color=LightCoral];
+    "Support info" [style=filled, color=LightCoral];
+    "Supporter Only Artifacts" [style=filled, color=LightCoral];
+    "Supporter list" [style=filled, color=LightCoral];
+    "Top Supporters" [style=filled, color=LightCoral];
 }
