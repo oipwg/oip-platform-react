@@ -5,7 +5,7 @@
 # http://www.graphviz.org/content/cluster
 
 digraph G {
-    size="3,0.4"; ratio=fill;
+    size="60,8"; ratio=fill;
     
     "Alexandria Web" -> "Static Pages";
     "Alexandria Web" -> "Interactive Pages";
