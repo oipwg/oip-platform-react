@@ -24,6 +24,7 @@ digraph G {
     "Interactive Pages" -> "Publisher Page";
     "Interactive Pages" -> Homepage;
     "Interactive Pages" -> Search;
+    "Interactive Pages" -> "Wallet";
     "Interactive Pages" -> "Artifact View";
     
     "User Pages" [style=filled, color=yellow];
@@ -31,6 +32,7 @@ digraph G {
     "Publisher Page" [style=filled, color=yellow];
     Homepage [style=filled, color=yellow];
     Search [style=filled, color=yellow];
+    Wallet [style=filled, color=LightCoral];
     "Artifact View" [style=filled, color=yellow];
     
     "User Pages" -> Login;
@@ -64,8 +66,19 @@ digraph G {
     "Unique Email" [style=filled, color=LightCoral];
     "Password & Confirm Password" [style=filled, color=LightCoral];
     "Password Suggestion" [style=filled, color=LightCoral];
-    "Recaptcha for Faucet" [style=filled, color=LightCoral];
+    "Recaptcha for Faucet" [style=filled, color=Yellow];
     "Accept T&C" [style=filled, color=LightCoral];
+    
+    "Password Suggestion" -> "8 Characters";
+    
+    subgraph cluster_1 {
+		"8 Characters" ->
+		"1 Uppercase" -> 
+		"1 Lowercase" -> 
+		"1 Number" ->
+		"1 Special Character";
+		color=red;
+	}
     
     Settings -> "Edit Publisher Info";
     Settings -> "Set Avatar";
@@ -77,16 +90,27 @@ digraph G {
     "NSFW Toggle" [style=filled, color=yellow];
     "Currency Selector" [style=filled, color=LightCoral];
     
+    "Edit Publisher Info" -> " Username";
+    subgraph cluster_2 {
+		" Username" ->
+		"Description" ->
+		"Profile Header Pic";
+		color=red;
+	}
+    
     Homepage -> "Suggested Content";
     Homepage -> "Suggested Publishers";
     Homepage -> "Latest Content";
     Homepage -> "Publisher Block";
+    Homepage -> "Miniplayer";
     
     "Suggested Content" [style=filled, color=LightCoral]; 
     "Suggested Publishers" [style=filled, color=LightCoral];
     "Latest Content" [style=filled, color=green];
     "Publisher Block" [style=filled, color=LightCoral];
+    "Miniplayer" [style=filled, color=yellow];
     
+    Search -> "Publisher Block";
     Search -> "Load Artifacts";
     Search -> "Load Pub Blocks";
     
@@ -100,6 +124,29 @@ digraph G {
     "Avatar & Username" [style=filled, color=LightCoral];
     "Follow Btn + Count" [style=filled, color=LightCoral];
     "Artifacts from Pub" [style=filled, color=LightCoral];
+    
+    Wallet -> FLO;
+    Wallet -> LTC;
+    Wallet -> BTC;
+    
+    FLO [style=filled, color=LightCoral];
+    LTC [style=filled, color=LightCoral];
+    BTC [style=filled, color=LightCoral];
+    
+    
+    FLO -> "Display Balance";
+    LTC -> "Display Balance";
+    BTC -> "Display Balance";
+    FLO -> "Send";
+    LTC -> "Send";
+    BTC -> "Send";
+    FLO -> "Recieve";
+    LTC -> "Recieve";
+    BTC -> "Recieve";
+    
+    "Display Balance"  [style=filled, color=LightCoral];
+    "Send" [style=filled, color=LightCoral];
+    "Recieve" [style=filled, color=LightCoral];
     
     "Artifact View" -> "Content Viewer";
     "Artifact View" -> "Artifact Info";
