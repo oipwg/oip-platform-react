@@ -101,6 +101,7 @@ digraph G {
     Homepage -> "Suggested Content";
     Homepage -> "Suggested Publishers";
     Homepage -> "Latest Content";
+    Homepage -> "Content Card";
     Homepage -> "Publisher Block";
     Homepage -> "Miniplayer";
     
@@ -125,6 +126,20 @@ digraph G {
     "Follow Btn + Count" [style=filled, color=LightCoral];
     "Artifacts from Pub" [style=filled, color=LightCoral];
     
+    "Content Card" -> "Thumbnail";
+    "Content Card" -> "Length";
+    "Content Card" -> "Type/paid Icon";
+    "Content Card" -> "Publisher Info";
+    "Content Card" -> "View Count";
+    "Content Card" -> "Publish Date ";
+    
+    "Thumbnail" [style=filled, color=green];
+    "Length" [style=filled, color=yellow];
+    "Type/paid Icon";
+    "Publisher Info" [style=filled, color=yellow];
+    "View Count" [style=filled, color=LightCoral];
+    "Publish Date " [style=filled, color=LightCoral];
+    
     Wallet -> FLO;
     Wallet -> LTC;
     Wallet -> BTC;
@@ -143,10 +158,14 @@ digraph G {
     FLO -> "Recieve";
     LTC -> "Recieve";
     BTC -> "Recieve";
+    FLO -> "Show QR";
+    LTC -> "Show QR";
+    BTC -> "Show QR";
     
     "Display Balance"  [style=filled, color=LightCoral];
     "Send" [style=filled, color=LightCoral];
     "Recieve" [style=filled, color=LightCoral];
+    "Show QR" [style=filled, color=LightCoral];
     
     "Artifact View" -> "Content Viewer";
     "Artifact View" -> "Artifact Info";
@@ -283,7 +302,7 @@ digraph G {
     "More Button" [style=filled, color=yellow];
     "Publish Date" [style=filled, color=green];
     "Artifact Description" [style=filled, color=green];
-    "File Table" [style=filled, color=green];
+    "File Table" [style=filled, color=yellow];
     "See More/See Less" [style=filled, color=green];
     
     "Publisher Avatar & Name" -> "If none, use Identicons";
@@ -318,9 +337,13 @@ digraph G {
     
     "Add URL's" [style=filled, color=green];
     
+    "File Table" -> "Buy";
+    "File Table" -> "Play";
     "File Table" -> "Hide if > 5";
     
     "Hide if > 5" [style=filled, color=green];
+    "Play" [style=filled, color=green];
+    "Buy" [style=filled, color=LightCoral];
     
     "Comments" -> "Tip & Post (Florincoin)";
     "Comments" -> "Post (isso)";
