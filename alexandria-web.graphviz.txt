@@ -143,11 +143,15 @@ digraph G {
     Wallet -> FLO;
     Wallet -> LTC;
     Wallet -> BTC;
+    Wallet -> "Coinbase Buy Modal";
+    Wallet -> "Tradebot Trade Modal";
+    Wallet -> "Advanced Settings";
     
     FLO [style=filled, color=LightCoral];
     LTC [style=filled, color=LightCoral];
     BTC [style=filled, color=LightCoral];
-    
+    "Coinbase Buy Modal" [style=filled, color=LightCoral];
+    "Tradebot Trade Modal" [style=filled, color=LightCoral];
     
     FLO -> "Display Balance";
     LTC -> "Display Balance";
@@ -161,6 +165,8 @@ digraph G {
     FLO -> "Show QR";
     LTC -> "Show QR";
     BTC -> "Show QR";
+    "Advanced Settings" -> "Import";
+    "Advanced Settings" -> "Backup";
     
     "Display Balance"  [style=filled, color=LightCoral];
     "Send" [style=filled, color=LightCoral];
