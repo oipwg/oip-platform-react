@@ -126,6 +126,8 @@ digraph G {
     "Follow Btn + Count" [style=filled, color=LightCoral];
     "Artifacts from Pub" [style=filled, color=LightCoral];
     
+    "Content Card" [style=filled, color=yellow];
+    
     "Content Card" -> "Thumbnail";
     "Content Card" -> "Length";
     "Content Card" -> "Type/paid Icon";
@@ -135,7 +137,7 @@ digraph G {
     
     "Thumbnail" [style=filled, color=green];
     "Length" [style=filled, color=yellow];
-    "Type/paid Icon";
+    "Type/paid Icon" [style=filled, color=green];
     "Publisher Info" [style=filled, color=yellow];
     "View Count" [style=filled, color=LightCoral];
     "Publish Date " [style=filled, color=LightCoral];
@@ -172,6 +174,10 @@ digraph G {
     "Send" [style=filled, color=LightCoral];
     "Recieve" [style=filled, color=LightCoral];
     "Show QR" [style=filled, color=LightCoral];
+    "Advanced Settings" [style=filled, color=LightCoral];
+    
+    "Import" [style=filled, color=LightCoral];
+    "Backup" [style=filled, color=LightCoral];
     
     "Artifact View" -> "Content Viewer";
     "Artifact View" -> "Artifact Info";
