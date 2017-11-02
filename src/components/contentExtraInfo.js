@@ -10,22 +10,30 @@ class ContentExtraInfo extends Component {
 
 		this.state = {
 			extendedView: false,
-			description: "",
-			files: [],
-			timestamp: 0,
-			niceTime: ""
+			Artifact: {}
 		}
 
 		this.setDescriptionAndFiles = this.setDescriptionAndFiles.bind(this);
 		this.toggleSeeMore = this.toggleSeeMore.bind(this);
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
+		let _this = this;
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
 	}
-	componentWillMount(){
-		this.setDescriptionAndFiles(this.props);
-	}
-	componentWillReceiveProps(nextProps){
-		if (this.props.artifact !== nextProps.artifact){
-			this.setDescriptionAndFiles(nextProps);
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let currentArtifact = newState.CurrentArtifact;
+
+		if (currentArtifact && this.state !== currentArtifact){
+			this.setState(currentArtifact);
 		}
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
 	}
 	setDescriptionAndFiles(props){
 		let description = "", files = [], tmpFiles = [], timestamp = 0;
@@ -70,21 +78,19 @@ class ContentExtraInfo extends Component {
 				tmpFiles[i].sugPlay = sugPlay;
 				tmpFiles[i].sugBuy = sugBuy;
 			}
-
-			let niceTime = moment(timestamp * 1000).calendar(null, {sameElse: "MMMM Do YYYY"});
-
-			this.setState({description: description, files: tmpFiles, timestamp: timestamp, niceTime: niceTime})
 		}
 	}
 	toggleSeeMore(){
 		this.setState({ extendedView: !this.state.extendedView })
 	}
 	render() {
+		let niceTime = moment(this.props.Core.Artifact.getTimestamp(this.state.artifact) * 1000).calendar(null, {sameElse: "MMMM Do YYYY"});
+
 		return (
 			<div>
-				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.state.niceTime}</strong></p>
+				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.state.isFetching ? "loading..." : niceTime}</strong></p>
 				<p style={this.state.extendedView ? {textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"} : {textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap", maxHeight:"150px", textOverflow: "ellipsis", overflow: "hidden"}}><Linkify>{this.state.description}</Linkify></p>
-				<FilesTable extendedView={this.state.extendedView} files={this.state.files} CurrentFile={this.props.CurrentFile} Core={this.props.Core} setCurrentFile={this.props.setCurrentFile} />
+				<FilesTable extendedView={this.state.extendedView} Core={this.props.Core} store={this.props.store} />
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
 					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />
 					<button className="btn btn-sm btn-outline-secondary" style={{borderColor: "#333", color: "#333", margin: "0px auto", display:"block", backgroundColor:"#fff"}} onClick={this.toggleSeeMore}>{this.state.extendedView ? "See Less" : "See More"}</button>
