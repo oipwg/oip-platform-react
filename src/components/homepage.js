@@ -5,7 +5,7 @@ import {
   LATEST_CONTENT_LIST
 } from '../actions'
 
-import ContentCard from './contentCard.js';
+import ContentCardsContainer from './ContentCardsContainer.js';
 
 class Homepage extends Component {
 	constructor(props){
@@ -20,6 +20,12 @@ class Homepage extends Component {
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
+		let _this = this;
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+	}
+	setupConnection(){
 		let _this = this;
 		this.unsubscribe = this.props.store.subscribe(() => {
 			_this.stateDidUpdate();
@@ -42,24 +48,18 @@ class Homepage extends Component {
 			this.setState(myNewState);
 		}
 	}
+	componentDidUnmount(){
+		this.unsubscribe;
+	}
 	render() {
 		let _this = this;
 
 		return (
-			<div className="container" style={{marginTop: "100px", marginBottom:"200px"}}>
-				<h4 style={{marginBottom: "25px"}}>Latest Artifacts</h4>
-				{this.state.isFetching ? <p>Loading...</p> : ""}
-				{this.state.error ? <p>{this.state.error}</p> : ""}
-				<div className="row">
-					{this.state.items.map(function(artJSON, i){
-						return <ContentCard 
-							key = {i}
-							artifact = {artJSON}
-							Core = {_this.props.Core}
-						/>
-					})}
-				</div>
-			</div>
+			<ContentCardsContainer
+				Core={this.props.Core}
+				title={"Latest Content"}
+				opts={this.state}
+			/>
 		);
 	}
 }
