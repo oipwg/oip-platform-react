@@ -48,8 +48,8 @@ class Homepage extends Component {
 			this.setState(myNewState);
 		}
 	}
-	componentDidUnmount(){
-		this.unsubscribe;
+	componentWillUnmount(){
+		this.unsubscribe();
 	}
 	render() {
 		let _this = this;

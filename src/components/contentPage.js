@@ -52,7 +52,7 @@ class ContentPage extends Component {
 		}
 	}
 	componentWillUnmount(){
-		this.unsubscribe;
+		this.unsubscribe();
 	}
 	setArtifact(props){
 		props.store.dispatch(selectCurrentArtifact(props.Core, props.match.params.id));
