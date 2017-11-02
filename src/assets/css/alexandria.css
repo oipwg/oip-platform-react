@@ -1080,3 +1080,10 @@ td.unpin {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1);
     background-color: #513318;
 }
+
+.nav-tabs .nav-link {
+  margin: 0px 5px;
+  color: #484848;
+  border: 1px solid #e9ecef;
+  background-color: rgba(200,200,200,0.7);
+}

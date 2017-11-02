@@ -1,5 +1,6 @@
 // Import React components
 import React, { Component } from 'react';
+
 import {
 	BrowserRouter as Router,
 	Route,
@@ -41,21 +42,21 @@ import ArtifactManager from './modules/ArtifactManager.js';
 
 class App extends Component {
 	componentDidMount(){
-		let _this = this;
+		//let _this = this;
 
-		Core.Index.getSupportedArtifacts(function(mySupportedArtifacts){
-			console.log(mySupportedArtifacts);
-			_this.setState({
-				SupportedArtifacts: mySupportedArtifacts
-			});
-		})
+		// Core.Index.getSupportedArtifacts(function(mySupportedArtifacts){
+		// 	console.log(mySupportedArtifacts);
+		// 	_this.setState({
+		// 		SupportedArtifacts: mySupportedArtifacts
+		// 	});
+		// })
 
-		Core.Index.getSuggestedContent(null, function(mySuggestedContent){
-			console.log(mySuggestedContent);
-			_this.setState({
-				CurrentSuggestedContent: mySuggestedContent
-			});
-		})
+		// Core.Index.getSuggestedContent(null, function(mySuggestedContent){
+		// 	console.log(mySuggestedContent);
+		// 	_this.setState({
+		// 		CurrentSuggestedContent: mySuggestedContent
+		// 	});
+		// })
 	}
 	componentWillUnmount() {
 		this.serverRequest.abort();
@@ -169,7 +170,7 @@ class App extends Component {
 
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
-						<Route exact path="/" render={props => <Homepage CurrentSuggestedContent={this.state.SupportedArtifacts.slice(0,100)} Core={Core} {...props} />} />
+						<Route exact path="/" render={props => <Homepage Core={Core} store={this.props.store} {...props} />} />
 
 						<Route path="/login" component={LoginPage} />
 						<Route path="/register" component={RegisterPage} />

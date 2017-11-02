@@ -53,8 +53,12 @@
 	})(window, document, "script", "https://chat.alexandria.io/livechat");
 	</script>
 	<script type="text/javascript">
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1"){
+      // No Usersnap because Localhost
+    } else {
 		(function() { var s = document.createElement("script"); s.type = "text/javascript"; s.async = true; s.src = '//api.usersnap.com/load/14a5209d-6d3f-4699-8832-5f709e647ba0.js';
 		var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); })();
+    }
 	</script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </html>
