@@ -20,49 +20,54 @@ export const PLAYLIST_SKIP_FORWARD = 'PLAYLIST_SKIP_FORWARD'
 export const PLAYLIST_PAUSE = 'PLAYLIST_PAUSE'
 export const PLAYLIST_PLAY = 'PLAYLIST_PLAY'
 
-export const LATEST_CONTENT_LIST = "LATEST_CONTENT_LIST"
-export const SEARCH_ARTIFACTS_LIST = "SEARCH_ARTIFACTS_LIST"
+export const LATEST_CONTENT_LIST = 'LATEST_CONTENT_LIST'
+export const SEARCH_PAGE_LIST = 'SEARCH_PAGE_LIST'
 
 export const setPageType = pg_type => ({
-    type: SET_PAGE_TYPE,
-    pg_type
+	type: SET_PAGE_TYPE,
+	pg_type
 })
 
 export const requestArtifactList = page => ({
-    type: REQUEST_ARTIFACT_LIST,
-    page
+	type: REQUEST_ARTIFACT_LIST,
+	page
 })
 
-export const recieveArtifactList = (page, artifacts) => ({
-    type: RECIEVE_ARTIFACT_LIST,
-    page,
-    artifacts,
-    receivedAt: Date.now()
+export const recieveArtifactList = (page, items) => ({
+	type: RECIEVE_ARTIFACT_LIST,
+	page,
+	items,
+	receivedAt: Date.now()
 })
 
 export const invalidateArtifactList = page => ({
-    type: INVALIDATE_ARTIFACT_LIST,
-    page
+	type: INVALIDATE_ARTIFACT_LIST,
+	page
 })
 
-export const requestArtifactListError = page => ({
-    type: REQUEST_ARTIFACT_LIST_ERROR,
-    page
+export const requestArtifactListError = (page, errorText) => ({
+	type: REQUEST_ARTIFACT_LIST_ERROR,
+	page,
+	errorText
 })
 
 export const fetchArtifactList = (Core, list_id, options) => dispatch => {
-    dispatch(requestArtifactList(list_id));
+	dispatch(requestArtifactList(list_id));
 
-    if (list_id === LATEST_CONTENT_LIST){
-        Core.Index.getSupportedArtifacts(function(artifacts){
-            console.log(artifacts);
-            dispatch(recieveArtifactList(list_id, artifacts.slice(0,50)));
-        }, function(err){
-            dispatch(requestArtifactListError(list_id));
-        })
-    } else if (list_id === SEARCH_ARTIFACTS_LIST) {
+	if (list_id === LATEST_CONTENT_LIST){
+		Core.Index.getSupportedArtifacts(function(artifacts){
+			console.log(artifacts);
+			dispatch(recieveArtifactList(list_id, artifacts.slice(0,50)));
+		}, function(err){
+			dispatch(requestArtifactListError(list_id));
+		})
+	} else if (list_id === SEARCH_PAGE_LIST) {
+		Core.Index.search(options, function(results){
+			dispatch(recieveArtifactList(list_id, results));
+		}, function(err){
+			dispatch(requestArtifactListError(list_id, err));
+		});
+	} else {
 
-    } else {
-
-    }
+	}
 }

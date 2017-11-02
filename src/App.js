@@ -178,7 +178,7 @@ class App extends Component {
 
 						<Route path="/pub/:id" render={props => <PublisherPage suggestedContent={this.state.SupportedArtifacts.slice(0,10)} Core={Core} {...props} />} />
 
-						<Route path="/search/:id" render={props => <SearchPage SearchResults={this.state.CurrentSuggestedContent} Core={Core} {...props} />} />
+						<Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
 
 						<Route path="/user/:page/:type/:id" component={UserPage} />
 						<Route path="/user/:page/:type" component={UserPage} />

@@ -1,47 +1,59 @@
 import React, { Component } from 'react';
 
-import ContentCard from './contentCard.js'
+import {
+  fetchArtifactList,
+  SEARCH_PAGE_LIST
+} from '../actions'
+
+import ContentCardsContainer from './ContentCardsContainer.js'
 
 class SearchPage extends Component {
 	constructor(props){
 		super(props);
 
 		this.state = {
-			searchResults: []
+			isFetching: false,
+			isInvalidated: false,
+			error: false,
+			items: []
 		}
 
-		this.searchAndSet = this.searchAndSet.bind(this);
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
+		let _this = this;
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+
+		this.dispatchSearch = this.dispatchSearch.bind(this);
 	}
 	componentDidMount(){
-		this.searchAndSet(this.props);
+		// Every time the state changes, log it
+		this.dispatchSearch(this.props)
 	}
 	componentWillReceiveProps(nextProps){
 		if (this.props.match.params.id !== nextProps.match.params.id)
-			this.searchAndSet(nextProps);
+			this.dispatchSearch(nextProps)
 	}
-	searchAndSet(props){
-		let _this = this;
+	dispatchSearch(props){
+		props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": props.match.params.id }));
+	}
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
 
-		props.Core.Index.search(props.match.params.id, function(results){
-			_this.setState({searchResults: results.artifacts});
-		});
+		let myNewState = newState.ArtifactLists[SEARCH_PAGE_LIST];
+
+		if (myNewState && this.state !== myNewState){
+			this.setState(myNewState);
+		}
 	}
 	render() {
-		let _this = this;
-
 		return (
-			<div className="container" style={{marginTop: "100px", marginBottom:"200px"}}>
-				<h4 style={{marginBottom: "25px"}}>Search Results</h4>
-				<div className="row">
-					{this.state.searchResults.map(function(artifact, i){
-						return <ContentCard 
-								key = {i}
-								artifact = {artifact}
-								Core = {_this.props.Core}
-							/>
-					})}
-				</div>
-			</div>
+			<ContentCardsContainer
+				Core={this.props.Core}
+				title={"Search Results"}
+				opts={this.state}
+			/>
 		);
 	}
 }
