@@ -48,6 +48,8 @@ class Homepage extends Component {
 		return (
 			<div className="container" style={{marginTop: "100px", marginBottom:"200px"}}>
 				<h4 style={{marginBottom: "25px"}}>Latest Artifacts</h4>
+				{this.state.isFetching ? <p>Loading...</p> : ""}
+				{this.state.error ? <p>{this.state.error}</p> : ""}
 				<div className="row">
 					{this.state.items.map(function(artJSON, i){
 						return <ContentCard 
