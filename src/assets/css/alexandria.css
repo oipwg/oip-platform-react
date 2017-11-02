@@ -1087,3 +1087,7 @@ td.unpin {
   border: 1px solid #e9ecef;
   background-color: rgba(200,200,200,0.7);
 }
+
+.rounded-circle > svg {
+  border-radius: 50%;
+}

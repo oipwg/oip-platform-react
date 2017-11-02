@@ -5,6 +5,8 @@ import ShareButton from './ShareButton.js';
 import TipButton from './TipButton.js';
 import ReportButton from './ReportButton.js';
 
+import Identicons from 'identicons-react';
+
 class ContentInfo extends Component {
 	constructor(props){
 		super(props);
@@ -18,6 +20,25 @@ class ContentInfo extends Component {
 		}
 
 		this.updateState = this.updateState.bind(this);
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
+		let _this = this;
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+	}
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let currentArtifact = newState.CurrentArtifact.artifact;
+
+		if (currentArtifact && this.state !== currentArtifact){
+			this.setState({ Artifact: currentArtifact });
+		}
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
 	}
 	componentDidMount(){
 		this.updateState(this.props);
@@ -35,22 +56,38 @@ class ContentInfo extends Component {
 		this.setState({creator: creator, title: title, icon: icon});
 	}
 	render() {
+		let creator = this.props.Core.Artifact.getPublisherName(this.state.Artifact);
+		let title = this.props.Core.Artifact.getTitle(this.state.Artifact);
+		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.state.Artifact));
+
 		return (
 			<div>
 				<div className="row">
 					<div className="col-10">
-						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}><span className={"icon icon-" + this.state.icon} style={{marginRight:"10px"}}></span>{this.state.title}</h3>
+						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}><span className={"icon icon-" + icon} style={{marginRight:"10px"}}></span>{title}</h3>
 					</div>
 					<div className="col-2">
 						<div style={{float: "right", marginTop: "2px"}}>
+							{/* 0.9 Feature */}
+							{/*
 							<button className="btn btn-outline-secondary">{this.state.views} Views</button>
+							*/}
 						</div>
 					</div>
 				</div>
 				<div className="media">
-					<img className="d-flex mr-3 rounded-circle" src={this.state.profilePicture} alt="" style={{width: "50px", height: "50px"}} />
+					<div className="d-flex mr-3 rounded-circle" style={{width: "50px", height: "50px"}}>
+						<Identicons id={creator} width={48} size={5} />
+					</div>
 					<div className="media-body">
-						<h5 className="mt-0" style={{paddingTop: "15px", marginLeft: "-10px"}}>{this.state.creator} <div className="btn-group"><button className="btn btn-sm btn-outline-warning" style={{marginLeft: "10px"}}><span className="icon-pin icon"></span>Follow</button><button className="btn btn-sm btn-outline-secondary" disabled>10 Followers</button></div>
+						<h5 className="mt-0" style={{paddingTop: "10px", marginLeft: "-10px"}}>{creator} 
+							{/* 0.9 Feature */}
+							{/*
+							<div className="btn-group">
+								<button className="btn btn-sm btn-outline-warning" style={{marginLeft: "10px"}}><span className="icon-pin icon"></span>Follow</button>
+								<button className="btn btn-sm btn-outline-secondary" disabled>10 Followers</button>
+							</div>
+							*/}
 							<div style={{float: "right"}}>
 								<ShareButton />
 								<TipButton />
@@ -59,7 +96,7 @@ class ContentInfo extends Component {
 						</h5>
 					</div>
 				</div>
-				<ContentExtraInfo artifact={this.props.artifact} Core={this.props.Core} setCurrentFile={this.props.setCurrentFile} CurrentFile={this.props.CurrentFile} />
+				<ContentExtraInfo Core={this.props.Core} store={this.props.store} />
 			</div>
 		);
 	}
