@@ -7,27 +7,57 @@ import '../assets/css/alexandria.videojs.css';
 class VideoPlayer extends Component {
 	constructor(props){
 		super(props);
-		this.createVideoPlayer = this.createVideoPlayer.bind(this);
-		this.updateVideoPlayer = this.updateVideoPlayer.bind(this);
-	}
-	componentDidMount() {
-		this.createVideoPlayer();
-	}
-	shouldComponentUpdate(nextProps, nextState){
-		if (this.props.CurrentFile === nextProps.CurrentFile && this.props.DisplayPaywall && !nextProps.DisplayPaywall){
-			this.player.play()
+
+		this.state = {
+			ActiveFile: {},
+			Artifact: {}
 		}
 
-		if (this.props.CurrentFile === nextProps.CurrentFile){
-			return false;
-		} else {
+		this.createVideoPlayer = this.createVideoPlayer.bind(this);
+		this.updateVideoPlayer = this.updateVideoPlayer.bind(this);
+
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
+		let _this = this;
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+	}
+	shouldComponentUpdate(nextProps, nextState){
+		if (this.state.ActiveFile !== nextState.ActiveFile){
 			return true;
 		}
+
+		return false;
 	}
-	componentDidUpdate() {
+	componentDidUpdate(){
 		this.updateVideoPlayer();
 	}
-	componentWillUnmount() {
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let currentArtifact = newState.CurrentArtifact.artifact;
+		let active = newState.FilePlaylist.active;
+		let activeFile = newState.FilePlaylist[active];
+
+		if (activeFile && this.state.ActiveFile !== activeFile){
+			console.log(currentArtifact);
+			console.log(activeFile);
+
+			this.setState({
+				Artifact: currentArtifact,
+				ActiveFile: activeFile
+			});
+
+			console.log(this.state);
+			
+			this.updateVideoPlayer();
+		}
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
+
 		if (this.player) {
 			try {
 				this.player.pause()
@@ -37,73 +67,72 @@ class VideoPlayer extends Component {
 			}
 		}
 	}
-	createVideoPlayer() {
-		if (this.props.CurrentFile){
-			let videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.CurrentFile));
-			let thumbnailURL;
+	componentDidMount() {
+		this.stateDidUpdate();
+		this.createVideoPlayer();
+	}
+	getPlayerOptions() {
+		var options = {};
 
-			if (this.props.ThumbnailFile){
-				thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.ThumbnailFile));
-			}
+		options.controls = true;
+		options.preload = "auto";
 
-			var options = {}
+		let videoURL;
 
-			let autoplay = true;
-
-			if (this.props.DisplayPaywall)
-				autoplay = false;
-
-			options.autoplay = autoplay;
-			if (this.props.ThumbnailFile){
-				options.poster = thumbnailURL;
-			}
-			options.controls = true;
-			options.preload = "auto";
-			options.chromecast = {
-				appId:'B49D4F18',
-				metadata:{
-					title: this.props.artifact['oip-041'].artifact.info.title,
-					subtitle:this.props.artifact['oip-041'].artifact.info.description ? this.props.artifact['oip-041'].artifact.info.description : "",
-				}
-			}
-			options.sources = [{src: videoURL, type: 'video/mp4'}];
-
-			// instantiate video.js
-			this.player = videojs(this.videoNode, options, function onPlayerReady() {
-				// console.log('onPlayerReady', this);
-			});
+		if (this.state.Artifact && this.state.ActiveFile.info){
+			videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact, this.state.ActiveFile.info));
+		} else {
+			videoURL = "";
 		}
+
+		let thumbnailURL;
+
+		if (this.state.Artifact){
+			let thumbnail = this.props.Core.Artifact.getThumbnail(this.state.Artifact);
+			thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact, thumbnail));
+		}
+
+		let autoplay = true;
+
+		if (this.state.isPaid && !this.state.hasPaid)
+			autoplay = false;
+
+		if (thumbnailURL){
+			options.poster = thumbnailURL;
+		}
+
+		options.autoplay = autoplay;
+		options.sources = [{src: videoURL, type: 'video/mp4'}];
+
+		return options;
+	}
+	createVideoPlayer() {
+		// instantiate video.js
+		this.player = videojs(this.videoNode, this.getPlayerOptions(), function onPlayerReady() {
+			// console.log('onPlayerReady', this);
+		});
 	}
 	updateVideoPlayer(){
-		if (this.props.artifact){
-			this.player.reset();
-			let videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.CurrentFile));
-			let thumbnailURL;
-			
-			if (this.props.ThumbnailFile){
-				thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.ThumbnailFile));
+		if (this.state.Artifact && this.state.ActiveFile){
+			if (this.player){
+				this.player.reset();
+
+				let options = this.getPlayerOptions();
+
+				if (options.poster){
+					this.player.poster = options.poster;
+				}
+
+				this.player.autoplay(options.autoplay);
+
+				this.player.src(options.sources);
+
+				if (!this.props.DisplayPaywall){
+					this.player.play();
+				}
+			} else {
+				this.createVideoPlayer();		
 			}
-
-			var options = {}
-
-			let autoplay = true;
-
-			if (this.props.DisplayPaywall)
-				autoplay = false;
-
-			this.player.autoplay(autoplay);
-
-			if (this.props.ThumbnailFile){
-				options.poster = thumbnailURL;
-				this.player.poster(options.poster);
-			}
-			options.sources = [{src: videoURL, type: 'video/mp4'}];
-
-			// instantiate video.js
-			this.player.src(options.sources);
-
-			if (!this.props.DisplayPaywall)
-				this.player.play();
 		}
 	}
 	render() {
