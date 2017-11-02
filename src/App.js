@@ -185,19 +185,7 @@ class App extends Component {
 						<Route path="/user/:page" component={UserPage} />
 						
 						<Route path="/:id" render={props => 
-							<ContentPage 
-								setCurrentFile={this.setCurrentFile} 
-								setDisplayedArtifact={this.setDisplayedArtifact} 
-								DisplayedArtifact={this.state.DisplayedArtifact} 
-								Core={Core} 
-								CurrentSuggestedContent={this.state.CurrentSuggestedContent} 
-								CurrentFile={this.state.CurrentFile} 
-								DisplayPaywall={this.state.DisplayPaywall}
-								setPaywallDisplay={this.setPaywallDisplay}
-								ThumbnailFile={this.state.ThumbnailFile}
-								SongList={this.state.SongList}
-								{...props} 
-							/>} 
+							<ContentPage Core={Core} store={this.props.store} {...props} />} 
 						/>
 
 						{/*

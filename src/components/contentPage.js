@@ -9,51 +9,64 @@ import ContentCard from './contentCard.js'
 import ArtifactManager from '../modules/ArtifactManager.js';
 //import PlaylistManager from '../modules/PlaylistManager.js';
 
+import {
+  selectCurrentArtifact
+} from '../actions'
+
 class ContentPage extends Component {
 	constructor(props){
 		super(props);
 
 		this.state = {
-			ArtifactManager: {
-				currentArtifact: {},
-				currentFile: {}
-			}
+			isFetching: false,
+			isInvalidated: false,
+			error: false,
+			artifact: {}
 		}
-		this.setArtifact = this.setArtifact.bind(this);
 
-		props.setDisplayedArtifact(props.match.params.id);
-	}
-	componentWillMount(){
-		//this.setArtifact(this.props);
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
+		let _this = this;
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+
+		this.setArtifact = this.setArtifact.bind(this);
 	}
 	componentWillReceiveProps(nextProps){
 		if (nextProps.match.params.id !== this.props.match.params.id){
 			this.setArtifact(nextProps);
 		}
 	}
+	componentDidMount(){
+		this.setArtifact(this.props);
+	}
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let myNewState = newState.CurrentArtifact;
+
+		if (myNewState && this.state !== myNewState){
+			this.setState(myNewState);
+		}
+	}
+	componentWillUnmount(){
+		this.unsubscribe;
+	}
 	setArtifact(props){
-		props.setDisplayedArtifact(props.match.params.id)
+		props.store.dispatch(selectCurrentArtifact(props.Core, props.match.params.id));
 	}
 	render() {
 		let _this = this;
 
 		return (
 			<div>
-				<ContentContainer 
-					artifact={this.props.DisplayedArtifact} 
-					Core={this.props.Core} 
-					ArtifactManager={ArtifactManager} 
-					setCurrentFile={this.props.setCurrentFile} 
-					CurrentFile={this.props.CurrentFile} 
-					DisplayPaywall={this.props.DisplayPaywall}
-					ThumbnailFile={this.props.ThumbnailFile}
-					setPaywallDisplay={this.props.setPaywallDisplay}
-					SongList={this.props.SongList}
-				/>
+				<ContentContainer Core={this.props.Core} store={this.props.store} />
 				<div className="container">
 					<div className="row">
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
-							<ContentInfo artifact={this.props.DisplayedArtifact} Core={this.props.Core} ArtifactManager={ArtifactManager} setCurrentFile={this.props.setCurrentFile} CurrentFile={this.props.CurrentFile} />
+							<ContentInfo Core={this.props.Core} store={this.props.store} />
 							<br />
 							{this.props.DisplayedArtifact ? 
 								<div>
@@ -63,7 +76,7 @@ class ContentPage extends Component {
 								: ""}
 						</div>
 						<div id='suggested' className="col-12 col-md-3" style={{marginTop: "30px"}}>
-							{this.props.CurrentSuggestedContent.map(function(content, i){
+							{[].map(function(content, i){
 								return <ContentCard 
 									key={i}
 									artifact={content}
