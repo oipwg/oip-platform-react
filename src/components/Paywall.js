@@ -25,23 +25,26 @@ class Paywall extends Component {
 
 		this.setPricingString = this.setPricingString.bind(this);
 	}
-	componentWillMount(){
-		if (this.props.artifact){
-			
-		}
+	componentDidMount(){
+		this.stateDidUpdate();
 	}
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.artifact && this.props.artifact !== nextProps.artifact){
-			
-		}
+	componentDidUpdate(){
+		this.stateDidUpdate();
 	}
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
 
-		let myNewState = newState.CurrentArtifact;
+		let CurrentArtifact = newState.CurrentArtifact;
+		let active = newState.FilePlaylist.active;
+		let ActiveFile = newState.FilePlaylist[active];
 
-		if (myNewState && this.state !== myNewState){
-			this.setState(myNewState);
+		let stateObj = {
+			ActiveFile: ActiveFile,
+			CurrentArtifact: CurrentArtifact
+		}
+
+		if (stateObj && this.state !== stateObj){
+			this.setState(stateObj);
 		}
 	}
 	componentWillUnmount(){

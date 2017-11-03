@@ -16,6 +16,7 @@ export const REQUEST_CURRENT_ARTIFACT_ERROR = 'REQUEST_CURRENT_ARTIFACT_ERROR'
 
 export const SET_ACTIVE_FILE_IN_PLAYLIST = 'SET_ACTIVE_FILE_IN_PLAYLIST'
 export const SET_FILE_PLAYLIST = 'SET_FILE_PLAYLIST'
+export const PAY_FOR_FILE = 'PAY_FOR_FILE'
 export const ADD_FILE_TO_PLAYLIST = 'ADD_FILE_TO_PLAYLIST'
 export const PLAYLIST_SKIP_BACK = 'PLAYLIST_SKIP_BACK'
 export const PLAYLIST_SKIP_FORWARD = 'PLAYLIST_SKIP_FORWARD'
@@ -95,14 +96,20 @@ export const requestCurrentArtifactError = error => ({
 	error
 })
 
-export const addFileToPlaylist = (file, uid) => ({
+export const addFileToPlaylist = (file, uid, Core) => ({
 	type: ADD_FILE_TO_PLAYLIST,
 	uid,
+	isPaid: Core.Artifact.isFilePaid(file),
 	file
 })
 
 export const setActiveFileInPlaylist = uid => ({
 	type: SET_ACTIVE_FILE_IN_PLAYLIST,
+	uid
+})
+
+export const payForFile = uid => ({
+	type: PAY_FOR_FILE,
 	uid
 })
 
@@ -116,7 +123,7 @@ export const selectCurrentArtifact = (Core, txid) => dispatch => {
 		let txid = Core.Artifact.getTXID(artifact);
 
 		for (var i = 0; i < files.length; i++) {
-			dispatch(addFileToPlaylist(files[i], txid + "|" + i));
+			dispatch(addFileToPlaylist(files[i], txid + "|" + i, Core));
 		}
 
 		dispatch(setActiveFileInPlaylist(txid + "|" + 0));
@@ -134,6 +141,10 @@ export const setCurrentFile = (Core, artifact, file) => dispatch => {
 			dispatch(setActiveFileInPlaylist(Core.Artifact.getTXID(artifact) + "|" + i));
 		}
 	}
+}
+
+export const payForCurrentFile = (active_id) => dispatch => {
+	dispatch(payForFile(active_id));
 }
 
 
