@@ -85,7 +85,7 @@ class VideoPlayer extends Component {
 			videoURL = "";
 		}
 
-		let thumbnailURL;
+		let thumbnailURL = "";
 
 		if (this.state.Artifact){
 			let thumbnail = this.props.Core.Artifact.getThumbnail(this.state.Artifact);
@@ -115,7 +115,9 @@ class VideoPlayer extends Component {
 	updateVideoPlayer(){
 		if (this.state.Artifact && this.state.ActiveFile){
 			if (this.player){
-				this.player.reset();
+				try {
+					this.player.reset();
+				} catch(e){}
 
 				let options = this.getPlayerOptions();
 
