@@ -126,6 +126,16 @@ export const selectCurrentArtifact = (Core, txid) => dispatch => {
 	});
 }
 
+export const setCurrentFile = (Core, artifact, file) => dispatch => {
+	let files = Core.Artifact.getFiles(artifact);
+
+	for (var i = 0; i < files.length; i++) {
+		if (files[i].fname === file.fname && files[i].dname === file.dname){
+			dispatch(setActiveFileInPlaylist(Core.Artifact.getTXID(artifact) + "|" + i));
+		}
+	}
+}
+
 
 
 

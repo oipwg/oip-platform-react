@@ -1,58 +1,110 @@
 import React, { Component } from 'react';
 
+import { setCurrentFile } from '../actions';
+
 class FilesTable extends Component {
 	constructor(props){
 		super(props);
 
 		this.state = {
-			files: []
+			CurrentArtifact: {
+				artifact: {}
+			},
+			ActiveFile: {
+				info: {}
+			}
 		}
 
 		this.viewFile = this.viewFile.bind(this);
 		this.stripUnimportantFiles = this.stripUnimportantFiles.bind(this);
-	}
-	shouldComponentUpdate(nextProps){
-		return true;
-	}
-	componentWillReceiveProps(nextProps){
-		this.setState({files: nextProps.files});
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
-		if (!nextProps.extendedView)
-			this.stripUnimportantFiles(nextProps.files, nextProps);
+		let _this = this;
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+	}
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let currentArtifact = newState.CurrentArtifact;
+		let active = newState.FilePlaylist.active;
+		let activeFile = newState.FilePlaylist[active];
+
+		if (currentArtifact && this.state !== currentArtifact){
+			this.setState({
+				CurrentArtifact: currentArtifact,
+				ActiveFile: activeFile
+			});
+		}
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
 	}
 	componentDidMount(){
-		this.setState({files: this.props.files});
-
-		if (!this.props.extendedView)
-			this.stripUnimportantFiles(this.props.files, this.props);
+		this.stateDidUpdate();
 	}
-	stripUnimportantFiles(files, props){
+	stripUnimportantFiles(files){
 		let newFiles = [];
-
-		console.log(files);
 
 		if (files && files.length <= 6){
 			for (var i = 0; i < files.length; i++) {
 				if (files[i].subtype !== "cover"){
-					if (!files[i] || !props.CurrentFile || files[i].fname !== props.CurrentFile.fname){
+					if (!files[i] || !this.state.ActiveFile || !this.state.ActiveFile.info || files[i].fname !== this.state.ActiveFile.info.fname){
 						newFiles.push(JSON.parse(JSON.stringify(files[i])));
 					}
 				}
 			}
 		}
 			
-		this.setState({files: newFiles});
+		return newFiles;
 	}
 	viewFile(file){
-		this.props.setCurrentFile(file);
+		this.props.store.dispatch(setCurrentFile(this.props.Core, this.state.CurrentArtifact.artifact, file));
 	}
 	render() {
+		let files = this.props.Core.Artifact.getFiles(this.state.CurrentArtifact.artifact)
+
+		for (var i = 0; i < files.length; i++) {
+			files[i].icon = this.props.Core.Artifact.getEntypoIconForType(files[i].type);
+
+			let sugPlay = files[i].sugPlay / this.props.Core.Artifact.getScale(this.state.CurrentArtifact.artifact);
+			let sugBuy = files[i].sugBuy / this.props.Core.Artifact.getScale(this.state.CurrentArtifact.artifact);
+
+			if (isNaN(sugPlay)){
+				sugPlay = 0;
+			}
+
+			if (isNaN(sugBuy)){
+				sugBuy = 0;
+			}
+
+			// eslint-disable-next-line
+			let playDecimal = sugPlay - parseInt(sugPlay);
+			// eslint-disable-next-line
+			let buyDecimal = sugBuy - parseInt(sugBuy);
+
+			if (playDecimal.toString().length === 3){
+				sugPlay = sugPlay.toString() + "0";
+			}
+			if (buyDecimal.toString().length === 3){
+				sugBuy = sugBuy.toString() + "0";
+			}
+
+			files[i].sugPlay = sugPlay;
+			files[i].sugBuy = sugBuy;
+		}
+
+		if (!this.props.extendedView)
+			files = this.stripUnimportantFiles(files);
+
 		let _this = this;
 		return (
 			<div>
 				<table className="table table-sm table-striped table-bordered text-center table-hover table-responsive table-inverse" style={{width: "100%", verticalAlign: "middle"}}>
 					<tbody>
-						{[].map(function(file, i){
+						{files.map(function(file, i){
 							return <tr key={i}>
 										<th scope="row"><span className={"icon icon-" + file.icon} style={{margin: "auto", display: "table", marginTop: "4px"}}></span></th>
 										<td style={{verticalAlign: "middle"}}>{file.subtype ? file.subtype : file.type}</td>

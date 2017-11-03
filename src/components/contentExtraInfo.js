@@ -85,11 +85,18 @@ class ContentExtraInfo extends Component {
 	}
 	render() {
 		let niceTime = moment(this.props.Core.Artifact.getTimestamp(this.state.artifact) * 1000).calendar(null, {sameElse: "MMMM Do YYYY"});
+		let description = this.props.Core.Artifact.getDescription(this.state.artifact);
 
 		return (
 			<div>
 				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.state.isFetching ? "loading..." : niceTime}</strong></p>
-				<p style={this.state.extendedView ? {textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"} : {textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap", maxHeight:"150px", textOverflow: "ellipsis", overflow: "hidden"}}><Linkify>{this.state.description}</Linkify></p>
+				<p style={this.state.extendedView ? 
+					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"} 
+					: 
+					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap", maxHeight:"150px", textOverflow: "ellipsis", overflow: "hidden"}}
+				>
+					<Linkify>{description}</Linkify>
+				</p>
 				<FilesTable extendedView={this.state.extendedView} Core={this.props.Core} store={this.props.store} />
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
 					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />
