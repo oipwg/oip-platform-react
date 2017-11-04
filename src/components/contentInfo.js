@@ -22,7 +22,8 @@ class ContentInfo extends Component {
 		this.unsubscribe = this.props.store.subscribe(() => {
 			_this.stateDidUpdate();
 		});
-
+	}
+	componentDidMount(){
 		this.stateDidUpdate();
 	}
 	stateDidUpdate(){

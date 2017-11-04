@@ -39,7 +39,7 @@ class ImageContainer extends Component {
 		this.updateImage();
 	}
 	componentDidUpdate(){
-		this.updateImage();
+		//this.updateImage();
 	}
 	updateImage(){
 		if (this.state.ActiveFile && this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid){

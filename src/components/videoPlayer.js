@@ -32,7 +32,7 @@ class VideoPlayer extends Component {
 		return false;
 	}
 	componentDidUpdate(){
-		this.updateVideoPlayer();
+		//this.updateVideoPlayer();
 	}
 	stateDidUpdate(){
 		let newState = this.props.store.getState();

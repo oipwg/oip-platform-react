@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { setCurrentFile } from '../actions';
 
+import PaymentButtons from './PaymentButtons.js';
+
 class FilesTable extends Component {
 	constructor(props){
 		super(props);
@@ -66,54 +68,32 @@ class FilesTable extends Component {
 	render() {
 		let files = this.props.Core.Artifact.getFiles(this.state.CurrentArtifact.artifact)
 
+		let filesCopy = [];
+
 		for (var i = 0; i < files.length; i++) {
-			files[i].icon = this.props.Core.Artifact.getEntypoIconForType(files[i].type);
+			let newObj = JSON.parse(JSON.stringify(files[i]));
 
-			let sugPlay = files[i].sugPlay / this.props.Core.Artifact.getScale(this.state.CurrentArtifact.artifact);
-			let sugBuy = files[i].sugBuy / this.props.Core.Artifact.getScale(this.state.CurrentArtifact.artifact);
+			newObj.icon = this.props.Core.Artifact.getEntypoIconForType(files[i].type);
 
-			if (isNaN(sugPlay)){
-				sugPlay = 0;
-			}
-
-			if (isNaN(sugBuy)){
-				sugBuy = 0;
-			}
-
-			// eslint-disable-next-line
-			let playDecimal = sugPlay - parseInt(sugPlay);
-			// eslint-disable-next-line
-			let buyDecimal = sugBuy - parseInt(sugBuy);
-
-			if (playDecimal.toString().length === 3){
-				sugPlay = sugPlay.toString() + "0";
-			}
-			if (buyDecimal.toString().length === 3){
-				sugBuy = sugBuy.toString() + "0";
-			}
-
-			files[i].sugPlay = sugPlay;
-			files[i].sugBuy = sugBuy;
+			filesCopy.push(newObj);
 		}
 
 		if (!this.props.extendedView)
-			files = this.stripUnimportantFiles(files);
+			filesCopy = this.stripUnimportantFiles(filesCopy);
 
 		let _this = this;
 		return (
 			<div>
 				<table className="table table-sm table-striped table-bordered text-center table-hover table-responsive table-inverse" style={{width: "100%", verticalAlign: "middle"}}>
 					<tbody>
-						{files.map(function(file, i){
+						{filesCopy.map(function(file, i){
 							return <tr key={i}>
 										<th scope="row"><span className={"icon icon-" + file.icon} style={{margin: "auto", display: "table", marginTop: "4px"}}></span></th>
 										<td style={{verticalAlign: "middle"}}>{file.subtype ? file.subtype : file.type}</td>
 										<td style={{verticalAlign: "middle"}}>{file.dname ? file.dname : file.fname}</td>
 										<td style={{verticalAlign: "middle", width: "230px"}}>
 											<div style={{margin: "auto"}}>
-												{file.disPlay ? "" : <button onClick={function(){_this.viewFile(file)}} className={file.sugPlay ? "btn btn-sm btn-outline-success" : "btn btn-sm btn-outline-info"}><span className="icon icon-controller-play"></span> {file.sugPlay ? "$" + file.sugPlay : "Free"}</button>}
-												<span style={{paddingLeft: "10px"}}></span>
-												{file.disBuy ? "" : <button className={file.sugBuy ? "btn btn-sm btn-outline-success" : "btn btn-sm btn-outline-info"}><span className="icon icon-download"></span> {file.sugBuy ? "$" + file.sugBuy : "Free"}</button>}
+												<PaymentButtons artifact={_this.state.CurrentArtifact.artifact} File={{info:file}} Core={_this.props.Core} />
 											</div>
 										</td>
 									</tr>

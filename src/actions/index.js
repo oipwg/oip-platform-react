@@ -61,7 +61,7 @@ export const fetchArtifactList = (Core, list_id, options) => dispatch => {
 
 	if (list_id === LATEST_CONTENT_LIST){
 		Core.Index.getSupportedArtifacts(function(artifacts){
-			console.log(artifacts);
+			console.log("fetch:",artifacts);
 			dispatch(recieveArtifactList(list_id, artifacts.slice(0,50)));
 		}, function(err){
 			dispatch(requestArtifactListError(list_id));
@@ -83,7 +83,7 @@ export const requestCurrentArtifact = () => ({
 
 export const recieveCurrentArtifact = artifact => ({
 	type: RECIEVE_CURRENT_ARTIFACT,
-	artifact,
+	artifact: {...artifact},
 	receivedAt: Date.now()
 })
 
@@ -116,11 +116,16 @@ export const payForFile = uid => ({
 export const selectCurrentArtifact = (Core, txid) => dispatch => {
 	dispatch(requestCurrentArtifact());
 
-	Core.Index.getArtifactFromID(txid, function(artifact){
-		dispatch(recieveCurrentArtifact(artifact));
+	Core.Index.getArtifactFromID(txid, function(artifacts){
+		console.log(artifacts);
+		console.log(artifacts[0]);
+		console.log("getid", artifacts);
 
-		let files = Core.Artifact.getFiles(artifact);
-		let txid = Core.Artifact.getTXID(artifact);
+		dispatch(recieveCurrentArtifact(artifacts[0]));
+
+		let files = Core.Artifact.getFiles(artifacts[0]);
+
+		let txid = Core.Artifact.getTXID(artifacts[0]);
 
 		for (var i = 0; i < files.length; i++) {
 			dispatch(addFileToPlaylist(files[i], txid + "|" + i, Core));

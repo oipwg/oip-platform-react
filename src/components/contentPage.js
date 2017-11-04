@@ -34,13 +34,11 @@ class ContentPage extends Component {
 
 		this.setArtifact = this.setArtifact.bind(this);
 	}
-	componentWillReceiveProps(nextProps){
-		if (nextProps.match.params.id !== this.props.match.params.id){
-			this.setArtifact(nextProps);
-		}
-	}
 	componentDidMount(){
 		this.setArtifact(this.props);
+	}
+	componentDidUpdate(){
+		//this.setArtifact(this.props);
 	}
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
@@ -55,7 +53,7 @@ class ContentPage extends Component {
 		this.unsubscribe();
 	}
 	setArtifact(props){
-		props.store.dispatch(selectCurrentArtifact(props.Core, props.match.params.id));
+		this.props.store.dispatch(selectCurrentArtifact(this.props.Core, this.props.match.params.id));
 	}
 	render() {
 		let _this = this;
