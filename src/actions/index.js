@@ -16,6 +16,7 @@ export const REQUEST_CURRENT_ARTIFACT_ERROR = 'REQUEST_CURRENT_ARTIFACT_ERROR'
 
 export const SET_ACTIVE_FILE_IN_PLAYLIST = 'SET_ACTIVE_FILE_IN_PLAYLIST'
 export const SET_FILE_PLAYLIST = 'SET_FILE_PLAYLIST'
+export const BUY_FILE = 'BUY_FILE'
 export const PAY_FOR_FILE = 'PAY_FOR_FILE'
 export const ADD_FILE_TO_PLAYLIST = 'ADD_FILE_TO_PLAYLIST'
 export const PLAYLIST_SKIP_BACK = 'PLAYLIST_SKIP_BACK'
@@ -113,6 +114,11 @@ export const payForFile = uid => ({
 	uid
 })
 
+export const buyFile = uid => ({
+	type: BUY_FILE,
+	uid
+})
+
 export const selectCurrentArtifact = (Core, txid) => dispatch => {
 	dispatch(requestCurrentArtifact());
 
@@ -148,8 +154,26 @@ export const setCurrentFile = (Core, artifact, file) => dispatch => {
 	}
 }
 
-export const payForCurrentFile = (active_id) => dispatch => {
-	dispatch(payForFile(active_id));
+export const payForFileFunc = (Core, artifact, file) => dispatch => {
+	let files = Core.Artifact.getFiles(artifact);
+
+	for (var i = 0; i < files.length; i++) {
+		if (files[i].fname === file.fname && files[i].dname === file.dname){
+			dispatch(payForFile(Core.Artifact.getTXID(artifact) + "|" + i));
+			dispatch(setActiveFileInPlaylist(Core.Artifact.getTXID(artifact) + "|" + i));
+		}
+	}
+}
+
+export const buyFileFunc = (Core, artifact, file) => dispatch => {
+	let files = Core.Artifact.getFiles(artifact);
+
+	for (var i = 0; i < files.length; i++) {
+		if (files[i].fname === file.fname && files[i].dname === file.dname){
+			dispatch(buyFile(Core.Artifact.getTXID(artifact) + "|" + i));
+			dispatch(setActiveFileInPlaylist(Core.Artifact.getTXID(artifact) + "|" + i));
+		}
+	}
 }
 
 

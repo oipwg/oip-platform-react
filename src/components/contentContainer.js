@@ -50,8 +50,8 @@ class ContentContainer extends Component {
 		return (
 			<div className="content-container">
 				<div id='content' 
-					className={ (this.state.isPaid && !this.state.hasPaid) ? "content blur" : "content"} 
-					style=	  { (this.state.isPaid && !this.state.hasPaid) ? {display: "block"} : {display: "inline"}}
+					className={ (this.state.isPaid && !this.state.hasPaid && !this.state.owned) ? "content blur" : "content"} 
+					style=	  { (this.state.isPaid && !this.state.hasPaid && !this.state.owned) ? {display: "block"} : {display: "inline"}}
 				>
 					{ type ===  'Audio' ? <AudioContainer Core={this.props.Core} store={this.props.store} /> : '' }
 					{ type ===  'Video' ? <VideoPlayer Core={this.props.Core} store={this.props.store} /> : '' }

@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 
+import { payForFileFunc, buyFileFunc } from '../actions';
+
 class PaymentButtons extends Component {
+	constructor(props){
+		super(props);
+
+		this.viewFile = this.viewFile.bind(this);
+	}
+	viewFile(file){
+
+	}
 	render() {
 		let disallowPlay = false;
 		let disallowBuy = false;
@@ -47,17 +57,19 @@ class PaymentButtons extends Component {
 			buyString = "Free";
 		else
 			buyString = "$" + sugBuy;
+
+		let _this = this;
 		
 		return (
 			<div style={{margin: "auto"}}>
 				{ disallowPlay ? "" : 
-					<button  className={viewString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={this.props.onPlayClick} style={{padding: "5px"}}>
+					<button  className={viewString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={() => { _this.props.store.dispatch(payForFileFunc(_this.props.Core, _this.props.artifact, _this.props.File.info)); } } style={{padding: "5px"}}>
 						<span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{viewString}
 					</button>
 				}
 				<span style={{padding: "0px 3px"}}></span>
 				{ disallowBuy ? "" : 
-					<button className={buyString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={this.props.onBuyClick} style={{padding: "5px"}}>
+					<button className={buyString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={() => { _this.props.store.dispatch(buyFileFunc(_this.props.Core, _this.props.artifact, _this.props.File.info)); } } style={{padding: "5px"}}>
 						<span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
 					</button>
 				}

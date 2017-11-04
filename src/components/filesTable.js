@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { setCurrentFile } from '../actions';
-
 import PaymentButtons from './PaymentButtons.js';
 
 class FilesTable extends Component {
@@ -17,7 +15,6 @@ class FilesTable extends Component {
 			}
 		}
 
-		this.viewFile = this.viewFile.bind(this);
 		this.stripUnimportantFiles = this.stripUnimportantFiles.bind(this);
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
@@ -62,9 +59,6 @@ class FilesTable extends Component {
 			
 		return newFiles;
 	}
-	viewFile(file){
-		this.props.store.dispatch(setCurrentFile(this.props.Core, this.state.CurrentArtifact.artifact, file));
-	}
 	render() {
 		let files = this.props.Core.Artifact.getFiles(this.state.CurrentArtifact.artifact)
 
@@ -93,7 +87,7 @@ class FilesTable extends Component {
 										<td style={{verticalAlign: "middle"}}>{file.dname ? file.dname : file.fname}</td>
 										<td style={{verticalAlign: "middle", width: "230px"}}>
 											<div style={{margin: "auto"}}>
-												<PaymentButtons artifact={_this.state.CurrentArtifact.artifact} File={{info:file}} Core={_this.props.Core} />
+												<PaymentButtons artifact={_this.state.CurrentArtifact.artifact} File={{info:file}} Core={_this.props.Core} store={_this.props.store} />
 											</div>
 										</td>
 									</tr>

@@ -9,18 +9,23 @@ class ImageContainer extends Component {
 		this.loadIntoImage = this.loadIntoImage.bind(this);
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
-		let _this = this;
+		let updateState = this.stateDidUpdate;
 
 		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
+			updateState();
 		});
 	}
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
 
-		let currentArtifact = newState.CurrentArtifact;
-		let active = newState.FilePlaylist.active;
-		let activeFile = newState.FilePlaylist[active];
+		let currentArtifact, active, activeFile;
+
+		if (newState.CurrentArtifact)
+			currentArtifact = newState.CurrentArtifact;
+		if (newState.FilePlaylist){
+			active = newState.FilePlaylist.active;
+			activeFile = newState.FilePlaylist[active];
+		}
 
 		let stateObj = {
 			CurrentArtifact: currentArtifact,
@@ -28,20 +33,23 @@ class ImageContainer extends Component {
 		}
 
 		if (stateObj && this.state !== stateObj){
-			this.setState(stateObj);
+			let updateImage = this.updateImage;
+			this.setState(stateObj, () => {
+				updateImage();
+			});
 		}
 	}
 	componentWillUnmount(){
 		this.unsubscribe();
 	}
 	componentDidMount(){
-		this.stateDidUpdate();
-		this.updateImage();
+		this.stateDidUpdate(this.props.store.getState());
 	}
 	componentDidUpdate(){
 		//this.updateImage();
 	}
 	updateImage(){
+		console.log(this.state);
 		if (this.state.ActiveFile && this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid){
 			this.loadIntoImage(this.state.CurrentArtifact.artifact, this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
 		} else {
