@@ -95,7 +95,7 @@ class ContentExtraInfo extends Component {
 					: 
 					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap", maxHeight:"150px", textOverflow: "ellipsis", overflow: "hidden"}}
 				>
-					<Linkify>{description}</Linkify>
+					<Linkify>{this.state.isFetching ? "loading..." : description}</Linkify>
 				</p>
 				<FilesTable extendedView={this.state.extendedView} Core={this.props.Core} store={this.props.store} />
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>

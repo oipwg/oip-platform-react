@@ -4,6 +4,8 @@ import {
   Link
 } from 'react-router-dom'
 
+import Identicons from 'identicons-react';
+
 class ContentCard extends Component {
 	componentDidMount(){
 		let thumbnail = this.props.Core.Artifact.getThumbnail(this.props.artifact);
@@ -36,6 +38,7 @@ class ContentCard extends Component {
 	}
 	render() {
 		let title = this.props.Core.Artifact.getTitle(this.props.artifact);
+		let publisher = this.props.Core.Artifact.getPublisher(this.props.artifact);
 		let txid = this.props.Core.Artifact.getTXID(this.props.artifact);
 		let paid = this.props.Core.Artifact.paid(this.props.artifact);
 		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.props.artifact));
@@ -62,7 +65,12 @@ class ContentCard extends Component {
 					{duration ? <p className="content-card-xinfo">{duration}</p> : <div className="content-card-xinfo-offset"></div>}
 					<div className="card-block" style={{padding: "10px",whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
 						<strong style={{}}>{title}</strong>
-						<p style={{marginBottom: "-10px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}><img className="rounded-circle" src={userIcon} width="30" height="30" alt="" style={{marginRight: "3px", marginBottom: "3px"}} /><span style={{paddingTop:"10px"}}>{this.props.artifact.publisherName}</span></p>
+						<p style={{marginBottom: "-10px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex"}}>
+							<div className="rounded-circle" style={{marginRight: "3px", marginBottom: "3px", display: "inline-flex", width: "30px", height: "30px"}}>
+								<Identicons id={publisher} width={30} size={5} />
+							</div>
+							<span style={{marginTop:"4px", display: "inline-flex"}}>{this.props.artifact.publisherName}</span>
+						</p>
 						<button className="btn btn-sm btn-outline-secondary view-btn">{this.props.views} Views</button>
 					</div>
 				</div>

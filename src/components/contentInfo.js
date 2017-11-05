@@ -39,7 +39,8 @@ class ContentInfo extends Component {
 		this.unsubscribe();
 	}
 	render() {
-		let creator = this.props.Core.Artifact.getPublisherName(this.state.artifact);
+		let publisher = this.props.Core.Artifact.getPublisher(this.state.artifact);
+		let pubName = this.props.Core.Artifact.getPublisherName(this.state.artifact);
 		let title = this.props.Core.Artifact.getTitle(this.state.artifact);
 		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.state.artifact));
 
@@ -47,7 +48,7 @@ class ContentInfo extends Component {
 			<div>
 				<div className="row">
 					<div className="col-10">
-						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}><span className={"icon icon-" + icon} style={{marginRight:"10px"}}></span>{this.state.isFetching ? "loading..." : title}</h3>
+						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}>{this.state.isFetching ? "" : <span className={"icon icon-" + icon} style={{marginRight:"10px"}}></span>}{this.state.isFetching ? "loading..." : title}</h3>
 					</div>
 					<div className="col-2">
 						<div style={{float: "right", marginTop: "2px"}}>
@@ -60,10 +61,10 @@ class ContentInfo extends Component {
 				</div>
 				<div className="media">
 					<div className="d-flex mr-3 rounded-circle" style={{width: "50px", height: "50px"}}>
-						{this.state.isFetching ? "" : <Identicons id={creator} width={48} size={5} /> }
+						{this.state.isFetching ? "" : <Identicons id={publisher} width={48} size={5} /> }
 					</div>
 					<div className="media-body">
-						<h5 className="mt-0" style={{paddingTop: "10px", marginLeft: "-10px"}}>{this.state.isFetching ? "loading..." : creator} 
+						<h5 className="mt-0" style={{paddingTop: "10px", marginLeft: "-10px"}}>{this.state.isFetching ? "loading..." : pubName} 
 							{/* 0.9 Feature */}
 							{/*
 							<div className="btn-group">
