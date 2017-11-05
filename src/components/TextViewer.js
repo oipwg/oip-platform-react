@@ -4,19 +4,50 @@ import MarkdownContainer from './markdownContainer.js';
 import PDFViewer from './pdfViewer.js';
 
 class TextViewer extends Component {
+	constructor(props){
+		super(props);
+
+		this.state = {
+
+		}
+
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
+		let _this = this;
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+	}
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let CurrentArtifact = newState.CurrentArtifact;
+		let active = newState.FilePlaylist.active;
+		let currentFile = newState.FilePlaylist[active];
+
+		if (currentFile && this.state !== currentFile){
+			this.setState({CurrentArtifact: CurrentArtifact, ActiveFile: currentFile});
+		}
+	}
+	componentDidMount(){
+		this.stateDidUpdate();
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
+	}
 	render() {
 		let pdf = false;
 
-		let files = this.props.artifact['oip-041'].artifact.storage.files;
-
-		for (var i = 0; i < files.length; i++){
-			if (files[i].type === "Text" && (this.props.Core.util.getExtension(files[i].fname) === "pdf" || this.props.Core.util.getExtension(files[i].fname) === "PDF"))
+		if (this.state.ActiveFile && this.state.ActiveFile.info){
+			if (this.props.Core.util.getExtension(this.state.ActiveFile.info.fname) === "pdf" || this.props.Core.util.getExtension(this.state.ActiveFile.info.fname) === "PDF"){
 				pdf = true;
+			}
 		}
 
 		return (
 			<div style={{height: "100%"}}>
-				{pdf ? <PDFViewer artifact={this.props.artifact} /> : <MarkdownContainer artifact={this.props.artifact} />}
+				{pdf ? <PDFViewer store={this.props.store} Core={this.props.Core} /> : <MarkdownContainer store={this.props.store} Core={this.props.Core} />}
 			</div>
 		);
 	}

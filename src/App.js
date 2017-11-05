@@ -188,17 +188,6 @@ class App extends Component {
 							<ContentPage Core={Core} store={this.props.store} {...props} />} 
 						/>
 
-						{/*
-						<Route path="/Audio/:id" render={props => <ContentPage artifact={demoContent[0]} suggestedContent={demoContent} {...props} />} />
-						<Route path="/Video/:id" render={props => <ContentPage artifact={demoContent[1]} suggestedContent={demoContent} {...props} />} />
-						<Route path="/img/:id" render={props => <ContentPage artifact={demoContent[2]} suggestedContent={demoContent}  {...props} />} />
-						<Route path="/text/:id" render={props => <ContentPage artifact={demoContent[3]} suggestedContent={demoContent}  {...props} />} />
-						<Route path="/pdf/:id" render={props => <ContentPage artifact={demoContent[4]} suggestedContent={demoContent} {...props} />} />
-						<Route path="/web/:id" render={props => <ContentPage artifact={demoContent[5]} suggestedContent={demoContent} {...props} />} />
-						<Route path="/game/:id" render={props => <ContentPage artifact={demoContent[6]} suggestedContent={demoContent} {...props} />} />
-						<Route path="/code/:id" render={props => <ContentPage artifact={demoContent[7]} suggestedContent={demoContent} {...props} />} />
-						*/}
-
 						{/* The switch will render the last Route if no others are found (aka 404 page.) */}
 						<Route component={NoMatch} />
 					</Switch>

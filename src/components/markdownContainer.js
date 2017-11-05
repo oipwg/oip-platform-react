@@ -4,42 +4,72 @@ import axios from 'axios';
 var ReactMarkdown = require('react-markdown');
 
 class MarkdownContainer extends Component {
-	componentDidMount(){
-		var _this = this;
-		let markdown;
+	constructor(props){
+		super(props);
 
-		let files = this.props.artifact['oip-041'].artifact.storage.files;
-		let mainHash = this.props.artifact['oip-041'].artifact.storage.location;
-
-		for (var i = 0; i < files.length; i++){
-			if (files[i].type === "Text" && !markdown)
-				markdown = files[i];
+		this.state = {
+			markdown: ""
 		}
 
-		let markdownURL = "";
+		this.getMarkdown = this.getMarkdown.bind(this);
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
-		if (markdown){
-			markdownURL = "https://gateway.ipfs.io/ipfs/" + mainHash + "/" + encodeURIComponent(markdown.fname);
-		}
+		let updateState = this.stateDidUpdate;
 
-		this.serverRequest = axios
-		.get(markdownURL)
-		.then(function(result) {    
-			_this.setState({
-				markdown: result.data
-			});
+		this.unsubscribe = this.props.store.subscribe(() => {
+			updateState();
 		});
 	}
-	componentWillUnmount() {
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let currentArtifact, active, activeFile;
+
+		if (newState.CurrentArtifact)
+			currentArtifact = newState.CurrentArtifact;
+		if (newState.FilePlaylist){
+			active = newState.FilePlaylist.active;
+			activeFile = newState.FilePlaylist[active];
+		}
+
+		let stateObj = {
+			CurrentArtifact: currentArtifact,
+			ActiveFile: activeFile
+		}
+
+		if (stateObj && this.state !== stateObj){
+			let getMarkdown = this.getMarkdown;
+			this.setState(stateObj, () => {
+				getMarkdown();
+			});
+		}
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
+
 		if (this.serverRequest){
 			try {
 				this.serverRequest.abort();
 			} catch(e){}
 		}
 	}
-	constructor(props) {
-		super(props);
-		this.state = {markdown: ""};
+	componentDidMount(){
+		this.stateDidUpdate();
+	}
+	getMarkdown(){
+		if (this.state.ActiveFile && this.state.CurrentArtifact && this.state.ActiveFile.info && this.state.CurrentArtifact.artifact){
+			let markdownURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.state.ActiveFile.info));
+			
+			let _this = this;
+
+			this.serverRequest = axios
+			.get(markdownURL)
+			.then(function(result) {    
+				_this.setState({
+					markdown: result.data
+				});
+			});
+		}
 	}
 	render() {
 		return (

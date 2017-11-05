@@ -14,7 +14,7 @@ class ContentContainer extends Component {
 		super(props);
 
 		this.state = {
-
+			ActiveFile: {}
 		};
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
@@ -28,11 +28,12 @@ class ContentContainer extends Component {
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
 
+		let CurrentArtifact = newState.CurrentArtifact;
 		let active = newState.FilePlaylist.active;
 		let currentFile = newState.FilePlaylist[active];
 
 		if (currentFile && this.state !== currentFile){
-			this.setState(currentFile);
+			this.setState({CurrentArtifact: CurrentArtifact, ActiveFile: currentFile});
 			console.log(this.state);
 		}
 	}
@@ -40,25 +41,28 @@ class ContentContainer extends Component {
 		this.unsubscribe();
 	}
 	render() {
-		let type;
+		let type, loading = false;
 
-		if (this.state.info && this.state.info.type){
-			type = this.state.info.type;
+		if (this.state.ActiveFile.info && this.state.ActiveFile.info.type){
+			type = this.state.ActiveFile.info.type;
 		}
+
+		if (this.state.CurrentArtifact && this.state.CurrentArtifact.isFetching)
+			loading = true;
 
 		let _this = this;
 		return (
 			<div className="content-container">
 				<div id='content' 
-					className={ (this.state.isPaid && !this.state.hasPaid && !this.state.owned) ? "content blur" : "content"} 
-					style=	  { (this.state.isPaid && !this.state.hasPaid && !this.state.owned) ? {display: "block"} : {display: "inline"}}
+					className={ (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? "content blur" : "content"} 
+					style=	  { (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? {display: "block"} : {display: "inline"}}
 				>
-					{ type ===  'Audio' ? <AudioContainer Core={this.props.Core} store={this.props.store} /> : '' }
-					{ type ===  'Video' ? <VideoPlayer Core={this.props.Core} store={this.props.store} /> : '' }
-					{ type ===  'Image' ? <ImageContainer Core={this.props.Core} store={this.props.store} /> : '' }
-					{ type ===  'Text' ? <TextViewer Core={this.props.Core} store={this.props.store} /> : '' }
-					{ type ===  'Web' ? <HTMLContainer Core={this.props.Core} store={this.props.store} /> : '' }
-					{ type ===  'Software' ? <CodeContainer Core={this.props.Core} store={this.props.store} /> : '' }
+					{ (type ===  'Audio' && !loading) ? <AudioContainer Core={this.props.Core} store={this.props.store} /> : '' }
+					{ (type ===  'Video' && !loading) ? <VideoPlayer Core={this.props.Core} store={this.props.store} /> : '' }
+					{ (type ===  'Image' && !loading) ? <ImageContainer Core={this.props.Core} store={this.props.store} /> : '' }
+					{ (type ===  'Text' && !loading) ? <TextViewer Core={this.props.Core} store={this.props.store} /> : '' }
+					{ (type ===  'Web' && !loading) ? <HTMLContainer Core={this.props.Core} store={this.props.store} /> : '' }
+					{ (type ===  'Software' && !loading) ? <CodeContainer Core={this.props.Core} store={this.props.store} /> : '' }
 				</div>
 				<Paywall Core={this.props.Core} store={this.props.store} />
 			</div>

@@ -45,14 +45,14 @@ class VideoPlayer extends Component {
 			console.log(currentArtifact);
 			console.log(activeFile);
 
+			let updateVideoPlayer = this.updateVideoPlayer;
+
 			this.setState({
 				Artifact: currentArtifact,
 				ActiveFile: activeFile
+			}, function(){
+				updateVideoPlayer()
 			});
-
-			console.log(this.state);
-			
-			this.updateVideoPlayer();
 		}
 	}
 	componentWillUnmount(){

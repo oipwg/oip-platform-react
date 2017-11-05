@@ -3,15 +3,16 @@ import React, { Component } from 'react';
 import ColorThief from 'color-thief-standalone';
 
 import SongList from './SongList.js';
+import AudioVisualizer from './AudioVisualizer.js';
 
 class AudioContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			songs: [{
-				src: ""
-			}],
-			currentSongURL: "",
+			SongList: {
+
+			},
+			thumbnailSrc: "",
 			bgColor: "#000",
 			mainColor: "#fff",
 			currentSongTitle: "",
@@ -35,97 +36,80 @@ class AudioContainer extends Component {
 		this.toHHMMSS = this.toHHMMSS.bind(this);
 		this.nextSong = this.nextSong.bind(this);
 
-		this.startVisualizationLoop = this.startVisualizationLoop.bind(this);
-		this.stopVisualizationLoop = this.stopVisualizationLoop.bind(this);
-		this.visualizationLoop = this.visualizationLoop.bind(this);
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
+		let updateState = this.stateDidUpdate;
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			updateState();
+		});
 	}
-	componentDidMount(){
-		this.updateThumbnail(this.props);
-		this.updateSong(this.props);
-		this.startVisualizationLoop();
-	}
-	componentWillUnmount(){
-		this.stopVisualizationLoop();
-	}
-	componentWillReceiveProps(nextProps){
-		this.updateThumbnail(nextProps);
-		this.updateSong(nextProps);
-	}
-	shouldComponentUpdate(nextProps, nextState){
-		if (this.props.artifact === nextProps.artifact && this.props.paid && !nextProps.paid){
-			this.refs.audio.play()
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let currentArtifact, active, activeFile, filePlaylist;
+
+		if (newState.CurrentArtifact)
+			currentArtifact = newState.CurrentArtifact;
+		if (newState.FilePlaylist){
+			filePlaylist = newState.FilePlaylist;
+			active = newState.FilePlaylist.active;
+			activeFile = newState.FilePlaylist[active];
 		}
 
-		if (this.props.CurrentFile !== nextProps.CurrentFile){
-			let songURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(nextProps.artifact, nextProps.CurrentFile));
+		let stateObj = {
+			CurrentArtifact: currentArtifact,
+			ActiveFile: activeFile,
+			FilePlaylist: filePlaylist
+		}
 
-			this.setState({currentTime: 0, currentDuration: 0, currentSongURL: songURL});
+		if (stateObj && this.state !== stateObj){
+			let updateSong = this.updateSong;
+			this.setState(stateObj, () => {
+				updateSong();
+			});
+		}
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
+	}
+	componentDidMount(){
+		this.stateDidUpdate();
+	}
+	componentWillUnmount(){
+	}
+	componentWillReceiveProps(nextProps, nextState){
+		//this.updateThumbnail(nextProps);
+		//this.updateSong();
+	}
+	shouldComponentUpdate(nextProps, nextState){
+		if (this.state.ActiveFile === nextState.ActiveFile && !this.state.ActiveFile.hasPaid && nextState.ActiveFile.hasPaid){
+			try {
+				//this.refs.audio.play()
+			} catch(e){}
+		}
+
+		if (this.state.ActiveFile && this.state.ActiveFile.info && this.state.ActiveFile.info !== nextState.ActiveFile.info){
+			let songURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(nextState.CurrentArtifact.artifact, nextState.ActiveFile.info));
+
+			//this.setState({currentSongURL: songURL});
 		}
 
 		return true;
 	}
-	startVisualizationLoop() {
-		if('webkitAudioContext' in window) {
-			this.context = new window.webkitAudioContext();
-		} else {
-			this.context = new AudioContext();
-		}
-		
-        this.analyser = this.context.createAnalyser();
-        this.canvas = this.refs.analyzerCanvas;
-        this.ctx = this.canvas.getContext('2d');
-        this.audio = this.refs.audio;
-        this.audio.crossOrigin = "anonymous";
-        this.audioSrc = this.context.createMediaElementSource(this.audio);
-        this.audioSrc.connect(this.analyser);
-        this.audioSrc.connect(this.context.destination);
-        this.analyser.connect(this.context.destination);
-
-		if( !this._frameId ) {
-			this._frameId = window.requestAnimationFrame( this.visualizationLoop );
-		}
-	}
-	stopVisualizationLoop(){
-		window.cancelAnimationFrame( this._frameId );
-	}
-	visualizationLoop(){
-		if (this.refs.audio.crossOrigin !== "anonymous")
-			this.refs.audio.crossOrigin = "anonymous";
-
-		let freqData = new Uint8Array(this.analyser.frequencyBinCount)
-        this.analyser.getByteFrequencyData(freqData)
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-        this.ctx.fillStyle = this.state.mainColor;
-        let bars = 200;
-        for (var i = 0; i < bars; i++) {
-            let bar_x = i * 3;
-            let bar_width = 3;
-            let bar_height = -(freqData[i] / 2);
-            this.ctx.fillRect(bar_x, this.canvas.height, bar_width, bar_height)
-        }
-        
-        if (this.audio.currentTime > 0)
-        	this.setState({mainSongProgress: this.audio.currentTime / this.audio.duration * 100, currentTime: this.audio.currentTime, currentDuration: this.audio.duration, playing: !this.audio.paused})
-
-        if (this.audio.currentTime === this.audio.duration){
-        	this.nextSong();
-        } 
-        
-        this._frameId = window.requestAnimationFrame( this.visualizationLoop )
-	}
-	updateThumbnail(props){
+	updateThumbnail(state){
 		let thumbnailURL = "";
 
-		if (props.artifact){
-			thumbnailURL = props.Core.Artifact.getThumbnail(props.artifact);
+		if (state.CurrentArtifact && state.CurrentArtifact.artifact){
+			thumbnailURL = this.props.Core.Artifact.getThumbnail(state.CurrentArtifact.artifact);
 		}
 
 		if (thumbnailURL !== ""){
-			if (props.Core){
+			if (this.props.Core){
 				let _this = this;
-				props.Core.Network.getThumbnailFromIPFS(props.Core.util.buildIPFSShortURL(props.artifact, thumbnailURL), function(srcData){
+				this.props.Core.Network.getThumbnailFromIPFS(this.props.Core.util.buildIPFSShortURL(state.CurrentArtifact.artifact, thumbnailURL), function(srcData){
 					try {
-						_this.setState({songs: [{ src: srcData }]});
+						_this.setState({thumbnailSrc: srcData });
 
 						let pic = new Image();
 						pic.onload = function(){
@@ -147,17 +131,22 @@ class AudioContainer extends Component {
 			this.setState({songs: [{ src: "" }]});
 		}
 	}
-	updateSong(props){
-		let songs = props.Core.Artifact.getSongs(props.artifact);
+	updateSong(){
+		let songs = this.props.Core.Artifact.getSongs(this.state.CurrentArtifact.artifact);
 
 		let firstSong;
 		for (let i = 0; i < songs.length; i++){
 			if (!firstSong){
 				firstSong = songs[i];
-				let ipfsURL = props.Core.util.buildIPFSURL(songs[i].location, songs[i].fname);
-				let title = props.Core.Artifact.getTitle(props.artifact);
-				let artist = props.Core.Artifact.getArtist(props.artifact);
-				this.setState({currentSongURL: ipfsURL, currentSongTitle: title, currentSongArtist: artist});
+				let ipfsURL = this.props.Core.util.buildIPFSURL(songs[i].location, songs[i].fname);
+				let title = this.props.Core.Artifact.getTitle(this.state.CurrentArtifact.artifact);
+				let artist = this.props.Core.Artifact.getArtist(this.state.CurrentArtifact.artifact);
+
+				let audio = this.refs.audio;
+
+				this.setState({currentSongURL: ipfsURL, currentSongTitle: title, currentSongArtist: artist}, function(){
+					//audio.src = ipfsURL;
+				});
 			}
 		}
 	}
@@ -242,11 +231,22 @@ class AudioContainer extends Component {
 		}
 	}
 	render() {
+		let name, artist, playlistLen = 0, paywall = false;
+
+		if (this.state.ActiveFile && this.state.ActiveFile.info){
+			name = this.state.ActiveFile.info.dname ? this.state.ActiveFile.info.dname : this.state.ActiveFile.info.fname;
+			paywall = ((this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid) || (!this.state.ActiveFile.owned && this.state.ActiveFile.isPaid))
+			//console.log(paywall);
+		}
+		if (this.state.FilePlaylist){
+			playlistLen = this.state.FilePlaylist.length - 1;
+		}
+		
 		return (
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden"}}>
                 <audio
                     ref="audio"
-                    autoPlay={this.props.DisplayPaywall ? false : true}
+                    autoPlay={false}
                     controls={true}
                     //this is the link to my song url feel free to use it or replace it with your own
                     src={this.state.currentSongURL}
@@ -255,13 +255,13 @@ class AudioContainer extends Component {
                 </audio>
                 <div className="container" style={{height: "90%"}}>
 	                <div className="row" style={{height: "90%"}}>
-		                <div className={this.props.SongList.length > 1 ? "col-6" : "col-12"} style={{margin: "auto"}}>
+		                <div className={playlistLen > 1 ? "col-6" : "col-12"} style={{margin: "auto"}}>
 		                	<h3 className="text-center" style={{color: this.state.mainColor}}>
-		                		{this.props.CurrentFile.dname ? this.props.CurrentFile.dname : this.props.CurrentFile.fname} - {this.state.currentSongArtist}
+		                		{name} - {this.state.currentSongArtist}
 		                	</h3>
-							<img ref="image" src={this.state.songs[0].src} style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}} alt="" />
+							<img ref="image" src={this.state.thumbnailSrc} style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}} alt="" />
 						</div>
-						{this.props.SongList.length > 1 ? <div className="col-6" style={{margin: "auto"}}>
+						{playlistLen > 1 ? <div className="col-6" style={{margin: "auto"}}>
 							<style dangerouslySetInnerHTML={{
 								__html: [
 									'.scrollbar::-webkit-scrollbar {',
@@ -292,13 +292,7 @@ class AudioContainer extends Component {
 					</div>
 				</div>
 				<div style={{width:"102%", height: "200px", position: "absolute", bottom: "10px", marginLeft: "-10px"}}>
-					<canvas
-		            	className="canvas-goo"
-		                ref="analyzerCanvas"
-		                id="analyzer"
-		                style={{width:"100%", height: "200px"}}
-		                >
-	                </canvas>
+					<AudioVisualizer audio={this.refs.audio} />
                 </div>
                 <div style={{width:"100%", height: "40px", position: "absolute", bottom: "0px", borderTop: "1px solid " + this.state.mainColor, display: "flex", backgroundColor: this.state.bgColor}}>
                 	<div style={{width: "40px", height: "100%", borderRight: "1px solid " + this.state.mainColor, display: "flex"}} onClick={this.toggleAudio}><span onClick={this.toggleAudio} className={this.state.playing ? "icon icon-controller-paus" : "icon icon-controller-play"} style={{fontSize: "25px", color: this.state.mainColor, margin:"auto auto"}}></span></div>

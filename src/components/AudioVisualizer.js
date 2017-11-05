@@ -1,0 +1,88 @@
+import React, { Component } from 'react';
+
+import { payForFileFunc, buyFileFunc } from '../actions';
+
+class AudioVisualizer extends Component {
+	constructor(props){
+		super(props);
+
+		this.startVisualizationLoop = this.startVisualizationLoop.bind(this);
+		this.stopVisualizationLoop = this.stopVisualizationLoop.bind(this);
+		this.visualizationLoop = this.visualizationLoop.bind(this);
+	}
+	componentDidMount(){
+		if (this.props.audio){
+			this.startVisualizationLoop();
+		}
+	}
+	componentDidUpdates(){
+		if (this.props.audio){
+			this.startVisualizationLoop();
+		}
+	}
+	startVisualizationLoop() {
+		if('webkitAudioContext' in window) {
+			this.context = new window.webkitAudioContext();
+		} else {
+			this.context = new AudioContext();
+		}
+		
+		this.analyser = this.context.createAnalyser();
+		this.canvas = this.refs.analyzerCanvas;
+		this.ctx = this.canvas.getContext('2d');
+		this.audio = this.props.audio;
+		this.audio.crossOrigin = "anonymous";
+		this.audioSrc = this.context.createMediaElementSource(this.audio);
+		this.audioSrc.connect(this.analyser);
+		this.audioSrc.connect(this.context.destination);
+		this.analyser.connect(this.context.destination);
+
+		if( !this._frameId ) {
+			this._frameId = window.requestAnimationFrame( this.visualizationLoop );
+		}
+	}
+	stopVisualizationLoop(){
+		window.cancelAnimationFrame( this._frameId );
+	}
+	visualizationLoop(){
+		if (this.props.audio.crossOrigin !== "anonymous")
+			this.props.audio.crossOrigin = "anonymous";
+
+		let freqData = new Uint8Array(this.analyser.frequencyBinCount)
+		this.analyser.getByteFrequencyData(freqData)
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+		this.ctx.fillStyle = this.state.mainColor;
+		let bars = 200;
+		for (var i = 0; i < bars; i++) {
+			let bar_x = i * 3;
+			let bar_width = 3;
+			let bar_height = -(freqData[i] / 2);
+			this.ctx.fillRect(bar_x, this.canvas.height, bar_width, bar_height)
+		}
+		
+		if (this.audio.currentTime > 0)
+			this.setState({mainSongProgress: this.audio.currentTime / this.audio.duration * 100, currentTime: this.audio.currentTime, currentDuration: this.audio.duration, playing: !this.audio.paused})
+
+		if (this.audio.currentTime === this.audio.duration){
+			this.nextSong();
+		} 
+		
+		this._frameId = window.requestAnimationFrame( this.visualizationLoop )
+	}
+	render() {
+		let _this = this;
+		
+		return (
+			<canvas
+				className="canvas-goo"
+				ref="analyzerCanvas"
+				id="analyzer"
+				style={{width:"100%", height: "200px"}}
+			>
+			</canvas>
+		)
+	}
+}
+
+
+export default AudioVisualizer;

@@ -43,7 +43,7 @@ class ImageContainer extends Component {
 		this.unsubscribe();
 	}
 	componentDidMount(){
-		this.stateDidUpdate(this.props.store.getState());
+		this.stateDidUpdate();
 	}
 	componentDidUpdate(){
 		//this.updateImage();
@@ -53,7 +53,7 @@ class ImageContainer extends Component {
 		if (this.state.ActiveFile && this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid){
 			this.loadIntoImage(this.state.CurrentArtifact.artifact, this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
 		} else {
-			if (this.state.CurrentArtifact){
+			if (this.state.CurrentArtifact && this.state.ActiveFile){
 				this.loadIntoImage(this.state.CurrentArtifact.artifact, this.state.ActiveFile.info);
 			}
 		}
