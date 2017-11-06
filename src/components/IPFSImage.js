@@ -53,7 +53,7 @@ class IPFSImage extends Component {
 	}
 	render() {
 		return (
-			<canvas ref='canvas' style={{width: "inherit", height: "inherit"}} />
+			<canvas ref='canvas' style={{width: "100%", height: "inherit", objectFit: "cover"}} />
 		);
 	}
 }

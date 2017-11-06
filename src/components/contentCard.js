@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 
 import Identicons from 'identicons-react';
+import IPFSImage from './IPFSImage.js';
 
 class ContentCard extends Component {
 	componentDidMount(){
@@ -42,6 +43,7 @@ class ContentCard extends Component {
 		let txid = this.props.Core.Artifact.getTXID(this.props.artifact);
 		let paid = this.props.Core.Artifact.paid(this.props.artifact);
 		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.props.artifact));
+		let thumbnailHash = this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.Core.Artifact.getThumbnail(this.props.artifact));
 		
 		let duration = this.props.Core.Artifact.getDuration(this.props.artifact);
 
@@ -55,7 +57,9 @@ class ContentCard extends Component {
 		return (
 			<Link to={"/" + txid.substring(0,6) } onClick={function(){window.scrollTo(0, 0)}} className={cardClasses}>
 				<div className="card">
-					<img className="card-img-top content-card-img" src={this.state.src ? this.state.src : this.state.backupSrc} alt="" />
+					<div className="card-img-top content-card-img">
+						<IPFSImage Core={this.props.Core} hash={thumbnailHash} />
+					</div>
 					<div style={{marginBottom:"115px", marginTop: "-145px"}}>
 						<button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px", border: "none", backgroundColor: "rgba(0,0,0,0.5)"}}>
 							{ paid ? <span className="icon icon-credit" style={{color: "rgb(63, 255, 63)"}}></span> : ''}

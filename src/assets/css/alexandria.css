@@ -68,6 +68,7 @@
 	width: auto; 
 	object-fit: cover;
 	background-color: #fff;
+  overflow: hidden;
 }
 
 .content-card-xinfo {
