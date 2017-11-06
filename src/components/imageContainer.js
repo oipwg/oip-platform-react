@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import IPFSImage from './IPFSImage.js';
 
 class ImageContainer extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {src: ""};
+		this.state = {};
 
-		this.updateImage = this.updateImage.bind(this);
-		this.loadIntoImage = this.loadIntoImage.bind(this);
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
 		let updateState = this.stateDidUpdate;
@@ -33,9 +32,8 @@ class ImageContainer extends Component {
 		}
 
 		if (stateObj && this.state !== stateObj){
-			let updateImage = this.updateImage;
 			this.setState(stateObj, () => {
-				updateImage();
+				
 			});
 		}
 	}
@@ -45,49 +43,25 @@ class ImageContainer extends Component {
 	componentDidMount(){
 		this.stateDidUpdate();
 	}
-	componentDidUpdate(){
-		//this.updateImage();
-	}
-	updateImage(){
-		console.log(this.state);
-		if (this.state.ActiveFile && this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid){
-			this.loadIntoImage(this.state.CurrentArtifact.artifact, this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
+	render() {
+		let hash = "";
+		let preview = false;
+
+		if (this.state.ActiveFile && this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && this.props.Core){
+			preview = true;
+
+			hash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
 		} else {
 			if (this.state.CurrentArtifact && this.state.ActiveFile){
-				this.loadIntoImage(this.state.CurrentArtifact.artifact, this.state.ActiveFile.info);
+				hash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.state.ActiveFile.info);
 			}
 		}
-	}
-	loadIntoImage(artifact, file){
-		if (artifact && file){
-			this.setState({src: ""});
 
-			let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(artifact, file);
-
-			let _this = this;
-			this.props.Core.Network.getThumbnailFromIPFS(ipfsShortURL, function(srcData){
-				try {
-					_this.setState({ src: srcData });
-				} catch(e) { }
-			})
-
-			// setTimeout(function(){
-			// 	if (!_this.hasUpdated){
-			// 		let longURL = _this.props.Core.util.buildIPFSURL(ipfsShortURL);
-			// 		_this.setState({ src: longURL });
-			// 	}
-			// }, 2 * 1000)
-		}
-	}
-	render() {
-		let preventTheft = true;
-
-		if (this.state.ActiveFile && !this.state.ActiveFile.isPaid){
-			preventTheft = false;
-		}
 		return (
 			<div style={{height: "100%", verticalAlign: "middle"}}>
-				<img className="img-container" onContextMenu={(e)=>  { if (preventTheft) e.preventDefault();}} onDragStart={(e)=>  { if (preventTheft) e.preventDefault();}} ref="image" src={this.state.src} style={{width: "auto", maxWidth: "100%", display: "block",margin: "auto", backgroundColor: "#fff"}} alt="" />
+				<div className="img-container" style={{width: "auto", maxWidth: "100%", display: "block",margin: "auto"}}>
+					<IPFSImage Core={this.props.Core} hash={hash} width={preview ? "100%" : ""} />
+				</div>
 			</div>
 		);
 	}
