@@ -7,9 +7,13 @@ class PaymentButtons extends Component {
 		super(props);
 
 		this.viewFile = this.viewFile.bind(this);
+		this.buyFile = this.buyFile.bind(this);
 	}
-	viewFile(file){
-
+	viewFile(){
+		this.props.store.dispatch(payForFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik));
+	}
+	buyFile(){
+		this.props.store.dispatch(buyFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik));
 	}
 	render() {
 		let disallowPlay = false;
@@ -63,13 +67,13 @@ class PaymentButtons extends Component {
 		return (
 			<div style={{margin: "auto"}}>
 				{ disallowPlay ? "" : 
-					<button  className={viewString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={() => { _this.props.store.dispatch(payForFileFunc(_this.props.Core, _this.props.artifact, _this.props.File.info)); } } style={{padding: "5px"}}>
+					<button  className={viewString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={this.viewFile} style={{padding: "5px"}}>
 						<span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{viewString}
 					</button>
 				}
 				<span style={{padding: "0px 3px"}}></span>
 				{ disallowBuy ? "" : 
-					<button className={buyString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={() => { _this.props.store.dispatch(buyFileFunc(_this.props.Core, _this.props.artifact, _this.props.File.info)); } } style={{padding: "5px"}}>
+					<button className={buyString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={this.buyFile} style={{padding: "5px"}}>
 						<span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
 					</button>
 				}

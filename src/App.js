@@ -2,11 +2,14 @@
 import React, { Component } from 'react';
 
 import {
-	BrowserRouter as Router,
+	Router,
 	Route,
 	Switch
 } from 'react-router-dom'
 import { CSSTransitionGroup } from 'react-transition-group'
+import createBrowserHistory from 'history/createBrowserHistory'
+
+import PiwikReactRouter from 'piwik-react-router';
 
 import Core from 'alexandria-core';
 
@@ -40,112 +43,26 @@ import SearchPage from './components/SearchPage.js';
 
 import ArtifactManager from './modules/ArtifactManager.js';
 
+const piwik = PiwikReactRouter({
+	url: 'piwik.alexandria.io',
+	siteId: 1
+})
+
+const history = createBrowserHistory()
+
 class App extends Component {
 	componentDidMount(){
-		//let _this = this;
-
-		// Core.Index.getSupportedArtifacts(function(mySupportedArtifacts){
-		// 	console.log(mySupportedArtifacts);
-		// 	_this.setState({
-		// 		SupportedArtifacts: mySupportedArtifacts
-		// 	});
-		// })
-
-		// Core.Index.getSuggestedContent(null, function(mySuggestedContent){
-		// 	console.log(mySuggestedContent);
-		// 	_this.setState({
-		// 		CurrentSuggestedContent: mySuggestedContent
-		// 	});
-		// })
+		
 	}
 	componentWillUnmount() {
-		this.serverRequest.abort();
+		
 	}
 	constructor(props) {
 		super(props);
 		
 		this.state = {
-			ArtifactPlaylist: [],
-			DisplayedArtifact: undefined,
-			DisplayPaywall: false,
-			CurrentFile: undefined,
-			ThumbnailFile: undefined,
-			NextFile: undefined,
-			CurrentSuggestedContent: [],
-			SupportedArtifacts: [],
-			SongList: []
+			
 		};
-
-		this.ArtifactManager = ArtifactManager;
-
-		// Start timers and loops to track playing content
-		//this.ArtifactManager.startup();
-
-		this.setDisplayedArtifact = this.setDisplayedArtifact.bind(this);
-		this.setCurrentFile = this.setCurrentFile.bind(this);
-		this.setThumbnailFile = this.setThumbnailFile.bind(this);
-		this.setPaywallDisplay = this.setPaywallDisplay.bind(this);
-		this.payForCurrentFile = this.payForCurrentFile.bind(this);
-		this.setupArtifact = this.setupArtifact.bind(this);
-	}
-	setArtifactPlaylist(playlist){
-
-	}
-	setDisplayedArtifact(artifact){
-		console.log(typeof artifact)
-		if (typeof artifact === "string"){
-			// We were passed an artifact ID, get one from Core and pass it to the Artifact Manager
-			let _this = this;
-
-			Core.Index.getArtifactFromID(artifact, function(artifact){
-				_this.setupArtifact(artifact);
-			});
-		} else if (typeof artifact === "object"){
-			// We were directly passed an Artifact, directly set to state.
-			this.setupArtifact(artifact);
-		}
-
-	}
-	setupArtifact(artifact){
-		let mainFile = Core.Artifact.getMainFile(artifact);
-		let thumbnailFile = Core.Artifact.getThumbnail(artifact);
-		let displayPaywall = Core.Artifact.checkPaidViewFile(mainFile);
-		let SongList = [];
-
-		if (Core.Artifact.getType(artifact) === "Audio"){
-			SongList = Core.Artifact.getSongs(artifact);
-		}
-
-		this.setState({
-			DisplayedArtifact: artifact,
-			CurrentFile: mainFile,
-			ThumbnailFile: thumbnailFile,
-			DisplayPaywall: displayPaywall,
-			SongList: SongList
-		})
-	}
-	setCurrentFile(newFile){
-		//let displayPaywall = Core.Artifact.checkPaidFile(newFile);
-		this.setState({
-			CurrentFile: newFile,
-			//DisplayPaywall: displayPaywall
-		});
-	}
-	setPaywallDisplay(boolval){
-		this.setState({
-			DisplayPaywall: boolval
-		})
-	}
-	setNextFile(newFile){
-
-	}
-	setThumbnailFile(newFile){
-		this.setState({
-			ThumbnailFile: newFile
-		})
-	}
-	payForCurrentFile(){
-
 	}
 	render() {
 		const supportsHistory = 'pushState' in window.history;
@@ -154,6 +71,7 @@ class App extends Component {
 			<Router 
 				forceRefresh={!supportsHistory} 
 				basename={"/"}
+				history={piwik.connectToHistory(history)}
 			>
 				<div>
 					{/* This is to add transitions to the app, fade, etc. */}
@@ -185,7 +103,7 @@ class App extends Component {
 						<Route path="/user/:page" component={UserPage} />
 						
 						<Route path="/:id" render={props => 
-							<ContentPage Core={Core} store={this.props.store} {...props} />} 
+							<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} />} 
 						/>
 
 						{/* The switch will render the last Route if no others are found (aka 404 page.) */}

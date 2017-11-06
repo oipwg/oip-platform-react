@@ -63,7 +63,7 @@ export const fetchArtifactList = (Core, list_id, options) => dispatch => {
 	if (list_id === LATEST_CONTENT_LIST){
 		Core.Index.getSupportedArtifacts(function(artifacts){
 			console.log("fetch:",artifacts);
-			dispatch(recieveArtifactList(list_id, artifacts.slice(0,50)));
+			dispatch(recieveArtifactList(list_id, artifacts.slice(0,200)));
 		}, function(err){
 			dispatch(requestArtifactListError(list_id));
 		})
@@ -119,18 +119,15 @@ export const buyFile = uid => ({
 	uid
 })
 
-export const selectCurrentArtifact = (Core, txid) => dispatch => {
+export const selectCurrentArtifact = (Core, txid, piwik) => dispatch => {
 	dispatch(requestCurrentArtifact());
 
 	Core.Index.getArtifactFromID(txid, function(artifacts){
-		console.log(artifacts);
-		console.log(artifacts[0]);
-		console.log("getid", artifacts);
-
 		dispatch(recieveCurrentArtifact(artifacts[0]));
 
 		let files = Core.Artifact.getFiles(artifacts[0]);
 
+		let publisher = Core.Artifact.getPublisher(artifacts[0]);
 		let txid = Core.Artifact.getTXID(artifacts[0]);
 
 		for (var i = 0; i < files.length; i++) {
@@ -139,6 +136,7 @@ export const selectCurrentArtifact = (Core, txid) => dispatch => {
 
 		dispatch(setActiveFileInPlaylist(txid + "|" + 0));
 
+		piwik.push(['trackContentImpression', publisher, txid, ""])
 	}, function(err){
 		dispatch(requestCurrentArtifactError(err));
 	});
@@ -154,24 +152,42 @@ export const setCurrentFile = (Core, artifact, file) => dispatch => {
 	}
 }
 
-export const payForFileFunc = (Core, artifact, file) => dispatch => {
+export const payForFileFunc = (Core, artifact, file, piwik) => dispatch => {
+	let txid = Core.Artifact.getTXID(artifact);
+	let publisher = Core.Artifact.getPublisher(artifact);
 	let files = Core.Artifact.getFiles(artifact);
 
 	for (var i = 0; i < files.length; i++) {
 		if (files[i].fname === file.fname && files[i].dname === file.dname){
-			dispatch(payForFile(Core.Artifact.getTXID(artifact) + "|" + i));
-			dispatch(setActiveFileInPlaylist(Core.Artifact.getTXID(artifact) + "|" + i));
+			let id = txid + "|" + i;
+
+			dispatch(payForFile(id));
+			dispatch(setActiveFileInPlaylist(id));
+
+			try {
+				piwik.push(["trackContentInteraction", "viewFile", publisher, txid, i]);
+			} catch (e) {
+				console.log(e);
+			}	
 		}
 	}
 }
 
-export const buyFileFunc = (Core, artifact, file) => dispatch => {
+export const buyFileFunc = (Core, artifact, file, piwik) => dispatch => {
+	let txid = Core.Artifact.getTXID(artifact);
+	let publisher = Core.Artifact.getPublisher(artifact);
 	let files = Core.Artifact.getFiles(artifact);
 
 	for (var i = 0; i < files.length; i++) {
 		if (files[i].fname === file.fname && files[i].dname === file.dname){
-			dispatch(buyFile(Core.Artifact.getTXID(artifact) + "|" + i));
-			dispatch(setActiveFileInPlaylist(Core.Artifact.getTXID(artifact) + "|" + i));
+			dispatch(buyFile(txid + "|" + i));
+			dispatch(setActiveFileInPlaylist(txid + "|" + i));
+
+			try {
+				piwik.push(["trackContentInteraction", "buyFile", publisher, txid, i]);
+			} catch (e) {
+				console.log(e)
+			}	
 		}
 	}
 }

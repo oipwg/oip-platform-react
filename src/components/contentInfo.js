@@ -80,7 +80,7 @@ class ContentInfo extends Component {
 						</h5>
 					</div>
 				</div>
-				<ContentExtraInfo Core={this.props.Core} store={this.props.store} />
+				<ContentExtraInfo Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} />
 			</div>
 		);
 	}

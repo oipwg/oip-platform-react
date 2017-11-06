@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 
 import ColorThief from 'color-thief-standalone';
 
-import SongList from './SongList.js';
 import AudioVisualizer from './AudioVisualizer.js';
+import PlaylistScroller from './PlaylistScroller.js';
+import IPFSImage from './IPFSImage.js';
 
 class AudioContainer extends Component {
 	constructor(props) {
@@ -231,12 +232,15 @@ class AudioContainer extends Component {
 		}
 	}
 	render() {
-		let name, artist, playlistLen = 0, paywall = false;
+		let name, artist, playlistLen = 0, paywall = false, ipfsHash = "";
 
 		if (this.state.ActiveFile && this.state.ActiveFile.info){
 			name = this.state.ActiveFile.info.dname ? this.state.ActiveFile.info.dname : this.state.ActiveFile.info.fname;
 			paywall = ((this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid) || (!this.state.ActiveFile.owned && this.state.ActiveFile.isPaid))
-			//console.log(paywall);
+
+			if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
+				ipfsHash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
+			}
 		}
 		if (this.state.FilePlaylist){
 			playlistLen = this.state.FilePlaylist.length - 1;
@@ -259,35 +263,13 @@ class AudioContainer extends Component {
 		                	<h3 className="text-center" style={{color: this.state.mainColor}}>
 		                		{name} - {this.state.currentSongArtist}
 		                	</h3>
-							<img ref="image" src={this.state.thumbnailSrc} style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}} alt="" />
-						</div>
-						{playlistLen > 1 ? <div className="col-6" style={{margin: "auto"}}>
-							<style dangerouslySetInnerHTML={{
-								__html: [
-									'.scrollbar::-webkit-scrollbar {',
-									'    background-color: ' + this.state.mainColor + ';',
-									'}',
-									'.scrollbar::-webkit-scrollbar-thumb {',
-									'    background-color: ' + this.state.mainColor + ';',
-									'}',
-									'.scrollbar::-webkit-scrollbar-track {',
-									'    background-color: ' + this.state.bgColor + ';',
-									'}'
-								].join('\n')
-							}} />
-							<div className="scrollbar" style={{height: "400px", overflowY: "scroll", margin: "auto", maxWidth: "450px"}}>
-								<h3 style={{color: this.state.mainColor, textAlign: "center"}}>
-								</h3>
-								<SongList 
-									SongList={this.props.SongList} 
-									artifact={this.props.artifact} 
-									Core={this.props.Core} 
-									CurrentFile={this.props.CurrentFile}
-									setCurrentFile={this.props.setCurrentFile}
-									mainColor={this.state.mainColor}
-									bgColor={this.state.bgColor}
-								/>
+							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
+								<IPFSImage Core={this.props.Core} hash={ipfsHash} />
 							</div>
+						</div>
+						{playlistLen > 1 ? 
+						<div className="col-6" style={{margin: "auto"}}>
+							<PlaylistScroller />
 						</div> : ""}
 					</div>
 				</div>

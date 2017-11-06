@@ -58,13 +58,13 @@ class ContentContainer extends Component {
 					style=	  { (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? {display: "block"} : {display: "inline"}}
 				>
 					{ (type ===  'Audio' && !loading) ? <AudioContainer Core={this.props.Core} store={this.props.store} /> : '' }
-					{ (type ===  'Video' && !loading) ? <VideoPlayer Core={this.props.Core} store={this.props.store} /> : '' }
+					{ (type ===  'Video' && !loading) ? <VideoPlayer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} /> : '' }
 					{ (type ===  'Image' && !loading) ? <ImageContainer Core={this.props.Core} store={this.props.store} /> : '' }
 					{ (type ===  'Text' && !loading) ? <TextViewer Core={this.props.Core} store={this.props.store} /> : '' }
 					{ (type ===  'Web' && !loading) ? <HTMLContainer Core={this.props.Core} store={this.props.store} /> : '' }
 					{ (type ===  'Software' && !loading) ? <CodeContainer Core={this.props.Core} store={this.props.store} /> : '' }
 				</div>
-				<Paywall Core={this.props.Core} store={this.props.store} />
+				<Paywall Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} />
 			</div>
 		);
 	}

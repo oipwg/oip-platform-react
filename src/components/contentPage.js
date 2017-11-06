@@ -53,18 +53,18 @@ class ContentPage extends Component {
 		this.unsubscribe();
 	}
 	setArtifact(props){
-		this.props.store.dispatch(selectCurrentArtifact(this.props.Core, this.props.match.params.id));
+		this.props.store.dispatch(selectCurrentArtifact(this.props.Core, this.props.match.params.id, this.props.piwik));
 	}
 	render() {
 		let _this = this;
 
 		return (
 			<div>
-				<ContentContainer Core={this.props.Core} store={this.props.store} />
+				<ContentContainer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} />
 				<div className="container">
 					<div className="row">
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
-							<ContentInfo Core={this.props.Core} store={this.props.store} />
+							<ContentInfo Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} />
 							<br />
 							{this.props.DisplayedArtifact ? 
 								<div>
