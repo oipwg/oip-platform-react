@@ -71,7 +71,10 @@ class ContentCard extends Component {
 							</div>
 							<span style={{marginTop:"4px", display: "inline-flex"}}>{this.props.artifact.publisherName}</span>
 						</p>
+						{/* 0.9 Feature */}
+						{/*
 						<button className="btn btn-sm btn-outline-secondary view-btn">{this.props.views} Views</button>
+						*/}
 					</div>
 				</div>
 			</Link>
