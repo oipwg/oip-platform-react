@@ -24,7 +24,7 @@ class ContentCard extends Component {
 		let cardClasses = "col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 no-link-styling";
 
 		if (this.props.size === "large")
-			cardClasses = "col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 no-link-styling"
+			cardClasses = "col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 no-link-styling";
 
 		return (
 			<Link to={"/" + txid.substring(0,6) } onClick={function(){window.scrollTo(0, 0)}} className={cardClasses}>
@@ -36,7 +36,7 @@ class ContentCard extends Component {
 						</button>
 					</div>
 					<div className="card-img-top content-card-img">
-						<IPFSImage Core={this.props.Core} hash={thumbnailHash} width={"100%"} />
+						<IPFSImage Core={this.props.Core} hash={thumbnailHash} width={"100%"} cover={true} />
 					</div>
 					{duration ? <p className="content-card-xinfo">{duration}</p> : <div className="content-card-xinfo-offset"></div>}
 					<div className="card-block" style={{padding: "10px",whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
