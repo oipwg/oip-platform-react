@@ -6,6 +6,8 @@ import {
 	Redirect
 } from 'react-router-dom'
 
+import LogoImg from '../assets/img/logo-full.png';
+
 class Navbar extends Component {
 	constructor(props) {
 		super(props);
@@ -49,7 +51,7 @@ class Navbar extends Component {
 				{this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm} /> : ""}
 				<nav className="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
 					<Link className="navbar-brand" to="/">
-						<img src="/assets/img/logo-full.png" width="auto" height="32px" className="d-inline-block align-top" alt="" />
+						<img src={LogoImg} width="auto" height="32px" className="d-inline-block align-top" alt="" />
 					</Link>
 					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
 						<span className="navbar-toggler-icon"></span>

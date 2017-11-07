@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 import {
-	Router,
+	BrowserRouter as Router,
 	Route,
 	Switch
 } from 'react-router-dom'
@@ -41,8 +41,6 @@ import DMCAForm from './components/DMCAForm.js';
 
 import SearchPage from './components/SearchPage.js';
 
-import ArtifactManager from './modules/ArtifactManager.js';
-
 const piwik = PiwikReactRouter({
 	url: 'piwik.alexandria.io',
 	siteId: 1
@@ -50,9 +48,11 @@ const piwik = PiwikReactRouter({
 
 const history = createBrowserHistory()
 
+const PUBLIC_URL = process.env.PUBLIC_URL;
+
 class App extends Component {
 	componentDidMount(){
-		
+
 	}
 	componentWillUnmount() {
 		
@@ -66,11 +66,10 @@ class App extends Component {
 	}
 	render() {
 		const supportsHistory = 'pushState' in window.history;
-
 		return (
 			<Router 
 				forceRefresh={!supportsHistory} 
-				basename={"/"}
+				basename={PUBLIC_URL + "/"}
 				history={piwik.connectToHistory(history)}
 			>
 				<div>
