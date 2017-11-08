@@ -10,7 +10,8 @@ class VideoPlayer extends Component {
 
 		this.state = {
 			ActiveFile: {},
-			Artifact: {}
+			Artifact: {},
+			playingURL: ""
 		}
 
 		this.createVideoPlayer = this.createVideoPlayer.bind(this);
@@ -69,7 +70,6 @@ class VideoPlayer extends Component {
 	}
 	componentDidMount() {
 		this.stateDidUpdate();
-		this.createVideoPlayer();
 	}
 	getPlayerOptions() {
 		var options = {};
@@ -128,6 +128,7 @@ class VideoPlayer extends Component {
 				this.player.autoplay(options.autoplay);
 
 				this.player.src(options.sources);
+				console.log(options);
 
 				if (!this.props.DisplayPaywall){
 					this.player.play();

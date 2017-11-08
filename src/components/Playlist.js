@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class SongList extends Component {
+class Playlist extends Component {
 	constructor(props){
 		super(props);
 
@@ -40,7 +40,7 @@ class SongList extends Component {
 						<button className="btn btn-sm btn-outline-info"><span className="icon icon-download"></span> Buy All: Free</button>
 					</div> 
 				</li>
-				{this.props.SongList.map(function(song, i){
+				{[].map(function(song, i){
 					return <li key={i} className="list-group-item" style={song.fname === _this.props.CurrentFile.fname ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
 						<div style={{padding: "4px 5px", display:"flex"}}>
 							<img className="rounded" src={song.albumArtwork} width="40px" height="40px" alt="" />
@@ -64,4 +64,4 @@ class SongList extends Component {
 	}
 }
 
-export default SongList;
+export default Playlist;

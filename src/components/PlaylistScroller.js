@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import SongList from './SongList.js';
+import Playlist from './Playlist.js';
 
 class PlaylistScroller extends Component {
 	constructor(props){
@@ -54,9 +54,10 @@ class PlaylistScroller extends Component {
 				<div className="scrollbar" style={{height: "400px", overflowY: "scroll", margin: "auto", maxWidth: "450px"}}>
 					<h3 style={{color: this.state.mainColor, textAlign: "center"}}>
 					</h3>
-					<SongList 
+					<Playlist 
 						Core={this.props.Core} 
 						store={this.props.store}
+						currentArtifactOnly={true}
 						mainColor={this.state.mainColor}
 						bgColor={this.state.bgColor}
 					/>

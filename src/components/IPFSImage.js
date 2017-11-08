@@ -36,7 +36,7 @@ class IPFSImage extends Component {
 
 		this.refs.canvas.getContext("2d").clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
 
-		this.props.Core.Network.getFileFromIPFS(this.props.hash, this.receiveDataFromIPFS);
+		this.props.Core.Network.getThumbnailFromIPFS(this.props.hash, this.receiveDataFromIPFS);
 	}
 	receiveDataFromIPFS(base64, hash){
 		if (hash === this.state.active){
@@ -60,6 +60,9 @@ class IPFSImage extends Component {
 				}
 
 				_this.imageLoaded();
+				if (typeof _this.props.onImageLoad === "function"){
+					_this.props.onImageLoad(this)
+				}
 
 				img = undefined;
 			};
@@ -80,7 +83,6 @@ class IPFSImage extends Component {
 		);
 	}
 	drawImageProp(ctx, img, x, y, w, h, offsetX, offsetY) {
-
 		if (arguments.length === 2) {
 			x = y = 0;
 			w = ctx.canvas.width;
