@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Spinner from 'react-spinkit';
+
 class IPFSImage extends Component {
 	constructor(props){
 		super(props);
@@ -79,7 +81,10 @@ class IPFSImage extends Component {
 		let preventTheft = true;
 		let widthProps = this.props.width ? this.props.width : false;
 		return (
-			<canvas ref='canvas' style={{width: widthProps ? widthProps : "inherit", height: "inherit", objectFit: "cover", backgroundColor: "#fff", margin: "auto", display: this.state.imageLoaded ? "flex" : "none"}} onContextMenu={(e)=>  { if (preventTheft) e.preventDefault();}} onDragStart={(e)=>  { if (preventTheft) e.preventDefault();}} />
+			<div style={{width: "inherit", height: "inherit"}}>
+				{ (!this.state.imageLoaded && !(this.props.hash === "")) ? <div style={{height: "100%", margin: "auto"}} className="spinner-container"><Spinner name="wave" color="aqua"/></div> : ''}
+				<canvas ref='canvas' style={{width: widthProps ? widthProps : "inherit", height: "inherit", objectFit: "cover", backgroundColor: "#fff", margin: "auto", display: this.state.imageLoaded ? "flex" : "none"}} onContextMenu={(e)=>  { if (preventTheft) e.preventDefault();}} onDragStart={(e)=>  { if (preventTheft) e.preventDefault();}} />
+			</div>
 		);
 	}
 	drawImageProp(ctx, img, x, y, w, h, offsetX, offsetY) {

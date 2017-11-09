@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Spinner from 'react-spinkit';
+
 import AudioContainer from './audioContainer.js';
 import VideoPlayer from './videoPlayer.js';
 import ImageContainer from './imageContainer.js';
@@ -57,6 +59,7 @@ class ContentContainer extends Component {
 					className={ (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? "content blur" : "content"} 
 					style=	  { (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? {display: "block"} : {display: "inline"}}
 				>
+					{ loading ? <div style={{height: "100%", margin: "auto"}} className="spinner-container"><Spinner name="wave" color="aqua"/></div> : ''}
 					{ (type ===  'Audio' && !loading) ? <AudioContainer Core={this.props.Core} store={this.props.store} /> : '' }
 					{ (type ===  'Video' && !loading) ? <VideoPlayer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} /> : '' }
 					{ (type ===  'Image' && !loading) ? <ImageContainer Core={this.props.Core} store={this.props.store} /> : '' }
