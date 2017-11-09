@@ -11,9 +11,14 @@ class PaymentButtons extends Component {
 	}
 	viewFile(){
 		this.props.store.dispatch(payForFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik));
+		this.scrollToTop()
 	}
 	buyFile(){
 		this.props.store.dispatch(buyFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik));
+		this.scrollToTop()
+	}
+	scrollToTop(){
+		window.scrollTo(0, 0);
 	}
 	render() {
 		let disallowPlay = false;
