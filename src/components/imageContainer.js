@@ -47,7 +47,7 @@ class ImageContainer extends Component {
 		let hash = "";
 		let preview = false;
 
-		if (this.state.ActiveFile && this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && this.props.Core){
+		if (this.state.ActiveFile && ((this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid) && !this.state.ActiveFile.owned) && this.props.Core){
 			preview = true;
 
 			hash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
@@ -57,10 +57,12 @@ class ImageContainer extends Component {
 			}
 		}
 
+		console.log(preview);
+
 		return (
-			<div style={{height: "100%", verticalAlign: "middle"}}>
-				<div className="img-container" style={{width: "auto", maxWidth: "100%", display: "block",margin: "auto"}}>
-					<IPFSImage Core={this.props.Core} hash={hash} width={preview ? "100%" : ""} />
+			<div className="align-middle" style={{height: "100%", width: "100vw", verticalAlign: "middle"}}>
+				<div className="img-container" style={{height: "inherit", width: "auto", maxWidth: "100%", display: "block",margin: "auto"}}>
+					<IPFSImage Core={this.props.Core} hash={hash} width={preview ? "100%" : ""} cover={preview} />
 				</div>
 			</div>
 		);

@@ -22,8 +22,10 @@ class IPFSImage extends Component {
 		this._ismounted = true;
 		this.tryImageUpdate();
 	}
-	componentWillReceiveProps(nextProps){
-		
+	componentWillReceiveProps(nextProps, nextState){
+		if (nextProps.cover !== this.props.cover){
+			this.requestNewIPFS = true;
+		}
 	}
 	componentDidUpdate(){
 		this.tryImageUpdate();
@@ -40,7 +42,8 @@ class IPFSImage extends Component {
 		this._ismounted = false;
 	}
 	tryImageUpdate(){
-		if (this.state.active !== this.props.hash){
+		if (this.state.active !== this.props.hash || this.requestNewIPFS){
+			this.requestNewIPFS = false;
 			this.requestImageFromIPFS();	
 		}
 	}
@@ -52,12 +55,19 @@ class IPFSImage extends Component {
 		});
 	}
 	receiveDataFromIPFS(urlORbase64, hash){
+		console.log(urlORbase64, hash);
+
 		if (!this._ismounted)
 			return;
 
 		if (hash === this.state.active){
 			let img = new Image;
 			let canvas = this.refs.canvas;
+
+			if (canvas){
+				this.initialWidth = canvas.width;
+				this.initialHeight = canvas.height;
+			}
 
 			let _this = this;
 
@@ -73,10 +83,27 @@ class IPFSImage extends Component {
 				} catch (e) {}
 
 				if (_this.props.cover && canvas){
-					_this.drawImageProp(canvas.getContext("2d"), img, 0, 0, canvas.width, canvas.height);
+					let ctx = canvas.getContext("2d");
+
+					// Draw a white background for the image to sit on
+					ctx.fillStyle = "#fff"
+					ctx.fillRect(0,0,canvas.width,canvas.height);
+					ctx.stroke();
+
+					// Draw the image
+					_this.drawImageProp(ctx, img, 0, 0, canvas.width, canvas.height);
 				} else {
-					if (canvas)
-						canvas.getContext("2d").drawImage(img, 0, 0);
+					if (canvas) {
+						let ctx = canvas.getContext("2d");
+
+						// Draw a white background for the image to sit on
+						ctx.fillStyle = "#fff"
+						ctx.fillRect(0,0,canvas.width,canvas.height);
+						ctx.stroke();
+
+						// Draw the image
+						ctx.drawImage(img, 0, 0);
+					}
 				}
 
 				_this.imageLoaded();
@@ -102,10 +129,11 @@ class IPFSImage extends Component {
 	render() {
 		let preventTheft = true;
 		let widthProps = this.props.width ? this.props.width : false;
+		console.log(this.props.cover);
 		return (
-			<div style={{width: "inherit", height: "inherit"}}>
+			<div style={{width: "inherit", maxWidth: "inherit", height: "inherit", maxHeight: "inherit"}}>
 				{ (!this.state.imageLoaded && !(this.props.hash === "")) ? <div style={{height: "100%", margin: "auto"}} className="spinner-container"><Spinner name="wave" color="aqua"/></div> : ''}
-				<canvas ref='canvas' style={{width: widthProps ? widthProps : "inherit", height: "inherit", objectFit: "cover", backgroundColor: "#fff", margin: "auto", display: this.state.imageLoaded ? "flex" : "none"}} onContextMenu={(e)=>  { if (preventTheft) e.preventDefault();}} onDragStart={(e)=>  { if (preventTheft) e.preventDefault();}} />
+				<canvas ref='canvas' className="" style={{width: widthProps ? widthProps : "inherit", maxWidth: "inherit", height: "inherit", maxHeight: "inherit", objectFit: this.props.cover ? "cover" : "contain", margin: "auto", display: this.state.imageLoaded ? "flex" : "none"}} onContextMenu={(e)=>  { if (preventTheft) e.preventDefault();}} onDragStart={(e)=>  { if (preventTheft) e.preventDefault();}} />
 			</div>
 		);
 	}

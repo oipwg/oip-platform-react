@@ -59,7 +59,7 @@ class ContentPage extends Component {
 		let _this = this;
 
 		return (
-			<div>
+			<div className="content-page">
 				<ContentContainer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} />
 				<div className="container">
 					<div className="row">

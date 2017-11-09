@@ -73,7 +73,7 @@ class MarkdownContainer extends Component {
 	}
 	render() {
 		return (
-			<div className="justify-content-center markdownContainer" style={{width: "60%", height: "100%", margin: "30px auto"}}>
+			<div className="justify-content-center markdownContainer" style={{width: "60%", height: "100%", margin: "0px auto"}}>
 				<ReactMarkdown source={this.state.markdown} />
 			</div>
 		);

@@ -55,8 +55,9 @@ class ContentContainer extends Component {
 		return (
 			<div className="content-container">
 				<div id='content' 
+					ref={content => this.content = content}
 					className={ (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? "content blur" : "content"} 
-					style=	  { (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? {display: "block"} : {display: "inline"}}
+					style=	  { (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? {overflow: "scroll"} : {}}
 				>
 					{ loading ? <div style={{height: "100%", margin: "auto"}} className="spinner-container"><Spinner name="wave" color="aqua"/></div> : ''}
 					{ (type ===  'Audio' && !loading) ? <AudioContainer Core={this.props.Core} store={this.props.store} /> : '' }
@@ -66,7 +67,7 @@ class ContentContainer extends Component {
 					{ (type ===  'Web' && !loading) ? <HTMLContainer Core={this.props.Core} store={this.props.store} /> : '' }
 					{ (type ===  'Software' && !loading) ? <CodeContainer Core={this.props.Core} store={this.props.store} /> : '' }
 				</div>
-				<Paywall Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} />
+				<Paywall Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} contentRef={this.content} />
 			</div>
 		);
 	}
