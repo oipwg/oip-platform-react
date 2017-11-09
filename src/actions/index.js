@@ -20,9 +20,17 @@ export const BUY_FILE = 'BUY_FILE'
 export const PAY_FOR_FILE = 'PAY_FOR_FILE'
 export const ADD_FILE_TO_PLAYLIST = 'ADD_FILE_TO_PLAYLIST'
 export const PLAYLIST_SKIP_BACK = 'PLAYLIST_SKIP_BACK'
-export const PLAYLIST_SKIP_FORWARD = 'PLAYLIST_SKIP_FORWARD'
+export const PLAYLIST_NEXT = 'PLAYLIST_NEXT'
 export const PLAYLIST_PAUSE = 'PLAYLIST_PAUSE'
 export const PLAYLIST_PLAY = 'PLAYLIST_PLAY'
+export const UPDATE_CURRENT_TIME = 'UPDATE_CURRENT_TIME'
+export const UPDATE_IS_PLAYING = 'UPDATE_IS_PLAYING'
+export const UPDATE_IS_PLAYABLE = 'UPDATE_IS_PLAYABLE'
+export const UPDATE_IS_SEEKABLE = 'UPDATE_IS_SEEKABLE'
+export const UPDATE_DURATION = 'UPDATE_DURATION'
+
+export const CHANGE_VOLUME = 'CHANGE_VOLUME'
+export const CHANGE_MUTE = 'CHANGE_MUTE'
 
 export const LATEST_CONTENT_LIST = 'LATEST_CONTENT_LIST'
 export const SEARCH_PAGE_LIST = 'SEARCH_PAGE_LIST'
@@ -118,6 +126,62 @@ export const buyFile = uid => ({
 	type: BUY_FILE,
 	uid
 })
+
+export const updateFileCurrentTime = (uid, currentTime) => ({
+	type: UPDATE_CURRENT_TIME,
+	uid,
+	currentTime
+})
+
+export const updateFileDuration = (uid, duration) => ({
+	type: UPDATE_DURATION,
+	uid,
+	duration
+})
+
+export const isPlayingFile = (uid, isPlaying) => ({
+	type: UPDATE_IS_PLAYING,
+	uid,
+	isPlaying
+})
+
+export const isPlayableFile = (uid, isPlayable) => ({
+	type: UPDATE_IS_PLAYABLE,
+	uid,
+	isPlayable
+})
+
+export const isSeekableFile = (uid, isSeekable) => ({
+	type: UPDATE_IS_SEEKABLE,
+	uid,
+	isSeekable
+})
+
+export const setVolume = volume => ({
+	type: CHANGE_VOLUME,
+	volume
+})
+
+export const setMute = mute => ({
+	type: CHANGE_MUTE,
+	isMuted: mute
+})
+
+export const playlistNext = () => (dispatch, getState) => {
+	let FilePlaylist = getState().FilePlaylist;
+	let active = FilePlaylist.active;
+
+	let keys = Object.keys(FilePlaylist);
+
+	for (var i = 0; i < keys.length; i++) {
+		if (keys[i] === active){
+			let nextI = i + 1;
+			if (keys[nextI]){
+				dispatch(setActiveFileInPlaylist(keys[nextI]));
+			}
+		}
+	}
+}
 
 export const selectCurrentArtifact = (Core, txid, piwik) => dispatch => {
 	dispatch(requestCurrentArtifact());

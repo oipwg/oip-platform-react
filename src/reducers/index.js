@@ -4,6 +4,7 @@ import * as actions from '../actions'
 import { ArtifactLists } from './ArtifactLists.js';
 import { CurrentArtifact } from './CurrentArtifact.js';
 import { FilePlaylist } from './FilePlaylist.js';
+import { VolumeControls } from './VolumeControls.js';
 
 const pageType = (state = 'ARTIFACT_LIST', action) => {
 	switch (action.type) {
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
 	pageType,
 	ArtifactLists,
 	CurrentArtifact,
-	FilePlaylist
+	FilePlaylist,
+	VolumeControls
 })
 
 export default rootReducer

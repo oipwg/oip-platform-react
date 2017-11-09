@@ -5,7 +5,9 @@ const file = (state = {
 	isPaid: false,
 	hasPaid: false,
 	explicitAction: false,
-	playState: actions.PAUSED,
+	isPlaying: actions.PAUSED,
+	isPlayable: false,
+	isSeekable: false,
 	duration: 0,
 	currentTime: 0,
 	info: {}
@@ -28,6 +30,31 @@ const file = (state = {
 				...state,
 				owned: true
 			}
+		case actions.UPDATE_CURRENT_TIME:
+			return {
+				...state,
+				currentTime: action.currentTime
+			}
+		case actions.UPDATE_DURATION:
+			return {
+				...state,
+				duration: action.duration
+			}
+		case actions.UPDATE_IS_PLAYING:
+			return {
+				...state,
+				isPlaying: action.isPlaying
+			}
+		case actions.UPDATE_IS_PLAYABLE:
+			return {
+				...state,
+				isPlayable: action.isPlayable
+			}
+		case actions.UPDATE_IS_SEEKABLE:
+			return {
+				...state,
+				isSeekable: action.isSeekable
+			}
 		default:
 			return state
 	}
@@ -38,6 +65,11 @@ export const FilePlaylist = (state = { }, action) => {
 		case actions.ADD_FILE_TO_PLAYLIST:
 		case actions.PAY_FOR_FILE:
 		case actions.BUY_FILE:
+		case actions.UPDATE_CURRENT_TIME:
+		case actions.UPDATE_IS_PLAYING:
+		case actions.UPDATE_IS_PLAYABLE:
+		case actions.UPDATE_IS_SEEKABLE:
+		case actions.UPDATE_DURATION:
 			return {
 				...state,
 				[action.uid]: file(state[action.uid], action)

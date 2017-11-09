@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { updateFileCurrentTime, isPlayingFile, isPlayableFile, isSeekableFile, updateFileDuration, setVolume, setMute, playlistNext } from '../actions'
+
 import ColorThief from 'color-thief-standalone';
 
 import AudioVisualizer from './AudioVisualizer.js';
@@ -14,18 +16,12 @@ class AudioContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isPlayable: false,
-			isSeekable: false,
-			isPlaying: false,
+			ActiveFile: {},
+			VolumeControls: {},
 			showPrevious: false,
 			hasPrevious: false,
 			showNext: false,
 			hasNext: false,
-			isMuted: false,
-			totalTime: 0,
-			currentTime: 0,
-			volume: 0.5,
-			lastVolume: 0.5,
 			bgColor: "#000",
 			mainColor: "#fff"
 		};
@@ -39,6 +35,7 @@ class AudioContainer extends Component {
 		this.onVolumeChange = this.onVolumeChange.bind(this);
 		this.onAudioPlay = this.onAudioPlay.bind(this);
 		this.onAudioPause = this.onAudioPause.bind(this);
+		this.nextSong = this.nextSong.bind(this);
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
@@ -51,7 +48,7 @@ class AudioContainer extends Component {
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
 
-		let currentArtifact, active, activeFile, filePlaylist;
+		let currentArtifact, active, activeFile, filePlaylist, VolumeControls;
 
 		if (newState.CurrentArtifact)
 			currentArtifact = newState.CurrentArtifact;
@@ -60,19 +57,18 @@ class AudioContainer extends Component {
 			active = newState.FilePlaylist.active;
 			activeFile = newState.FilePlaylist[active];
 		}
+		if (newState.VolumeControls)
+			VolumeControls = newState.VolumeControls;
 
 		let stateObj = {
 			CurrentArtifact: currentArtifact,
 			ActiveFile: activeFile,
-			FilePlaylist: filePlaylist
+			active,
+			FilePlaylist: filePlaylist,
+			VolumeControls
 		}
 
-		if (stateObj && this.state !== stateObj){
-			//let updateSong = this.updateSong;
-			this.setState(stateObj, () => {
-				//updateSong();
-			});
-		}
+		this.setState(stateObj);
 	}
 	componentWillUnmount(){
 		this.audio.removeEventListener("canplay", this.onCanPlay)
@@ -104,18 +100,22 @@ class AudioContainer extends Component {
 		}
 	}
 	onCanPlay(canPlay){
-		this.setState({ isPlayable: true, isSeekable: true });
+		this.props.store.dispatch(isPlayableFile(this.state.active, true));
+		this.props.store.dispatch(isSeekableFile(this.state.active, true));
 	}
 	onTimeUpdate(event){
 		if (event && event.srcElement && this && this.audio){
-			this.setState({ currentTime: event.srcElement.currentTime, totalTime: event.srcElement.duration, isPlaying: true})
+			this.props.store.dispatch(updateFileCurrentTime(this.state.active, event.srcElement.currentTime));
+
+			if (this.state.ActiveFile.duration !== event.srcElement.duration && event.srcElement.duration)
+				this.props.store.dispatch(updateFileDuration(this.state.active, event.srcElement.duration));
 		}
 	}
 	onAudioPlay(){
-		this.setState({isPlaying: true});
+		this.props.store.dispatch(isPlayingFile(this.state.active, true));
 	}
 	onAudioPause(){
-		this.setState({isPlaying: false});
+		this.props.store.dispatch(isPlayingFile(this.state.active, false));
 	}
 	onPlaybackChange(shouldPlay){
 		if (shouldPlay)
@@ -132,19 +132,24 @@ class AudioContainer extends Component {
 		}
 	}
 	onMuteChange(mute){
-		let newVolume = mute ? 0 : this.state.lastVolume;
-		this.setState({isMuted: mute, volume: newVolume});
+		let newVolume = mute ? 0 : this.state.VolumeControls.lastVolume;
+
+		this.props.store.dispatch(setMute(mute, newVolume));
 
 		try {
 			this.audio.volume = newVolume;
 		} catch (e) {}
 	}
 	onVolumeChange(volume){
-		this.setState({volume: volume, lastVolume: volume});
+		//this.setState({volume: volume, lastVolume: volume});
+		this.props.store.dispatch(setVolume(volume));
 
 		try {
 			this.audio.volume = volume;
 		} catch (e) {}
+	}
+	nextSong(){
+		this.props.store.dispatch(playlistNext());
 	}
 	render() {
 		//console.log("audioState: ", this.state);
@@ -154,6 +159,9 @@ class AudioContainer extends Component {
 		if (this.state.ActiveFile && this.state.ActiveFile.info){
 			name = this.state.ActiveFile.info.dname ? this.state.ActiveFile.info.dname : this.state.ActiveFile.info.fname;
 			paywall = ((this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid) || (!this.state.ActiveFile.owned && this.state.ActiveFile.isPaid));
+
+			if (this.state.ActiveFile.currentTime === this.state.ActiveFile.duration && this.state.ActiveFile.currentTime !== 0)
+				this.nextSong();
 
 			if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
 				ipfsHash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
@@ -197,8 +205,8 @@ class AudioContainer extends Component {
                 <div style={{width:"100%", height: "40px", position: "absolute", bottom: "0px", borderTop: "1px solid " + this.state.mainColor, display: "flex", backgroundColor: this.state.bgColor}}>
                 	<div style={{width: "auto", height: "auto", margin: "auto", borderRight: "1px solid " + this.state.mainColor, display: "flex"}} onClick={this.toggleAudio}>
                 		<PlaybackControls
-							isPlayable={this.state.isPlayable}
-							isPlaying={this.state.isPlaying}
+							isPlayable={this.state.ActiveFile.isPlayable}
+							isPlaying={this.state.ActiveFile.isPlaying}
 							showPrevious={this.state.showPrevious}
 							hasPrevious={this.state.hasPrevious}
 							showNext={this.state.showNext}
@@ -222,29 +230,29 @@ class AudioContainer extends Component {
 						}} />
 	                	<ProgressBar
 		                	style={{width: "100%"}}
-							totalTime={this.state.totalTime}
-							currentTime={this.state.currentTime}
-							isSeekable={this.state.isSeekable}
+							totalTime={this.state.ActiveFile.duration}
+							currentTime={this.state.ActiveFile.currentTime}
+							isSeekable={this.state.ActiveFile.isSeekable}
 							onSeek={this.onSeek}
 						/>
                 		<span style={{mixBlendMode: "difference", color: "#fff", verticalAlign: "middle", lineHeight: "35px", marginLeft: "10px", marginTop: "-76px", display: "inline-block"}}>
 		            		<TimeMarker
-								totalTime={this.state.totalTime}
-								currentTime={this.state.currentTime}
+								totalTime={this.state.ActiveFile.duration}
+								currentTime={this.state.ActiveFile.currentTime}
 								markerSeparator=" / "
 							/>
 						</span>
                 	</div>
                 	<div style={{width: "40px", height: "100%", borderLeft: "1px solid " + this.state.mainColor, display: "flex"}}>
 	                	<MuteToggleButton
-							isMuted={this.state.isMuted}
+							isMuted={this.state.VolumeControls.isMuted}
 							onMuteChange={this.onMuteChange}
-							isEnabled={this.state.isPlayable}
+							isEnabled={this.state.ActiveFile.isPlayable}
 						/>
 						<VolumeSlider
-							volume={this.state.volume}
+							volume={this.state.VolumeControls.volume}
 							onVolumeChange={this.onVolumeChange}
-							isEnabled={this.state.isPlayable}
+							isEnabled={this.state.ActiveFile.isPlayable}
 						/>
                 	</div>
                 </div>
