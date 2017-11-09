@@ -3,7 +3,7 @@ import * as actions from '../actions'
 export const VolumeControls = (state = {
 	isMuted: false,
 	volume: 0.75,
-
+	lastVolume: 0.75
 }, action) => {
 	switch (action.type) {
 		case actions.CHANGE_VOLUME:

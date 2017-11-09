@@ -136,6 +136,9 @@ class AudioContainer extends Component {
 
 		this.props.store.dispatch(setMute(mute, newVolume));
 
+		if (newVolume !== 0)
+			this.props.store.dispatch(setVolume(newVolume));
+
 		try {
 			this.audio.volume = newVolume;
 		} catch (e) {}
