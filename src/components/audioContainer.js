@@ -149,7 +149,7 @@ class AudioContainer extends Component {
 		} catch (e) {}
 	}
 	nextSong(){
-		this.props.store.dispatch(playlistNext());
+		this.props.store.dispatch(playlistNext({type: "Audio"}));
 	}
 	render() {
 		//console.log("audioState: ", this.state);
@@ -160,7 +160,7 @@ class AudioContainer extends Component {
 			name = this.state.ActiveFile.info.dname ? this.state.ActiveFile.info.dname : this.state.ActiveFile.info.fname;
 			paywall = ((this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid) || (!this.state.ActiveFile.owned && this.state.ActiveFile.isPaid));
 
-			if (this.state.ActiveFile.currentTime === this.state.ActiveFile.duration && this.state.ActiveFile.currentTime !== 0)
+			if (this.state.ActiveFile.currentTime === this.state.ActiveFile.duration && this.state.ActiveFile.currentTime !== 0 && this.state.ActiveFile.isPlaying)
 				this.nextSong();
 
 			if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){

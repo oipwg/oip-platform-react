@@ -167,7 +167,7 @@ export const setMute = mute => ({
 	isMuted: mute
 })
 
-export const playlistNext = () => (dispatch, getState) => {
+export const playlistNext = restrictions => (dispatch, getState) => {
 	let FilePlaylist = getState().FilePlaylist;
 	let active = FilePlaylist.active;
 
@@ -177,7 +177,13 @@ export const playlistNext = () => (dispatch, getState) => {
 		if (keys[i] === active){
 			let nextI = i + 1;
 			if (keys[nextI]){
-				dispatch(setActiveFileInPlaylist(keys[nextI]));
+				if (restrictions && restrictions.type){
+					if (FilePlaylist[keys[nextI]].info.type === restrictions.type){
+						dispatch(setActiveFileInPlaylist(keys[nextI]));
+					}
+				} else {
+					dispatch(setActiveFileInPlaylist(keys[nextI]));
+				}
 			}
 		}
 	}
