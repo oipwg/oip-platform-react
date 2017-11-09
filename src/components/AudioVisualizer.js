@@ -63,13 +63,6 @@ class AudioVisualizer extends Component {
 			this.ctx.fillRect(bar_x, this.canvas.height, bar_width, bar_height)
 		}
 		
-		if (this.audio.currentTime > 0)
-			this.setState({mainSongProgress: this.audio.currentTime / this.audio.duration * 100, currentTime: this.audio.currentTime, currentDuration: this.audio.duration, playing: !this.audio.paused})
-
-		if (this.audio.currentTime === this.audio.duration){
-			this.nextSong();
-		} 
-		
 		this._frameId = window.requestAnimationFrame( this.visualizationLoop )
 	}
 	render() {

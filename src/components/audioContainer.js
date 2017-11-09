@@ -37,6 +37,8 @@ class AudioContainer extends Component {
 		this.onSeek = this.onSeek.bind(this);
 		this.onMuteChange = this.onMuteChange.bind(this);
 		this.onVolumeChange = this.onVolumeChange.bind(this);
+		this.onAudioPlay = this.onAudioPlay.bind(this);
+		this.onAudioPause = this.onAudioPause.bind(this);
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
@@ -75,12 +77,16 @@ class AudioContainer extends Component {
 	componentWillUnmount(){
 		this.audio.removeEventListener("canplay", this.onCanPlay)
 		this.audio.removeEventListener("timeupdate", this.onTimeUpdate)
+		this.audio.removeEventListener("play", this.onAudioPlay)
+		this.audio.removeEventListener("pause", this.onAudioPause)
 
 		this.unsubscribe();
 	}
 	componentDidMount(){
 		this.audio.addEventListener("canplay", this.onCanPlay)
 		this.audio.addEventListener("timeupdate", this.onTimeUpdate)
+		this.audio.addEventListener("play", this.onAudioPlay)
+		this.audio.addEventListener("pause", this.onAudioPause)
 
 		this.stateDidUpdate();
 	}
@@ -101,20 +107,28 @@ class AudioContainer extends Component {
 		this.setState({ isPlayable: true, isSeekable: true });
 	}
 	onTimeUpdate(event){
-		if (event && event.srcElement && this && this.audio)
-			this.setState({ currentTime: event.srcElement.currentTime, totalTime: event.srcElement.duration})
+		if (event && event.srcElement && this && this.audio){
+			this.setState({ currentTime: event.srcElement.currentTime, totalTime: event.srcElement.duration, isPlaying: true})
+		}
+	}
+	onAudioPlay(){
+		this.setState({isPlaying: true});
+	}
+	onAudioPause(){
+		this.setState({isPlaying: false});
 	}
 	onPlaybackChange(shouldPlay){
 		if (shouldPlay)
 			this.audio.play();
 		else
 			this.audio.pause();
-
-		this.setState({isPlaying: shouldPlay});
 	}
 	onSeek(time){
 		if (time){
 			this.audio.currentTime = time;
+
+			if (this.audio.paused)
+				this.audio.play();
 		}
 	}
 	onMuteChange(mute){
@@ -133,7 +147,7 @@ class AudioContainer extends Component {
 		} catch (e) {}
 	}
 	render() {
-		console.log("audioState: ", this.state);
+		//console.log("audioState: ", this.state);
 
 		let name, artist, playlistLen = 0, paywall = false, ipfsHash = "", songURL = "";
 
@@ -144,6 +158,7 @@ class AudioContainer extends Component {
 			if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
 				ipfsHash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
 				songURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.state.ActiveFile.info));
+				artist = this.props.Core.Artifact.getArtist(this.state.CurrentArtifact.artifact);
 			}
 		}
 		if (this.state.FilePlaylist){
@@ -154,9 +169,8 @@ class AudioContainer extends Component {
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden"}}>
                 <audio
                     ref={audio => this.audio = audio}
-                    autoPlay={false}
+                    autoPlay={!paywall}
                     controls={true}
-                    //this is the link to my song url feel free to use it or replace it with your own
                     src={songURL}
                     style={{display: "none"}}
                     >
@@ -165,7 +179,7 @@ class AudioContainer extends Component {
 	                <div className="row" style={{height: "90%"}}>
 		                <div className={playlistLen > 1 ? "col-6" : "col-12"} style={{margin: "auto"}}>
 		                	<h3 className="text-center" style={{color: this.state.mainColor}}>
-		                		{name} - {this.state.currentSongArtist}
+		                		{name} - {artist}
 		                	</h3>
 							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
 								<IPFSImage Core={this.props.Core} hash={ipfsHash} onImageLoad={this.onImageLoad} />

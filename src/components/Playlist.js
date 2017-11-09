@@ -57,7 +57,7 @@ class Playlist extends Component {
 
 		if (this.props.currentArtifactOnly){
 			DisplayFiles = this.getCurrentArtifactFiles();
-			console.log(DisplayFiles);
+			//console.log(DisplayFiles);
 		}
 
 		if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
