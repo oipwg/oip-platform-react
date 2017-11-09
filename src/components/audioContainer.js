@@ -178,7 +178,7 @@ class AudioContainer extends Component {
 					</div>
 				</div>
 				<div style={{width:"102%", height: "200px", position: "absolute", bottom: "10px", marginLeft: "-10px"}}>
-					<AudioVisualizer audio={this.refs.audio} />
+					<AudioVisualizer audio={this.audio} mainColor={this.state.mainColor} />
                 </div>
                 <div style={{width:"100%", height: "40px", position: "absolute", bottom: "0px", borderTop: "1px solid " + this.state.mainColor, display: "flex", backgroundColor: this.state.bgColor}}>
                 	<div style={{width: "auto", height: "auto", margin: "auto", borderRight: "1px solid " + this.state.mainColor, display: "flex"}} onClick={this.toggleAudio}>
@@ -202,6 +202,7 @@ class AudioContainer extends Component {
 								'}',
 								'.ProgressBar-elapsed {',
 								'    background-color: ' + this.state.mainColor + ' !important;',
+								'    border: 1px solid ' + this.state.bgColor + ' !important;',
 								'}'
 							].join('\n')
 						}} />

@@ -15,27 +15,30 @@ class AudioVisualizer extends Component {
 			this.startVisualizationLoop();
 		}
 	}
-	componentDidUpdates(){
+	componentDidUpdate(){
 		if (this.props.audio){
 			this.startVisualizationLoop();
 		}
 	}
 	startVisualizationLoop() {
+		if (this._frameId)
+			return;
+
 		if('webkitAudioContext' in window) {
-			this.context = new window.webkitAudioContext();
+			this.audioContext = new window.webkitAudioContext();
 		} else {
-			this.context = new AudioContext();
+			this.audioContext = new AudioContext();
 		}
 		
-		this.analyser = this.context.createAnalyser();
+		this.analyser = this.audioContext.createAnalyser();
 		this.canvas = this.refs.analyzerCanvas;
 		this.ctx = this.canvas.getContext('2d');
 		this.audio = this.props.audio;
 		this.audio.crossOrigin = "anonymous";
-		this.audioSrc = this.context.createMediaElementSource(this.audio);
+		this.audioSrc = this.audioContext.createMediaElementSource(this.audio);
 		this.audioSrc.connect(this.analyser);
-		this.audioSrc.connect(this.context.destination);
-		this.analyser.connect(this.context.destination);
+		this.audioSrc.connect(this.audioContext.destination);
+		this.analyser.connect(this.audioContext.destination);
 
 		if( !this._frameId ) {
 			this._frameId = window.requestAnimationFrame( this.visualizationLoop );
@@ -51,7 +54,7 @@ class AudioVisualizer extends Component {
 		let freqData = new Uint8Array(this.analyser.frequencyBinCount)
 		this.analyser.getByteFrequencyData(freqData)
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-		this.ctx.fillStyle = this.state.mainColor;
+		this.ctx.fillStyle = this.props.mainColor;
 		let bars = 200;
 		for (var i = 0; i < bars; i++) {
 			let bar_x = i * 3;
