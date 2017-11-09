@@ -45,18 +45,18 @@ class IPFSImage extends Component {
 		}
 	}
 	requestImageFromIPFS(){
-		this.setState({isFetching: true, imageLoaded: false, active: this.props.hash});
+		this.setState({isFetching: true, imageLoaded: false, active: this.props.hash}, () => {
+			this.refs.canvas.getContext("2d").clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
 
-		this.refs.canvas.getContext("2d").clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
-
-		this.IPFSRequests.push(this.props.Core.Network.getThumbnailFromIPFS(this.props.hash, this.receiveDataFromIPFS));
+			this.IPFSRequests.push(this.props.Core.Network.getThumbnailFromIPFS(this.props.hash, this.receiveDataFromIPFS));
+		});
 	}
-	receiveDataFromIPFS(base64, hash){
+	receiveDataFromIPFS(urlORbase64, hash){
 		if (!this._ismounted)
 			return;
 
 		if (hash === this.state.active){
-			let img = new Image();
+			let img = new Image;
 			let canvas = this.refs.canvas;
 
 			let _this = this;
@@ -67,30 +67,31 @@ class IPFSImage extends Component {
 
 				try {
 					if (!_this.props.cover && canvas){
-						canvas.width = this.naturalWidth;
-						canvas.height = this.naturalHeight;
+						canvas.width = img.naturalWidth;
+						canvas.height = img.naturalHeight;
 					}
 				} catch (e) {}
+
 				if (_this.props.cover && canvas){
-					_this.drawImageProp(canvas.getContext("2d"), this, 0, 0, canvas.width, canvas.height);
+					_this.drawImageProp(canvas.getContext("2d"), img, 0, 0, canvas.width, canvas.height);
 				} else {
 					if (canvas)
-						canvas.getContext("2d").drawImage(this, 0, 0);
+						canvas.getContext("2d").drawImage(img, 0, 0);
 				}
 
 				_this.imageLoaded();
 				if (typeof _this.props.onImageLoad === "function"){
-					_this.props.onImageLoad(this)
+					_this.props.onImageLoad(img)
 				}
 
 				img = undefined;
 			};
 
-			img.onerror = function(){
+			img.onerror = function(error){
 				_this.imageLoaded();
 			}
 
-			img.src = base64;
+			img.src = urlORbase64;
 
 			this.setState({isFetching: false});
 		}
