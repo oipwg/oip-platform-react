@@ -67,13 +67,13 @@ class PaymentButtons extends Component {
 		return (
 			<div style={{margin: "auto"}}>
 				{ disallowPlay ? "" : 
-					<button  className={viewString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={this.viewFile} style={{padding: "5px"}}>
+					<button  className={viewString === "Free" ? "btn btn-outline-info pad-5" : "btn btn-outline-success pad-5"} onClick={this.viewFile} style={this.props.btnStyle} >
 						<span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{viewString}
 					</button>
 				}
 				<span style={{padding: "0px 3px"}}></span>
 				{ disallowBuy ? "" : 
-					<button className={buyString === "Free" ? "btn btn-outline-info" : "btn btn-outline-success"} onClick={this.buyFile} style={{padding: "5px"}}>
+					<button className={buyString === "Free" ? "btn btn-outline-info pad-5" : "btn btn-outline-success pad-5"} onClick={this.buyFile} style={this.props.btnStyle}>
 						<span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
 					</button>
 				}

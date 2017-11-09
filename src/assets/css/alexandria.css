@@ -1118,3 +1118,7 @@ td.unpin {
 .rounded-circle > svg {
   border-radius: 50%;
 }
+
+.pad-5 {
+  padding: 5px;
+}

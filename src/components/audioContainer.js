@@ -90,6 +90,9 @@ class AudioContainer extends Component {
 			let palette = colorThief.getPalette(img, 2);
 			this.setState({bgColor: "rgb(" + palette[0].join(',') + ")"})
 			this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
+
+			img.style.display = "none";
+			img = undefined;
 		} catch(e){ 
 			console.error(e) 
 		}
@@ -98,7 +101,8 @@ class AudioContainer extends Component {
 		this.setState({ isPlayable: true, isSeekable: true });
 	}
 	onTimeUpdate(event){
-		this.setState({ currentTime: event.srcElement.currentTime, totalTime: event.srcElement.duration})
+		if (event && event.srcElement && this && this.audio)
+			this.setState({ currentTime: event.srcElement.currentTime, totalTime: event.srcElement.duration})
 	}
 	onPlaybackChange(shouldPlay){
 		if (shouldPlay)
@@ -169,7 +173,7 @@ class AudioContainer extends Component {
 						</div>
 						{playlistLen > 1 ? 
 						<div className="col-6" style={{margin: "auto"}}>
-							<PlaylistScroller Core={this.props.Core} store={this.props.store} />
+							<PlaylistScroller Core={this.props.Core} store={this.props.store} mainColor={this.state.mainColor} bgColor={this.state.bgColor} currentArtifactOnly={true} />
 						</div> : ""}
 					</div>
 				</div>

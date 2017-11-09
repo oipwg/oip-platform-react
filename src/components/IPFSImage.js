@@ -24,7 +24,7 @@ class IPFSImage extends Component {
 		this.tryImageUpdate();
 	}
 	componentWillUnmount(){
-		
+		this.refs.canvas = undefined;
 	}
 	tryImageUpdate(){
 		if (this.state.active !== this.props.hash){
@@ -40,7 +40,7 @@ class IPFSImage extends Component {
 	}
 	receiveDataFromIPFS(base64, hash){
 		if (hash === this.state.active){
-			let img = new Image;
+			let img = new Image();
 			let canvas = this.refs.canvas;
 
 			let _this = this;
