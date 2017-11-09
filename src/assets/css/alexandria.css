@@ -145,9 +145,7 @@
 		height: 100%;
 	}
 	.content-container {
-		height: auto;
-		min-height: 60vh;
-		max-height: 73vh;
+		height: 73vh;
 	}
 }
 @media (max-width: 1300px) and (min-width: 900px) { 
@@ -192,7 +190,7 @@
 	.content-container {
 		height: auto;
 	    max-height: 50vh;
-		min-height: 30vh;
+		min-height: 22vh;
 	}
 }
 

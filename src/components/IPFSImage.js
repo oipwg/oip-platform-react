@@ -55,8 +55,6 @@ class IPFSImage extends Component {
 		});
 	}
 	receiveDataFromIPFS(urlORbase64, hash){
-		console.log(urlORbase64, hash);
-
 		if (!this._ismounted)
 			return;
 
