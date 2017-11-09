@@ -237,7 +237,7 @@ export const payForFileFunc = (Core, artifact, file, piwik) => dispatch => {
 			try {
 				piwik.push(["trackContentInteraction", "viewFile", publisher, txid, i]);
 			} catch (e) {
-				console.log(e);
+				//console.log(e);
 			}	
 		}
 	}
@@ -256,7 +256,7 @@ export const buyFileFunc = (Core, artifact, file, piwik) => dispatch => {
 			try {
 				piwik.push(["trackContentInteraction", "buyFile", publisher, txid, i]);
 			} catch (e) {
-				console.log(e)
+				//console.log(e)
 			}	
 		}
 	}

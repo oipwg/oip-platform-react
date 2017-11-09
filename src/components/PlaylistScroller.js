@@ -27,6 +27,7 @@ class PlaylistScroller extends Component {
 						mainColor={this.props.mainColor}
 						bgColor={this.props.bgColor}
 						currentArtifactOnly={this.props.currentArtifactOnly}
+						filter={this.props.filter}
 					/>
 				</div>
 			</div>

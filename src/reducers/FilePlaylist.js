@@ -5,7 +5,7 @@ const file = (state = {
 	isPaid: false,
 	hasPaid: false,
 	explicitAction: false,
-	isPlaying: actions.PAUSED,
+	isPlaying: false,
 	isPlayable: false,
 	isSeekable: false,
 	duration: 0,

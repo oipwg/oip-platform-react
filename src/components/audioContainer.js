@@ -198,7 +198,7 @@ class AudioContainer extends Component {
 						</div>
 						{playlistLen > 1 ? 
 						<div className="col-6" style={{margin: "auto"}}>
-							<PlaylistScroller Core={this.props.Core} store={this.props.store} mainColor={this.state.mainColor} bgColor={this.state.bgColor} currentArtifactOnly={true} />
+							<PlaylistScroller Core={this.props.Core} store={this.props.store} mainColor={this.state.mainColor} bgColor={this.state.bgColor} currentArtifactOnly={true} filter={{type: "Audio"}} />
 						</div> : ""}
 					</div>
 				</div>

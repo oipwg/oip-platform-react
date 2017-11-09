@@ -14,6 +14,7 @@ class Playlist extends Component {
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.getCurrentArtifactFiles = this.getCurrentArtifactFiles.bind(this);
+		this.getAllFiles = this.getAllFiles.bind(this);
 
 		let _this = this;
 
@@ -39,17 +40,50 @@ class Playlist extends Component {
 	componentWillUnmount(){
 		this.unsubscribe();
 	}
-	getCurrentArtifactFiles(){
+	getAllFiles(){
 		let files = [];
 
 		if (this.state.CurrentArtifact && this.state.FilePlaylist){
 			for (var key in this.state.FilePlaylist) {
-				if (key.split("|").length === 2)
-					files.push(this.state.FilePlaylist[key]);
+				// This just makes sure we are not getting the "active" key from the FilePlaylist obj
+				if (key.split("|").length === 2){
+					let newObj = this.state.FilePlaylist[key];
+					newObj.key = key.toString();
+					files.push(newObj);
+				}
 			}
 		}
 
-		return files;
+		return [...files];
+	}
+	getCurrentArtifactFiles(){
+		let files = this.getAllFiles();
+		let myArtifactFiles = [];
+
+		for (var file in files) {
+			if (files[file].key.split("|")[0] === this.props.Core.Artifact.getTXID(this.state.CurrentArtifact.artifact)){
+				myArtifactFiles.push(files[file]);
+			}
+		}
+
+		return myArtifactFiles;
+	}
+	filterFiles(files, filter){
+		let filteredFiles = [];
+
+		if (filter){
+			if (filter.type){
+				for (var i = 0; i < files.length; i++) {
+					if (files[i].info.type === filter.type){
+						filteredFiles.push(files[i]);
+					}
+				}
+			}
+
+			return filteredFiles;
+		} else {
+			return files;
+		}
 	}
 	render() {
 		let _this = this;
@@ -59,8 +93,11 @@ class Playlist extends Component {
 
 		if (this.props.currentArtifactOnly){
 			DisplayFiles = this.getCurrentArtifactFiles();
-			//console.log(DisplayFiles);
+		} else {
+			DisplayFiles = this.getAllFiles();
 		}
+
+		DisplayFiles = this.filterFiles(DisplayFiles, this.props.filter);
 
 		if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
 			Artist = this.props.Core.Artifact.getArtist(this.state.CurrentArtifact.artifact)
@@ -84,7 +121,7 @@ class Playlist extends Component {
 								<div style={file.info.fname === _this.state.ActiveFile.info.fname ? {color: _this.props.bgColor, fontSize:"12px", width: "235px", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "235px", display: "flex"}}>
 									<div style={{width: "200px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {file.info.dname ? file.info.dname : file.info.fname}</div>
 									<div style={{width: "30px", textAlign: "right"}}>
-										<FormattedTime numSeconds={file.info.duration ? file.info.duration : 0} />
+										{file.info.duration > 0 ? <FormattedTime numSeconds={file.info.duration} /> : ""}
 									</div>
 								</div>
 							</div>

@@ -36,7 +36,6 @@ class ContentContainer extends Component {
 
 		if (currentFile && this.state !== currentFile){
 			this.setState({CurrentArtifact: CurrentArtifact, ActiveFile: currentFile});
-			console.log(this.state);
 		}
 	}
 	componentWillUnmount(){
