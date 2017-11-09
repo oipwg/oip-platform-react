@@ -69,6 +69,10 @@ class IPFSImage extends Component {
 				img = undefined;
 			};
 
+			img.onerror = function(){
+				_this.imageLoaded();
+			}
+
 			img.src = base64;
 
 			this.setState({isFetching: false});
