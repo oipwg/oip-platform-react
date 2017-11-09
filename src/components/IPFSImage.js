@@ -11,12 +11,15 @@ class IPFSImage extends Component {
 			imageLoaded: false
 		}
 
+		this.IPFSRequests = [];
+
 		this.requestImageFromIPFS = this.requestImageFromIPFS.bind(this);
 		this.receiveDataFromIPFS = this.receiveDataFromIPFS.bind(this);
 		this.tryImageUpdate = this.tryImageUpdate.bind(this);
 		this.imageLoaded = this.imageLoaded.bind(this);
 	}
 	componentDidMount(){
+		this._ismounted = true;
 		this.tryImageUpdate();
 	}
 	componentWillReceiveProps(nextProps){
@@ -27,6 +30,14 @@ class IPFSImage extends Component {
 	}
 	componentWillUnmount(){
 		this.refs.canvas = undefined;
+		
+		for (var i = 0; i < this.IPFSRequests.length; i++) {
+			// Run the cancelation function that was returned at time of the initial IPFS call
+			try {
+				this.IPFSRequests[i]();
+			} catch (e) {}
+		}
+		this._ismounted = false;
 	}
 	tryImageUpdate(){
 		if (this.state.active !== this.props.hash){
@@ -38,9 +49,12 @@ class IPFSImage extends Component {
 
 		this.refs.canvas.getContext("2d").clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
 
-		this.props.Core.Network.getThumbnailFromIPFS(this.props.hash, this.receiveDataFromIPFS);
+		this.IPFSRequests.push(this.props.Core.Network.getThumbnailFromIPFS(this.props.hash, this.receiveDataFromIPFS));
 	}
 	receiveDataFromIPFS(base64, hash){
+		if (!this._ismounted)
+			return;
+
 		if (hash === this.state.active){
 			let img = new Image();
 			let canvas = this.refs.canvas;
@@ -48,6 +62,9 @@ class IPFSImage extends Component {
 			let _this = this;
 
 			img.onload = function(){
+				if (!_this._ismounted)
+					return;
+
 				try {
 					if (!_this.props.cover && canvas){
 						canvas.width = this.naturalWidth;

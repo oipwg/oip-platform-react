@@ -1138,3 +1138,8 @@ td.unpin {
 .sk-wave > div {
   width: 30px !important;
 }
+
+.sk-fade-in {
+    -webkit-animation: sk-fade-in 0.2s !important;
+    animation: sk-fade-in 0.2s !important;
+}
