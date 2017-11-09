@@ -109,6 +109,8 @@
 
 .content > div {
 	width: 100vw;
+	height: inherit;
+	max-height: inherit;
 }
 
 .paywall {
@@ -140,6 +142,9 @@
 .white-canvas {
 	background: #fff;
 }
+.video-js .vjs-tech {
+	max-height: inherit;
+}
 @media (min-width: 1300px) { 
 	.img-container{
 		height: 100%;
@@ -162,20 +167,26 @@
 	    max-height: 70vh;
 		min-height: 50vh;
 	}
+	.content > div {
+		max-height: 70vh;
+	}
 }
 @media (max-width: 900px) and (min-width: 550px) { 
-	.img-container{
+	.img-container {
 		height: auto;
-		max-height: 50vh;
+		max-height: 60vh;
 	}
 	.img-container > canvas {
 		height: auto;
-		max-height: 50vh;
+		max-height: 60vh;
 	}
 	.content-container {
 		height: auto;
 	    max-height: 60vh;
 		min-height: 30vh;
+	}
+	.content > div {
+		max-height: 60vh;
 	}
 }
 @media (max-width: 550px) and (min-width: 200px) { 
@@ -191,6 +202,9 @@
 		height: auto;
 	    max-height: 50vh;
 		min-height: 22vh;
+	}
+	.content > div {
+		max-height: 50vh;
 	}
 }
 
