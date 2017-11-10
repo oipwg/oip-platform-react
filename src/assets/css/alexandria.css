@@ -64,11 +64,23 @@
 }
 
 .content-card-img {
-	height: 145px; 
-	width: auto; 
+	height: 0px; 
+	width: 100%;
+	padding-bottom: 56.25%;
+	position: relative;
 	object-fit: cover;
 	background-color: #fff;
-  overflow: hidden;
+	overflow: hidden;
+}
+
+.content-card-img > div {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100%;
 }
 
 .content-card-xinfo {

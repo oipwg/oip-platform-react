@@ -38,7 +38,7 @@ class ContentCard extends Component {
 						</button>
 					</div>
 					<div className="card-img-top content-card-img">
-						<IPFSImage Core={this.props.Core} hash={thumbnailHash} width={"100%"} cover={true} />
+						<IPFSImage Core={this.props.Core} hash={thumbnailHash} width={"100%"} height={"100%"} cover={true} />
 					</div>
 					{duration ? <p className="content-card-xinfo"><FormattedTime numSeconds={duration} /></p> : <div className="content-card-xinfo-offset"></div>}
 					<div className="card-block" style={{padding: "10px",whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
