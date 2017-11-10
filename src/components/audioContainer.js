@@ -69,6 +69,9 @@ class AudioContainer extends Component {
 		}
 
 		this.setState(stateObj);
+
+		if (VolumeControls && VolumeControls.volume && this.audio)
+			this.audio.volume = VolumeControls.volume;
 	}
 	componentWillUnmount(){
 		this.audio.removeEventListener("canplay", this.onCanPlay)
@@ -94,11 +97,9 @@ class AudioContainer extends Component {
 			this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
 
 			img.style.display = "none";
-			img = undefined;
 		} catch(e){ 
 			console.error(e) 
 		}
-		img = undefined;
 	}
 	onCanPlay(canPlay){
 		this.props.store.dispatch(isPlayableFile(this.state.active, true));

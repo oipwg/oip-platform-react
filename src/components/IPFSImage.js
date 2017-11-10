@@ -125,7 +125,7 @@ class IPFSImage extends Component {
 		this.setState({imageLoaded: true})
 	}
 	render() {
-		let preventTheft = true;
+		let preventTheft = this.props.cover ? false : true;
 		let widthProps = this.props.width ? this.props.width : false;
 		console.log(this.props.cover);
 		return (

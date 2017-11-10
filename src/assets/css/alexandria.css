@@ -144,6 +144,7 @@
 }
 .video-js .vjs-tech {
 	max-height: inherit;
+	height: 100%;
 }
 .markdownContainer {
 	width: 60%;
@@ -157,6 +158,9 @@ body > canvas {
 	}
 	.content-container {
 		height: 73vh;
+	}
+	.content > div {
+		max-height: 73vh;
 	}
 }
 @media (max-width: 1300px) and (min-width: 900px) { 
