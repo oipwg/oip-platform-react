@@ -42,9 +42,10 @@ class ContentContainer extends Component {
 		this.unsubscribe();
 	}
 	render() {
-		let type, loading = false;
+		let type, loading = false, haveLoadedState = false;
 
 		if (this.state.ActiveFile.info && this.state.ActiveFile.info.type){
+			haveLoadedState = true;
 			type = this.state.ActiveFile.info.type;
 		}
 
@@ -59,7 +60,7 @@ class ContentContainer extends Component {
 					className={ (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? "content blur" : "content"} 
 					style=	  { (this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned) ? {overflow: "scroll"} : {}}
 				>
-					{ loading ? <div style={{height: "100%", margin: "auto"}} className="spinner-container"><Spinner name="wave" color="aqua"/></div> : ''}
+					{ (!haveLoadedState || loading) ? <div style={{height: "100%", width: "100vw", maxWidth: "100vw"}} className="spinner-container"><Spinner name="wave" color="aqua" /></div> : ''}
 					{ (type ===  'Audio' && !loading) ? <AudioContainer Core={this.props.Core} store={this.props.store} /> : '' }
 					{ (type ===  'Video' && !loading) ? <VideoPlayer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} /> : '' }
 					{ (type ===  'Image' && !loading) ? <ImageContainer Core={this.props.Core} store={this.props.store} /> : '' }

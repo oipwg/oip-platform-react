@@ -98,6 +98,7 @@ class AudioContainer extends Component {
 		} catch(e){ 
 			console.error(e) 
 		}
+		img = undefined;
 	}
 	onCanPlay(canPlay){
 		this.props.store.dispatch(isPlayableFile(this.state.active, true));
@@ -178,20 +179,20 @@ class AudioContainer extends Component {
 		
 		return (
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden"}}>
-                <audio
-                    ref={audio => this.audio = audio}
-                    autoPlay={!paywall}
-                    controls={true}
-                    src={songURL}
-                    style={{display: "none"}}
-                    >
-                </audio>
-                <div className="container" style={{height: "90%"}}>
-	                <div className="row" style={{height: "90%"}}>
-		                <div className={playlistLen > 1 ? "col-6" : "col-12"} style={{margin: "auto"}}>
-		                	<h3 className="text-center" style={{color: this.state.mainColor}}>
-		                		{name} - {artist}
-		                	</h3>
+				<audio
+					ref={audio => this.audio = audio}
+					autoPlay={!paywall}
+					controls={true}
+					src={songURL}
+					style={{display: "none"}}
+					>
+				</audio>
+				<div className="container" style={{height: "90%"}}>
+					<div className="row" style={{height: "90%"}}>
+						<div className={playlistLen > 1 ? "col-6" : "col-12"} style={{margin: "auto"}}>
+							<h3 className="text-center" style={{color: this.state.mainColor}}>
+								{name} - {artist}
+							</h3>
 							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
 								<IPFSImage Core={this.props.Core} hash={ipfsHash} onImageLoad={this.onImageLoad} />
 							</div>
@@ -204,10 +205,10 @@ class AudioContainer extends Component {
 				</div>
 				<div style={{width:"102%", height: "200px", position: "absolute", bottom: "10px", marginLeft: "-10px"}}>
 					<AudioVisualizer audio={this.audio} mainColor={this.state.mainColor} />
-                </div>
-                <div style={{width:"100%", height: "40px", position: "absolute", bottom: "0px", borderTop: "1px solid " + this.state.mainColor, display: "flex", backgroundColor: this.state.bgColor}}>
-                	<div style={{width: "auto", height: "auto", margin: "auto", borderRight: "1px solid " + this.state.mainColor, display: "flex"}} onClick={this.toggleAudio}>
-                		<PlaybackControls
+				</div>
+				<div style={{width:"100%", height: "40px", position: "absolute", bottom: "0px", borderTop: "1px solid " + this.state.mainColor, display: "flex", backgroundColor: this.state.bgColor}}>
+					<div style={{width: "auto", height: "auto", margin: "auto", borderRight: "1px solid " + this.state.mainColor, display: "flex"}} onClick={this.toggleAudio}>
+						<PlaybackControls
 							isPlayable={this.state.ActiveFile.isPlayable}
 							isPlaying={this.state.ActiveFile.isPlaying}
 							showPrevious={this.state.showPrevious}
@@ -218,9 +219,9 @@ class AudioContainer extends Component {
 							onPrevious={() => alert('Go to previous')}
 							onNext={() => alert('Go to next')}
 						/>
-                	</div>
-                	<div style={{width: "100%"}}>
-                		<style dangerouslySetInnerHTML={{
+					</div>
+					<div style={{width: "100%"}}>
+						<style dangerouslySetInnerHTML={{
 							__html: [
 								'.ProgressBar {',
 								'    background: ' + this.state.bgColor + ' !important;',
@@ -231,23 +232,23 @@ class AudioContainer extends Component {
 								'}'
 							].join('\n')
 						}} />
-	                	<ProgressBar
-		                	style={{width: "100%"}}
+						<ProgressBar
+							style={{width: "100%"}}
 							totalTime={this.state.ActiveFile.duration}
 							currentTime={this.state.ActiveFile.currentTime}
 							isSeekable={this.state.ActiveFile.isSeekable}
 							onSeek={this.onSeek}
 						/>
-                		<span style={{mixBlendMode: "difference", color: "#fff", verticalAlign: "middle", lineHeight: "35px", marginLeft: "10px", marginTop: "-76px", display: "inline-block"}}>
-		            		<TimeMarker
+						<span style={{mixBlendMode: "difference", color: "#fff", verticalAlign: "middle", lineHeight: "35px", marginLeft: "10px", marginTop: "-76px", display: "inline-block"}}>
+							<TimeMarker
 								totalTime={this.state.ActiveFile.duration}
 								currentTime={this.state.ActiveFile.currentTime}
 								markerSeparator=" / "
 							/>
 						</span>
-                	</div>
-                	<div style={{width: "40px", height: "100%", borderLeft: "1px solid " + this.state.mainColor, display: "flex"}}>
-	                	<MuteToggleButton
+					</div>
+					<div style={{width: "40px", height: "100%", borderLeft: "1px solid " + this.state.mainColor, display: "flex"}}>
+						<MuteToggleButton
 							isMuted={this.state.VolumeControls.isMuted}
 							onMuteChange={this.onMuteChange}
 							isEnabled={this.state.ActiveFile.isPlayable}
@@ -257,8 +258,8 @@ class AudioContainer extends Component {
 							onVolumeChange={this.onVolumeChange}
 							isEnabled={this.state.ActiveFile.isPlayable}
 						/>
-                	</div>
-                </div>
+					</div>
+				</div>
 			</div>
 		);
 	}

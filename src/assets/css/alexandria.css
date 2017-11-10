@@ -148,6 +148,9 @@
 .markdownContainer {
 	width: 60%;
 }
+body > canvas {
+	display: none;
+}
 @media (min-width: 1300px) { 
 	.img-container{
 		height: 100%;
