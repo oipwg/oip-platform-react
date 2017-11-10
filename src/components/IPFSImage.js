@@ -128,7 +128,6 @@ class IPFSImage extends Component {
 		let preventTheft = this.props.cover ? false : true;
 		let widthProps = this.props.width ? this.props.width : false;
 		let heightProps = this.props.height ? this.props.height : false;
-		console.log(this.props.cover);
 		return (
 			<div style={{width: widthProps ? widthProps : "inherit", maxWidth: widthProps ? widthProps : "inherit", height: heightProps ? heightProps : "inherit", maxHeight: heightProps ? heightProps : "inherit"}}>
 				{ (!this.state.imageLoaded && !(this.props.hash === "")) ? <div style={{height: "100%", margin: "auto"}} className="spinner-container"><Spinner name="wave" color="aqua"/></div> : ''}

@@ -51,7 +51,7 @@ class HTMLContainer extends Component {
 		}
 
 		return (
-			<iframe title="html_doc" style={{width:"100%", height:"100%", overflow: "hidden"}} frameBorder="0" src={websiteURL}></iframe>
+			<iframe title="html_doc" style={{width:"inherit", height:"100%", overflow: "hidden", backgroundColor: "#fff", borderBottom: "1px solid rgba(0,0,0,0.2)"}} frameBorder="0" src={websiteURL}></iframe>
 		);
 	}
 }

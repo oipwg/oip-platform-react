@@ -119,7 +119,7 @@
 	width:100vw;
 }
 
-.content > div {
+.content > div, .content > iframe {
 	width: 100vw;
 	height: inherit;
 	max-height: inherit;
@@ -171,7 +171,7 @@ body > canvas {
 	.content-container {
 		height: 73vh;
 	}
-	.content > div {
+	.content > div, .content > iframe {
 		max-height: 73vh;
 	}
 }
@@ -189,7 +189,7 @@ body > canvas {
 	    max-height: 70vh;
 		min-height: 50vh;
 	}
-	.content > div {
+	.content > div, .content > iframe {
 		max-height: 70vh;
 	}
 	.markdownContainer {
@@ -210,7 +210,7 @@ body > canvas {
 	    max-height: 60vh;
 		min-height: 30vh;
 	}
-	.content > div {
+	.content > div, .content > iframe {
 		max-height: 60vh;
 	}
 	.markdownContainer {
@@ -231,7 +231,7 @@ body > canvas {
 	    max-height: 50vh;
 		min-height: 22vh;
 	}
-	.content > div {
+	.content > div, .content > iframe {
 		max-height: 50vh;
 	}
 	.markdownContainer {

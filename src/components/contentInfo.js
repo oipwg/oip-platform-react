@@ -43,12 +43,13 @@ class ContentInfo extends Component {
 		let pubName = this.props.Core.Artifact.getPublisherName(this.state.artifact);
 		let title = this.props.Core.Artifact.getTitle(this.state.artifact);
 		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.state.artifact));
+		let paid = this.state.artifact ? this.props.Core.Artifact.paid(this.state.artifact) : false;
 
 		return (
 			<div>
 				<div className="row">
 					<div className="col-10">
-						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}>{this.state.isFetching ? "" : <span className={"icon icon-" + icon} style={{marginRight:"10px"}}></span>}{this.state.isFetching ? "loading..." : title}</h3>
+						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}>{this.state.isFetching ? "" : <div style={{display: "inline"}}>{ paid ? <span className="icon icon-credit" style={{color: "#28a745"}}></span> : ''}<span className={"icon icon-" + icon} style={{marginRight:"10px"}}></span></div>}{this.state.isFetching ? "loading..." : title}</h3>
 					</div>
 					<div className="col-2">
 						<div style={{float: "right", marginTop: "2px"}}>
