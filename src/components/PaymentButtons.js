@@ -15,12 +15,17 @@ class PaymentButtons extends Component {
 	}
 	buyFile(){
 		this.props.store.dispatch(buyFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik));
-		this.scrollToTop()
+		//this.scrollToTop()
 	}
 	scrollToTop(){
 		window.scrollTo(0, 0);
 	}
 	render() {
+		let owned = false;
+
+		let viewBtnType = "outline-info";
+		let buyBtnType = "outline-info";
+
 		let disallowPlay = false;
 		let disallowBuy = false;
 
@@ -37,6 +42,10 @@ class PaymentButtons extends Component {
 		}
 
 		if (this.props.File){
+			if (this.props.File.owned){
+				console.log("Huzzah!");
+				owned = true;	
+			}
 			if (this.props.File.info.sugPlay){
 				sugPlay = this.props.File.info.sugPlay;
 			}
@@ -57,28 +66,39 @@ class PaymentButtons extends Component {
 		sugPlay = this.props.Core.util.createPriceString(sugPlay);
 		sugBuy = this.props.Core.util.createPriceString(sugBuy);
 
-		if (sugPlay === 0 || sugPlay === "0")
+		if (sugPlay === 0 || sugPlay === "0"){
 			viewString = "Free";
-		else
+		} else {
 			viewString = "$" + sugPlay;
+			viewBtnType = "outline-success";
+		}
 
-		if (sugBuy === 0 || sugBuy === "0")
+		if (sugBuy === 0 || sugBuy === "0"){
 			buyString = "Free";
-		else
+		} else {
 			buyString = "$" + sugBuy;
+			buyBtnType = "outline-success";
+		}
+
+		if (owned) {
+			viewBtnType = "outline-info";
+			viewString = "View";
+			buyBtnType = "primary";
+			buyString = "Download";
+		}
 
 		let _this = this;
 		
 		return (
 			<div style={{margin: "auto"}}>
 				{ disallowPlay ? "" : 
-					<button  className={viewString === "Free" ? "btn btn-outline-info pad-5" : "btn btn-outline-success pad-5"} onClick={this.viewFile} style={this.props.btnStyle} >
+					<button  className={"pad-5 btn btn-" + viewBtnType} onClick={this.viewFile} style={this.props.btnStyle} >
 						<span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{viewString}
 					</button>
 				}
 				<span style={{padding: "0px 3px"}}></span>
 				{ disallowBuy ? "" : 
-					<button className={buyString === "Free" ? "btn btn-outline-info pad-5" : "btn btn-outline-success pad-5"} onClick={this.buyFile} style={this.props.btnStyle}>
+					<button className={"pad-5 btn btn-" + buyBtnType} onClick={this.buyFile} style={this.props.btnStyle}>
 						<span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
 					</button>
 				}
