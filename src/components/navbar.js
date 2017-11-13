@@ -19,10 +19,40 @@ class Navbar extends Component {
 
 		this.state = {
 			dropdownOpen: false,
-			loggedIn: false,
+			User: {},
+			Wallet: {
+				florincoin: {
+					balance: 0
+				}
+			},
 			searchTerm: "test",
 			search: false
 		};
+
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
+		let _this = this;
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+	}
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let User = newState.User;
+		let Wallet = newState.Wallet;
+
+		this.setState({
+			User,
+			Wallet
+		});
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
+	}
+	componentDidMount(){
+		this.stateDidUpdate();
 	}
 	toggle() {
 		this.setState({
@@ -73,8 +103,13 @@ class Navbar extends Component {
 						</div>
 						<div>
 							<Link to="/user/upload/"><button className="btn btn-sm btn-warning-light-bg btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
-							{this.state.loggedIn ? <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="btn-group">
-								<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}><div><img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} alt="" /><span style={{paddingLeft: "5px"}}>NASA Archive</span></div></DropdownToggle>
+							{this.state.User.isLoggedIn ? <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="btn-group">
+								<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}>
+									<div>
+										{/* <img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} alt="" /> */}
+										<span style={{padding: "0px 5px"}}>{this.state.User.publisher.name}</span>
+									</div>
+								</DropdownToggle>
 								<DropdownMenu style={this.state.dropdownOpen ? {display: "block"} : {}}>
 									<Link to="/user/artifacts/"><DropdownItem><span className="icon icon-classic-computer"></span> My Artifacts</DropdownItem></Link>
 									<Link to="/user/analytics/"><DropdownItem><span className="icon icon-line-graph"></span> Analytics <span className="badge badge-info">beta</span></DropdownItem></Link>
@@ -84,8 +119,8 @@ class Navbar extends Component {
 									<div className="dropdown-divider"></div>
 									<DropdownItem><span className="icon icon-log-out"></span> Logout</DropdownItem>
 								</DropdownMenu>
-								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>15,623</span> bits</Link>
-							</ButtonDropdown> : <Link to="/login"><button className="btn btn-outline-white" style={{marginLeft: "10px"}}>Login</button></Link>}
+								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{parseFloat(this.state.Wallet.florincoin.balance.toFixed(3))}</span> FLO</Link>
+							</ButtonDropdown> : <Link to="/login"><button className="btn btn-outline-white" style={{margin: "auto 10px"}}>{this.state.User.isFetching ? "logging in..." : "Login"}</button></Link>}
 						</div>
 					</div>
 				</nav>

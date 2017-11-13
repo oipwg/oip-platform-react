@@ -4,7 +4,59 @@ import {
   Link
 } from 'react-router-dom'
 
+import validator from 'validator';
+
+import ButtonCheckbox from './ButtonCheckbox.js';
+
+const STATUS = { 
+	NO_INPUT: "NO_INPUT",
+	VALID: "VALID",
+	INVALID: "INVALID"
+}
+
 class LoginPage extends Component {
+	constructor(props){
+		super(props);
+
+		this.state = {
+			emailState: STATUS.NO_INPUT,
+			passwordState: STATUS.NO_INPUT,
+			confirmState: STATUS.NO_INPUT,
+			rememberMe: false,
+			email: "",
+			password: ""
+		}
+
+		this.login = this.login.bind(this);
+		this.updateEmail = this.updateEmail.bind(this);
+		this.updatePassword = this.updatePassword.bind(this);
+		this.updateRememberMe = this.updateRememberMe.bind(this);
+	}
+	login(){
+		console.log(this.state.email, this.state.password, this.state.rememberMe);
+	}
+	updateEmail(){
+		let newState = this.state.emailState;
+
+		let isEmail = validator.isEmail(this.email.value);
+		newState = isEmail ? STATUS.VALID : STATUS.INVALID;
+
+		if (this.email.value === "")
+			newState = STATUS.NO_INPUT;
+
+		this.setState({email: this.email.value, emailState: newState});
+	}
+	updatePassword(){
+		let newState = STATUS.VALID;
+
+		if (this.password.value === "")
+			newState = STATUS.NO_INPUT;
+
+		this.setState({password: this.password.value, passwordState: newState});
+	}
+	updateRememberMe(){
+		this.setState({rememberMe: !this.state.rememberMe });
+	}
 	render() {
 		return (
 			<div className="container">
@@ -15,28 +67,33 @@ class LoginPage extends Component {
 							<h2>Please Login</h2>
 							<hr className="colorgraph" />
 							<div className="form-group">
-								<input type="text" name="email" id="email" className="form-control input-lg" placeholder="Email/Identifier" />
-								<div className="invalid-feedback" id="feedback_email">
-									Email/Identifier is invalid. Please provide your identifier or your account Email.
-								</div>
+								<input ref={email => this.email = email} onInput={this.updateEmail} type="text" name="email" id="email" className={"form-control input-lg" + (this.state.emailState === STATUS.INVALID ? " is-invalid" : "") + (this.state.emailState === STATUS.VALID ? " is-valid" : "")} placeholder="Email/Identifier" />
+								{this.state.emailState === STATUS.INVALID ? 
+									<div className="invalid-feedback" id="feedback_email">
+										Email/Identifier is invalid. Please provide your identifier or your account Email.
+									</div> 
+									: 
+									""
+								}
 							</div>
 							<div className="form-group">
-								<input type="password" name="password" id="password" className="form-control input-lg" placeholder="Password" />
-								<div className="invalid-feedback" id="feedback_password">
-									Invalid Password.
-								</div>
+								<input ref={password => this.password = password} onInput={this.updatePassword} type="password" className={"form-control input-lg" + (this.state.passwordState === STATUS.INVALID ? " is-invalid" : "") + (this.state.passwordState === STATUS.VALID ? " is-valid" : "")} placeholder="Password" />
+								{this.state.passwordState === STATUS.INVALID ? 
+									<div className="invalid-feedback" id="feedback_password">
+										Invalid Password.
+									</div>
+									:
+									""
+								}
 							</div>
-							<span className="button-checkbox">
-								<button type="button" className="btn btn-primary active" data-color="primary"><i className="fa fa-check-square-o"></i> Remember Me</button>
-								<input type="checkbox" name="remember-me" id="remember-me" checked="checked" className="d-none" />
-							</span>
+							<ButtonCheckbox onClick={this.updateRememberMe} toggleState={this.state.rememberMe} text={"Remember Me"} />
 							<hr className="colorgraph" />
 							<div className="row">
 								<div className="col-xs-3 col-sm-3 col-md-3 order-2 order-sm-1">
 									<Link to="/register"><button className="btn btn-lg btn-outline-secondary btn-block">Register</button></Link>
 								</div>
 								<div className="col-xs-9 col-sm-9 col-md-9 order-1 order-sm-2">
-									<button id="signin" className="btn btn-lg btn-success btn-block" onclick="tryLogin()">Login</button>
+									<button id="signin" className="btn btn-lg btn-success btn-block" onClick={this.login}>Login</button>
 								</div>
 							</div>
 						</fieldset>

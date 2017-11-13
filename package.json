@@ -62,6 +62,7 @@
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.3",
     "url-loader": "0.5.9",
+    "validator": "^9.1.1",
     "video.js": "^6.2.4",
     "videojs-qualityselector": "0.0.1",
     "videojs-resolution-switcher": "^0.4.2",

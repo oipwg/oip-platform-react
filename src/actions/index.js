@@ -29,11 +29,19 @@ export const UPDATE_IS_PLAYABLE = 'UPDATE_IS_PLAYABLE'
 export const UPDATE_IS_SEEKABLE = 'UPDATE_IS_SEEKABLE'
 export const UPDATE_DURATION = 'UPDATE_DURATION'
 
+export const UPDATE_WALLET = 'UPDATE_WALLET'
+export const UPDATE_BALANCE = 'UPDATE_BALANCE'
+export const UPDATE_ADDRESSES = 'UPDATE_ADDRESSES'
+
 export const CHANGE_VOLUME = 'CHANGE_VOLUME'
 export const CHANGE_MUTE = 'CHANGE_MUTE'
 
 export const LATEST_CONTENT_LIST = 'LATEST_CONTENT_LIST'
 export const SEARCH_PAGE_LIST = 'SEARCH_PAGE_LIST'
+
+export const LOGIN_FETCHING = 'LOGIN_FETCHING'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
 export const PAUSED = 'PAUSED'
 
@@ -71,7 +79,7 @@ export const fetchArtifactList = (Core, list_id, options) => dispatch => {
 	if (list_id === LATEST_CONTENT_LIST){
 		Core.Index.getSupportedArtifacts(function(artifacts){
 			console.log("fetch:",artifacts);
-			dispatch(recieveArtifactList(list_id, artifacts.slice(0,40)));
+			dispatch(recieveArtifactList(list_id, artifacts.slice(0,400)));
 		}, function(err){
 			dispatch(requestArtifactListError(list_id));
 		})
@@ -165,6 +173,36 @@ export const setVolume = volume => ({
 export const setMute = mute => ({
 	type: CHANGE_MUTE,
 	isMuted: mute
+})
+
+export const updateWallet = walletState => ({
+	type: UPDATE_WALLET,
+	walletState
+})
+
+export const updateBalance = (coin, balance) => ({
+	type: UPDATE_BALANCE,
+	coin,
+	balance
+})
+
+export const updateAddresses = (coin, balance) => ({
+	type: UPDATE_ADDRESSES,
+	coin,
+	balance
+})
+
+export const loginFetching = () => ({
+	type: LOGIN_FETCHING
+})
+
+export const loginSuccess = (publisher) => ({
+	type: LOGIN_SUCCESS,
+	publisher
+})
+
+export const loginFailure = () => ({
+	type: LOGIN_FAILURE
 })
 
 export const playlistNext = restrictions => (dispatch, getState) => {
@@ -262,8 +300,24 @@ export const buyFileFunc = (Core, artifact, file, piwik) => dispatch => {
 	}
 }
 
+export const setupWalletEvents = (Core) => dispatch => {
+	Core.Events.on("wallet-bal-update", function(newState){
+		console.log(newState);
+		dispatch(updateWallet(newState));
+	})
+}
 
+export const login = (Core, identifier, password) => dispatch => {
+	dispatch(loginFetching());
 
+	Core.User.Login(identifier, password, (publisher) => {
+		// On Success
+		dispatch(loginSuccess(publisher));
+	}, (error) => {
+		// On Error
+		dispatch(loginFailure());
+	})
+}
 
 
 

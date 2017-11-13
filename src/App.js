@@ -13,6 +13,8 @@ import PiwikReactRouter from 'piwik-react-router';
 
 import Core from 'alexandria-core';
 
+import { setupWalletEvents, login } from './actions';
+
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
 // Import custom entypo css class & Alexandria css class
@@ -52,7 +54,8 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 
 class App extends Component {
 	componentDidMount(){
-
+		this.props.store.dispatch(setupWalletEvents(Core));
+		this.props.store.dispatch(login(Core, 'me+oipmw@skylarostler.com', 'sUbsist=49'));
 	}
 	componentWillUnmount() {
 		
@@ -83,6 +86,7 @@ class App extends Component {
 					{/* Include all components that need to be rendered above the main container content */}
 					<Navbar 
 						Core={Core}
+						store={this.props.store}
 					/>
 
 					{/* Include all components that need to be rendered in the main container content */}
