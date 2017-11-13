@@ -45,10 +45,10 @@ class CoinCard extends Component {
 						<h6 className="card-subtitle mb-2 text-muted" style={{marginBottom: "12px !important"}}>{parseFloat(this.props.info.balance.toFixed(4))} {COIN_CONFIGS[this.props.coin].presymbol} ({COIN_CONFIGS[this.props.coin].symbol})</h6>
 						<h4 className="card-subtitle mb-2 text-muted"><span style={{color: "#28a745"}}>${this.props.info.usd ? parseFloat(this.props.info.usd).toFixed(2) : "0.00"}</span></h4>
 						<div style={{height: "10px"}}></div>
-						<button className="btn btn-sm btn-outline-secondary" style={{padding: "2px 5px"}}><span className="icon icon-cog"></span> Manage</button>
+						{/*<button className="btn btn-sm btn-outline-secondary" style={{padding: "2px 5px"}}><span className="icon icon-cog"></span> Manage</button>*/}
 						<button className="btn btn-sm btn-outline-dark" style={{padding: "2px 5px"}}><span className="fa fa-qrcode"></span> Show QR</button>
 						<button className="btn btn-sm btn-outline-primary" style={{padding: "2px 5px"}}><span className="icon icon-wallet"></span> Send</button>
-						<button className="btn btn-sm btn-outline-success" style={{padding: "2px 5px"}}><span className="icon icon-credit"></span>Buy </button>
+						{/*<button className="btn btn-sm btn-outline-success" style={{padding: "2px 5px"}}><span className="icon icon-credit"></span>Buy </button>*/}
 					</div>
 				</div>
 			</div>
