@@ -48,6 +48,7 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 class App extends Component {
 	componentDidMount(){
 		this.props.store.dispatch(setupWalletEvents(Core));
+		this.props.store.dispatch(login(Core, '75c1209-dbcac5a6-e040977-64a52ae', 'PublicDevAccount'));
 	}
 	componentWillUnmount() {
 		
