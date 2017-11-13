@@ -1168,3 +1168,9 @@ td.unpin {
     -webkit-animation: sk-fade-in 0.2s !important;
     animation: sk-fade-in 0.2s !important;
 }
+
+.not-active:hover {
+	color: #007bff;
+	background-color: rgba(0, 105, 217, 0.25);
+    border-color: rgba(0, 98, 204, 1);
+}

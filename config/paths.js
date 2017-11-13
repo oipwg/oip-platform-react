@@ -50,6 +50,8 @@ module.exports = {
   yarnLockFile: resolveApp('yarn.lock'),
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
+  alexandriaCore: resolveApp('node_modules/alexandria-core'),
+  alexandriaCoreNodeModules: resolveApp('node_modules/alexandria-core/node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
 };

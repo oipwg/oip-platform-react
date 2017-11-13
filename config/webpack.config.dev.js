@@ -164,10 +164,11 @@ module.exports = {
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: paths.appSrc,
+        include: [paths.appSrc, paths.alexandriaCore],
+        exclude: paths.alexandriaCoreNodeModules,
         loader: require.resolve('babel-loader'),
         options: {
-          
+          presets: ["stage-2"],
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.

@@ -13,6 +13,8 @@ import PiwikReactRouter from 'piwik-react-router';
 
 import Core from 'alexandria-core';
 
+import { setupWalletEvents, login } from './actions';
+
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
 // Import custom entypo css class & Alexandria css class
@@ -24,15 +26,8 @@ import Navbar from './components/navbar.js';
 import Homepage from './components/homepage.js';
 import MiniMusicPlayer from './components/miniMusicPlayer.js';
 import ContentPage from './components/contentPage.js';
-import PublishContainer from './components/publishContainer.js';
-import SidebarContainer from './components/sidebarContainer.js';
-import MyArtifactsContainer from './components/myArtifactsContainer.js';
-import AnalyticsContainer from './components/analyticsContainer.js';
-import WalletContainer from './components/walletContainer.js';
-import SettingsContainer from './components/settingsContainer.js';
-import ViewArtifactContainer from './components/viewArtifactContainer.js';
-import EditArtifactContainer from './components/editArtifactContainer.js';
 import PublisherPage from './components/PublisherPage.js';
+import UserPage from './components/UserPage.js';
 
 import LoginPage from './components/LoginPage.js';
 import RegisterPage from './components/RegisterPage.js';
@@ -52,7 +47,7 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 
 class App extends Component {
 	componentDidMount(){
-
+		this.props.store.dispatch(setupWalletEvents(Core));
 	}
 	componentWillUnmount() {
 		
@@ -83,6 +78,7 @@ class App extends Component {
 					{/* Include all components that need to be rendered above the main container content */}
 					<Navbar 
 						Core={Core}
+						store={this.props.store}
 					/>
 
 					{/* Include all components that need to be rendered in the main container content */}
@@ -97,9 +93,9 @@ class App extends Component {
 
 						<Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
 
-						<Route path="/user/:page/:type/:id" component={UserPage} />
-						<Route path="/user/:page/:type" component={UserPage} />
-						<Route path="/user/:page" component={UserPage} />
+						<Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
+						<Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
+						<Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
 						
 						<Route path="/:id" render={props => 
 							<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} />} 
@@ -122,35 +118,6 @@ const NoMatch = ({ match }) => (
 		<h1 style={{marginTop: "75px", fontSize: "120px"}}>404</h1>
 		{match.pathname ? <h3>No match for <code>{match.pathname}</code></h3> : "Page not found"}
 	</div>
-)
-
-const UserPage = ({ match }) => (
-	<SidebarContainer>
-		{(() => {
-			console.log(match.params);
-			switch(match.params.page){
-				case "artifacts":
-					switch(match.params.type){
-						case 'view':
-							return <ViewArtifactContainer />
-						case 'edit':
-							return <EditArtifactContainer />
-						default:
-							return <MyArtifactsContainer />
-					}
-				case "analytics":
-					return <AnalyticsContainer />
-				case "upload":
-					return <PublishContainer />
-				case "wallet":
-					return <WalletContainer />
-				case "settings":
-					return <SettingsContainer />
-				default:
-					return <NoMatch />
-			}
-		})()}
-	</SidebarContainer>
 )
 
 export default App;
