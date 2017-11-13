@@ -30,6 +30,7 @@ export const UPDATE_IS_SEEKABLE = 'UPDATE_IS_SEEKABLE'
 export const UPDATE_DURATION = 'UPDATE_DURATION'
 
 export const UPDATE_WALLET = 'UPDATE_WALLET'
+export const UPDATE_USD = 'UPDATE_USD'
 export const UPDATE_BALANCE = 'UPDATE_BALANCE'
 export const UPDATE_ADDRESSES = 'UPDATE_ADDRESSES'
 
@@ -180,6 +181,12 @@ export const updateWallet = walletState => ({
 	walletState
 })
 
+export const updateUSD = (coin, usd) => ({
+	type: UPDATE_USD,
+	coin,
+	usd
+})
+
 export const updateBalance = (coin, balance) => ({
 	type: UPDATE_BALANCE,
 	coin,
@@ -304,6 +311,10 @@ export const setupWalletEvents = (Core) => dispatch => {
 	Core.Events.on("wallet-bal-update", function(newState){
 		console.log(newState);
 		dispatch(updateWallet(newState));
+
+		Core.Data.getFLOPrice(function(price){
+			dispatch(updateUSD('florincoin', (price * newState.florincoin.balance).toFixed(4)))
+		})
 	})
 }
 

@@ -119,7 +119,7 @@ class Navbar extends Component {
 									<div className="dropdown-divider"></div>
 									<DropdownItem><span className="icon icon-log-out"></span> Logout</DropdownItem>
 								</DropdownMenu>
-								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{parseFloat(this.state.Wallet.florincoin.balance.toFixed(3))}</span> FLO</Link>
+								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{this.state.Wallet.florincoin.usd === 0 ? parseFloat(this.state.Wallet.florincoin.balance.toFixed(3)) : "$" + parseFloat(this.state.Wallet.florincoin.usd).toFixed(2)}</span> {this.state.Wallet.florincoin.usd === 0 ? "FLO" : ""}</Link>
 							</ButtonDropdown> : <Link to="/login"><button className="btn btn-outline-white" style={{margin: "auto 10px"}}>{this.state.User.isFetching ? "logging in..." : "Login"}</button></Link>}
 						</div>
 					</div>

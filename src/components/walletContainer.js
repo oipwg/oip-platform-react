@@ -1,6 +1,40 @@
 import React, { Component } from 'react';
 
+import CoinCard from './CoinCard.js';
+
 class WalletContainer extends Component {
+	constructor(props){
+		super(props);
+
+		this.state = {
+			Wallet: {}
+		};
+
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
+		let _this = this;
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+	}
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let User = newState.User;
+		let Wallet = newState.Wallet;
+
+		this.setState({
+			User,
+			Wallet
+		});
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
+	}
+	componentDidMount(){
+		this.stateDidUpdate();
+	}
 	render() {
 		return (
 			<div className="container">
@@ -8,20 +42,14 @@ class WalletContainer extends Component {
 					<div className="col-12">
 						<h2 className="text-center">Wallets</h2>
 					</div>
-					<div className="col-12 col-sm-6 col-md-4">
-						<div className="card">
-							<div className="card-body text-center">
-								<h3 className="card-title"><img src="/assets/img/btcflat.svg" style={{height: "50px"}} alt="bitcoin" /> Bitcoin</h3>
-								<h6 className="card-subtitle mb-2 text-muted" style={{marginBottom: "12px !important"}}>--- bits (µBTC)</h6>
-								<h4 className="card-subtitle mb-2 text-muted"><span style={{color: "#28a745"}}>$--.--</span></h4>
-								<div style={{height: "10px"}}></div>
-								<a className="btn btn-sm btn-outline-secondary" style={{padding: "2px 5px"}}><span className="icon icon-cog"></span> Manage</a>
-								<a className="btn btn-sm btn-outline-dark" style={{padding: "2px 5px"}}><span className="fa fa-qrcode"></span> Show QR</a>
-								<a className="btn btn-sm btn-outline-primary" style={{padding: "2px 5px"}}><span className="icon icon-wallet"></span> Send</a>
-								<a className="btn btn-sm btn-outline-success" style={{padding: "2px 5px"}}><span className="icon icon-credit"></span>Buy </a>
-							</div>
-							<div></div>
-						</div>
+					{Object.keys(this.state.Wallet).map(key => {
+						if (key === "bitcoin_testnet")
+							return
+
+						return <CoinCard key={key} coin={key} info={this.state.Wallet[key]} Core={this.props.Core} />
+					})}
+					{/*<div className="col-12 col-sm-6 col-md-4">
+						<CoinCard />
 					</div>
 					<div className="col-12 col-sm-6 col-md-4">
 						<div className="card">
@@ -52,7 +80,7 @@ class WalletContainer extends Component {
 								<a className="btn btn-sm btn-outline-success" style={{padding: "2px 5px"}}><span className="icon icon-credit"></span>Buy </a>
 							</div>
 						</div>
-					</div>
+					</div>*/}
 				</div>
 			</div>
 		);
