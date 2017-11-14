@@ -18,6 +18,9 @@ export const SET_ACTIVE_FILE_IN_PLAYLIST = 'SET_ACTIVE_FILE_IN_PLAYLIST'
 export const SET_FILE_PLAYLIST = 'SET_FILE_PLAYLIST'
 export const BUY_FILE = 'BUY_FILE'
 export const PAY_FOR_FILE = 'PAY_FOR_FILE'
+export const PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS'
+export const PAYMENT_ERROR = 'PAYMENT_ERROR'
+export const CLEAR_PAY_PROGRESS_ERROR = 'CLEAR_PAY_PROGRESS_ERROR'
 export const ADD_FILE_TO_PLAYLIST = 'ADD_FILE_TO_PLAYLIST'
 export const PLAYLIST_SKIP_BACK = 'PLAYLIST_SKIP_BACK'
 export const PLAYLIST_NEXT = 'PLAYLIST_NEXT'
@@ -43,6 +46,7 @@ export const SEARCH_PAGE_LIST = 'SEARCH_PAGE_LIST'
 export const LOGIN_FETCHING = 'LOGIN_FETCHING'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const LOGOUT = 'LOGOUT'
 
 export const PAUSED = 'PAUSED'
 
@@ -79,8 +83,7 @@ export const fetchArtifactList = (Core, list_id, options) => dispatch => {
 
 	if (list_id === LATEST_CONTENT_LIST){
 		Core.Index.getSupportedArtifacts(function(artifacts){
-			console.log("fetch:",artifacts);
-			dispatch(recieveArtifactList(list_id, artifacts.slice(0,400)));
+			dispatch(recieveArtifactList(list_id, artifacts.slice(0,40)));
 		}, function(err){
 			dispatch(requestArtifactListError(list_id));
 		})
@@ -133,6 +136,21 @@ export const payForFile = uid => ({
 
 export const buyFile = uid => ({
 	type: BUY_FILE,
+	uid
+})
+
+export const paymentInProgress = uid => ({
+	type: PAYMENT_IN_PROGRESS,
+	uid
+})
+
+export const paymentError = uid => ({
+	type: PAYMENT_ERROR,
+	uid
+})
+
+export const clearPaymentProgressError = uid => ({
+	type: CLEAR_PAY_PROGRESS_ERROR,
 	uid
 })
 
@@ -212,6 +230,10 @@ export const loginFailure = () => ({
 	type: LOGIN_FAILURE
 })
 
+export const logout = () => ({
+	type: LOGOUT
+})
+
 export const playlistNext = restrictions => (dispatch, getState) => {
 	let FilePlaylist = getState().FilePlaylist;
 	let active = FilePlaylist.active;
@@ -272,12 +294,33 @@ export const payForFileFunc = (Core, artifact, file, piwik) => dispatch => {
 	let publisher = Core.Artifact.getPublisher(artifact);
 	let files = Core.Artifact.getFiles(artifact);
 
+	let paymentAmount = file.sugPlay / Core.Artifact.getScale(artifact);
+
+	let paymentAddresses = Core.Artifact.getPaymentAddresses(artifact, file);
+
 	for (var i = 0; i < files.length; i++) {
 		if (files[i].fname === file.fname && files[i].dname === file.dname){
 			let id = txid + "|" + i;
 
-			dispatch(payForFile(id));
-			dispatch(setActiveFileInPlaylist(id));
+			if (file.sugPlay && paymentAmount > 0){
+				// If file has cost
+				dispatch(paymentInProgress(id));
+
+				Core.Wallet.sendPayment("USD", paymentAmount, paymentAddresses, (error, success) => {
+					if (error){
+						// console.error(error);
+						dispatch(paymentError(id));
+						// setTimeout(()=>{ dispatch(clearPaymentProgressError(id)); }, 2500)
+					} else {
+						dispatch(payForFile(id));
+						dispatch(setActiveFileInPlaylist(id));
+					}
+				})
+			} else {
+				// If it is free
+				dispatch(payForFile(id));
+				dispatch(setActiveFileInPlaylist(id));
+			}
 
 			try {
 				piwik.push(["trackContentInteraction", "viewFile", publisher, txid, i]);
@@ -309,8 +352,11 @@ export const buyFileFunc = (Core, artifact, file, piwik) => dispatch => {
 
 export const setupWalletEvents = (Core) => dispatch => {
 	Core.Events.on("wallet-bal-update", function(newState){
-		console.log(newState);
 		dispatch(updateWallet(newState));
+
+		Core.Data.getBTCPrice(function(price){
+			dispatch(updateUSD('bitcoin', (price * newState.bitcoin.balance).toFixed(4)))
+		})
 
 		Core.Data.getFLOPrice(function(price){
 			dispatch(updateUSD('florincoin', (price * newState.florincoin.balance).toFixed(4)))

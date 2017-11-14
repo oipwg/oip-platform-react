@@ -47,8 +47,8 @@ class SearchPage extends Component {
 			this.setState(myNewState);
 		}
 	}
-	componentDidUnmount(){
-		this.unsubscribe;
+	componentWillUnmount(){
+		this.unsubscribe();
 	}
 	render() {
 		return (

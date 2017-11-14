@@ -36,12 +36,10 @@ class ContentExtraInfo extends Component {
 		this.unsubscribe();
 	}
 	setDescriptionAndFiles(props){
-		let description = "", files = [], tmpFiles = [], timestamp = 0;
+		let files = [], tmpFiles = [];
 
 		if (props.artifact){
-			description = props.Core.Artifact.getDescription(props.artifact);
 			files = props.Core.Artifact.getFiles(props.artifact);
-			timestamp = props.Core.Artifact.getTimestamp(props.artifact);
 
 			for (var i = files.length - 1; i >= 0; i--) {
 				tmpFiles[i] = {};

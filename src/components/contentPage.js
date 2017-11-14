@@ -6,9 +6,6 @@ import IssoCommentBox from './isso/IssoCommentBox.js'
 import IssoComments from './isso/IssoComments.js'
 import ContentCard from './contentCard.js'
 
-import ArtifactManager from '../modules/ArtifactManager.js';
-//import PlaylistManager from '../modules/PlaylistManager.js';
-
 import {
   selectCurrentArtifact
 } from '../actions'

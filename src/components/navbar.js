@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
+import { logout } from '../actions';
+
 import {
 	Link,
 	Redirect
@@ -16,6 +18,7 @@ class Navbar extends Component {
 		this.searchForArtifacts = this.searchForArtifacts.bind(this);
 		this.updateTextInput = this.updateTextInput.bind(this);
 		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.logout = this.logout.bind(this);
 
 		this.state = {
 			dropdownOpen: false,
@@ -75,6 +78,14 @@ class Navbar extends Component {
 			this.searchForArtifacts();
 		}
 	}
+	logout(){
+		try {
+			localStorage.username = "";
+			localStorage.pw = "";
+
+			this.props.store.dispatch(logout());
+		} catch(e){}
+	}
 	render() {
 		return (
 			<div>
@@ -117,7 +128,7 @@ class Navbar extends Component {
 									<Link to="/user/wallet/"><DropdownItem><span className="icon icon-wallet"></span> Wallet</DropdownItem></Link>
 									<Link to="/user/settings/"><DropdownItem><span className="icon icon-cog"></span> Settings</DropdownItem></Link>
 									<div className="dropdown-divider"></div>
-									<DropdownItem><span className="icon icon-log-out"></span> Logout</DropdownItem>
+									<DropdownItem onClick={this.logout}><span className="icon icon-log-out"></span> Logout</DropdownItem>
 								</DropdownMenu>
 								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{this.state.Wallet.florincoin.usd === 0 ? parseFloat(this.state.Wallet.florincoin.balance.toFixed(3)) : "$" + parseFloat(this.state.Wallet.florincoin.usd).toFixed(2)}</span> {this.state.Wallet.florincoin.usd === 0 ? "FLO" : ""}</Link>
 							</ButtonDropdown> : <Link to="/login"><button className="btn btn-outline-white" style={{margin: "auto 10px"}}>{this.state.User.isFetching ? "logging in..." : "Login"}</button></Link>}

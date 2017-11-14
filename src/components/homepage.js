@@ -32,11 +32,6 @@ class Homepage extends Component {
 		});
 	}
 	componentDidMount(){
-		// Every time the state changes, log it
-		// Note that subscribe() returns a function for unregistering the listener
-		let _this = this;
-
-		// Dispatch some actions
 		this.props.store.dispatch(fetchArtifactList(this.props.Core, LATEST_CONTENT_LIST));
 	}
 	stateDidUpdate(){
@@ -52,8 +47,6 @@ class Homepage extends Component {
 		this.unsubscribe();
 	}
 	render() {
-		let _this = this;
-
 		return (
 			<ContentCardsContainer
 				Core={this.props.Core}

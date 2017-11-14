@@ -8,7 +8,6 @@ import WalletContainer from './walletContainer.js';
 import SettingsContainer from './settingsContainer.js';
 import ViewArtifactContainer from './viewArtifactContainer.js';
 import EditArtifactContainer from './editArtifactContainer.js';
-import PublisherPage from './PublisherPage.js';
 
 class UserPage extends Component {
 	constructor(props) {

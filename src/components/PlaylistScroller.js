@@ -20,7 +20,7 @@ class PlaylistScroller extends Component {
 					].join('\n')
 				}} />
 				<div className="scrollbar" style={{height: "400px", overflowY: "scroll", margin: "auto", maxWidth: "450px"}}>
-					<h3 style={{color: this.props.mainColor, textAlign: "center"}}></h3>
+					{/*<h3 style={{color: this.props.mainColor, textAlign: "center"}}></h3>*/}
 					<Playlist 
 						Core={this.props.Core} 
 						store={this.props.store}

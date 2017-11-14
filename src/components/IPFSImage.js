@@ -59,7 +59,7 @@ class IPFSImage extends Component {
 			return;
 
 		if (hash === this.state.active){
-			let img = new Image;
+			let img = new Image();
 			let canvas = this.refs.canvas;
 
 			if (canvas){

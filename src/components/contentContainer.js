@@ -52,7 +52,6 @@ class ContentContainer extends Component {
 		if (this.state.CurrentArtifact && this.state.CurrentArtifact.isFetching)
 			loading = true;
 
-		let _this = this;
 		return (
 			<div className="content-container">
 				<div id='content' 

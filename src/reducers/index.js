@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import * as actions from '../actions'
 
 import { ArtifactLists } from './ArtifactLists.js';
 import { CurrentArtifact } from './CurrentArtifact.js';

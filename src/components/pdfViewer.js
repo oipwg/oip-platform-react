@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import PDF from 'react-pdf-js';
-
 class PDFViewer extends Component {
 	constructor(props){
 		super(props);

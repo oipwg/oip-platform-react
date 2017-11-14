@@ -27,6 +27,14 @@ export const User = (state = {
 				isLoggedIn: true,
 				publisher: action.publisher
 			}
+		case actions.LOGOUT:
+			return {
+				...state,
+				isFetching: false,
+				loginFailure: false,
+				isLoggedIn: false,
+				publisher: {}
+			}
 		default:
 			return state
 	}

@@ -4,6 +4,8 @@ const file = (state = {
 	owned: false,
 	isPaid: false,
 	hasPaid: false,
+	paymentInProgress: false,
+	paymentError: false,
 	explicitAction: false,
 	isPlaying: false,
 	isPlayable: false,
@@ -23,7 +25,9 @@ const file = (state = {
 		case actions.PAY_FOR_FILE:
 			return {
 				...state,
-				hasPaid: true
+				hasPaid: true,
+				paymentInProgress: false,
+				paymentError: false
 			}
 		case actions.BUY_FILE:
 			return {
@@ -55,6 +59,24 @@ const file = (state = {
 				...state,
 				isSeekable: action.isSeekable
 			}
+		case actions.PAYMENT_IN_PROGRESS:
+			return {
+				...state,
+				paymentInProgress: true,
+				paymentError: false
+			}
+		case actions.PAYMENT_ERROR:
+			return {
+				...state,
+				paymentInProgress: false,
+				paymentError: true
+			}
+		case actions.CLEAR_PAY_PROGRESS_ERROR:
+			return {
+				...state,
+				paymentInProgress: false,
+				paymentError: false
+			}
 		default:
 			return state
 	}
@@ -70,6 +92,9 @@ export const FilePlaylist = (state = { }, action) => {
 		case actions.UPDATE_IS_PLAYABLE:
 		case actions.UPDATE_IS_SEEKABLE:
 		case actions.UPDATE_DURATION:
+		case actions.PAYMENT_IN_PROGRESS:
+		case actions.PAYMENT_ERROR:
+		case actions.CLEAR_PAY_PROGRESS_ERROR:
 			return {
 				...state,
 				[action.uid]: file(state[action.uid], action)

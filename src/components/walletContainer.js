@@ -35,16 +35,19 @@ class WalletContainer extends Component {
 	componentDidMount(){
 		this.stateDidUpdate();
 	}
+	toggleSendModal(){
+		this.setState({ sendModal: !this.state.sendModal });
+	}
 	render() {
 		return (
 			<div className="container">
 				<div className="row">
 					<div className="col-12">
-						<h2 className="text-center">Wallets</h2>
+						<h2 className="text-center">Wallet</h2>
 					</div>
 					{Object.keys(this.state.Wallet).map(key => {
 						if (key === "bitcoin_testnet")
-							return
+							return <div />
 
 						return <CoinCard key={key} coin={key} info={this.state.Wallet[key]} Core={this.props.Core} />
 					})}

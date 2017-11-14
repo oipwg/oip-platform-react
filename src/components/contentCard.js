@@ -43,12 +43,12 @@ class ContentCard extends Component {
 					{duration ? <p className="content-card-xinfo"><FormattedTime numSeconds={duration} /></p> : <div className="content-card-xinfo-offset"></div>}
 					<div className="card-block" style={{padding: "10px",whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
 						<strong style={{}}>{title}</strong>
-						<p style={{marginBottom: "-10px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex"}}>
+						<div style={{marginBottom: "-10px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex"}}>
 							<div className="rounded-circle" style={{marginRight: "3px", marginBottom: "3px", display: "inline-flex", width: "30px", height: "30px"}}>
 								<Identicons id={publisher} width={30} size={5} />
 							</div>
-							<span style={{marginTop:"4px", display: "inline-flex"}}>{this.props.artifact.publisherName}</span>
-						</p>
+							<p style={{marginTop:"4px", display: "inline-flex"}}>{this.props.artifact.publisherName}</p>
+						</div>
 						{/* 0.9 Feature */}
 						{/*
 						<button className="btn btn-sm btn-outline-secondary view-btn">{this.props.views} Views</button>

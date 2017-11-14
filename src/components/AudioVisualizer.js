@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { payForFileFunc, buyFileFunc } from '../actions';
-
 class AudioVisualizer extends Component {
 	constructor(props){
 		super(props);
@@ -66,8 +64,6 @@ class AudioVisualizer extends Component {
 		this._frameId = window.requestAnimationFrame( this.visualizationLoop )
 	}
 	render() {
-		let _this = this;
-		
 		return (
 			<canvas
 				className="canvas-goo"

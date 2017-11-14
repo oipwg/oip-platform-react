@@ -48,7 +48,12 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 class App extends Component {
 	componentDidMount(){
 		this.props.store.dispatch(setupWalletEvents(Core));
-		this.props.store.dispatch(login(Core, '75c1209-dbcac5a6-e040977-64a52ae', 'PublicDevAccount'));
+
+		try {
+			if (localStorage.username && localStorage.pw){
+				this.props.store.dispatch(login(Core, localStorage.username, localStorage.pw));
+			}
+		} catch (e) {}
 	}
 	componentWillUnmount() {
 		
@@ -86,7 +91,7 @@ class App extends Component {
 					<Switch>
 						<Route exact path="/" render={props => <Homepage Core={Core} store={this.props.store} {...props} />} />
 
-						<Route path="/login" component={LoginPage} />
+						<Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
 						<Route path="/register" component={RegisterPage} />
 						<Route path="/dmca" component={DMCAForm} />
 
