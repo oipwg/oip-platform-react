@@ -22,6 +22,8 @@ class PaymentButtons extends Component {
 	}
 	render() {
 		let owned = false;
+		let paymentInProgress = false;
+		let paymentError = false;
 
 		let viewBtnType = "outline-info";
 		let buyBtnType = "outline-info";
@@ -43,8 +45,13 @@ class PaymentButtons extends Component {
 
 		if (this.props.File){
 			if (this.props.File.owned){
-				console.log("Huzzah!");
 				owned = true;	
+			}
+			if (this.props.File.paymentInProgress){
+				paymentInProgress = true;	
+			}
+			if (this.props.File.paymentError){
+				paymentError = true;	
 			}
 			if (this.props.File.info.sugPlay){
 				sugPlay = this.props.File.info.sugPlay;
@@ -87,21 +94,32 @@ class PaymentButtons extends Component {
 			buyString = "Download";
 		}
 
-		let _this = this;
-		
+		if (paymentInProgress) {
+			viewBtnType = "outline-info disabled";
+			viewString = "paying...";
+		}
+
+		if (paymentError) {
+			viewBtnType = "outline-danger";
+			viewString = "Error!";
+		}
+
 		return (
-			<div style={{margin: "auto"}}>
+			<div>
+				<div style={{width: disallowBuy ? "100%" : "50%", textAlign: disallowBuy ? "center" : "right", display: "inline-block", paddingRight: "3px"}}>
 				{ disallowPlay ? "" : 
 					<button  className={"pad-5 btn btn-" + viewBtnType} onClick={this.viewFile} style={this.props.btnStyle} >
 						<span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{viewString}
 					</button>
 				}
-				<span style={{padding: "0px 3px"}}></span>
+				</div>
+				<div style={{width: disallowPlay ? "100%" : "50%", textAlign: disallowPlay ? "center" : "left", display: "inline-block", paddingLeft: "3px"}}>
 				{ disallowBuy ? "" : 
 					<button className={"pad-5 btn btn-" + buyBtnType} onClick={this.buyFile} style={this.props.btnStyle}>
 						<span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
 					</button>
 				}
+				</div>
 			</div>
 		)
 	}

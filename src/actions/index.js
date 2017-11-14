@@ -83,7 +83,7 @@ export const fetchArtifactList = (Core, list_id, options) => dispatch => {
 
 	if (list_id === LATEST_CONTENT_LIST){
 		Core.Index.getSupportedArtifacts(function(artifacts){
-			dispatch(recieveArtifactList(list_id, artifacts.slice(0,40)));
+			dispatch(recieveArtifactList(list_id, artifacts.slice(0,100)));
 		}, function(err){
 			dispatch(requestArtifactListError(list_id));
 		})
