@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+// import fileDownload from 'js-file-download';
+
 import { payForFileFunc, buyFileFunc } from '../actions';
 
 class PaymentButtons extends Component {
@@ -10,11 +12,10 @@ class PaymentButtons extends Component {
 		this.buyFile = this.buyFile.bind(this);
 	}
 	viewFile(){
-		this.props.store.dispatch(payForFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik));
-		this.scrollToTop()
 		let scrollToTop = this.scrollToTop;
 		this.props.store.dispatch(payForFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem, function(success){
 			scrollToTop();
+		}));
 	}
 	buyFile(){
 		if (this.props.File.owned){
