@@ -292,9 +292,10 @@ export const setCurrentFile = (Core, artifact, file) => dispatch => {
 	}
 }
 
-export const payForFileFunc = (Core, artifact, file, piwik) => dispatch => {
+export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, onSuccess) => dispatch => {
 	let txid = Core.Artifact.getTXID(artifact);
 	let publisher = Core.Artifact.getPublisher(artifact);
+	let publisherName = Core.Artifact.getPublisherName(artifact);
 	let files = Core.Artifact.getFiles(artifact);
 
 	let paymentAmount = file.sugPlay / Core.Artifact.getScale(artifact);
@@ -309,15 +310,16 @@ export const payForFileFunc = (Core, artifact, file, piwik) => dispatch => {
 				// If file has cost
 				dispatch(paymentInProgress(id));
 
-				Core.Wallet.sendPayment("USD", paymentAmount, paymentAddresses, (error, success) => {
-					if (error){
-						// console.error(error);
-						dispatch(paymentError(id));
-						// setTimeout(()=>{ dispatch(clearPaymentProgressError(id)); }, 2500)
-					} else {
-						dispatch(payForFile(id));
-						dispatch(setActiveFileInPlaylist(id));
-					}
+				Core.Wallet.sendPayment("USD", paymentAmount, paymentAddresses, (success) => {	
+					if (NotificationSystem){
+						NotificationSystem.addNotification({title: "Payment Success!", message: "Paid $" + paymentAmount + " to " + publisherName, level: "success", position: "tr", autoDismiss: 2})
+					}	
+					dispatch(payForFile(id));
+					dispatch(setActiveFileInPlaylist(id));
+
+					onSuccess(success)
+				}, (error) => {
+					dispatch(paymentError(id));
 				})
 			} else {
 				// If it is free

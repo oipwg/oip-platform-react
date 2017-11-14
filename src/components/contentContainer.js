@@ -67,7 +67,7 @@ class ContentContainer extends Component {
 					{ (type ===  'Web' && !loading) ? <HTMLContainer Core={this.props.Core} store={this.props.store} /> : '' }
 					{ (type ===  'Software' && !loading) ? <CodeContainer Core={this.props.Core} store={this.props.store} /> : '' }
 				</div>
-				<Paywall Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} contentRef={this.content} />
+				<Paywall Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} contentRef={this.content} NotificationSystem={this.props.NotificationSystem} />
 			</div>
 		);
 	}

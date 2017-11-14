@@ -118,7 +118,7 @@ class FilesTable extends Component {
 										<td style={{verticalAlign: "middle"}}>{file.info.subtype ? file.info.subtype : file.info.type}</td>
 										<td style={{verticalAlign: "middle"}}>{file.info.dname ? file.info.dname : file.info.fname}</td>
 										<td style={{verticalAlign: "middle", width: "230px"}}>
-											<PaymentButtons artifact={_this.state.CurrentArtifact.artifact} File={file} Core={_this.props.Core} store={_this.props.store} piwik={_this.props.piwik} />
+											<PaymentButtons artifact={_this.state.CurrentArtifact.artifact} File={file} Core={_this.props.Core} store={_this.props.store} piwik={_this.props.piwik} NotificationSystem={_this.props.NotificationSystem} />
 										</td>
 									</tr>
 						})}

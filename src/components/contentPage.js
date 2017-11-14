@@ -65,11 +65,11 @@ class ContentPage extends Component {
 
 		return (
 			<div className="content-page">
-				<ContentContainer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} />
+				<ContentContainer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
 				<div className="container">
 					<div className="row">
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
-							<ContentInfo Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} />
+							<ContentInfo Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
 							<br />
 							{this.props.DisplayedArtifact ? 
 								<div>

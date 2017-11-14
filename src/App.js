@@ -11,6 +11,8 @@ import createBrowserHistory from 'history/createBrowserHistory'
 
 import PiwikReactRouter from 'piwik-react-router';
 
+import NotificationSystem from 'react-notification-system';
+
 import Core from 'alexandria-core';
 
 import { setupWalletEvents, login } from './actions';
@@ -54,6 +56,8 @@ class App extends Component {
 				this.props.store.dispatch(login(Core, localStorage.username, localStorage.pw));
 			}
 		} catch (e) {}
+
+		this.setState({NotificationSystem: this.refs.NotificationSystem})
 	}
 	componentWillUnmount() {
 		
@@ -62,7 +66,7 @@ class App extends Component {
 		super(props);
 		
 		this.state = {
-			
+			NotificationSystem: undefined	
 		};
 	}
 	render() {
@@ -86,6 +90,7 @@ class App extends Component {
 						Core={Core}
 						store={this.props.store}
 					/>
+					<NotificationSystem ref="NotificationSystem" />
 
 					{/* Include all components that need to be rendered in the main container content */}
 					<Switch>
@@ -104,7 +109,7 @@ class App extends Component {
 						<Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
 						
 						<Route path="/:id" render={props => 
-							<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} />} 
+							<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />} 
 						/>
 
 						{/* The switch will render the last Route if no others are found (aka 404 page.) */}

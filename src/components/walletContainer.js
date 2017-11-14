@@ -47,7 +47,7 @@ class WalletContainer extends Component {
 					</div>
 					{Object.keys(this.state.Wallet).map(key => {
 						if (key === "bitcoin_testnet")
-							return <div />
+							return <div key={key} />
 
 						return <CoinCard key={key} coin={key} info={this.state.Wallet[key]} Core={this.props.Core} />
 					})}
