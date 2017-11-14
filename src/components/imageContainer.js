@@ -57,8 +57,6 @@ class ImageContainer extends Component {
 			}
 		}
 
-		console.log(preview);
-
 		return (
 			<div className="align-middle" style={{height: "100%", width: "100vw", verticalAlign: "middle"}}>
 				<div className="img-container" style={{height: "inherit", width: "auto", maxWidth: "100%", display: "block",margin: "auto"}}>

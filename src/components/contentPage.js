@@ -7,7 +7,9 @@ import IssoComments from './isso/IssoComments.js'
 import ContentCard from './contentCard.js'
 
 import {
-  selectCurrentArtifact
+  selectCurrentArtifact,
+  fetchArtifactList,
+  RANDOM_ARTIFACT_LIST
 } from '../actions'
 
 class ContentPage extends Component {
@@ -15,10 +17,7 @@ class ContentPage extends Component {
 		super(props);
 
 		this.state = {
-			isFetching: false,
-			isInvalidated: false,
-			error: false,
-			artifact: {}
+			ArtifactList: []
 		}
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
@@ -33,24 +32,33 @@ class ContentPage extends Component {
 	}
 	componentDidMount(){
 		this.setArtifact(this.props);
+		this.props.store.dispatch(fetchArtifactList(this.props.Core, RANDOM_ARTIFACT_LIST));
 	}
-	componentDidUpdate(){
-		//this.setArtifact(this.props);
+	componentWillReceiveProps(nextProps){
+		if (this.props.match.params.id !== nextProps.match.params.id){
+			this.setArtifact(nextProps);
+			nextProps.store.dispatch(fetchArtifactList(nextProps.Core, RANDOM_ARTIFACT_LIST));
+		}
 	}
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
 
-		let myNewState = newState.CurrentArtifact;
+		let CurrentArtifact = newState.CurrentArtifact;
+		let myList = newState.ArtifactLists[RANDOM_ARTIFACT_LIST];
 
-		if (myNewState && this.state !== myNewState){
-			this.setState(myNewState);
+		if (!myList){
+			myList = [];
+		} else {
+			myList = myList.items;
 		}
+
+		this.setState({CurrentArtifact, ArtifactList: myList});
 	}
 	componentWillUnmount(){
 		this.unsubscribe();
 	}
 	setArtifact(props){
-		this.props.store.dispatch(selectCurrentArtifact(this.props.Core, this.props.match.params.id, this.props.piwik));
+		props.store.dispatch(selectCurrentArtifact(props.Core, props.match.params.id, props.piwik));
 	}
 	render() {
 		let _this = this;
@@ -71,7 +79,8 @@ class ContentPage extends Component {
 								: ""}
 						</div>
 						<div id='suggested' className="col-12 col-md-3" style={{marginTop: "30px"}}>
-							{[].map(function(content, i){
+							<h5>Suggested Content</h5>
+							{this.state.ArtifactList.map(function(content, i){
 								return <ContentCard 
 									key={i}
 									artifact={content}

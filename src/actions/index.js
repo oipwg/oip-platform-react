@@ -3,6 +3,7 @@
 export const SET_PAGE_TYPE = 'SET_PAGE_TYPE'
 
 export const SEARCH_FOR_ARTIFACTS = "SEARCH_FOR_ARTIFACTS";
+export const RANDOM_ARTIFACT_LIST = 'RANDOM_ARTIFACT_LIST'
 
 export const REQUEST_ARTIFACT_LIST = 'REQUEST_ARTIFACT_LIST'
 export const RECIEVE_ARTIFACT_LIST = 'RECIEVE_ARTIFACT_LIST'
@@ -94,7 +95,9 @@ export const fetchArtifactList = (Core, list_id, options) => dispatch => {
 			dispatch(requestArtifactListError(list_id, err));
 		});
 	} else {
-
+		Core.Index.getRandomSuggested(function(results){
+			dispatch(recieveArtifactList(list_id, results))
+		})
 	}
 }
 
