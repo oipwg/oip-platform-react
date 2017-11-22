@@ -227,6 +227,12 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
     }),
+    new webpack.ProvidePlugin({   
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery',
+        Popper: 'popper.js'
+    }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:

@@ -22,6 +22,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 // Import custom entypo css class & Alexandria css class
 import './assets/css/entypo.css';
 import './assets/css/alexandria.css';
+// Import Bootstrap 4 JS
+import 'bootstrap/dist/js/bootstrap.js';
 
 import Navbar from './components/navbar.js';
 

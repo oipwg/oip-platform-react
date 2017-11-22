@@ -164,6 +164,12 @@
 body > canvas {
 	display: none;
 }
+@media (max-width: 1000px) {
+  .login-profile-btn {
+    text-align: center;
+    margin-top: 15px;
+  }
+}
 @media (min-width: 1300px) { 
 	.img-container{
 		height: 100%;

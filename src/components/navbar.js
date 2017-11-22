@@ -18,10 +18,12 @@ class Navbar extends Component {
 		this.searchForArtifacts = this.searchForArtifacts.bind(this);
 		this.updateTextInput = this.updateTextInput.bind(this);
 		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.onNavbarToggleClick = this.onNavbarToggleClick.bind(this);
 		this.logout = this.logout.bind(this);
 
 		this.state = {
 			dropdownOpen: false,
+			navDropdownOpen: false,
 			User: {},
 			Wallet: {
 				florincoin: {
@@ -86,6 +88,11 @@ class Navbar extends Component {
 			this.props.store.dispatch(logout());
 		} catch(e){}
 	}
+	onNavbarToggleClick(){
+		this.setState({
+			navDropdownOpen: !this.state.navDropdownOpen
+		})
+	}
 	render() {
 		return (
 			<div>
@@ -94,8 +101,26 @@ class Navbar extends Component {
 					<Link className="navbar-brand" to="/">
 						<img src={LogoImg} width="auto" height="32px" className="d-inline-block align-top" alt="" />
 					</Link>
-					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation" onClick={this.onNavbarToggleClick}>
 						<span className="navbar-toggler-icon"></span>
+						{this.state.User.isLoggedIn ? <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className={this.state.navDropdownOpen ? "btn-group d-none" : "btn-group d-none d-sm-inline-flex"}>
+							<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}>
+								<div>
+									{/* <img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} alt="" /> */}
+									<span style={{padding: "0px 5px"}}>{this.state.User.publisher.name}</span>
+								</div>
+							</DropdownToggle>
+							<DropdownMenu style={this.state.dropdownOpen ? {display: "block"} : {}}>
+								{/*<Link to="/user/artifacts/"><DropdownItem><span className="icon icon-classic-computer"></span> My Artifacts</DropdownItem></Link>
+								<Link to="/user/analytics/"><DropdownItem><span className="icon icon-line-graph"></span> Analytics <span className="badge badge-info">beta</span></DropdownItem></Link>*/}
+								<Link to="/user/upload/"><DropdownItem><span className="icon icon-upload-to-cloud"></span> Upload</DropdownItem></Link>
+								<Link to="/user/wallet/"><DropdownItem><span className="icon icon-wallet"></span> Wallet</DropdownItem></Link>
+								<Link to="/user/settings/"><DropdownItem><span className="icon icon-cog"></span> Settings</DropdownItem></Link>
+								<div className="dropdown-divider"></div>
+								<DropdownItem onClick={this.logout}><span className="icon icon-log-out"></span> Logout</DropdownItem>
+							</DropdownMenu>
+							<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{this.state.Wallet.florincoin.usd === 0 ? parseFloat(this.state.Wallet.florincoin.balance.toFixed(3)) : "$" + parseFloat(this.state.Wallet.florincoin.usd).toFixed(2)}</span> {this.state.Wallet.florincoin.usd === 0 ? "FLO" : ""}</Link>
+						</ButtonDropdown> : <Link to="/login"><button className={this.state.navDropdownOpen ? "btn btn-outline-white d-none" : "btn btn-outline-white d-none d-sm-inline-flex"} style={{margin: "auto 10px"}}>{this.state.User.isFetching ? "logging in..." : "Login"}</button></Link>}
 					</button>
 					<div id="navbarToggle" className="collapse navbar-collapse">
 						<div style={{margin: "0px auto"}}>
@@ -112,7 +137,7 @@ class Navbar extends Component {
 								</li>
 							</ul>
 						</div>
-						<div>
+						<div className="login-profile-btn">
 							<Link to="/user/upload/"><button className="btn btn-sm btn-warning-light-bg btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
 							{this.state.User.isLoggedIn ? <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="btn-group">
 								<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}>
