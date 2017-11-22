@@ -61,7 +61,7 @@ class ContentInfo extends Component {
 					</div>
 				</div>
 				<div className="media">
-					<div className="d-flex mr-3 rounded-circle" style={{width: "50px", height: "50px"}}>
+					<div className="d-flex mr-3 rounded-circle border border-secondary" style={{width: "50px", height: "50px"}}>
 						{this.state.isFetching ? "" : <Identicons id={publisher} width={48} size={5} /> }
 					</div>
 					<div className="media-body">

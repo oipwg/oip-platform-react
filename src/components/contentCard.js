@@ -44,7 +44,7 @@ class ContentCard extends Component {
 					<div className="card-block" style={{padding: "10px",whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
 						<strong style={{}}>{title}</strong>
 						<div style={{marginBottom: "-10px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex"}}>
-							<div className="rounded-circle" style={{marginRight: "3px", marginBottom: "3px", display: "inline-flex", width: "30px", height: "30px"}}>
+							<div className="rounded-circle border border-secondary" style={{marginRight: "3px", marginBottom: "3px", display: "inline-flex", width: "32px", height: "32px"}}>
 								<Identicons id={publisher} width={30} size={5} />
 							</div>
 							<p style={{marginTop:"4px", display: "inline-flex"}}>{this.props.artifact.publisherName}</p>
