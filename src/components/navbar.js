@@ -26,9 +26,9 @@ class Navbar extends Component {
 			navDropdownOpen: false,
 			User: {},
 			Wallet: {
-				florincoin: {
-					balance: 0
-				}
+				florincoin: { balance: 0, usd: 0 },
+				bitcoin: { balance: 0, usd: 0 },
+				litecoin: { balance: 0, usd: 0 }
 			},
 			searchTerm: "test",
 			search: false
@@ -94,6 +94,21 @@ class Navbar extends Component {
 		})
 	}
 	render() {
+		let totalbalance = 0;
+
+		if (this.state && this.state.Wallet){
+			let flobalance = 0, btcbalance = 0, ltcbalance = 0;
+
+			if (this.state.Wallet.florincoin && this.state.Wallet.florincoin.usd)
+				flobalance = parseFloat(this.state.Wallet.florincoin.usd);
+			if (this.state.Wallet.bitcoin && this.state.Wallet.bitcoin.usd)
+				btcbalance = parseFloat(this.state.Wallet.bitcoin.usd);
+			if (this.state.Wallet.litecoin && this.state.Wallet.litecoin.usd)
+				ltcbalance = parseFloat(this.state.Wallet.litecoin.usd);
+
+			totalbalance = flobalance + btcbalance + ltcbalance;
+		}
+
 		return (
 			<div>
 				{this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm} /> : ""}
@@ -119,7 +134,7 @@ class Navbar extends Component {
 								<div className="dropdown-divider"></div>
 								<DropdownItem onClick={this.logout}><span className="icon icon-log-out"></span> Logout</DropdownItem>
 							</DropdownMenu>
-							<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{this.state.Wallet.florincoin.usd === 0 ? parseFloat(this.state.Wallet.florincoin.balance.toFixed(3)) : "$" + parseFloat(this.state.Wallet.florincoin.usd).toFixed(2)}</span> {this.state.Wallet.florincoin.usd === 0 ? "FLO" : ""}</Link>
+							<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{totalbalance === 0 ? "" : "$" + parseFloat(totalbalance).toFixed(2)}</span></Link>
 						</ButtonDropdown> : <Link to="/login"><button className={this.state.navDropdownOpen ? "btn btn-outline-white d-none" : "btn btn-outline-white d-none d-sm-inline-flex"} style={{margin: "auto 10px"}}>{this.state.User.isFetching ? "logging in..." : "Login"}</button></Link>}
 					</button>
 					<div id="navbarToggle" className="collapse navbar-collapse">
@@ -155,7 +170,7 @@ class Navbar extends Component {
 									<div className="dropdown-divider"></div>
 									<DropdownItem onClick={this.logout}><span className="icon icon-log-out"></span> Logout</DropdownItem>
 								</DropdownMenu>
-								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{this.state.Wallet.florincoin.usd === 0 ? parseFloat(this.state.Wallet.florincoin.balance.toFixed(3)) : "$" + parseFloat(this.state.Wallet.florincoin.usd).toFixed(2)}</span> {this.state.Wallet.florincoin.usd === 0 ? "FLO" : ""}</Link>
+								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{totalbalance === 0 ? "" : "$" + parseFloat(totalbalance).toFixed(2)}</span></Link>
 							</ButtonDropdown> : <Link to="/login"><button className="btn btn-outline-white" style={{margin: "auto 10px"}}>{this.state.User.isFetching ? "logging in..." : "Login"}</button></Link>}
 						</div>
 					</div>

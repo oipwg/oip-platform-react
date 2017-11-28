@@ -164,7 +164,7 @@
 body > canvas {
 	display: none;
 }
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
   .login-profile-btn {
     text-align: center;
     margin-top: 15px;
@@ -177,7 +177,7 @@ body > canvas {
 	.content-container {
 		height: 73vh;
 	}
-	.content > div, .content > iframe {
+	.content > div, .content > iframe, .content > div > iframe {
 		max-height: 73vh;
 	}
 }
@@ -198,7 +198,7 @@ body > canvas {
 	.content > div {
     max-height: 70vh;
 	}
-  .content > iframe {
+  .content > iframe, .content > div > iframe {
     max-height: 70vh;
     min-height: 70vh;
   }
@@ -223,7 +223,7 @@ body > canvas {
 	.content > div {
 		max-height: 60vh;
 	}
-  .content > iframe {
+  .content > iframe, .content > div > iframe {
     min-height: 60vh;
     max-height: 60vh;
   }
@@ -248,7 +248,7 @@ body > canvas {
 	.content > div {
 		max-height: 50vh;
 	}
-  .content > iframe {
+  .content > iframe, .content > div > iframe {
     min-height: 50vh;
     max-height: 50vh;
   }

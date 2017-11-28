@@ -27,6 +27,9 @@ class AudioVisualizer extends Component {
 		} else {
 			this.audioContext = new AudioContext();
 		}
+
+		if (this.props.audio.crossOrigin !== "anonymous")
+			this.props.audio.crossOrigin = "anonymous";
 		
 		this.analyser = this.audioContext.createAnalyser();
 		this.canvas = this.refs.analyzerCanvas;

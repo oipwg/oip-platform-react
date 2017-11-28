@@ -37,6 +37,7 @@ export const UPDATE_WALLET = 'UPDATE_WALLET'
 export const UPDATE_USD = 'UPDATE_USD'
 export const UPDATE_BALANCE = 'UPDATE_BALANCE'
 export const UPDATE_ADDRESSES = 'UPDATE_ADDRESSES'
+export const UPDATE_COIN = 'UPDATE_COIN'
 
 export const CHANGE_VOLUME = 'CHANGE_VOLUME'
 export const CHANGE_MUTE = 'CHANGE_MUTE'
@@ -202,6 +203,19 @@ export const updateWallet = walletState => ({
 	walletState
 })
 
+export const updateWalletFunc = walletState => (dispatch, getState) => {
+	let newState = walletState;
+	let prevState = getState();
+
+	for (var coin in prevState){
+		if (newState[coin] && newState[coin].usd === 0 && prevState[coin] && prevState[coin].usd && prevState[coin].usd > 0){
+			newState[coin].usd = prevState[coin].usd
+		}
+	}
+
+	dispatch(updateWallet(newState));
+}
+
 export const updateUSD = (coin, usd) => ({
 	type: UPDATE_USD,
 	coin,
@@ -357,7 +371,7 @@ export const buyFileFunc = (Core, artifact, file, piwik) => dispatch => {
 
 export const setupWalletEvents = (Core) => dispatch => {
 	Core.Events.on("wallet-bal-update", function(newState){
-		dispatch(updateWallet(newState));
+		dispatch(updateWalletFunc(newState));
 
 		Core.Data.getBTCPrice(function(price){
 			dispatch(updateUSD('bitcoin', (price * newState.bitcoin.balance).toFixed(4)))
@@ -365,6 +379,10 @@ export const setupWalletEvents = (Core) => dispatch => {
 
 		Core.Data.getFLOPrice(function(price){
 			dispatch(updateUSD('florincoin', (price * newState.florincoin.balance).toFixed(4)))
+		})
+
+		Core.Data.getLTCPrice(function(price){
+			dispatch(updateUSD('litecoin', (price * newState.litecoin.balance).toFixed(4)))
 		})
 	})
 }
