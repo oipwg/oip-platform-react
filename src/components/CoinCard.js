@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
-import CryptoQR from './CryptoQR.js';
+import BuyButton from './BuyButton.js';
+import QRButton from './QRButton.js';
+import SendButton from './SendButton.js';
+import SwapButton from './SwapButton.js';
 
 import btc_logo from '../assets/img/btcflat.svg';
 import flo_logo from '../assets/img/flo.svg';
@@ -15,19 +16,28 @@ const COIN_CONFIGS = {
 		display: 1000000,
 		presymbol: "bits",
 		symbol: "uBTC",
-		logo: btc_logo
+		logo: btc_logo,
+		buy: "coinbase",
+		sell: false,
+		trade: false
 	},
 	florincoin: {
 		order: 2,
 		name: "Flo",
 		symbol: "FLO",
-		logo: flo_logo
+		logo: flo_logo,
+		buy: false,
+		sell: false,
+		trade: true
 	},
 	litecoin: {
 		order: 3,
 		name: "Litecoin",
 		symbol: "LTC",
-		logo: ltc_logo
+		logo: ltc_logo,
+		buy: "coinbase",
+		sell: false,
+		trade: false
 	}
 }
 
@@ -77,56 +87,12 @@ class CoinCard extends Component {
 						<h4 className="card-subtitle mb-2 text-muted"><span style={{color: "#28a745"}}>${this.props.info.usd ? parseFloat(this.props.info.usd).toFixed(2) : "0.00"}</span></h4>
 						<div style={{height: "10px"}}></div>
 						{/*<button className="btn btn-sm btn-outline-secondary" style={{padding: "2px 5px"}}><span className="icon icon-cog"></span> Manage</button>*/}
-						<button className="btn btn-sm btn-outline-dark" style={{padding: "2px 5px", marginRight: "3px"}} onClick={this.toggleQRModal}><span className="fa fa-qrcode"></span> Show QR</button>
-						<button className="btn btn-sm btn-outline-primary" style={{padding: "2px 5px", marginLeft: "3px"}} onClick={this.toggleSendModal}><span className="icon icon-wallet"></span> Send</button>
-						{/*<button className="btn btn-sm btn-outline-success" style={{padding: "2px 5px"}}><span className="icon icon-credit"></span>Buy </button>*/}
+						{COIN_CONFIGS[this.props.coin].buy === "coinbase" ? <BuyButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} /> : ""}
+						{COIN_CONFIGS[this.props.coin].trade ? <SwapButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} /> : ""}
+						<QRButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} />
+						<SendButton coinName={COIN_CONFIGS[this.props.coin].name} />
 					</div>
 				</div>
-				<Modal isOpen={this.state.sendModal} toggle={this.toggleSendModal} className={this.props.className}>
-					<ModalHeader toggle={this.sendModal} style={{margin: "auto"}}>Send {COIN_CONFIGS[this.props.coin].name}</ModalHeader>
-					<ModalBody>
-						<div id="walletSpend" className="container">
-							<div className="row">
-								<div className="form-inline" style={{width: "100%"}}>
-									<div className="col-8">
-										<label>Address</label>
-									</div>
-
-									<div className="col-4">
-										<label>Amount</label>
-									</div>
-								</div>
-							</div>
-
-							<div className="row" id="walletSpendTo">
-								<div className="form-inline" style={{width: "100%"}}>
-									<div className="col-8">
-										<input type="text" style={{width: "inherit"}} className="form-control addressTo" data-original-title="" title="" />
-									</div>
-									<div className="col-4">
-										<input type="text" style={{width: "inherit"}} className="form-control amount" data-original-title="" title="" placeholder="0.00" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</ModalBody>
-					<ModalFooter>
-						<Button color="secondary" onClick={this.toggleSendModal}>Cancel</Button>{' '}
-						<Button color="primary" onClick={this.toggleSendModal}>Send</Button>
-					</ModalFooter>
-				</Modal>
-				<Modal isOpen={this.state.qrModal} toggle={this.toggleQRModal} className={this.props.className}>
-					<ModalHeader toggle={this.qrModal} style={{margin: "auto"}}>Deposit {COIN_CONFIGS[this.props.coin].name}</ModalHeader>
-					<ModalBody style={{margin: "auto"}} className="text-center">
-						<CryptoQR type="receive" coin={this.props.coin} address={mainAddress} size={200} />
-						<br />
-						<code>{mainAddress}</code>
-					</ModalBody>
-					<ModalFooter>
-						<Button color="secondary" onClick={this.toggleQRModal}>Cancel</Button>{' '}
-						<Button color="primary" onClick={this.toggleQRModal}>Send</Button>
-					</ModalFooter>
-				</Modal>
 			</div>
 		);
 	}
