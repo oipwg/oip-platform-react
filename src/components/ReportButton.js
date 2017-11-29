@@ -24,11 +24,13 @@ class ReportButton extends Component {
 				</Button>
 				<Popover placement="top" isOpen={this.state.popoverOpen} target="ReportPopover" toggle={this.toggle}>
 					<PopoverHeader style={{textAlign: "center"}}>More Tools</PopoverHeader>
-					<PopoverBody>
-						<button className="btn btn-sm btn-outline-dark btn-margin-right"><span className="icon icon-error"></span> Report</button>
-						<button className="btn btn-sm btn-outline-success btn-margin-right"><span className="icon icon-wallet"></span> $0.10</button>
-						<button className="btn btn-sm btn-outline-success btn-margin-right"><span className="icon icon-wallet"></span> $1</button>
-						<button className="btn btn-sm btn-outline-success btn-margin-right">Other</button>
+					<PopoverBody style={{textAlign: "center"}}>
+						<button className="btn btn-sm btn-outline-dark btn-margin-right"><span className="icon icon-error"></span> File DMCA Report</button>
+						<hr />
+						<button className="btn btn-sm btn-outline-dark btn-margin-right"><span className="icon icon-error"></span> Report Illegal Content</button>
+						<button className="btn btn-sm btn-outline-dark btn-margin-right"><span className="icon icon-error"></span> Report Mislabeled Pornography</button>
+						<button className="btn btn-sm btn-outline-dark btn-margin-right"><span className="icon icon-error"></span> Report for Encouraging or inciting Violence</button>
+						<button className="btn btn-sm btn-outline-dark btn-margin-right"><span className="icon icon-error"></span> Report for Personal or Confidental information</button>
 					</PopoverBody>
 				</Popover>
 			</div>
