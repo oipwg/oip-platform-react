@@ -60,6 +60,8 @@ class IPFSImage extends Component {
 
 		if (hash === this.state.active){
 			let img = new Image();
+			img.crossOrigin="anonymous";
+			
 			let canvas = this.refs.canvas;
 
 			if (canvas){
