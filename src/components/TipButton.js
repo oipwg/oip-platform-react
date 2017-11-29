@@ -8,29 +8,37 @@ class TipButton extends Component {
 		super(props);
 
 		this.state = {
-			popoverOpen: false
+			customStart: false
 		}
 
 		this.toggle = this.toggle.bind(this);
 		this.tip = this.tip.bind(this);
 	}
 	toggle(){
-		this.setState({
-			popoverOpen: !this.state.popoverOpen
-		})
 	}
 	tip(){
-		this.toggle();
+		if (this.props.type === "custom" && !this.state.customStart){
+			this.setState({customStart: true});
+		} else {
+			this.toggle();
 
-		this.setState({tipping: true, tipSuccess: false, tipError: false});
-		let _this = this;
+			this.setState({tipping: true, tipSuccess: false, tipError: false});
+			let _this = this;
 
-		this.props.store.dispatch(tipFunc(this.props.Core, this.props.artifact, this.props.amount, this.props.piwik, this.props.NotificationSystem, function(success){
-			_this.setState({tipping: false, tipSuccess: true, tipError: false});
-		}, function(error){
-			_this.setState({tipping: false, tipSuccess: false, tipError: true});
-			console.error(error);
-		}));
+			var amount;
+
+			if (this.props.type === "custom")
+				amount = parseFloat(this.refs.custom.value);
+			else if (this.props.amount)
+				amount = this.props.amount
+
+			this.props.store.dispatch(tipFunc(this.props.Core, this.props.artifact, amount, this.props.piwik, this.props.NotificationSystem, function(success){
+				_this.setState({tipping: false, tipSuccess: true, tipError: false});
+			}, function(error){
+				_this.setState({tipping: false, tipSuccess: false, tipError: true});
+				console.error(error);
+			}));
+		}
 	}
 	render() {
 		let text = this.props.amount ? "$" + this.props.Core.util.createPriceString(this.props.amount) : "Other";
@@ -52,7 +60,7 @@ class TipButton extends Component {
 		}
 
 		return (
-			<button className={"btn-margin-right btn btn-sm btn-outline-" + color} onClick={this.tip}><span className="fa fa-send-o"></span> {text}</button>
+			<button className={"btn-margin-right btn btn-sm btn-outline-" + color} onClick={this.tip}>{this.state.customStart ? "" : <span className="fa fa-send-o"></span>} {this.state.customStart ? <input ref="custom" type="number" style={{width: "30px"}} /> : text}{this.state.customStart ? <span className="fa fa-send-o"></span> : ""}</button>
 		);
 	}
 }
