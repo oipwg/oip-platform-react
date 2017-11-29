@@ -1192,3 +1192,16 @@ td.unpin {
 	background-color: rgba(0, 105, 217, 0.25);
     border-color: rgba(0, 98, 204, 1);
 }
+
+@media (min-width: 576px){
+  .modal-dialog {
+    max-width: 500px;
+    margin: 25vh auto;
+  }
+}
+
+.btn-none-grey {
+  color: grey;
+  border-color: rgba(0,0,0,0);
+  background: rgba(0,0,0,0);
+}

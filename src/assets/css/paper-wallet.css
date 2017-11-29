@@ -1,0 +1,279 @@
+.paper-wallet {
+    position: absolute;
+    height: 430px;
+    text-align: center;
+    width: 1005px;
+    perspective-origin: 502.5px 215px;
+    transform-origin: 502.5px 215px;
+    font: normal normal 400 normal 16px / normal Arial;
+}
+
+.pw-wallet-container {
+    height: 430px;
+    width: 1005px;
+}
+
+.pw-div {
+    bottom: 0px;
+    height: 430px;
+    left: 0px;
+    position: relative;
+    right: 0px;
+    text-align: left;
+    top: 0px;
+    width: 1005px;
+    perspective-origin: 502.5px 215px;
+    transform-origin: 502.5px 215px;
+    font: normal normal 400 normal 16px / normal Ubuntu, Arial;
+}
+
+.pw-logo {
+    bottom: 74px;
+    height: 64px;
+    left: 48px;
+    position: absolute;
+    right: 873px;
+    text-align: left;
+    top: 272px;
+    width: 64px;
+    perspective-origin: 42px 42px;
+    transform-origin: 42px 42px;
+    font: normal normal 400 normal 16px / normal Ubuntu, Arial;
+    padding: 10px;
+}
+
+.pw-currency-logo {
+    height: 64px;
+    text-align: left;
+    width: 64px;
+    perspective-origin: 32px 32px;
+    transform-origin: 32px 32px;
+    font: normal normal 400 normal 16px / normal Ubuntu, Arial;
+}
+
+.pw-holder {
+    height: 430px;
+    text-align: left;
+    width: 1005px;
+    perspective-origin: 502.5px 215px;
+    transform-origin: 502.5px 215px;
+    font: normal normal 400 normal 16px / normal Ubuntu, Arial;
+}
+
+.pw-wallet-img {
+    height: 426px;
+    left: 0px;
+    text-align: left;
+    width: 1004px;
+    perspective-origin: 502px 213px;
+    transform-origin: 502px 213px;
+    font: normal normal 400 normal 16px / normal Ubuntu, Arial;
+}
+
+.pw-qr-1 {
+    bottom: 40.5px;
+    height: 119.5px;
+    left: 780px;
+    position: absolute;
+    right: 99.5px;
+    text-align: left;
+    top: 263px;
+    width: 115.5px;
+    z-index: 100;
+    perspective-origin: 62.75px 63.25px;
+    transform-origin: 62.75px 63.25px;
+    background: rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box;
+    font: normal normal 400 normal 16px / normal Ubuntu, Arial;
+    padding: 5px 5px 2px;
+}
+
+.pw-qr-1canvas {
+    height: 115.5px;
+    text-align: left;
+    width: 115.5px;
+    perspective-origin: 57.75px 57.75px;
+    transform-origin: 57.75px 57.75px;
+    font: normal normal 400 normal 16px / normal Ubuntu, Arial;
+}
+
+.pw-rq-2 {
+    bottom: 267.203px;
+    height: 118.797px;
+    left: 434.203px;
+    position: absolute;
+    right: 446px;
+    text-align: left;
+    top: 37px;
+    width: 114.797px;
+    z-index: 100;
+    perspective-origin: 62.3906px 62.8906px;
+    transform: matrix(-1, 1.22465e-16, -1.22465e-16, -1, 0, 0);
+    transform-origin: 62.3906px 62.8906px;
+    background: rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box;
+    font: normal normal 400 normal 16px / normal Ubuntu, Arial;
+    padding: 5px 5px 2px;
+}
+
+.pw-qr-2canvas {
+    height: 114.797px;
+    text-align: left;
+    width: 114.797px;
+    perspective-origin: 57.3906px 57.3906px;
+    transform-origin: 57.3906px 57.3906px;
+    font: normal normal 400 normal 16px / normal Ubuntu, Arial;
+}/*#CANVAS_10*/
+
+.pw-pub-key {
+    bottom: 88px;
+    height: 32px;
+    left: 874px;
+    overflow-wrap: break-word;
+    position: absolute;
+    right: 7px;
+    text-align: center;
+    top: 310px;
+    width: 124px;
+    word-wrap: break-word;
+    z-index: 100;
+    perspective-origin: 62px 16px;
+    transform: matrix(6.12323e-17, -1, 1, 6.12323e-17, 0, 0);
+    transform-origin: 62px 16px;
+    font: normal normal 100 normal 11px / normal Courier, monospace;
+}/*#DIV_11*/
+
+.pw-priv-key {
+    bottom: 312px;
+    height: 32px;
+    left: 341px;
+    overflow-wrap: break-word;
+    position: absolute;
+    right: 540px;
+    text-align: center;
+    top: 86px;
+    width: 124px;
+    word-wrap: break-word;
+    z-index: 100;
+    perspective-origin: 62px 16px;
+    transform: matrix(6.12323e-17, 1, -1, 6.12323e-17, 0, 0);
+    transform-origin: 62px 16px;
+    font: normal normal 100 normal 11px / normal Courier, monospace;
+}
+
+.pw-text {
+    bottom: 8px;
+    color: rgb(56, 56, 56);
+    height: 156px;
+    left: 339px;
+    position: absolute;
+    right: 349px;
+    text-align: left;
+    text-decoration: none solid rgb(56, 56, 56);
+    top: 234px;
+    width: 265px;
+    column-rule-color: rgb(56, 56, 56);
+    perspective-origin: 158.5px 94px;
+    transform-origin: 158.5px 94px;
+    caret-color: rgb(56, 56, 56);
+    border: 0px none rgb(56, 56, 56);
+    font: normal normal 400 normal 10px / 15px Ubuntu, Arial;
+    outline: rgb(56, 56, 56) none 0px;
+    padding: 15px 15px 17px 37px;
+}
+
+.pw-text-img {
+    color: rgb(56, 56, 56);
+    display: block;
+    float: right;
+    height: 50px;
+    text-align: left;
+    text-decoration: none solid rgb(56, 56, 56);
+    width: 50px;
+    column-rule-color: rgb(56, 56, 56);
+    perspective-origin: 25px 25px;
+    transform-origin: 25px 25px;
+    caret-color: rgb(56, 56, 56);
+    border: 0px none rgb(56, 56, 56);
+    font: normal normal 400 normal 10px / 15px Ubuntu, Arial;
+    outline: rgb(56, 56, 56) none 0px;
+}
+
+.pw-text-box {
+    color: rgb(56, 56, 56);
+    height: 114px;
+    text-align: left;
+    text-decoration: none solid rgb(56, 56, 56);
+    width: 265px;
+    column-rule-color: rgb(56, 56, 56);
+    perspective-origin: 132.5px 57px;
+    transform-origin: 132.5px 57px;
+    caret-color: rgb(56, 56, 56);
+    border: 0px none rgb(56, 56, 56);
+    font: normal normal 400 normal 10px / 15px Ubuntu, Arial;
+    margin: 0px;
+    outline: rgb(56, 56, 56) none 0px;
+    padding: 0px;
+}
+
+.pw-text-1 {
+    color: rgb(56, 56, 56);
+    height: 26px;
+    text-decoration: none solid rgb(56, 56, 56);
+    width: 265px;
+    column-rule-color: rgb(56, 56, 56);
+    perspective-origin: 132.5px 13px;
+    transform-origin: 132.5px 13px;
+    caret-color: rgb(56, 56, 56);
+    border: 0px none rgb(56, 56, 56);
+    font: normal normal 400 normal 10px / 13px Ubuntu, Arial;
+    margin: 0px 0px 5px;
+    outline: rgb(56, 56, 56) none 0px;
+}
+
+.pw-text-2, .pw-text-3 {
+    color: rgb(56, 56, 56);
+    height: 39px;
+    text-decoration: none solid rgb(56, 56, 56);
+    width: 265px;
+    column-rule-color: rgb(56, 56, 56);
+    perspective-origin: 132.5px 19.5px;
+    transform-origin: 132.5px 19.5px;
+    caret-color: rgb(56, 56, 56);
+    border: 0px none rgb(56, 56, 56);
+    font: normal normal 400 normal 10px / 13px Ubuntu, Arial;
+    margin: 0px 0px 5px;
+    outline: rgb(56, 56, 56) none 0px;
+}
+
+.pw-text-bold {
+    color: rgb(56, 56, 56);
+    text-align: left;
+    text-decoration: none solid rgb(56, 56, 56);
+    column-rule-color: rgb(56, 56, 56);
+    caret-color: rgb(56, 56, 56);
+    border: 0px none rgb(56, 56, 56);
+    font: normal normal 700 normal 10px / 13px Ubuntu, Arial;
+    outline: rgb(56, 56, 56) none 0px;
+}/*#B_19*/
+
+.pw-text-bold2 {
+    color: rgb(56, 56, 56);
+    text-align: left;
+    text-decoration: none solid rgb(56, 56, 56);
+    column-rule-color: rgb(56, 56, 56);
+    caret-color: rgb(56, 56, 56);
+    border: 0px none rgb(56, 56, 56);
+    font: normal normal 700 normal 10px / 15px Ubuntu, Arial;
+    outline: rgb(56, 56, 56) none 0px;
+}/*#B_20, #B_21, #B_23*/
+
+.pw-text-bold3 {
+    color: rgb(56, 56, 56);
+    text-align: left;
+    text-decoration: none solid rgb(56, 56, 56);
+    column-rule-color: rgb(56, 56, 56);
+    caret-color: rgb(56, 56, 56);
+    border: 0px none rgb(56, 56, 56);
+    font: normal normal 400 normal 10px / 15px Ubuntu, Arial;
+    outline: rgb(56, 56, 56) none 0px;
+}/*#BR_22*/
+

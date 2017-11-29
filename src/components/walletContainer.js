@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import CoinCard from './CoinCard.js';
+import PaperWallets from './PaperWallets.js';
 
 class WalletContainer extends Component {
 	constructor(props){
@@ -51,6 +52,7 @@ class WalletContainer extends Component {
 
 						return <CoinCard key={key} coin={key} info={this.state.Wallet[key]} Core={this.props.Core} />
 					})}
+					{/*<PaperWallets />*/}
 					{/*<div className="col-12 col-sm-6 col-md-4">
 						<CoinCard />
 					</div>
