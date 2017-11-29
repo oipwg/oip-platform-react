@@ -179,7 +179,7 @@ class AudioContainer extends Component {
 		}
 		
 		return (
-			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden"}}>
+			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh"}}>
 				<audio
 					ref={audio => this.audio = audio}
 					autoPlay={!paywall}
