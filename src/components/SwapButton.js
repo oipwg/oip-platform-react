@@ -28,11 +28,12 @@ class SwapButton extends Component {
 			<div className="d-inline">
 				<button className="btn btn-sm btn-outline-info" style={{padding: "2px 5px", marginRight: "3px"}} onClick={this.toggleSwapModal}><span className="fa fa-retweet"></span> Swap</button>
 				<Modal isOpen={this.state.swapModal} toggle={this.toggleSwapModal} className={this.props.className}>
-					<ModalHeader toggle={this.swapModal} style={{margin: "auto"}}>Trade for {this.props.coinName}</ModalHeader>
+					<ModalHeader toggle={this.swapModal} style={{margin: "auto"}}></ModalHeader>
 					<ModalBody style={{margin: "auto"}} className="text-center">
-						<CryptoQR type="receive" coin={this.props.coin} address={this.props.address} size={200} />
-						<br />
-						<code>{this.props.address}</code>
+						<h4>Swap</h4>
+						<button>Flo</button>
+						<h4>for</h4>
+						<button>Bitcoin</button>
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.toggleSwapModal}>Cancel</Button>{' '}

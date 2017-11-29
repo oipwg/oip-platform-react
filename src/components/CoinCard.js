@@ -78,6 +78,13 @@ class CoinCard extends Component {
 			balance = parseFloat(parseFloat(this.props.info.balance * COIN_CONFIGS[this.props.coin].display).toFixed(4));
 		}
 
+		let currency;
+
+		if (this.props.coin === 'litecoin')
+			currency = 'ltc';
+		else if (this.props.coin === 'bitcoin')
+			currency = 'btc';
+
 		return (
 			<div className={"col-12 col-sm-6 col-md-4 order-" + COIN_CONFIGS[this.props.coin].order}>
 				<div className="card">
@@ -87,7 +94,7 @@ class CoinCard extends Component {
 						<h4 className="card-subtitle mb-2 text-muted"><span style={{color: "#28a745"}}>${this.props.info.usd ? parseFloat(this.props.info.usd).toFixed(2) : "0.00"}</span></h4>
 						<div style={{height: "10px"}}></div>
 						{/*<button className="btn btn-sm btn-outline-secondary" style={{padding: "2px 5px"}}><span className="icon icon-cog"></span> Manage</button>*/}
-						{COIN_CONFIGS[this.props.coin].buy === "coinbase" ? <BuyButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} /> : ""}
+						{COIN_CONFIGS[this.props.coin].buy === "coinbase" ? <BuyButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} currency={currency} /> : ""}
 						{COIN_CONFIGS[this.props.coin].trade ? <SwapButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} /> : ""}
 						<QRButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} />
 						<SendButton coinName={COIN_CONFIGS[this.props.coin].name} />
