@@ -52,6 +52,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   alexandriaCore: resolveApp('node_modules/alexandria-core'),
   alexandriaCoreNodeModules: resolveApp('node_modules/alexandria-core/node_modules'),
+  aep: resolveApp('node_modules/alexandria-core/node_modules/aep'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
 };

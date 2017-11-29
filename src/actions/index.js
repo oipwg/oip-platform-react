@@ -21,6 +21,8 @@ export const BUY_FILE = 'BUY_FILE'
 export const PAY_FOR_FILE = 'PAY_FOR_FILE'
 export const PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS'
 export const PAYMENT_ERROR = 'PAYMENT_ERROR'
+export const BUY_IN_PROGRESS = 'BUY_IN_PROGRESS'
+export const BUY_ERROR = 'BUY_ERROR'
 export const CLEAR_PAY_PROGRESS_ERROR = 'CLEAR_PAY_PROGRESS_ERROR'
 export const ADD_FILE_TO_PLAYLIST = 'ADD_FILE_TO_PLAYLIST'
 export const PLAYLIST_SKIP_BACK = 'PLAYLIST_SKIP_BACK'
@@ -150,6 +152,16 @@ export const paymentInProgress = uid => ({
 
 export const paymentError = uid => ({
 	type: PAYMENT_ERROR,
+	uid
+})
+
+export const buyInProgress = uid => ({
+	type: BUY_IN_PROGRESS,
+	uid
+})
+
+export const buyError = uid => ({
+	type: BUY_ERROR,
 	uid
 })
 
@@ -306,7 +318,35 @@ export const setCurrentFile = (Core, artifact, file) => dispatch => {
 	}
 }
 
-export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, onSuccess) => dispatch => {
+export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
+	let txid = Core.Artifact.getTXID(artifact);
+	let publisher = Core.Artifact.getPublisher(artifact);
+	let publisherName = Core.Artifact.getPublisherName(artifact);
+
+	let paymentAddresses = Core.Artifact.getPaymentAddresses(artifact);
+
+	let id = txid;
+
+	if (paymentAmount > 0){
+		Core.Wallet.sendPayment("USD", paymentAmount, paymentAddresses, (success) => {	
+			if (NotificationSystem){
+				NotificationSystem.addNotification({title: "Tip Success!", message: "Tipped $" + Core.util.createPriceString(paymentAmount) + " to " + publisherName, level: "success", position: "tr", autoDismiss: 2})
+			}	
+
+			onSuccess(success)
+		}, (error) => {
+			onError(error);
+		})
+	}
+
+	try {
+		piwik.push(["trackContentInteraction", "viewFile", publisher, txid]);
+	} catch (e) {
+		//console.log(e);
+	}
+}
+
+export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
 	let txid = Core.Artifact.getTXID(artifact);
 	let publisher = Core.Artifact.getPublisher(artifact);
 	let publisherName = Core.Artifact.getPublisherName(artifact);
@@ -326,7 +366,7 @@ export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, 
 
 				Core.Wallet.sendPayment("USD", paymentAmount, paymentAddresses, (success) => {	
 					if (NotificationSystem){
-						NotificationSystem.addNotification({title: "Payment Success!", message: "Paid $" + paymentAmount + " to " + publisherName, level: "success", position: "tr", autoDismiss: 2})
+						NotificationSystem.addNotification({title: "Payment Success!", message: "Paid $" + Core.util.createPriceString(paymentAmount) + " to " + publisherName, level: "success", position: "tr", autoDismiss: 2})
 					}	
 					dispatch(payForFile(id));
 					dispatch(setActiveFileInPlaylist(id));
@@ -334,6 +374,7 @@ export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, 
 					onSuccess(success)
 				}, (error) => {
 					dispatch(paymentError(id));
+					onError(error);
 				})
 			} else {
 				// If it is free
@@ -350,18 +391,45 @@ export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, 
 	}
 }
 
-export const buyFileFunc = (Core, artifact, file, piwik) => dispatch => {
+export const buyFileFunc = (Core, artifact, file, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
 	let txid = Core.Artifact.getTXID(artifact);
 	let publisher = Core.Artifact.getPublisher(artifact);
+	let publisherName = Core.Artifact.getPublisherName(artifact);
 	let files = Core.Artifact.getFiles(artifact);
+
+	let paymentAmount = file.sugBuy / Core.Artifact.getScale(artifact);
+
+	let paymentAddresses = Core.Artifact.getPaymentAddresses(artifact, file);
+
+	let filei = 0;
 
 	for (var i = 0; i < files.length; i++) {
 		if (files[i].fname === file.fname && files[i].dname === file.dname){
-			dispatch(buyFile(txid + "|" + i));
-			dispatch(setActiveFileInPlaylist(txid + "|" + i));
+			filei = i;
+			if (file.sugBuy && paymentAmount > 0){
+				// If file has cost
+				dispatch(buyInProgress(txid));
+
+				Core.Wallet.sendPayment("USD", paymentAmount, paymentAddresses, (success) => {	
+					if (NotificationSystem){
+						NotificationSystem.addNotification({title: "Payment Success!", message: "Paid $" + Core.util.createPriceString(paymentAmount) + " to " + publisherName, level: "success", position: "tr", autoDismiss: 2})
+					}	
+					dispatch(setActiveFileInPlaylist(txid + "|" + filei));
+					dispatch(buyFile(txid + "|" + filei));
+
+					onSuccess(success)
+				}, (error) => {
+					dispatch(buyError(txid));
+					onError(error);
+				})
+			} else {
+				// If it is free
+				dispatch(setActiveFileInPlaylist(txid + "|" + filei));
+				dispatch(buyFile(txid + "|" + filei));
+			}
 
 			try {
-				piwik.push(["trackContentInteraction", "buyFile", publisher, txid, i]);
+				piwik.push(["trackContentInteraction", "buyFile", publisher, txid, filei]);
 			} catch (e) {
 				//console.log(e)
 			}	

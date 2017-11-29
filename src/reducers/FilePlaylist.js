@@ -6,6 +6,8 @@ const file = (state = {
 	hasPaid: false,
 	paymentInProgress: false,
 	paymentError: false,
+	buyInProgress: false,
+	buyError: false,
 	explicitAction: false,
 	isPlaying: false,
 	isPlayable: false,
@@ -76,6 +78,18 @@ const file = (state = {
 				...state,
 				paymentInProgress: false,
 				paymentError: false
+			}
+		case actions.BUY_IN_PROGRESS:
+			return {
+				...state,
+				buyInProgress: true,
+				buyError: false
+			}
+		case actions.BUY_ERROR:
+			return {
+				...state,
+				buyInProgress: false,
+				buyError: true
 			}
 		default:
 			return state

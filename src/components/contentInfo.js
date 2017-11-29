@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import ContentExtraInfo from './contentExtraInfo.js';
 import ShareButton from './ShareButton.js';
-import TipButton from './TipButton.js';
+import TipButtons from './TipButtons.js';
 import ReportButton from './ReportButton.js';
 
 import Identicons from 'identicons-react';
@@ -75,7 +75,7 @@ class ContentInfo extends Component {
 							*/}
 							<div style={{float: "right"}}>
 								<ShareButton />
-								<TipButton />
+								<TipButtons artifact={this.state.artifact} Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
 								<ReportButton />
 							</div>
 						</h5>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
+import { tipFunc } from '../actions'
+
 class TipButton extends Component {
 	constructor(props){
 		super(props);
@@ -19,23 +21,16 @@ class TipButton extends Component {
 	}
 	tip(){
 		this.toggle();
+
+		this.props.store.dispatch(tipFunc(this.props.Core, this.props.artifact, this.props.amount, this.props.piwik, this.props.NotificationSystem, function(success){
+			
+		}, function(error){
+			console.log(error);
+		}));
 	}
 	render() {
 		return (
-			<div style={{display: "inline"}}>
-				<Button id="TipPopover" onClick={this.toggle} className="btn btn-sm btn-outline-success btn-margin-right">
-					<span className="icon-wallet icon"></span> Tip
-				</Button>
-				<Popover placement="top" isOpen={this.state.popoverOpen} target="TipPopover" toggle={this.toggle}>
-					<PopoverHeader style={{textAlign: "center"}}>Send Tip</PopoverHeader>
-					<PopoverBody>
-						<button className="btn btn-sm btn-outline-success btn-margin-right" onClick={this.tip}><span className="icon icon-wallet"></span> $0.01</button>
-						<button className="btn btn-sm btn-outline-success btn-margin-right" onClick={this.tip}><span className="icon icon-wallet"></span> $0.10</button>
-						<button className="btn btn-sm btn-outline-success btn-margin-right" onClick={this.tip}><span className="icon icon-wallet"></span> $1</button>
-						<button className="btn btn-sm btn-outline-success btn-margin-right">Other</button>
-					</PopoverBody>
-				</Popover>
-			</div>
+			<button className="btn btn-sm btn-outline-success btn-margin-right" onClick={this.tip}><span className="fa fa-send-o"></span> {this.props.amount ? "$" + this.props.Core.util.createPriceString(this.props.amount) : "Other"}</button>
 		);
 	}
 }

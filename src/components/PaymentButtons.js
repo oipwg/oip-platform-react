@@ -15,21 +15,26 @@ class PaymentButtons extends Component {
 		let scrollToTop = this.scrollToTop;
 		this.props.store.dispatch(payForFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem, function(success){
 			scrollToTop();
+		}, function(error){
+			console.log(error);
 		}));
 	}
 	buyFile(){
 		if (this.props.File.owned){
 			this.dlStarted = true;
 		} else {
-			this.props.store.dispatch(buyFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem));
+			this.props.store.dispatch(buyFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem, function(success){
+				//scrollToTop();
+			}, function(error){
+				console.log(error);
+			}));
 		}
-		
-		//this.scrollToTop()
 	}
 	scrollToTop(){
 		window.scrollTo(0, 0);
 	}
 	render() {
+		let hasPaid = false;
 		let owned = false;
 		let paymentInProgress = false;
 		let paymentError = false;
@@ -55,6 +60,9 @@ class PaymentButtons extends Component {
 		if (this.props.File){
 			if (this.props.File.owned){
 				owned = true;	
+			}
+			if (this.props.File.hasPaid){
+				hasPaid = true;	
 			}
 			if (this.props.File.paymentInProgress){
 				paymentInProgress = true;	
@@ -96,6 +104,11 @@ class PaymentButtons extends Component {
 			buyBtnType = "outline-success";
 		}
 
+		if (hasPaid){
+			viewBtnType = "outline-info";
+			viewString = "View";
+		}
+
 		if (owned) {
 			viewBtnType = "outline-info";
 			viewString = "View";
@@ -115,14 +128,14 @@ class PaymentButtons extends Component {
 
 		return (
 			<div>
-				<div style={{width: disallowBuy ? "100%" : "50%", textAlign: disallowBuy ? "center" : "right", display: "inline-block", paddingRight: "3px"}}>
+				<div style={{width: disallowBuy ? "100%" : "50%", textAlign: disallowBuy ? "center" : "right", display: disallowPlay ? "" : "inline-block", paddingRight: "3px"}}>
 				{ disallowPlay ? "" : 
 					<button  className={"pad-5 btn btn-" + viewBtnType} onClick={this.viewFile} style={this.props.btnStyle} >
 						<span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{viewString}
 					</button>
 				}
 				</div>
-				<div style={{width: disallowPlay ? "100%" : "50%", textAlign: disallowPlay ? "center" : "left", display: "inline-block", paddingLeft: "3px"}}>
+				<div style={{width: disallowPlay ? "100%" : "50%", textAlign: disallowPlay ? "center" : "left", display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
 				{ disallowBuy ? "" : 
 					<button className={"pad-5 btn btn-" + buyBtnType} onClick={this.buyFile} style={this.props.btnStyle}>
 						<span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
