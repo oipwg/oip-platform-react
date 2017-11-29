@@ -22,15 +22,37 @@ class TipButton extends Component {
 	tip(){
 		this.toggle();
 
+		this.setState({tipping: true, tipSuccess: false, tipError: false});
+		let _this = this;
+
 		this.props.store.dispatch(tipFunc(this.props.Core, this.props.artifact, this.props.amount, this.props.piwik, this.props.NotificationSystem, function(success){
-			
+			_this.setState({tipping: false, tipSuccess: true, tipError: false});
 		}, function(error){
-			console.log(error);
+			_this.setState({tipping: false, tipSuccess: false, tipError: true});
+			console.error(error);
 		}));
 	}
 	render() {
+		let text = this.props.amount ? "$" + this.props.Core.util.createPriceString(this.props.amount) : "Other";
+		let color = "success";
+
+		if (this.state.tipping){
+			text = "tipping..."
+			color = "info"
+		}
+
+		if (this.state.tipSuccess){
+			color = "success"
+			text = "Tipped!"
+		}
+
+		if (this.state.tipError){
+			color = "danger"
+			text = "Tip Error!"
+		}
+
 		return (
-			<button className="btn btn-sm btn-outline-success btn-margin-right" onClick={this.tip}><span className="fa fa-send-o"></span> {this.props.amount ? "$" + this.props.Core.util.createPriceString(this.props.amount) : "Other"}</button>
+			<button className={"btn-margin-right btn btn-sm btn-outline-" + color} onClick={this.tip}><span className="fa fa-send-o"></span> {text}</button>
 		);
 	}
 }
