@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
+import fileDownload from 'js-file-download';
+
 import BuyButton from './BuyButton.js';
 import QRButton from './QRButton.js';
 import SendButton from './SendButton.js';
@@ -68,6 +70,7 @@ class CoinCard extends Component {
 		this.toggleSettingsMenu = this.toggleSettingsMenu.bind(this);
 		this.printPaperWallet = this.printPaperWallet.bind(this);
 		this.paperWalletPrinted = this.paperWalletPrinted.bind(this);
+		this.downloadBackup = this.downloadBackup.bind(this);
 	}
 	componentDidMount(){
 		
@@ -90,13 +93,18 @@ class CoinCard extends Component {
 	paperWalletPrinted(){
 		this.setState({printPaperWallet: false})
 	}
+	downloadBackup(){
+		fileDownload(JSON.stringify(this.props.info, null, 4), this.props.coin + ".backup.json");
+	}
 	render() {
 		let mainAddress = "";
 		let privKey = "";
+		let walletData = {};
 
 		if (this.props.info && this.props.info.addresses && this.props.info.addresses[0] && this.props.info.addresses[0].address){
 			mainAddress = this.props.info.addresses[0].address;
 			privKey = this.props.info.addresses[0].privKey;
+			walletData = this.props.info;
 		}
 
 		let balance = parseFloat(this.props.info.balance.toFixed(4));
@@ -122,9 +130,9 @@ class CoinCard extends Component {
 						<DropdownMenu>
 							<DropdownItem header>Settings</DropdownItem>
 							<DropdownItem onClick={this.printPaperWallet}>Print Paper Wallet</DropdownItem>
-							<DropdownItem>Export Backup</DropdownItem>
+							<DropdownItem onClick={this.downloadBackup}>Download Backup</DropdownItem>
 							<DropdownItem divider />
-							<DropdownItem>Advanced</DropdownItem>
+							<DropdownItem disabled>Advanced</DropdownItem>
 						</DropdownMenu>
 					</ButtonDropdown>
 					<div className="card-body text-center">
