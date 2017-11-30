@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import fileDownload from 'js-file-download';
 
-import { payForFileFunc, buyFileFunc } from '../actions';
+import { payForFileFunc, buyFileFunc, promptLogin } from '../actions';
 
 class PaymentButtons extends Component {
 	constructor(props){
@@ -13,11 +13,22 @@ class PaymentButtons extends Component {
 	}
 	viewFile(){
 		let scrollToTop = this.scrollToTop;
-		this.props.store.dispatch(payForFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem, function(success){
+		let onSuccess = function(success){
 			scrollToTop();
-		}, function(error){
+		};
+		let onError = function(error){
 			console.log(error);
-		}));
+		}
+		let _this = this;
+		let payForFile = function(Core, artifact, file, piwik, NotificationSystem){
+			_this.props.store.dispatch(payForFileFunc(Core, artifact, file, piwik, NotificationSystem, onSuccess, onError));
+		};
+		if (this.props.store.getState().User.isLoggedIn){
+			payForFile(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem);
+		} else {
+			this.props.store.dispatch(promptLogin(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem, payForFile, onError));
+		}
+			
 	}
 	buyFile(){
 		if (this.props.File.owned){

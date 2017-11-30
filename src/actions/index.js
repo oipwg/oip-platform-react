@@ -51,6 +51,7 @@ export const LOGIN_FETCHING = 'LOGIN_FETCHING'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const LOGOUT = 'LOGOUT'
+export const PROMPT_LOGIN = 'PROMPT_LOGIN'
 
 export const PAUSED = 'PAUSED'
 
@@ -269,6 +270,24 @@ export const logout = () => (dispatch) => {
 		localStorage.pw = "";
 	} catch(e){ console.error(e) }
 	dispatch(logoutAction())
+}
+
+export const loginPrompt = () => ({
+	type: PROMPT_LOGIN
+})
+
+export const promptLogin = (Core, artifact, file, piwik, NotificationSystem, onSuccess, onError) => (dispatch, getState) => {
+	dispatch(loginPrompt());
+
+	var succeeded = false;
+	let checkLogin = setInterval(() => {
+		let state = getState();
+		if (state.User.isLoggedIn && !succeeded){
+			onSuccess(Core, artifact, file, piwik, NotificationSystem);
+			succeeded = true;
+			checkLogin = undefined;
+		}
+	}, 1000)
 }
 
 export const playlistNext = restrictions => (dispatch, getState) => {

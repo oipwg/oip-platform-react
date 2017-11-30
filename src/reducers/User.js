@@ -4,6 +4,7 @@ export const User = (state = {
 	isFetching: false,
 	loginFailure: false,
 	isLoggedIn: false,
+	modalPrompt: false,
 	publisher: {}
 }, action) => {
 	switch (action.type){
@@ -25,6 +26,7 @@ export const User = (state = {
 				isFetching: false,
 				loginFailure: false,
 				isLoggedIn: true,
+				modalPrompt: false,
 				publisher: action.publisher
 			}
 		case actions.LOGOUT:
@@ -34,6 +36,11 @@ export const User = (state = {
 				loginFailure: false,
 				isLoggedIn: false,
 				publisher: {}
+			}
+		case actions.PROMPT_LOGIN:
+			return {
+				...state,
+				modalPrompt: true
 			}
 		default:
 			return state

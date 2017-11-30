@@ -40,6 +40,8 @@ import DMCAForm from './components/DMCAForm.js';
 
 import SearchPage from './components/SearchPage.js';
 
+import LoginPrompt from './components/LoginPrompt.js'
+
 const piwik = PiwikReactRouter({
 	url: 'piwik.alexandria.io',
 	siteId: 1
@@ -92,6 +94,7 @@ class App extends Component {
 						Core={Core}
 						store={this.props.store}
 					/>
+					<LoginPrompt Core={Core} store={this.props.store} />
 					<NotificationSystem ref="NotificationSystem" />
 
 					{/* Include all components that need to be rendered in the main container content */}

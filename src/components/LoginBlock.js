@@ -91,7 +91,7 @@ class LoginBlock extends Component {
 	}
 	render() {
 		return (
-			<div>
+			<div style={{width: "100%"}}>
 				<h2>Please Login</h2>
 				<hr className="colorgraph" />
 				<div className="form-group">
@@ -117,10 +117,10 @@ class LoginBlock extends Component {
 				<ButtonCheckbox onClick={this.updateRememberMe} toggleState={this.state.rememberMe} text={"Remember Me"} />
 				<hr className="colorgraph" />
 				<div className="row">
-					<div className="col-xs-3 col-sm-3 col-md-3 order-2 order-sm-1">
-						<Link to="/register"><button className="btn btn-lg btn-outline-secondary btn-block">Register</button></Link>
+					<div className="col-12 col-sm-5 col-md-5 order-2 order-sm-1">
+						<button className="btn btn-lg btn-outline-secondary btn-block" onClick={this.props.onRegisterClick}>Register</button>
 					</div>
-					<div className="col-xs-9 col-sm-9 col-md-9 order-1 order-sm-2">
+					<div className="col-12 col-sm-7 col-md-7 order-1 order-sm-2">
 						<button id="signin" className="btn btn-lg btn-success btn-block" onClick={this.login}>{this.state.User.isFetching ?  "loading..." : "Login"}</button>
 					</div>
 				</div>
