@@ -15,6 +15,7 @@ class Navbar extends Component {
 		super(props);
 
 		this.toggle = this.toggle.bind(this);
+		this.toggle2 = this.toggle2.bind(this);
 		this.searchForArtifacts = this.searchForArtifacts.bind(this);
 		this.updateTextInput = this.updateTextInput.bind(this);
 		this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -23,6 +24,7 @@ class Navbar extends Component {
 
 		this.state = {
 			dropdownOpen: false,
+			dropdown2Open: false,
 			navDropdownOpen: false,
 			User: {},
 			Wallet: {
@@ -64,6 +66,11 @@ class Navbar extends Component {
 			dropdownOpen: !this.state.dropdownOpen
 		});
 	}
+	toggle2() {
+		this.setState({
+			dropdown2Open: !this.state.dropdown2Open
+		});
+	}
 	searchForArtifacts(){
 		this.setState({search: true});
 		let _this = this;
@@ -81,12 +88,12 @@ class Navbar extends Component {
 		}
 	}
 	logout(){
+		console.log("LOGOUT");
 		try {
-			localStorage.username = "";
-			localStorage.pw = "";
-
-			this.props.store.dispatch(logout());
-		} catch(e){}
+			this.props.store.dispatch(logout("test"));
+		} catch(e){
+			console.error(e);
+		}
 	}
 	onNavbarToggleClick(){
 		this.setState({
@@ -154,14 +161,14 @@ class Navbar extends Component {
 						</div>
 						<div className="login-profile-btn">
 							<Link to="/user/upload/"><button className="btn btn-sm btn-warning-light-bg btn-outline-warning"><span className="icon icon-upload-to-cloud"></span> Upload</button></Link>
-							{this.state.User.isLoggedIn ? <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="btn-group">
+							{this.state.User.isLoggedIn ? <ButtonDropdown isOpen={this.state.dropdown2Open} toggle={this.toggle2} className="btn-group">
 								<DropdownToggle className="btn btn-outline-white" style={{color: "#fff", padding: "0px 3px", marginLeft: "10px"}}>
 									<div>
 										{/* <img className="rounded-circle" src="/assets/img/nasa.jpg" style={{width:"30px",height:"30px"}} alt="" /> */}
 										<span style={{padding: "0px 5px"}}>{this.state.User.publisher.name}</span>
 									</div>
 								</DropdownToggle>
-								<DropdownMenu style={this.state.dropdownOpen ? {display: "block"} : {}}>
+								<DropdownMenu style={this.state.dropdown2Open ? {display: "block"} : {}}>
 									{/*<Link to="/user/artifacts/"><DropdownItem><span className="icon icon-classic-computer"></span> My Artifacts</DropdownItem></Link>
 									<Link to="/user/analytics/"><DropdownItem><span className="icon icon-line-graph"></span> Analytics <span className="badge badge-info">beta</span></DropdownItem></Link>*/}
 									<Link to="/user/upload/"><DropdownItem><span className="icon icon-upload-to-cloud"></span> Upload</DropdownItem></Link>

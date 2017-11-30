@@ -259,9 +259,17 @@ export const loginFailure = () => ({
 	type: LOGIN_FAILURE
 })
 
-export const logout = () => ({
+export const logoutAction = () => ({
 	type: LOGOUT
 })
+
+export const logout = () => (dispatch) => {
+	try {
+		localStorage.username = "";
+		localStorage.pw = "";
+	} catch(e){ console.error(e) }
+	dispatch(logoutAction())
+}
 
 export const playlistNext = restrictions => (dispatch, getState) => {
 	let FilePlaylist = getState().FilePlaylist;
