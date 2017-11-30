@@ -1196,7 +1196,7 @@ td.unpin {
 @media (min-width: 576px){
   .modal-dialog {
     max-width: 500px;
-    margin: 25vh auto;
+    margin: 10vh auto;
   }
 }
 
