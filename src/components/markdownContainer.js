@@ -58,7 +58,7 @@ class MarkdownContainer extends Component {
 	}
 	getMarkdown(){
 		if (this.state.ActiveFile && this.state.CurrentArtifact && this.state.ActiveFile.info && this.state.CurrentArtifact.artifact){
-			let markdownURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.state.ActiveFile.info));
+			let markdownURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.CurrentArtifact.artifact), this.state.ActiveFile.info));
 			
 			let _this = this;
 

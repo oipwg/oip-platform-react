@@ -19,7 +19,7 @@ class ContentCard extends Component {
 		let txid = this.props.Core.Artifact.getTXID(this.props.artifact);
 		let paid = this.props.Core.Artifact.paid(this.props.artifact);
 		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.props.artifact));
-		let thumbnailHash = this.props.Core.util.buildIPFSShortURL(this.props.artifact, this.props.Core.Artifact.getThumbnail(this.props.artifact));
+		let thumbnailHash = this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.props.artifact), this.props.Core.Artifact.getThumbnail(this.props.artifact));
 		
 		let duration = this.props.Core.Artifact.getDuration(this.props.artifact);
 

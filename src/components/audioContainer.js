@@ -169,8 +169,8 @@ class AudioContainer extends Component {
 				this.nextSong();
 
 			if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
-				ipfsHash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
-				songURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact, this.state.ActiveFile.info));
+				ipfsHash = this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.CurrentArtifact.artifact), this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
+				songURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.CurrentArtifact.artifact), this.state.ActiveFile.info));
 				artist = this.props.Core.Artifact.getArtist(this.state.CurrentArtifact.artifact);
 			}
 		}

@@ -11,7 +11,7 @@ class PublisherCard extends Component {
 		if (thumbnail){
 			if (this.props.Core){
 				this.updateSrc = true;
-				let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(this.props.artifact, thumbnail);
+				let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.props.artifact), thumbnail);
 				this.props.Core.Network.getThumbnailFromIPFS(ipfsShortURL, this.updateSrcCallback)
 			}
 		}

@@ -465,7 +465,7 @@ export const buyFileFunc = (Core, artifact, file, piwik, NotificationSystem, onS
 }
 
 export const setupWalletEvents = (Core) => dispatch => {
-	Core.Events.on("wallet-bal-update", function(newState){
+	Core.Wallet.on("bal-update", function(newState){
 		dispatch(updateWalletFunc(newState));
 
 		Core.Data.getBTCPrice(function(price){

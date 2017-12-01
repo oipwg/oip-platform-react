@@ -80,7 +80,7 @@ class VideoPlayer extends Component {
 		let videoURL;
 
 		if (this.state.Artifact && this.state.ActiveFile.info){
-			videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact, this.state.ActiveFile.info));
+			videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.Artifact), this.state.ActiveFile.info));
 		} else {
 			videoURL = "";
 		}
@@ -89,7 +89,7 @@ class VideoPlayer extends Component {
 
 		if (this.state.Artifact){
 			let thumbnail = this.props.Core.Artifact.getThumbnail(this.state.Artifact);
-			thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact, thumbnail));
+			thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.Artifact), thumbnail));
 		}
 
 		let autoplay = true;
