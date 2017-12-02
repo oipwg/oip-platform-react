@@ -4,7 +4,7 @@ import {
   Link
 } from 'react-router-dom'
 
-import { login } from '../actions';
+import { register } from '../actions';
 
 import validator from 'validator';
 
@@ -103,7 +103,7 @@ class RegisterBlock extends Component {
 
 		// If we are ready, go ahead and start the registration process.
 
-		this.props.store.dispatch(login(this.props.Core, this.state.email, this.state.password));
+		this.props.store.dispatch(register(this.props.Core, this.state.username, this.state.email, this.state.password, this.props.onRegister, this.props.onRegisterError));
 
 		try {
 			localStorage.setItem("username", this.state.email);

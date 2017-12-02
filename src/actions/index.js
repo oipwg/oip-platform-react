@@ -52,6 +52,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const LOGOUT = 'LOGOUT'
 export const PROMPT_LOGIN = 'PROMPT_LOGIN'
+export const REGISTER_START = 'REGISTER_START'
+export const REGISTER_ERROR = 'REGISTER_ERROR'
 
 export const PAUSED = 'PAUSED'
 
@@ -276,6 +278,10 @@ export const loginPrompt = () => ({
 	type: PROMPT_LOGIN
 })
 
+export const registerStarting = () => ({
+	type: REGISTER_START
+})
+
 export const promptLogin = (Core, artifact, file, piwik, NotificationSystem, onSuccess, onError) => (dispatch, getState) => {
 	dispatch(loginPrompt());
 
@@ -494,7 +500,23 @@ export const login = (Core, identifier, password) => dispatch => {
 	})
 }
 
+export const register = (Core, username, email, password, onSuccess, onError) => dispatch => {
+	dispatch(registerStarting());
 
+	Core.User.Register(email, password, function(identifier){
+		Core.Wallet.tryFaucet(function(txid){
+			Core.Publisher.Register(username, function(txid){
+				onSuccess();
+			}, function(error){
+				onError(error);
+			})
+		}, function(error){
+			onError(error);
+		})
+	}, function(error){
+		onError(error);
+	})
+}
 
 
 

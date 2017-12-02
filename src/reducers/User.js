@@ -5,6 +5,8 @@ export const User = (state = {
 	loginFailure: false,
 	isLoggedIn: false,
 	modalPrompt: false,
+	registerStart: false,
+	registerError: false,
 	publisher: {}
 }, action) => {
 	switch (action.type){
@@ -27,6 +29,8 @@ export const User = (state = {
 				loginFailure: false,
 				isLoggedIn: true,
 				modalPrompt: false,
+				registerStart: false,
+				registerError: false,
 				publisher: action.publisher
 			}
 		case actions.LOGOUT:
@@ -41,6 +45,18 @@ export const User = (state = {
 			return {
 				...state,
 				modalPrompt: true
+			}
+		case actions.REGISTER_START:
+			return {
+				...state,
+				registerStart: true,
+				registerError: false
+			}
+		case actions.REGISTER_ERROR:
+			return {
+				...state,
+				registerStart: false,
+				registerError: true
 			}
 		default:
 			return state
