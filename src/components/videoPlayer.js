@@ -26,7 +26,7 @@ class VideoPlayer extends Component {
 		});
 	}
 	shouldComponentUpdate(nextProps, nextState){
-		if (this.state.ActiveFile !== nextState.ActiveFile){
+		if (this.state.ActiveFile.info != nextState.ActiveFile.info || (!this.state.ActiveFile.info.hasPaid && nextState.ActiveFile.hasPaid)){
 			return true;
 		}
 
@@ -48,11 +48,21 @@ class VideoPlayer extends Component {
 
 			let updateVideoPlayer = this.updateVideoPlayer;
 
+			let shouldUpdate = false;
+
+			
+			if (this.state.ActiveFile.info != activeFile.info)
+				shouldUpdate = true;
+
+			if (!this.state.ActiveFile.hasPaid && activeFile.hasPaid)
+				shouldUpdate = true;
+
 			this.setState({
 				Artifact: currentArtifact,
 				ActiveFile: activeFile
 			}, function(){
-				updateVideoPlayer()
+				if (shouldUpdate)
+					updateVideoPlayer()
 			});
 		}
 	}
@@ -94,8 +104,9 @@ class VideoPlayer extends Component {
 
 		let autoplay = true;
 
-		if (this.state.isPaid && !this.state.hasPaid)
+		if (this.state.ActiveFile.isPaid && (!this.state.ActiveFile.hasPaid && !this.state.ActiveFile.isOwned)){
 			autoplay = false;
+		}
 
 		if (thumbnailURL){
 			options.poster = thumbnailURL;
@@ -116,7 +127,7 @@ class VideoPlayer extends Component {
 		if (this.state.Artifact && this.state.ActiveFile){
 			if (this.player){
 				try {
-					this.player.reset();
+					//this.player.reset();
 				} catch(e){}
 
 				let options = this.getPlayerOptions();
