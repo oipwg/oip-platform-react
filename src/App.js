@@ -13,7 +13,7 @@ import PiwikReactRouter from 'piwik-react-router';
 
 import NotificationSystem from 'react-notification-system';
 
-import Core from 'alexandria-core';
+import Core from 'oip-js';
 
 import { setupWalletEvents, login } from './actions';
 

@@ -4,7 +4,7 @@
   "author": "Skylar Ostler <me@skylarostler.com>",
   "version": "1.0.0",
   "dependencies": {
-    "alexandria-core": "git+https://github.com/dloa/alexandria-core.git",
+    "oip-js": "git+https://github.com/oipwg/oip-js.git",
     "autoprefixer": "7.1.1",
     "axios": "^0.16.2",
     "babel-core": "6.25.0",
