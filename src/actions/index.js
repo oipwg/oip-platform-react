@@ -52,6 +52,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const LOGOUT = 'LOGOUT'
 export const PROMPT_LOGIN = 'PROMPT_LOGIN'
+export const PROMPT_SWAP = 'PROMPT_SWAP'
+export const PROMPT_BUY = 'PROMPT_BUY'
 export const REGISTER_START = 'REGISTER_START'
 export const REGISTER_ERROR = 'REGISTER_ERROR'
 
@@ -278,23 +280,17 @@ export const loginPrompt = () => ({
 	type: PROMPT_LOGIN
 })
 
+export const buyPrompt = () => ({
+	type: PROMPT_BUY
+})
+
+export const swapPrompt = () => ({
+	type: PROMPT_SWAP
+})
+
 export const registerStarting = () => ({
 	type: REGISTER_START
 })
-
-export const promptLogin = (Core, artifact, file, piwik, NotificationSystem, onSuccess, onError) => (dispatch, getState) => {
-	dispatch(loginPrompt());
-
-	var succeeded = false;
-	let checkLogin = setInterval(() => {
-		let state = getState();
-		if (state.User.isLoggedIn && !succeeded){
-			onSuccess(Core, artifact, file, piwik, NotificationSystem);
-			succeeded = true;
-			checkLogin = undefined;
-		}
-	}, 1000)
-}
 
 export const playlistNext = restrictions => (dispatch, getState) => {
 	let FilePlaylist = getState().FilePlaylist;
@@ -351,6 +347,133 @@ export const setCurrentFile = (Core, artifact, file) => dispatch => {
 	}
 }
 
+export const promptLogin = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+	dispatch(loginPrompt());
+
+	var succeeded = false;
+	let checkLogin = setInterval(() => {
+		let state = getState();
+		if (state.User.isLoggedIn && !succeeded){
+			onSuccess(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError);
+			succeeded = true;
+			clearInterval(checkLogin);
+		}
+	}, 1000)
+}
+
+export const promptCurrencyBuy = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+	dispatch(buyPrompt());
+
+	var succeeded = false;
+	let checkBuy = setInterval(() => {
+		let state = getState();
+		for (var coin in paymentAddresses){
+			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
+				onSuccess(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError);
+				succeeded = true;
+				clearInterval(checkBuy);
+			}
+		}
+	}, 1000)
+}
+
+export const promptSwap = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+	dispatch(swapPrompt());
+
+	var succeeded = false;
+	let checkSwap = setInterval(() => {
+		let state = getState();
+		for (var coin in paymentAddresses){
+			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
+				onSuccess(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError);
+				succeeded = true;
+				clearInterval(checkSwap);
+			}
+		}
+	}, 1000)
+}
+
+export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+	let state = getState();
+
+	if (state.User.isLoggedIn){
+		var canProcessWith = [];
+		for (var acceptedCoin in paymentAddresses){
+			if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][fiat] && state.Wallet[acceptedCoin][fiat] >= fiat_amount){
+				var obj = {};
+				obj[acceptedCoin] = paymentAddresses[acceptedCoin];
+				canProcessWith.push(obj)
+			}
+		}
+		if (canProcessWith.length > 0){
+			dispatch(sendPayment(Core, NotificationSystem, canProcessWith, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+		} else {
+			let swapFrom = [];
+			let swapTo = [];
+
+			for (var coin in state.Wallet) {
+				if (state.Wallet[coin][fiat] >= fiat_amount){
+					swapFrom.push(coin);
+				}
+			}
+
+			for (var coin in paymentAddresses) {
+				swapTo.push(coin)
+			}
+
+			if (swapFrom.length > 0){
+				dispatch(promptSwap(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+			} else {
+				dispatch(promptCurrencyBuy(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError))
+			}
+		}
+	} else {
+		dispatch(promptLogin(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+	}
+}
+
+export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+	let state = getState();
+	let canProcessWith = {};
+
+	for (var acceptedCoin in paymentAddresses){
+		if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][fiat] && state.Wallet[acceptedCoin][fiat] >= fiat_amount){
+			canProcessWith[acceptedCoin] = paymentAddresses[acceptedCoin];
+		}
+	}
+
+	// Default send with lowest fee, this is just hardcoded for now...
+	let coin = "";
+
+	if (canProcessWith.florincoin){
+		coin = "florincoin"
+	} else if (canProcessWith.litecoin){
+		coin = "litecoin"
+	} else if (canProcessWith.bitcoin){
+		coin = "bitcoin"
+	} else if (canProcessWith === {}){
+		onError("not enough balance in selected wallets...");
+		return;
+	}
+	
+	Core.Wallet.sendPayment(coin, fiat, fiat_amount, canProcessWith[coin], (success) => {	
+		if (NotificationSystem){
+			let titleStr = "Payment";
+			let msgStr = "Paid";
+
+			if (type && type === "tip"){
+				titleStr = "Tip";
+				msgStr = "Tipped";
+			}
+			NotificationSystem.addNotification({title: titleStr + " Success!", message: msgStr + " $" + Core.util.createPriceString(fiat_amount) + " to " + paymentName, level: "success", position: "tr", autoDismiss: 2})
+		}	
+
+		onSuccess(success)
+	}, (error) => {
+		onError(error);
+	})
+}
+
 export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
 	let txid = Core.Artifact.getTXID(artifact);
 	let publisher = Core.Artifact.getPublisher(artifact);
@@ -361,15 +484,7 @@ export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem
 	let id = txid;
 
 	if (paymentAmount > 0){
-		Core.Wallet.sendPayment("USD", paymentAmount, paymentAddresses, (success) => {	
-			if (NotificationSystem){
-				NotificationSystem.addNotification({title: "Tip Success!", message: "Tipped $" + Core.util.createPriceString(paymentAmount) + " to " + publisherName, level: "success", position: "tr", autoDismiss: 2})
-			}	
-
-			onSuccess(success)
-		}, (error) => {
-			onError(error);
-		})
+		dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, "usd", paymentAmount, "tip", publisherName, onSuccess, onError));
 	}
 
 	try {
