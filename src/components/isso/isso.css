@@ -57,6 +57,9 @@
 .isso-comment > div.text-wrapper {
     display: block;
 }
+.isso-comment > div.text-wrapper > div.text {
+    white-space: pre-wrap;
+}
 .isso-comment .isso-follow-up {
     padding-left: calc(7% + 20px);
 }

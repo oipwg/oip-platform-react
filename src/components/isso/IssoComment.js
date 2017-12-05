@@ -19,7 +19,9 @@ class IssoComment extends Component {
 						</a>
 						<span className="note"></span>
 					</div>
-					<div className="text" dangerouslySetInnerHTML={{__html: this.props.comment.text}} />
+					<div className="text">
+						{this.props.comment.text}
+					</div>
 					<div className="isso-comment-footer">
 						<span className="votes">{this.props.comment.likes === 0 ? "" : this.props.comment.likes}</span>
 						<a href="#asdf" className="upvote">

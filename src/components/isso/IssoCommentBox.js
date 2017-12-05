@@ -41,6 +41,7 @@ class IssoCommentBox extends Component {
 		let _this = this;
 		if (this.state.comment !== ""){
 			this.props.store.dispatch(addComment(this.props.Core, this.props.url, this.state.comment));
+			this.textarea.value = "";
 		}
 	}
 	render() {
