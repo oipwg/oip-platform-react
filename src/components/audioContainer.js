@@ -12,6 +12,8 @@ import { PlaybackControls, ProgressBar, TimeMarker, MuteToggleButton, VolumeSlid
 
 import '../assets/css/audio-player.css';
 
+import '../assets/css/alexandria-audio-player.css';
+
 class AudioContainer extends Component {
 	constructor(props) {
 		super(props);
@@ -230,6 +232,17 @@ class AudioContainer extends Component {
 								'.ProgressBar-elapsed {',
 								'    background-color: ' + this.state.mainColor + ' !important;',
 								'    border: 1px solid ' + this.state.bgColor + ' !important;',
+								'}',
+								'.Icon-shape {',
+								'    fill: ' + this.state.mainColor + ' !important;',
+								'}',
+								'.VolumeSlider {',
+								'    background: ' + this.state.bgColor + ' !important;',
+								'    border: 1px solid ' + this.state.mainColor + ' !important;',
+								'}',
+								'.VolumeSlider-value {',
+								'    background: ' + this.state.mainColor + ' !important;',
+								'    border: 1px solid ' + this.state.bgColor + ' !important;',
 								'}'
 							].join('\n')
 						}} />
@@ -248,11 +261,12 @@ class AudioContainer extends Component {
 							/>
 						</span>
 					</div>
-					<div style={{width: "40px", height: "100%", borderLeft: "1px solid " + this.state.mainColor, display: "flex"}}>
+					<div style={{width: "45px", height: "auto", margin: "auto", borderLeft: "1px solid " + this.state.mainColor, display: "flex"}}>
 						<MuteToggleButton
 							isMuted={this.state.VolumeControls.isMuted}
 							onMuteChange={this.onMuteChange}
 							isEnabled={this.state.ActiveFile.isPlayable}
+							onHover
 						/>
 						<VolumeSlider
 							volume={this.state.VolumeControls.volume}

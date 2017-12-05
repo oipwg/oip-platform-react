@@ -1,0 +1,18 @@
+.PlayButton, .PauseButton, .PrevButton, .NextButton, .SoundOnButton, .SoundOffButton {
+	margin: 0px 0px;
+	width: 100%;
+	border-radius: 0%;
+	padding: 8px;
+	background: rgba(0,0,0,0);
+	border: none;
+	outline: none;
+}
+.VolumeSlider {
+	left: -20px;
+}
+.VolumeSlider-handle {
+	background: rgba(0,0,0,0);
+}
+.VolumeSlider-intent {
+	background: rgba(0, 0, 0, 0.2) !important;
+}
