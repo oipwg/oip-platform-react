@@ -23,12 +23,8 @@ class PaymentButtons extends Component {
 		let payForFile = function(Core, artifact, file, piwik, NotificationSystem){
 			_this.props.store.dispatch(payForFileFunc(Core, artifact, file, piwik, NotificationSystem, onSuccess, onError));
 		};
-		if (this.props.store.getState().User.isLoggedIn){
-			payForFile(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem);
-		} else {
-			this.props.store.dispatch(promptLogin(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem, payForFile, onError));
-		}
-			
+	
+		payForFile(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem);		
 	}
 	buyFile(){
 		if (this.props.File.owned){

@@ -347,21 +347,29 @@ export const setCurrentFile = (Core, artifact, file) => dispatch => {
 	}
 }
 
-export const promptLogin = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+export const promptLogin = (onSuccess, onError) => (dispatch, getState) => {
 	dispatch(loginPrompt());
 
 	var succeeded = false;
 	let checkLogin = setInterval(() => {
 		let state = getState();
 		if (state.User.isLoggedIn && !succeeded){
-			onSuccess(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError);
-			succeeded = true;
-			clearInterval(checkLogin);
+			let shouldContinue = true;
+			for (var coin in state.Wallet) {
+				if (state.Wallet[coin].balance > 0 && (!state.Wallet[coin].usd || state.Wallet[coin].usd === 0)){
+					shouldContinue = false;
+				}
+			}
+			if (shouldContinue){
+				succeeded = true;
+				clearInterval(checkLogin);
+				onSuccess();
+			}
 		}
 	}, 1000)
 }
 
-export const promptCurrencyBuy = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+export const promptCurrencyBuy = (coin, fiat, fiat_amount, paymentAddresses, onSuccess, onError) => (dispatch, getState) => {
 	dispatch(buyPrompt());
 
 	var succeeded = false;
@@ -369,15 +377,15 @@ export const promptCurrencyBuy = (Core, NotificationSystem, paymentAddresses, fi
 		let state = getState();
 		for (var coin in paymentAddresses){
 			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
-				onSuccess(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError);
 				succeeded = true;
 				clearInterval(checkBuy);
+				onSuccess();
 			}
 		}
 	}, 1000)
 }
 
-export const promptSwap = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+export const promptSwap = (coin, fiat, fiat_amount, paymentAddresses, onSuccess, onError) => (dispatch, getState) => {
 	dispatch(swapPrompt());
 
 	var succeeded = false;
@@ -385,28 +393,36 @@ export const promptSwap = (Core, NotificationSystem, paymentAddresses, fiat, fia
 		let state = getState();
 		for (var coin in paymentAddresses){
 			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
-				onSuccess(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError);
 				succeeded = true;
 				clearInterval(checkSwap);
+				onSuccess();
 			}
 		}
 	}, 1000)
 }
 
 export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+	console.log(paymentAddresses);
+	let retryTryPaymentSend = function(){
+		dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+	}
+	let processTransaction = function(addrList){
+		dispatch(sendPayment(Core, NotificationSystem, addrList, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+	}
+
 	let state = getState();
 
 	if (state.User.isLoggedIn){
-		var canProcessWith = [];
+		var canProcessWith = {};
 		for (var acceptedCoin in paymentAddresses){
+			console.log(fiat_amount, state.Wallet[acceptedCoin][fiat] >= fiat_amount);
 			if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][fiat] && state.Wallet[acceptedCoin][fiat] >= fiat_amount){
-				var obj = {};
-				obj[acceptedCoin] = paymentAddresses[acceptedCoin];
-				canProcessWith.push(obj)
+				canProcessWith[acceptedCoin] = paymentAddresses[acceptedCoin];
 			}
 		}
-		if (canProcessWith.length > 0){
-			dispatch(sendPayment(Core, NotificationSystem, canProcessWith, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+		if (Object.keys(canProcessWith).length > 0){
+			console.log(canProcessWith);
+			processTransaction(canProcessWith);
 		} else {
 			let swapFrom = [];
 			let swapTo = [];
@@ -422,41 +438,38 @@ export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat,
 			}
 
 			if (swapFrom.length > 0){
-				dispatch(promptSwap(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+				dispatch(promptSwap(coin, fiat, fiat_amount, paymentAddresses, retryTryPaymentSend, onError));
 			} else {
-				dispatch(promptCurrencyBuy(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError))
+				dispatch(promptCurrencyBuy(coin, fiat, fiat_amount, paymentAddresses, retryTryPaymentSend, onError))
 			}
 		}
 	} else {
-		dispatch(promptLogin(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+		dispatch(promptLogin(retryTryPaymentSend, onError));
 	}
 }
 
 export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+	console.log("sendPayment", paymentAddresses, fiat, fiat_amount, type, paymentName);
 	let state = getState();
-	let canProcessWith = {};
-
-	for (var acceptedCoin in paymentAddresses){
-		if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][fiat] && state.Wallet[acceptedCoin][fiat] >= fiat_amount){
-			canProcessWith[acceptedCoin] = paymentAddresses[acceptedCoin];
-		}
-	}
 
 	// Default send with lowest fee, this is just hardcoded for now...
 	let coin = "";
 
-	if (canProcessWith.florincoin){
+	if (paymentAddresses.florincoin){
 		coin = "florincoin"
-	} else if (canProcessWith.litecoin){
+	} else if (paymentAddresses.litecoin){
 		coin = "litecoin"
-	} else if (canProcessWith.bitcoin){
+	} else if (paymentAddresses.bitcoin){
 		coin = "bitcoin"
-	} else if (canProcessWith === {}){
+	} else if (paymentAddresses === {}){
 		onError("not enough balance in selected wallets...");
 		return;
 	}
+
+	if (!paymentAddresses[coin])
+		return;
 	
-	Core.Wallet.sendPayment(coin, fiat, fiat_amount, canProcessWith[coin], (success) => {	
+	Core.Wallet.sendPayment(coin, fiat, fiat_amount, paymentAddresses[coin], (success) => {	
 		if (NotificationSystem){
 			let titleStr = "Payment";
 			let msgStr = "Paid";
@@ -512,10 +525,7 @@ export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, 
 				// If file has cost
 				dispatch(paymentInProgress(id));
 
-				Core.Wallet.sendPayment("USD", paymentAmount, paymentAddresses, (success) => {	
-					if (NotificationSystem){
-						NotificationSystem.addNotification({title: "Payment Success!", message: "Paid $" + Core.util.createPriceString(paymentAmount) + " to " + publisherName, level: "success", position: "tr", autoDismiss: 2})
-					}	
+				dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
 					dispatch(payForFile(id));
 					dispatch(setActiveFileInPlaylist(id));
 
@@ -523,7 +533,7 @@ export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, 
 				}, (error) => {
 					dispatch(paymentError(id));
 					onError(error);
-				})
+				}));
 			} else {
 				// If it is free
 				dispatch(payForFile(id));
@@ -557,19 +567,15 @@ export const buyFileFunc = (Core, artifact, file, piwik, NotificationSystem, onS
 			if (file.sugBuy && paymentAmount > 0){
 				// If file has cost
 				dispatch(buyInProgress(txid));
-
-				Core.Wallet.sendPayment("USD", paymentAmount, paymentAddresses, (success) => {	
-					if (NotificationSystem){
-						NotificationSystem.addNotification({title: "Payment Success!", message: "Paid $" + Core.util.createPriceString(paymentAmount) + " to " + publisherName, level: "success", position: "tr", autoDismiss: 2})
-					}	
+				dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {	
 					dispatch(setActiveFileInPlaylist(txid + "|" + filei));
 					dispatch(buyFile(txid + "|" + filei));
 
-					onSuccess(success)
+					onSuccess(success);
 				}, (error) => {
 					dispatch(buyError(txid));
 					onError(error);
-				})
+				}));
 			} else {
 				// If it is free
 				dispatch(setActiveFileInPlaylist(txid + "|" + filei));
@@ -590,15 +596,15 @@ export const setupWalletEvents = (Core) => dispatch => {
 		dispatch(updateWalletFunc(newState));
 
 		Core.Data.getBTCPrice(function(price){
-			dispatch(updateUSD('bitcoin', (price * newState.bitcoin.balance).toFixed(4)))
+			dispatch(updateUSD('bitcoin', parseFloat(price * newState.bitcoin.balance)))
 		})
 
 		Core.Data.getFLOPrice(function(price){
-			dispatch(updateUSD('florincoin', (price * newState.florincoin.balance).toFixed(4)))
+			dispatch(updateUSD('florincoin', parseFloat(price * newState.florincoin.balance)))
 		})
 
 		Core.Data.getLTCPrice(function(price){
-			dispatch(updateUSD('litecoin', (price * newState.litecoin.balance).toFixed(4)))
+			dispatch(updateUSD('litecoin', parseFloat(price * newState.litecoin.balance)))
 		})
 	})
 }
