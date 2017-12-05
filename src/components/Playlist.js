@@ -118,7 +118,7 @@ class Playlist extends Component {
 							<img className="rounded" src={""} width="40px" height="40px" alt="" />
 							<div style={{padding: "0px 10px", width:"235px"}}>
 								<div style={file.info.fname === _this.state.ActiveFile.info.fname ? {color: _this.props.bgColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"} : {color: _this.props.mainColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{Artist}</div>
-								<div style={file.info.fname === _this.state.ActiveFile.info.fname ? {color: _this.props.bgColor, fontSize:"12px", width: "235px", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "235px", display: "flex"}}>
+								<div style={file.info.fname === _this.state.ActiveFile.info.fname ? {color: _this.props.bgColor, fontSize:"12px", width: "100%", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "100%", display: "flex"}}>
 									<div style={{width: "200px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {file.info.dname ? file.info.dname : file.info.fname}</div>
 									<div style={{width: "30px", textAlign: "right"}}>
 										{file.info.duration > 0 ? <FormattedTime numSeconds={file.info.duration} /> : ""}
