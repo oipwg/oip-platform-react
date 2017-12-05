@@ -3,7 +3,8 @@ import * as actions from '../actions'
 const curArtifact = (state = {
 	isFetching: false,
 	didInvalidate: false,
-	artifact: {}
+	artifact: {},
+	comments: []
 }, action) => {
 	switch (action.type) {
 		case actions.INVALIDATE_CURRENT_ARTIFACT:
@@ -22,7 +23,8 @@ const curArtifact = (state = {
 			return {
 				...state,
 				isFetching: true,
-				didInvalidate: false
+				didInvalidate: false,
+				comments: []
 			}
 		case actions.RECIEVE_CURRENT_ARTIFACT:
 			return {
@@ -30,7 +32,18 @@ const curArtifact = (state = {
 				isFetching: false,
 				didInvalidate: false,
 				artifact: action.artifact,
-				lastUpdated: action.receivedAt
+				lastUpdated: action.receivedAt,
+				comments: []
+			}
+		case actions.SET_COMMENTS:
+			return {
+				...state,
+				comments: action.comments
+			}
+		case actions.ADD_COMMENT:
+			return {
+				...state,
+				comments: [...state.comments, action.comment]
 			}
 		default:
 			return state
@@ -43,6 +56,8 @@ export const CurrentArtifact = (state = { }, action) => {
 		case actions.REQUEST_CURRENT_ARTIFACT_ERROR:
 		case actions.REQUEST_CURRENT_ARTIFACT:
 		case actions.RECIEVE_CURRENT_ARTIFACT:
+		case actions.ADD_COMMENT:
+		case actions.SET_COMMENTS:
 			return curArtifact(state, action)
 		default:
 			return state

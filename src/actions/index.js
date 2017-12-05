@@ -14,6 +14,8 @@ export const REQUEST_CURRENT_ARTIFACT = 'REQUEST_CURRENT_ARTIFACT'
 export const RECIEVE_CURRENT_ARTIFACT = 'RECIEVE_CURRENT_ARTIFACT'
 export const INVALIDATE_CURRENT_ARTIFACT = 'INVALIDATE_CURRENT_ARTIFACT'
 export const REQUEST_CURRENT_ARTIFACT_ERROR = 'REQUEST_CURRENT_ARTIFACT_ERROR'
+export const SET_COMMENTS = 'SET_COMMENTS'
+export const ADD_COMMENT = 'ADD_COMMENT'
 
 export const SET_ACTIVE_FILE_IN_PLAYLIST = 'SET_ACTIVE_FILE_IN_PLAYLIST'
 export const SET_FILE_PLAYLIST = 'SET_FILE_PLAYLIST'
@@ -126,6 +128,16 @@ export const invalidateCurrentArtifact = () => ({
 export const requestCurrentArtifactError = error => ({
 	type: REQUEST_CURRENT_ARTIFACT_ERROR,
 	error
+})
+
+export const setComments = (comments) => ({
+	type: SET_COMMENTS,
+	comments
+})
+
+export const addSingleComment = (comment) => ({
+	type: ADD_COMMENT,
+	comment
 })
 
 export const addFileToPlaylist = (file, uid, Core) => ({
@@ -338,10 +350,28 @@ export const selectCurrentArtifact = (Core, txid, piwik) => dispatch => {
 
 		dispatch(setActiveFileInPlaylist(txid + "|" + 0));
 
+		dispatch(getComments(Core, txid));
+
 		piwik.push(['trackContentImpression', publisher, txid, ""])
 	}, function(err){
 		dispatch(requestCurrentArtifactError(err));
 	});
+}
+
+export const getComments = (Core, url) => dispatch => {
+	Core.Comments.get(url, function(res){
+		if (res && res.data && res.data.replies){
+			dispatch(setComments(res.data.replies))
+		}
+	})
+}
+
+export const addComment = (Core, url, comment) => dispatch => {
+	Core.Comments.add(url, comment, function(res){
+		if (res && res.data && res.data){
+			dispatch(addSingleComment(res.data))
+		}
+	})
 }
 
 export const setCurrentFile = (Core, artifact, file) => dispatch => {

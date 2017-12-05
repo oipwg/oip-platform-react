@@ -77,8 +77,8 @@ class ContentPage extends Component {
 							<br />
 							{(this.state.CurrentArtifact && artifactTXID !== "") ? 
 								<div>
-									<IssoCommentBox Core={this.props.Core} url={artifactTXID} />
-									<IssoComments Core={this.props.Core} url={artifactTXID} />
+									<IssoCommentBox Core={this.props.Core} store={this.props.store} url={artifactTXID} />
+									<IssoComments Core={this.props.Core} store={this.props.store} url={artifactTXID} />
 								</div>
 								: ""}
 						</div>

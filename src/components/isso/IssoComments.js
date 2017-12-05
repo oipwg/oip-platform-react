@@ -12,29 +12,37 @@ class IssoComments extends Component {
 			comments: []
 		}
 
-		this.getComments = this.getComments.bind(this);
-	}
-	componentDidMount(){
-		this.getComments(this.props);
-	}
-	componentWillReceiveProps(nextProps){
-		if (this.props.url !== nextProps.url){
-			this.getComments(nextProps);
-		}
-	}
-	getComments(props){
+		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+
 		let _this = this;
-		props.Core.Comments.get(props.url, function(res){
-			if (res && res.data && res.data.replies)
-				_this.setState({comments: res.data.replies})
-			else
-				_this.setState({comments: []})
+
+		this.unsubscribe = this.props.store.subscribe(() => {
+			_this.stateDidUpdate();
+		});
+	}
+	stateDidUpdate(){
+		let newState = this.props.store.getState();
+
+		let comments = newState.CurrentArtifact.comments;
+
+		if (!comments)
+			comments = []
+
+		comments.sort((a,b) => {
+			if (a.created > b.created){
+				return -1;
+			} else {
+				return 1;
+			}
 		})
 
-		// props.Core.Comments.add(props.url, "Hi Oliver!", function(res){
-		// 	if (res && res.data && res.data.replies)
-		// 		_this.setState({comments: res.data.replies})
-		// })
+		this.setState({comments: comments});
+	}
+	componentDidMount(){
+		this.stateDidUpdate();
+	}
+	componentWillUnmount(){
+		this.unsubscribe();
 	}
 	render() {
 		return (
