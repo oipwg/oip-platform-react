@@ -63,6 +63,10 @@ class ContentPage extends Component {
 	render() {
 		let _this = this;
 
+		let artifactTXID = "";
+		if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact)
+			artifactTXID = this.state.CurrentArtifact.artifact.txid;
+
 		return (
 			<div className="content-page">
 				<ContentContainer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
@@ -71,10 +75,10 @@ class ContentPage extends Component {
 						<div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
 							<ContentInfo Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
 							<br />
-							{this.props.DisplayedArtifact ? 
+							{(this.state.CurrentArtifact && artifactTXID !== "") ? 
 								<div>
-									<IssoCommentBox Core={this.props.Core} url={this.props.DisplayedArtifact.txid} />
-									<IssoComments Core={this.props.Core} url={this.props.DisplayedArtifact.txid} />
+									<IssoCommentBox Core={this.props.Core} url={artifactTXID} />
+									<IssoComments Core={this.props.Core} url={artifactTXID} />
 								</div>
 								: ""}
 						</div>

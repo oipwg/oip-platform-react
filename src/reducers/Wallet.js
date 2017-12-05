@@ -28,7 +28,7 @@ const Coin = (state = {
 
 export const Wallet = (state = {
 	swapPrompt: false,
-	buyPrompt: true
+	buyPrompt: false
 }, action) => {
 	switch (action.type) {
 		case actions.UPDATE_BALANCE:

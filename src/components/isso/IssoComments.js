@@ -31,10 +31,10 @@ class IssoComments extends Component {
 				_this.setState({comments: []})
 		})
 
-		// props.Core.Comments.add(props.url, "Hi Oliver!", function(res){
-		// 	if (res && res.data && res.data.replies)
-		// 		_this.setState({comments: res.data.replies})
-		// })
+		props.Core.Comments.add(props.url, "Hi Oliver!", function(res){
+			if (res && res.data && res.data.replies)
+				_this.setState({comments: res.data.replies})
+		})
 	}
 	render() {
 		return (
