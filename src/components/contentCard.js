@@ -29,7 +29,7 @@ class ContentCard extends Component {
 			cardClasses = "col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 no-link-styling";
 
 		return (
-			<Link to={"/" + txid.substring(0,6) } onClick={function(){window.scrollTo(0, 0)}} className={cardClasses}>
+			<Link to={"/" + txid.substring(0,6) } onClick={function(){window.scrollTo(0, 0)}} className={cardClasses} title={title} >
 				<div className="card">
 					<div style={{marginBottom:"-26px", marginTop: "-1px", zIndex: "1"}}>
 						<button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px", border: "none", backgroundColor: "rgba(0,0,0,0.5)"}}>
