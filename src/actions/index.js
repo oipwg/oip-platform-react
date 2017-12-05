@@ -369,9 +369,6 @@ export const getComments = (Core, url) => dispatch => {
 export const addComment = (Core, url, comment) => dispatch => {
 	Core.Comments.add(url, comment, function(res){
 		dispatch(getComments(Core, url));
-		// if (res && res.data && res.data){
-		// 	dispatch(addSingleComment(res.data))
-		// }
 	})
 }
 
