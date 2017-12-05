@@ -222,11 +222,15 @@ export const updateWallet = walletState => ({
 
 export const updateWalletFunc = walletState => (dispatch, getState) => {
 	let newState = walletState;
-	let prevState = getState();
+	let prevState = getState().Wallet;
 
 	for (var coin in prevState){
+		// console.log(coin, )
 		if (newState[coin] && newState[coin].usd === 0 && prevState[coin] && prevState[coin].usd && prevState[coin].usd > 0){
 			newState[coin].usd = prevState[coin].usd
+		}
+		if (typeof prevState[coin] !== "object"){
+			newState[coin] = prevState[coin];
 		}
 	}
 
@@ -276,16 +280,19 @@ export const logout = () => (dispatch) => {
 	dispatch(logoutAction())
 }
 
-export const loginPrompt = () => ({
-	type: PROMPT_LOGIN
+export const loginPrompt = (prompt) => ({
+	type: PROMPT_LOGIN,
+	prompt
 })
 
-export const buyPrompt = () => ({
-	type: PROMPT_BUY
+export const buyPrompt = (prompt) => ({
+	type: PROMPT_BUY,
+	prompt
 })
 
-export const swapPrompt = () => ({
-	type: PROMPT_SWAP
+export const swapPrompt = (prompt) => ({
+	type: PROMPT_SWAP,
+	prompt
 })
 
 export const registerStarting = () => ({
@@ -348,7 +355,7 @@ export const setCurrentFile = (Core, artifact, file) => dispatch => {
 }
 
 export const promptLogin = (onSuccess, onError) => (dispatch, getState) => {
-	dispatch(loginPrompt());
+	dispatch(loginPrompt(true));
 
 	var succeeded = false;
 	let checkLogin = setInterval(() => {
@@ -370,7 +377,7 @@ export const promptLogin = (onSuccess, onError) => (dispatch, getState) => {
 }
 
 export const promptCurrencyBuy = (coin, fiat, fiat_amount, paymentAddresses, onSuccess, onError) => (dispatch, getState) => {
-	dispatch(buyPrompt());
+	dispatch(buyPrompt(true));
 
 	var succeeded = false;
 	let checkBuy = setInterval(() => {
@@ -379,6 +386,7 @@ export const promptCurrencyBuy = (coin, fiat, fiat_amount, paymentAddresses, onS
 			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
 				succeeded = true;
 				clearInterval(checkBuy);
+				dispatch(buyPrompt(false));
 				onSuccess();
 			}
 		}
@@ -386,7 +394,7 @@ export const promptCurrencyBuy = (coin, fiat, fiat_amount, paymentAddresses, onS
 }
 
 export const promptSwap = (coin, fiat, fiat_amount, paymentAddresses, onSuccess, onError) => (dispatch, getState) => {
-	dispatch(swapPrompt());
+	dispatch(swapPrompt(true));
 
 	var succeeded = false;
 	let checkSwap = setInterval(() => {
@@ -395,6 +403,7 @@ export const promptSwap = (coin, fiat, fiat_amount, paymentAddresses, onSuccess,
 			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
 				succeeded = true;
 				clearInterval(checkSwap);
+				dispatch(swapPrompt(false));
 				onSuccess();
 			}
 		}

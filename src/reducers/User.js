@@ -4,7 +4,7 @@ export const User = (state = {
 	isFetching: false,
 	loginFailure: false,
 	isLoggedIn: false,
-	modalPrompt: false,
+	loginModalPrompt: false,
 	registerStart: false,
 	registerError: false,
 	publisher: {}
@@ -28,7 +28,7 @@ export const User = (state = {
 				isFetching: false,
 				loginFailure: false,
 				isLoggedIn: true,
-				modalPrompt: false,
+				loginModalPrompt: false,
 				registerStart: false,
 				registerError: false,
 				publisher: action.publisher
@@ -44,7 +44,7 @@ export const User = (state = {
 		case actions.PROMPT_LOGIN:
 			return {
 				...state,
-				modalPrompt: true
+				loginModalPrompt: true
 			}
 		case actions.REGISTER_START:
 			return {

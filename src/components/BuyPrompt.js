@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import LoginBlock from './LoginBlock.js';
-import RegisterBlock from './RegisterBlock.js';
+import BuyCryptoBlock from './BuyCryptoBlock.js';
 
-class LoginPrompt extends Component {
+class BuyPrompt extends Component {
 	constructor(props){
 		super(props);
 
@@ -27,7 +26,7 @@ class LoginPrompt extends Component {
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
 
-		let showPrompt = newState.User.loginModalPrompt;
+		let showPrompt = newState.Wallet.buyPrompt;
 		this.setState({showPrompt: showPrompt});
 	}
 	componentDidMount(){
@@ -49,8 +48,7 @@ class LoginPrompt extends Component {
 				{this.state.showPrompt ? 
 				<Modal isOpen={this.state.showPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
-						{this.state.type === "login" ? <LoginBlock Core={this.props.Core} store={this.props.store} onRegisterClick={this.toggleLoginRegister} /> : "" }
-						{this.state.type === "register" ? <RegisterBlock Core={this.props.Core} store={this.props.store} onLoginClick={this.toggleLoginRegister} /> : "" }
+						<BuyCryptoBlock Core={this.props.Core} store={this.props.store} onRegisterClick={this.toggleLoginRegister} />
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.togglePrompt}>Cancel</Button>
@@ -63,4 +61,4 @@ class LoginPrompt extends Component {
 	}
 }
 
-export default LoginPrompt;
+export default BuyPrompt;

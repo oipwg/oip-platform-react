@@ -5,7 +5,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import LoginBlock from './LoginBlock.js';
 import RegisterBlock from './RegisterBlock.js';
 
-class LoginPrompt extends Component {
+class SwapPrompt extends Component {
 	constructor(props){
 		super(props);
 
@@ -27,7 +27,7 @@ class LoginPrompt extends Component {
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
 
-		let showPrompt = newState.User.loginModalPrompt;
+		let showPrompt = newState.Wallet.swapPrompt;
 		this.setState({showPrompt: showPrompt});
 	}
 	componentDidMount(){
@@ -63,4 +63,4 @@ class LoginPrompt extends Component {
 	}
 }
 
-export default LoginPrompt;
+export default SwapPrompt;

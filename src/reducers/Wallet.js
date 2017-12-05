@@ -26,7 +26,10 @@ const Coin = (state = {
 	}
 }
 
-export const Wallet = (state = { }, action) => {
+export const Wallet = (state = {
+	swapPrompt: false,
+	buyPrompt: true
+}, action) => {
 	switch (action.type) {
 		case actions.UPDATE_BALANCE:
 		case actions.UPDATE_ADDRESSES:
@@ -35,6 +38,17 @@ export const Wallet = (state = { }, action) => {
 				...state,
 				[action.coin]: Coin(state[action.coin], action)
 			}
+		case actions.PROMPT_SWAP:
+			return {
+				...state,
+				swapPrompt: action.prompt
+			}
+		case actions.PROMPT_BUY:
+			return {
+				...state,
+				swapPrompt: action.prompt
+			}
+		case actions.PROMPT_BUY:
 		case actions.UPDATE_WALLET:
 			return action.walletState
 		default:
