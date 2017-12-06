@@ -181,7 +181,7 @@ class AudioContainer extends Component {
 		}
 		
 		return (
-			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh"}}>
+			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio
 					ref={audio => this.audio = audio}
 					autoPlay={!paywall}
@@ -192,7 +192,7 @@ class AudioContainer extends Component {
 				</audio>
 				<div className="container" style={{height: "90%"}}>
 					<div className="row" style={{height: "90%"}}>
-						<div className={playlistLen > 1 ? "col-6" : "col-12"} style={{margin: "auto"}}>
+						<div className={playlistLen > 1 ? "col-md-6 col-sm-12" : "col-12"} style={{margin: "auto"}}>
 							<h3 className="text-center" style={{color: this.state.mainColor}}>
 								{name} - {artist}
 							</h3>
@@ -201,7 +201,7 @@ class AudioContainer extends Component {
 							</div>
 						</div>
 						{playlistLen > 1 ? 
-						<div className="col-6" style={{margin: "auto"}}>
+						<div className="col-md-6 col-sm-12" style={{margin: "20px auto"}}>
 							<PlaylistScroller Core={this.props.Core} store={this.props.store} mainColor={this.state.mainColor} bgColor={this.state.bgColor} currentArtifactOnly={true} filter={{type: "Audio"}} />
 						</div> : ""}
 					</div>

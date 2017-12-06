@@ -8,12 +8,20 @@ class AudioVisualizer extends Component {
 		this.stopVisualizationLoop = this.stopVisualizationLoop.bind(this);
 		this.visualizationLoop = this.visualizationLoop.bind(this);
 	}
+	shouldComponentUpdate(nextProps, nextState){
+		if ((!this.props.audio && nextProps.audio) || this.props.audio.src !== nextProps.audio.src){
+			return true;
+		}
+
+		return false
+	}
 	componentDidMount(){
 		if (this.props.audio){
 			this.startVisualizationLoop();
 		}
 	}
 	componentDidUpdate(){
+		console.log("Updated");
 		if (this.props.audio){
 			this.startVisualizationLoop();
 		}
@@ -42,29 +50,41 @@ class AudioVisualizer extends Component {
 		this.analyser.connect(this.audioContext.destination);
 
 		if( !this._frameId ) {
-			this._frameId = window.requestAnimationFrame( this.visualizationLoop );
+			let fps = 30;
+			let one_second = 1000;
+
+			this.fpsInterval = one_second / fps;
+			this.then = Date.now();
+			this.startTime = this.then;
+			this.visualizationLoop();
 		}
 	}
 	stopVisualizationLoop(){
 		window.cancelAnimationFrame( this._frameId );
 	}
 	visualizationLoop(){
-		if (this.props.audio.crossOrigin !== "anonymous")
-			this.props.audio.crossOrigin = "anonymous";
+		this._frameId = window.requestAnimationFrame( this.visualizationLoop );
 
-		let freqData = new Uint8Array(this.analyser.frequencyBinCount)
-		this.analyser.getByteFrequencyData(freqData)
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-		this.ctx.fillStyle = this.props.mainColor;
-		let bars = 200;
-		for (var i = 0; i < bars; i++) {
-			let bar_x = i * 3;
-			let bar_width = 3;
-			let bar_height = -(freqData[i] / 2);
-			this.ctx.fillRect(bar_x, this.canvas.height, bar_width, bar_height)
+		let now = Date.now();
+		let elapsed = now - this.then;
+
+		if (elapsed > this.fpsInterval){
+			this.then = now - (elapsed % this.fpsInterval);
+
+			// Drawing Code
+
+			let freqData = new Uint8Array(this.analyser.frequencyBinCount)
+			this.analyser.getByteFrequencyData(freqData)
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+			this.ctx.fillStyle = this.props.mainColor;
+			let bars = 200;
+			for (var i = 0; i < bars; i++) {
+				let bar_x = i * 3;
+				let bar_width = 3;
+				let bar_height = -(freqData[i] / 2);
+				this.ctx.fillRect(bar_x, this.canvas.height, bar_width, bar_height)
+			}
 		}
-		
-		this._frameId = window.requestAnimationFrame( this.visualizationLoop )
 	}
 	render() {
 		return (

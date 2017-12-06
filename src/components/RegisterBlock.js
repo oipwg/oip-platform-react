@@ -42,7 +42,8 @@ class RegisterBlock extends Component {
 			username: "",
 			email: "",
 			password: "",
-			passwordConfirm: ""
+			passwordConfirm: "",
+			recaptcha: ""
 		}
 
 		this.register = this.register.bind(this);
@@ -51,6 +52,7 @@ class RegisterBlock extends Component {
 		this.updatePassword = this.updatePassword.bind(this);
 		this.updatePasswordConfirm = this.updatePasswordConfirm.bind(this);
 		this.updateVerify = this.updateVerify.bind(this);
+		this.recaptcha = this.recaptcha.bind(this);
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
 		let _this = this;
@@ -96,6 +98,9 @@ class RegisterBlock extends Component {
 			abort = true;
 			this.setState({verifyState: STATUS.INVALID});
 		}
+		if (this.state.recaptcha === ""){
+			abort = true;
+		}
 
 		// If we are not ready, abort.
 		if (abort)
@@ -103,7 +108,11 @@ class RegisterBlock extends Component {
 
 		// If we are ready, go ahead and start the registration process.
 
-		this.props.store.dispatch(register(this.props.Core, this.state.username, this.state.email, this.state.password, this.props.onRegister, this.props.onRegisterError));
+		this.props.store.dispatch(register(this.props.Core, this.state.username, this.state.email, this.state.password, this.state.recaptcha, (success) => {
+			console.log(success);
+		}, (error) => {
+			console.log(error)
+		}));
 
 		try {
 			localStorage.setItem("username", this.state.email);
@@ -188,6 +197,9 @@ class RegisterBlock extends Component {
 	}
 	updateVerify(){
 		this.setState({verify: !this.state.verify });
+	}
+	recaptcha(response){
+		this.setState({recaptcha: response})
 	}
 	render() {
 		return (
@@ -283,7 +295,7 @@ class RegisterBlock extends Component {
 				</div>
 				<div className="row">
 					<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}>
-						<Recaptcha sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" />
+						<Recaptcha sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" verifyCallback={this.recaptcha} />
 					</div>
 				</div>
 				<br />

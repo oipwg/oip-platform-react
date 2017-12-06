@@ -4,6 +4,14 @@ import Identicons from 'identicons-react';
 import moment from 'moment'
 
 class IssoComment extends Component {
+	constructor(props){
+		super(props);
+
+		this.downvote = this.downvote.bind(this);
+	}
+	downvote(){
+
+	}
 	render() {
 		return (
 			<div className={this.props.comment.likes === 0 ? "isso-comment isso-no-votes" : "isso-comment"}>
@@ -28,7 +36,7 @@ class IssoComment extends Component {
 							<span className="icon icon-chevron-up"></span>
 						</a>
 						<span className="spacer">|</span>
-						<a href="#asdf" className="downvote" data-ytta-id="-">
+						<a onClick={this.downvote} className="downvote">
 							<span className="icon icon-chevron-down"></span>
 						</a>
 						<a href="#asdf" className="reply" data-ytta-id="-">Reply</a>

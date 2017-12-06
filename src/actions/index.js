@@ -633,15 +633,18 @@ export const setupWalletEvents = (Core) => dispatch => {
 		dispatch(updateWalletFunc(newState));
 
 		Core.Data.getBTCPrice(function(price){
-			dispatch(updateUSD('bitcoin', parseFloat(price * newState.bitcoin.balance)))
+			if (newState.bitcoin && newState.bitcoin.balance && newState.bitcoin.balance > 0)
+				dispatch(updateUSD('bitcoin', parseFloat(price * newState.bitcoin.balance)))
 		})
 
 		Core.Data.getFLOPrice(function(price){
-			dispatch(updateUSD('florincoin', parseFloat(price * newState.florincoin.balance)))
+			if (newState.florincoin && newState.florincoin.balance && newState.florincoin.balance > 0)
+				dispatch(updateUSD('florincoin', parseFloat(price * newState.florincoin.balance)))
 		})
 
 		Core.Data.getLTCPrice(function(price){
-			dispatch(updateUSD('litecoin', parseFloat(price * newState.litecoin.balance)))
+			if (newState.litecoin && newState.litecoin.balance && newState.litecoin.balance > 0)
+				dispatch(updateUSD('litecoin', parseFloat(price * newState.litecoin.balance)))
 		})
 	})
 }
@@ -658,11 +661,24 @@ export const login = (Core, identifier, password) => dispatch => {
 	})
 }
 
-export const register = (Core, username, email, password, onSuccess, onError) => dispatch => {
+export const register = (Core, username, email, password, recaptcha, onSuccess, onError) => dispatch => {
 	dispatch(registerStarting());
 
-	Core.User.Register(email, password, function(identifier){
-		Core.Wallet.tryFaucet(function(txid){
+	Core.User.Register(email, password, function(wallet){
+		console.log(wallet);
+
+		let floAddress = "";
+		try {
+			floAddress = wallet.keys[0].coins.florincoin.address;
+		} catch (e) {
+			console.log(e);
+		}
+
+		if (floAddress === "")
+			return;
+
+		Core.Wallet.tryFaucet(floAddress, recaptcha, function(res, txinfo){
+			console.log(res, txinfo)
 			Core.Publisher.Register(username, function(txid){
 				onSuccess();
 			}, function(error){

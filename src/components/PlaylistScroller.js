@@ -8,6 +8,10 @@ class PlaylistScroller extends Component {
 			<div>
 				<style dangerouslySetInnerHTML={{
 					__html: [
+						'.scrollbar {',
+						'    border: 1px solid ' + this.props.mainColor + ';',
+						'	 border-radius: 0.25rem;',
+						'}',
 						'.scrollbar::-webkit-scrollbar {',
 						'    background-color: ' + this.props.mainColor + ';',
 						'}',
@@ -19,7 +23,7 @@ class PlaylistScroller extends Component {
 						'}'
 					].join('\n')
 				}} />
-				<div className="scrollbar" style={{height: "32vh", overflowY: "scroll", margin: "auto", maxWidth: "500px"}}>
+				<div className="scrollbar" style={{height: "32vh", overflowY: "scroll", margin: "auto", marginTop: "10px", marginBottom: "100px", maxWidth: "450px"}}>
 					{/*<h3 style={{color: this.props.mainColor, textAlign: "center"}}></h3>*/}
 					<Playlist 
 						Core={this.props.Core} 
