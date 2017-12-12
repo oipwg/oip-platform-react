@@ -113,9 +113,9 @@ class CoinCard extends Component {
 		let presymbol = "";
 		let logo, paperWalletBG, trade, buy, faucet;
 
-		if (this.props.info && this.props.info.addresses && this.props.info.addresses[0] && this.props.info.addresses[0].address){
-			mainAddress = this.props.info.addresses[0].address;
-			privKey = this.props.info.addresses[0].privKey;
+		if (this.props.info){
+			mainAddress = this.props.info.mainAddress;
+			privKey = this.props.info.mainPrivate;
 			walletData = this.props.info;
 			balance = parseFloat(this.props.info.balance.toFixed(4));
 		} 
