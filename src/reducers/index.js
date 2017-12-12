@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux'
-
 import { ArtifactLists } from './ArtifactLists.js';
 import { CurrentArtifact } from './CurrentArtifact.js';
 import { FilePlaylist } from './FilePlaylist.js';
@@ -16,7 +14,7 @@ const pageType = (state = 'ARTIFACT_LIST', action) => {
 	}
 }
 
-const rootReducer = combineReducers({
+const rootReducer = {
 	User,
 	Wallet,
 	pageType,
@@ -24,6 +22,6 @@ const rootReducer = combineReducers({
 	CurrentArtifact,
 	FilePlaylist,
 	VolumeControls
-})
+}
 
 export default rootReducer

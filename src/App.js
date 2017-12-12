@@ -7,7 +7,10 @@ import {
 	Switch
 } from 'react-router-dom'
 import { CSSTransitionGroup } from 'react-transition-group'
+
 import createBrowserHistory from 'history/createBrowserHistory'
+import { ConnectedRouter, push } from 'react-router-redux'
+import { Provider } from 'react-redux'
 
 import PiwikReactRouter from 'piwik-react-router';
 
@@ -78,59 +81,60 @@ class App extends Component {
 	}
 	render() {
 		const supportsHistory = 'pushState' in window.history;
+
+		piwik.connectToHistory(history);
+
 		return (
-			<Router 
-				forceRefresh={!supportsHistory} 
-				basename={PUBLIC_URL + "/"}
-				history={piwik.connectToHistory(history)}
-			>
-				<div>
-					{/* This is to add transitions to the app, fade, etc. */}
-					<CSSTransitionGroup
-						transitionName="fade"
-						transitionEnterTimeout={300}
-						transitionLeaveTimeout={300}
-					/>
-
-					{/* Include all components that need to be rendered above the main container content */}
-					<Navbar 
-						Core={Core}
-						store={this.props.store}
-					/>
-					<LoginPrompt Core={Core} store={this.props.store} />
-					<DailyFaucetPrompt Core={Core} store={this.props.store} />
-					<SwapPrompt Core={Core} store={this.props.store} />
-					<BuyPrompt Core={Core} store={this.props.store} />
-					<NotificationSystem ref="NotificationSystem" />
-
-					{/* Include all components that need to be rendered in the main container content */}
-					<Switch>
-						<Route exact path="/" render={props => <Homepage Core={Core} store={this.props.store} {...props} />} />
-
-						<Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
-						<Route path="/register" component={RegisterPage} />
-						<Route path="/dmca" component={DMCAForm} />
-
-						<Route path="/pub/:id" render={props => <PublisherPage suggestedContent={this.state.SupportedArtifacts.slice(0,10)} Core={Core} {...props} />} />
-
-						<Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
-
-						<Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
-						<Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
-						<Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
-						
-						<Route path="/:id" render={props => 
-							<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />} 
+			<Provider store={this.props.store}>
+				<ConnectedRouter history={history}>
+					<div>
+						{/* This is to add transitions to the app, fade, etc. */}
+						<CSSTransitionGroup
+							transitionName="fade"
+							transitionEnterTimeout={300}
+							transitionLeaveTimeout={300}
 						/>
 
-						{/* The switch will render the last Route if no others are found (aka 404 page.) */}
-						<Route component={NoMatch} />
-					</Switch>
+						{/* Include all components that need to be rendered above the main container content */}
+						<Navbar 
+							Core={Core}
+							store={this.props.store}
+						/>
+						<LoginPrompt Core={Core} store={this.props.store} />
+						<DailyFaucetPrompt Core={Core} store={this.props.store} />
+						<SwapPrompt Core={Core} store={this.props.store} />
+						<BuyPrompt Core={Core} store={this.props.store} />
+						<NotificationSystem ref="NotificationSystem" />
 
-					{/* Include all components that need to be rendered after the main container content */}
-					<MiniMusicPlayer display="false" />
-				</div>
-			</Router>
+						{/* Include all components that need to be rendered in the main container content */}
+						<Switch>
+							<Route exact path="/" render={props => <Homepage Core={Core} store={this.props.store} {...props} />} />
+
+							<Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
+							<Route path="/register" component={RegisterPage} />
+							<Route path="/dmca" component={DMCAForm} />
+
+							<Route path="/pub/:id" render={props => <PublisherPage suggestedContent={this.state.SupportedArtifacts.slice(0,10)} Core={Core} {...props} />} />
+
+							<Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
+
+							<Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
+							<Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
+							<Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
+							
+							<Route path="/:id" render={props => 
+								<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />} 
+							/>
+
+							{/* The switch will render the last Route if no others are found (aka 404 page.) */}
+							<Route component={NoMatch} />
+						</Switch>
+
+						{/* Include all components that need to be rendered after the main container content */}
+						<MiniMusicPlayer display="false" />
+					</div>
+				</ConnectedRouter>
+			</Provider>
 		);
 	}
 }

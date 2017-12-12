@@ -4,7 +4,12 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import reducer from './reducers'
+
+import createHistory from 'history/createBrowserHistory'
+
+import { routerReducer, routerMiddleware } from 'react-router-redux'
+import { combineReducers } from 'redux'
+import reducers from './reducers'
 
 import './index.css';
 import App from './App';
@@ -14,10 +19,14 @@ const logger = createLogger({
     collapsed: true
 });
 
-let middleware = [ logger, thunk ];
+const history = createHistory()
+
+let middleware = [ logger, thunk, routerMiddleware(history) ];
+
+reducers.router = routerReducer;
 
 let store = createStore(
-  reducer,
+  combineReducers(reducers),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({name: "Alexandria React"}),
   applyMiddleware(...middleware)
 )
