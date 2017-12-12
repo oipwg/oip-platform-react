@@ -8,6 +8,7 @@ import BuyButton from './BuyButton.js';
 import QRButton from './QRButton.js';
 import SendButton from './SendButton.js';
 import SwapButton from './SwapButton.js';
+import FaucetButton from './SwapButton.js';
 
 import PaperWallet from './PaperWallet.js';
 
@@ -30,7 +31,8 @@ export const COIN_CONFIGS = {
 		paperWalletBG: btc_bg,
 		buy: "coinbase",
 		sell: false,
-		trade: false
+		trade: false,
+		faucet: false
 	},
 	florincoin: {
 		order: 2,
@@ -41,7 +43,8 @@ export const COIN_CONFIGS = {
 		paperWalletBG: flo_bg,
 		buy: false,
 		sell: false,
-		trade: true
+		trade: true,
+		faucet: true
 	},
 	litecoin: {
 		order: 3,
@@ -52,7 +55,8 @@ export const COIN_CONFIGS = {
 		paperWalletBG: ltc_bg,
 		buy: "coinbase",
 		sell: false,
-		trade: false
+		trade: false,
+		faucet: false
 	}
 }
 
@@ -107,7 +111,7 @@ class CoinCard extends Component {
 		let name = "";
 		let symbol = "";
 		let presymbol = "";
-		let logo, paperWalletBG, trade, buy;
+		let logo, paperWalletBG, trade, buy, faucet;
 
 		if (this.props.info && this.props.info.addresses && this.props.info.addresses[0] && this.props.info.addresses[0].address){
 			mainAddress = this.props.info.addresses[0].address;
@@ -128,6 +132,7 @@ class CoinCard extends Component {
 			paperWalletBG = COIN_CONFIGS[this.props.coin].paperWalletBG;
 			trade = COIN_CONFIGS[this.props.coin].trade;
 			buy = COIN_CONFIGS[this.props.coin].buy;
+			faucet = COIN_CONFIGS[this.props.coin].faucet;
 		}
 
 		let currency;
@@ -158,6 +163,7 @@ class CoinCard extends Component {
 						<h4 className="card-subtitle mb-2 text-muted"><span style={{color: "#28a745"}}>${this.props.info.usd ? parseFloat(this.props.info.usd).toFixed(2) : "0.00"}</span></h4>
 						<div style={{height: "10px"}}></div>
 						{/*<button className="btn btn-sm btn-outline-secondary" style={{padding: "2px 5px"}}><span className="icon icon-cog"></span> Manage</button>*/}
+						{faucet ? <FaucetButton coinName={name} address={mainAddress} currency={currency} /> : ""}
 						{buy === "coinbase" ? <BuyButton coinName={name} address={mainAddress} currency={currency} /> : ""}
 						{trade ? <SwapButton coinName={name} address={mainAddress} /> : ""}
 						<QRButton coinName={name} address={mainAddress} />
