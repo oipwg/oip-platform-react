@@ -56,6 +56,7 @@ export const LOGOUT = 'LOGOUT'
 export const PROMPT_LOGIN = 'PROMPT_LOGIN'
 export const PROMPT_SWAP = 'PROMPT_SWAP'
 export const PROMPT_BUY = 'PROMPT_BUY'
+export const PROMPT_DAILY_FAUCET = 'PROMPT_DAILY_FAUCET'
 export const REGISTER_START = 'REGISTER_START'
 export const REGISTER_ERROR = 'REGISTER_ERROR'
 
@@ -691,6 +692,30 @@ export const register = (Core, username, email, password, recaptcha, onSuccess, 
 		onError(error);
 	})
 }
+
+export const tryDailyFaucet = (Core, recaptcha, onSuccess, onError) => dispatch => {
+	Core.Wallet.tryDailyFaucet(Core.Wallet.getMainAddress('florincoin'), recaptcha, function(success){
+		console.log(success);
+		onSuccess();
+	}, function(error){
+		console.error(error);
+		onError(error);
+	})
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

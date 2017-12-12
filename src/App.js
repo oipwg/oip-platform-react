@@ -43,6 +43,7 @@ import SearchPage from './components/SearchPage.js';
 import LoginPrompt from './components/LoginPrompt.js'
 import SwapPrompt from './components/SwapPrompt.js'
 import BuyPrompt from './components/BuyPrompt.js'
+import DailyFaucetPrompt from './components/DailyFaucetPrompt.js';
 
 const piwik = PiwikReactRouter({
 	url: 'piwik.alexandria.io',
@@ -97,6 +98,7 @@ class App extends Component {
 						store={this.props.store}
 					/>
 					<LoginPrompt Core={Core} store={this.props.store} />
+					<DailyFaucetPrompt Core={Core} store={this.props.store} />
 					<SwapPrompt Core={Core} store={this.props.store} />
 					<BuyPrompt Core={Core} store={this.props.store} />
 					<NotificationSystem ref="NotificationSystem" />

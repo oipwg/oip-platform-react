@@ -4,7 +4,6 @@
   "author": "Skylar Ostler <me@skylarostler.com>",
   "version": "1.0.0",
   "dependencies": {
-    "oip-js": "git+https://github.com/oipwg/oip-js.git",
     "autoprefixer": "7.1.1",
     "axios": "^0.16.2",
     "babel-core": "6.25.0",
@@ -38,6 +37,7 @@
     "livephotoskit": "^1.5.1",
     "moment": "^2.18.1",
     "object-assign": "4.1.1",
+    "oip-js": "git+https://github.com/oipwg/oip-js.git",
     "piwik-react-router": "^0.10.0",
     "popper.js": "^1.12.9",
     "postcss-flexbugs-fixes": "3.0.0",
@@ -45,9 +45,11 @@
     "promise": "7.1.1",
     "qrcode.react": "^0.7.2",
     "react": "^15.6.1",
+    "react-async-script": "^0.9.1",
     "react-dev-utils": "^3.0.2",
     "react-dom": "^15.6.1",
     "react-error-overlay": "^1.0.9",
+    "react-google-recaptcha": "^0.9.9",
     "react-linkify": "^0.2.1",
     "react-markdown": "^2.5.0",
     "react-notification-system": "^0.2.16",
@@ -81,8 +83,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "preins": "mv node_modules/alexandria-core/ alexandria-core/",
-    "postins": "mv alexandria-core/ node_modules/alexandria-core/"
+    "preins": "mv node_modules/oip-js/ oip-js/",
+    "postins": "mv oip-js/ node_modules/oip-js/"
   },
   "jest": {
     "collectCoverageFrom": [

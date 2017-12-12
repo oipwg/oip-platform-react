@@ -72,9 +72,11 @@ class RegisterBlock extends Component {
 	}
 	componentWillUnmount(){
 		this.unsubscribe();
+		this.showRecaptcha = false;
 	}
 	componentDidMount(){
 		this.stateDidUpdate();
+		this.showRecaptcha = true;
 	}
 	register(){
 		let abort = false;
@@ -295,7 +297,7 @@ class RegisterBlock extends Component {
 				</div>
 				<div className="row">
 					<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}>
-						<Recaptcha sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" verifyCallback={this.recaptcha} />
+						{this.showRecaptcha ? <Recaptcha sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" verifyCallback={this.recaptcha} /> : ""}
 					</div>
 				</div>
 				<br />

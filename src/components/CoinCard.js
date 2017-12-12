@@ -35,6 +35,7 @@ export const COIN_CONFIGS = {
 	florincoin: {
 		order: 2,
 		name: "Flo",
+		display: 1,
 		symbol: "FLO",
 		logo: flo_logo,
 		paperWalletBG: flo_bg,
@@ -45,6 +46,7 @@ export const COIN_CONFIGS = {
 	litecoin: {
 		order: 3,
 		name: "Litecoin",
+		display: 1,
 		symbol: "LTC",
 		logo: ltc_logo,
 		paperWalletBG: ltc_bg,
@@ -100,17 +102,32 @@ class CoinCard extends Component {
 		let mainAddress = "";
 		let privKey = "";
 		let walletData = {};
+		let balance = 0;
+		let order = 1;
+		let name = "";
+		let symbol = "";
+		let presymbol = "";
+		let logo, paperWalletBG, trade, buy;
 
 		if (this.props.info && this.props.info.addresses && this.props.info.addresses[0] && this.props.info.addresses[0].address){
 			mainAddress = this.props.info.addresses[0].address;
 			privKey = this.props.info.addresses[0].privKey;
 			walletData = this.props.info;
-		}
+			balance = parseFloat(this.props.info.balance.toFixed(4));
+		} 
 
-		let balance = parseFloat(this.props.info.balance.toFixed(4));
-
-		if (COIN_CONFIGS[this.props.coin].display){
-			balance = parseFloat(parseFloat(this.props.info.balance * COIN_CONFIGS[this.props.coin].display).toFixed(4));
+		if (this.props.coin && COIN_CONFIGS && COIN_CONFIGS[this.props.coin] && COIN_CONFIGS[this.props.coin].display){
+			order = COIN_CONFIGS[this.props.coin].order;
+			try {
+				balance = parseFloat(parseFloat(this.props.info.balance * COIN_CONFIGS[this.props.coin].display).toFixed(4));
+			} catch (e) {}
+			name = COIN_CONFIGS[this.props.coin].name;
+			logo = COIN_CONFIGS[this.props.coin].logo;
+			presymbol = COIN_CONFIGS[this.props.coin].presymbol;
+			symbol = COIN_CONFIGS[this.props.coin].symbol;
+			paperWalletBG = COIN_CONFIGS[this.props.coin].paperWalletBG;
+			trade = COIN_CONFIGS[this.props.coin].trade;
+			buy = COIN_CONFIGS[this.props.coin].buy;
 		}
 
 		let currency;
@@ -121,7 +138,7 @@ class CoinCard extends Component {
 			currency = 'btc';
 
 		return (
-			<div className={"col-12 col-sm-6 col-md-4 order-" + COIN_CONFIGS[this.props.coin].order}>
+			<div className={"col-12 col-sm-6 col-md-4 order-" + order}>
 				<div className="card">
 					<ButtonDropdown isOpen={this.state.settingsDropdown} toggle={this.toggleSettingsMenu}>
 						<DropdownToggle className="btn btn-sm btn-none-grey" style={{width: "34px", right: "0px", position: "absolute"}}>
@@ -136,17 +153,17 @@ class CoinCard extends Component {
 						</DropdownMenu>
 					</ButtonDropdown>
 					<div className="card-body text-center">
-						<h3 className="card-title"><img src={COIN_CONFIGS[this.props.coin].logo} style={{height: "50px"}} alt={COIN_CONFIGS[this.props.coin].name} /> {COIN_CONFIGS[this.props.coin].name}</h3>
-						<h6 className="card-subtitle mb-2 text-muted" style={{marginBottom: "12px !important"}}>{balance} {COIN_CONFIGS[this.props.coin].presymbol} ({COIN_CONFIGS[this.props.coin].symbol})</h6>
+						<h3 className="card-title"><img src={logo} style={{height: "50px"}} alt={name} /> {name}</h3>
+						<h6 className="card-subtitle mb-2 text-muted" style={{marginBottom: "12px !important"}}>{balance} {presymbol} ({symbol})</h6>
 						<h4 className="card-subtitle mb-2 text-muted"><span style={{color: "#28a745"}}>${this.props.info.usd ? parseFloat(this.props.info.usd).toFixed(2) : "0.00"}</span></h4>
 						<div style={{height: "10px"}}></div>
 						{/*<button className="btn btn-sm btn-outline-secondary" style={{padding: "2px 5px"}}><span className="icon icon-cog"></span> Manage</button>*/}
-						{COIN_CONFIGS[this.props.coin].buy === "coinbase" ? <BuyButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} currency={currency} /> : ""}
-						{COIN_CONFIGS[this.props.coin].trade ? <SwapButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} /> : ""}
-						<QRButton coinName={COIN_CONFIGS[this.props.coin].name} address={mainAddress} />
-						<SendButton coinName={COIN_CONFIGS[this.props.coin].name} />
+						{buy === "coinbase" ? <BuyButton coinName={name} address={mainAddress} currency={currency} /> : ""}
+						{trade ? <SwapButton coinName={name} address={mainAddress} /> : ""}
+						<QRButton coinName={name} address={mainAddress} />
+						<SendButton coinName={name} />
 					</div>
-					{this.state.printPaperWallet ? <PaperWallet print={true} logo={COIN_CONFIGS[this.props.coin].logo} bg={COIN_CONFIGS[this.props.coin].paperWalletBG} public={mainAddress} private={privKey} onPrint={this.paperWalletPrinted} /> : ""}
+					{this.state.printPaperWallet ? <PaperWallet print={true} logo={logo} bg={paperWalletBG} public={mainAddress} private={privKey} onPrint={this.paperWalletPrinted} /> : ""}
 				</div>
 			</div>
 		);
