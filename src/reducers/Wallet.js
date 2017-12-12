@@ -28,7 +28,8 @@ const Coin = (state = {
 
 export const Wallet = (state = {
 	swapPrompt: false,
-	buyPrompt: false
+	buyPrompt: false,
+	dailyFaucetPrompt: true
 }, action) => {
 	switch (action.type) {
 		case actions.UPDATE_BALANCE:
@@ -47,6 +48,11 @@ export const Wallet = (state = {
 			return {
 				...state,
 				swapPrompt: action.prompt
+			}
+		case actions.PROMPT_DAILY_FAUCET:
+			return {
+				...state,
+				dailyFaucetPrompt: action.prompt
 			}
 		case actions.PROMPT_BUY:
 		case actions.UPDATE_WALLET:
