@@ -7,7 +7,11 @@ class SendButton extends Component {
 		super(props);
 
 		this.state = {
-			sendModal: false
+			sendModal: false,
+			address: "",
+			amount: "",
+			addressStatus: "NO_INPUT",
+			amountStatus: "NO_INPUT"
 		}
 
 		this.toggleSendModal = this.toggleSendModal.bind(this)
@@ -20,6 +24,27 @@ class SendButton extends Component {
 	}
 	toggleSendModal() {
 		this.setState({sendModal: !this.state.sendModal})
+	}
+	updateAddress(){
+		let newValue = this.address.value();
+
+		if (newValue !== ""){
+			this.setState({
+				address: newValue,
+				addressStatus: "VALID"
+			});
+		} else {
+			this.setState({
+				address: newValue,
+				addressStatus: "NO_INPUT"
+			})
+		}
+	}
+	updateAmount(){
+
+	}
+	sendFunds(){
+
 	}
 	render() {
 		return (
@@ -44,10 +69,10 @@ class SendButton extends Component {
 							<div className="row" id="walletSpendTo">
 								<div className="form-inline" style={{width: "100%"}}>
 									<div className="col-8">
-										<input type="text" style={{width: "inherit"}} className="form-control addressTo" data-original-title="" title="" />
+										<input ref={address => this.address = address} type="text" style={{width: "inherit"}} className="form-control addressTo" data-original-title="" title="" />
 									</div>
 									<div className="col-4">
-										<input type="text" style={{width: "inherit"}} className="form-control amount" data-original-title="" title="" placeholder="0.00" />
+										<input ref={amount => this.amount = amount} type="text" style={{width: "inherit"}} className="form-control amount" data-original-title="" title="" placeholder="0.00" />
 									</div>
 								</div>
 							</div>

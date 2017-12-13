@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import LoginBlock from './LoginBlock.js';
-import RegisterBlock from './RegisterBlock.js';
+import SwapBlock from './SwapBlock.js';
 
 class SwapPrompt extends Component {
 	constructor(props){
@@ -16,7 +15,7 @@ class SwapPrompt extends Component {
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.togglePrompt = this.togglePrompt.bind(this);
-		this.toggleLoginRegister = this.toggleLoginRegister.bind(this);
+		this.onSwap = this.onSwap.bind(this);
 
 		let _this = this;
 
@@ -39,8 +38,8 @@ class SwapPrompt extends Component {
 	togglePrompt(){
 		this.setState({showPrompt: !this.state.showPrompt})
 	}
-	toggleLoginRegister(){
-		this.setState({type: this.state.type === "login" ? "register" : "login"});
+	onSwap(){
+		this.setState({showPrompt: !this.state.showPrompt})
 	}
 	render() {
 
@@ -49,8 +48,7 @@ class SwapPrompt extends Component {
 				{this.state.showPrompt ? 
 				<Modal isOpen={this.state.showPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
-						{this.state.type === "login" ? <LoginBlock Core={this.props.Core} store={this.props.store} onRegisterClick={this.toggleLoginRegister} /> : "" }
-						{this.state.type === "register" ? <RegisterBlock Core={this.props.Core} store={this.props.store} onLoginClick={this.toggleLoginRegister} /> : "" }
+						<SwapBlock Core={this.props.Core} store={this.props.store} onSwap={this.onSwap} />
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.togglePrompt}>Cancel</Button>

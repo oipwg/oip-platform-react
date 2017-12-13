@@ -63,7 +63,10 @@ class DailyFaucetBlock extends Component {
 					<ReCAPTCHA sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" onChange={this.recaptcha} />
 					{this.state.recaptchaState === "NEEDS_INPUT" ? <div className="text-danger">You must complete the reCaptcha!</div> : ""}
 				</div>
-				<button className="btn btn-outline-success" onClick={this.tryDailyFaucet}>Claim $0.005 Now</button>
+				<div>
+					<button className="btn btn-outline-secondary" onClick={this.props.onFaucetCancel} style={{marginRight: "5px"}}>No Thanks</button>
+					<button className="btn btn-outline-success" onClick={this.tryDailyFaucet}>Claim $0.005 Now</button>
+				</div>
 			</div>
 		);
 	}

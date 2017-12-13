@@ -44,7 +44,7 @@ export const COIN_CONFIGS = {
 		buy: false,
 		sell: false,
 		trade: true,
-		faucet: true
+		faucet: false
 	},
 	litecoin: {
 		order: 3,

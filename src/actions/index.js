@@ -57,6 +57,7 @@ export const PROMPT_LOGIN = 'PROMPT_LOGIN'
 export const PROMPT_SWAP = 'PROMPT_SWAP'
 export const PROMPT_BUY = 'PROMPT_BUY'
 export const PROMPT_DAILY_FAUCET = 'PROMPT_DAILY_FAUCET'
+export const SET_TRY_FAUCET = 'SET_TRY_FAUCET'
 export const REGISTER_START = 'REGISTER_START'
 export const REGISTER_ERROR = 'REGISTER_ERROR'
 
@@ -308,6 +309,11 @@ export const swapPrompt = (prompt) => ({
 	prompt
 })
 
+export const faucetPrompt = (prompt) => ({
+	type: PROMPT_DAILY_FAUCET,
+	prompt
+})
+
 export const registerStarting = () => ({
 	type: REGISTER_START
 })
@@ -439,6 +445,37 @@ export const promptSwap = (coin, fiat, fiat_amount, paymentAddresses, onSuccess,
 	}, 1000)
 }
 
+export const promptTryFaucet = (Core, onSuccess, onError) => (dispatch, getState) => {
+	let intlState = getState();
+
+	var succeeded = false;
+	var heardFromCheck = false;
+	let checkFaucet = setInterval(() => {
+		let state = getState();
+		if (state && state.Wallet && state.Wallet.florincoin){
+			if (state.Wallet.tryFaucet === false && !succeeded && heardFromCheck){
+				succeeded = true;
+				clearInterval(checkFaucet);
+				onSuccess();
+			}
+		}
+	}, 200)
+
+	Core.Wallet.checkDailyFaucet(intlState.Wallet.florincoin.mainAddress, (canReceive) => {
+		if (!canReceive){
+			dispatch(faucetPrompt(true));
+			heardFromCheck = true;
+		} else {
+			dispatch(setTryFaucet(false));
+			clearInterval(checkFaucet);
+			onSuccess();
+		}
+	}, (error) => {
+		dispatch(setTryFaucet(false));
+		onError(error);
+	})
+}
+
 export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
 	console.log(paymentAddresses);
 	let retryTryPaymentSend = function(){
@@ -478,7 +515,24 @@ export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat,
 			if (swapFrom.length > 0){
 				dispatch(promptSwap(coin, fiat, fiat_amount, paymentAddresses, retryTryPaymentSend, onError));
 			} else {
-				dispatch(promptCurrencyBuy(coin, fiat, fiat_amount, paymentAddresses, retryTryPaymentSend, onError))
+				var faucetUSDValue = 0.005;
+
+				var canProcessWithIfFaucet = {};
+
+				for (var acceptedCoin in paymentAddresses){
+					if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][fiat]){
+						var currentBalance = state.Wallet[acceptedCoin][fiat];
+						if (currentBalance + faucetUSDValue >= fiat_amount){
+							canProcessWithIfFaucet[acceptedCoin] = paymentAddresses[acceptedCoin];
+						}
+					}
+				}
+
+				if (state.Wallet.tryFaucet && Object.keys(canProcessWithIfFaucet).length > 0){
+					dispatch(promptTryFaucet(Core, retryTryPaymentSend, onError))
+				} else {
+					dispatch(promptCurrencyBuy(coin, fiat, fiat_amount, paymentAddresses, retryTryPaymentSend, onError))
+				}
 			}
 		}
 	} else {
@@ -693,12 +747,19 @@ export const register = (Core, username, email, password, recaptcha, onSuccess, 
 	})
 }
 
+export const setTryFaucet = (newValue) => ({
+	type: SET_TRY_FAUCET,
+	tryFaucet: newValue
+})
+
 export const tryDailyFaucet = (Core, recaptcha, onSuccess, onError) => dispatch => {
 	Core.Wallet.tryDailyFaucet(Core.Wallet.getMainAddress('florincoin'), recaptcha, function(success){
 		console.log(success);
+		dispatch(setTryFaucet(false));
 		onSuccess();
 	}, function(error){
 		console.error(error);
+		dispatch(setTryFaucet(false));
 		onError(error);
 	})
 }
