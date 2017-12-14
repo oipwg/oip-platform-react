@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
+import moment from 'moment'
+
 import btc_logo from '../assets/img/btcflat.svg';
 import flo_logo from '../assets/img/flo.svg';
 import ltc_logo from '../assets/img/ltcflat.svg';
@@ -115,8 +117,8 @@ class TransactionTable extends Component {
 							"color": "#28a745"
 						},
 						"coin": {
-							"name": "Bitcoin",
-							"logo": btc_logo
+							"name": "Florincoin",
+							"logo": flo_logo
 						}
 					})
 				}
@@ -144,7 +146,7 @@ class TransactionTable extends Component {
 						{
 							Header: "Date",
 							accessor: "timestamp",
-							Cell: props => <span>{props.value}</span>
+							Cell: props => <span>{props.value ? moment.unix(props.value).fromNow() : ""}</span>
 						},
 						{
 							Header: "Coin",
