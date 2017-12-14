@@ -4,7 +4,7 @@ import {
   Link
 } from 'react-router-dom'
 
-class PublisherCard extends Component {
+class PublisherBlock extends Component {
 	componentDidMount(){
 		let thumbnail = this.props.Core.Artifact.getThumbnail(this.props.artifact);
 
@@ -67,4 +67,4 @@ class PublisherCard extends Component {
 	}
 }
 
-export default PublisherCard;
+export default PublisherBlock;
