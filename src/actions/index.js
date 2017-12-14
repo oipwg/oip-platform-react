@@ -462,7 +462,7 @@ export const promptTryFaucet = (Core, onSuccess, onError) => (dispatch, getState
 	}, 200)
 
 	Core.Wallet.checkDailyFaucet(intlState.Wallet.florincoin.mainAddress, (canReceive) => {
-		if (!canReceive){
+		if (canReceive){
 			dispatch(faucetPrompt(true));
 			heardFromCheck = true;
 		} else {
@@ -490,8 +490,13 @@ export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat,
 	if (state.User.isLoggedIn){
 		var canProcessWith = {};
 		for (var acceptedCoin in paymentAddresses){
-			console.log(fiat_amount, state.Wallet[acceptedCoin][fiat] >= fiat_amount);
-			if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][fiat] && state.Wallet[acceptedCoin][fiat] >= fiat_amount){
+			var tmpFiat = fiat;
+
+			// If we are using the coin, then just check against the balance
+			if (fiat === acceptedCoin)
+				tmpFiat = "balance";
+
+			if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][tmpFiat] && state.Wallet[acceptedCoin][tmpFiat] >= fiat_amount){
 				canProcessWith[acceptedCoin] = paymentAddresses[acceptedCoin];
 			}
 		}
@@ -503,6 +508,7 @@ export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat,
 			let swapTo = [];
 
 			for (var coin in state.Wallet) {
+				console.log(state.Wallet[coin][fiat], fiat_amount);
 				if (state.Wallet[coin][fiat] >= fiat_amount){
 					swapFrom.push(coin);
 				}
@@ -522,7 +528,7 @@ export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat,
 				for (var acceptedCoin in paymentAddresses){
 					if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][fiat]){
 						var currentBalance = state.Wallet[acceptedCoin][fiat];
-						if (currentBalance + faucetUSDValue >= fiat_amount){
+						if (parseFloat(currentBalance) + faucetUSDValue >= fiat_amount){
 							canProcessWithIfFaucet[acceptedCoin] = paymentAddresses[acceptedCoin];
 						}
 					}

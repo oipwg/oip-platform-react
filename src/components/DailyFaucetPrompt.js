@@ -41,11 +41,14 @@ class DailyFaucetPrompt extends Component {
 		this.setState({showPrompt: !this.state.showPrompt})
 	}
 	onFaucetReceive(){
+		this.props.store.dispatch(faucetPrompt(false));
 		this.props.store.dispatch(setTryFaucet(false));
+		this.setState({showPrompt: false})
 	}
 	onFaucetCancel(){
 		this.props.store.dispatch(faucetPrompt(false));
 		this.props.store.dispatch(setTryFaucet(false));
+		this.setState({showPrompt: false})
 	}
 	render() {
 

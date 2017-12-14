@@ -27,6 +27,7 @@ export const COIN_CONFIGS = {
 		display: 1000000,
 		presymbol: "bits",
 		symbol: "uBTC",
+		currencyCode: "BTC",
 		logo: btc_logo,
 		paperWalletBG: btc_bg,
 		buy: "coinbase",
@@ -39,6 +40,7 @@ export const COIN_CONFIGS = {
 		name: "Flo",
 		display: 1,
 		symbol: "FLO",
+		currencyCode: "FLO",
 		logo: flo_logo,
 		paperWalletBG: flo_bg,
 		buy: false,
@@ -51,6 +53,7 @@ export const COIN_CONFIGS = {
 		name: "Litecoin",
 		display: 1,
 		symbol: "LTC",
+		currencyCode: "LTC",
 		logo: ltc_logo,
 		paperWalletBG: ltc_bg,
 		buy: "coinbase",
@@ -111,7 +114,7 @@ class CoinCard extends Component {
 		let name = "";
 		let symbol = "";
 		let presymbol = "";
-		let logo, paperWalletBG, trade, buy, faucet;
+		let logo, paperWalletBG, trade, buy, faucet, currencyCode;
 
 		if (this.props.info){
 			mainAddress = this.props.info.mainAddress;
@@ -127,6 +130,7 @@ class CoinCard extends Component {
 			} catch (e) {}
 			name = COIN_CONFIGS[this.props.coin].name;
 			logo = COIN_CONFIGS[this.props.coin].logo;
+			currencyCode = COIN_CONFIGS[this.props.coin].currencyCode;
 			presymbol = COIN_CONFIGS[this.props.coin].presymbol;
 			symbol = COIN_CONFIGS[this.props.coin].symbol;
 			paperWalletBG = COIN_CONFIGS[this.props.coin].paperWalletBG;
@@ -167,7 +171,7 @@ class CoinCard extends Component {
 						{buy === "coinbase" ? <BuyButton coinName={name} address={mainAddress} currency={currency} /> : ""}
 						{trade ? <SwapButton coinName={name} address={mainAddress} /> : ""}
 						<QRButton coinName={name} address={mainAddress} />
-						<SendButton coinName={name} />
+						<SendButton Core={this.props.Core} store={this.props.store} coinName={name} coin={this.props.coin} coinCode={currencyCode} maxSend={this.props.info.balance} NotificationSystem={this.props.NotificationSystem} />
 					</div>
 					{this.state.printPaperWallet ? <PaperWallet print={true} logo={logo} bg={paperWalletBG} public={mainAddress} private={privKey} onPrint={this.paperWalletPrinted} /> : ""}
 				</div>

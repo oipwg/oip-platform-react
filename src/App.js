@@ -118,9 +118,9 @@ class App extends Component {
 
 							<Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
 
-							<Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
-							<Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
-							<Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} {...props} />} />
+							<Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
+							<Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
+							<Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
 							
 							<Route path="/:id" render={props => 
 								<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />} 

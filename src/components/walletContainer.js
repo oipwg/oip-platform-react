@@ -60,7 +60,7 @@ class WalletContainer extends Component {
 						if (key === "bitcoin_testnet")
 							return <div key={key} />
 
-						return <CoinCard key={key} coin={key} info={this.state.Wallet[key]} Core={this.props.Core} />
+						return <CoinCard key={key} coin={key} info={this.state.Wallet[key]} Core={this.props.Core} store={this.props.store} NotificationSystem={this.props.NotificationSystem} />
 					})}
 				</div>
 			</div>

@@ -42,7 +42,7 @@ class UserPage extends Component {
 					case "upload":
 						return <PublishContainer />
 					case "wallet":
-						return <WalletContainer Core={this.props.Core} store={this.props.store} />
+						return <WalletContainer Core={this.props.Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} />
 					case "settings":
 						return <SettingsContainer />
 					default:

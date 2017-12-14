@@ -31,8 +31,8 @@ class SwapBlock extends Component {
 	render() {
 		return (
 			<div style={{width: "100%"}}>
-				<h2>Balance Low</h2>
-				<p>Your wallet is low on funds, please select what kind of Coin you would like to buy.</p>
+				<h2>Swap Required</h2>
+				<p>Your wallet only has COIN_1 but needs COIN_2 to complete this payment, please select the amount (in USD) that you want to swap from COIN_1 to COIN_2.</p>
 				<div style={{display: "flex"}}>
 					<div className="card" style={{width: "45%", margin: "auto"}}>
 						<div className="card-body">

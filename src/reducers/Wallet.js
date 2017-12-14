@@ -48,7 +48,7 @@ export const Wallet = (state = {
 		case actions.PROMPT_BUY:
 			return {
 				...state,
-				swapPrompt: action.prompt
+				buyPrompt: action.prompt
 			}
 		case actions.PROMPT_DAILY_FAUCET:
 			return {
