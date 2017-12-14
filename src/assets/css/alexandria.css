@@ -280,9 +280,12 @@ body > canvas {
 	filter: blur(15px);
 }
 
-.btn-outline-secondary {
-	border-color: #333 !important;
-	color: #333 !important;;
+.btn-secondary > .text-success {
+  color: #02ec38 !important;
+}
+
+.btn-outline-secondary:hover > .text-success {
+  color: #02ec38 !important;
 }
 
 .btn-outline-white {

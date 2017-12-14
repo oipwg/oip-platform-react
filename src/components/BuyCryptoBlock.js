@@ -6,9 +6,15 @@ class BuyCryptoBlock extends Component {
 	constructor(props){
 		super(props);
 
-		this.state = {};
+		this.state = {
+			amount: undefined,
+			currency: undefined,
+			selectedAmount: undefined,
+			selectedCurrency: undefined
+		};
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+		this.selectOption = this.selectOption.bind(this);
 
 		let _this = this;
 
@@ -28,24 +34,78 @@ class BuyCryptoBlock extends Component {
 	componentWillUnmount(){
 		this.unsubscribe();
 	}
+	selectOption(type, value, secondValue){
+		if (type === "amount"){
+			this.setState({ amount: secondValue, selectedAmount: value })
+		} else if (type === "currency"){
+			this.setState({ currency: secondValue, selectedCurrency: value })
+		}
+	}
 	render() {
+		let activeAmountOne = false;
+		let activeAmountTwo = false;
+		let activeAmountThree = false;
+		let activeAmountFour = false;
+
+		if (this.state.selectedAmount === 1){
+			activeAmountOne = true;
+		} else if (this.state.selectedAmount === 2){
+			activeAmountTwo = true;
+		} else if (this.state.selectedAmount === 3){
+			activeAmountThree = true;
+		} else if (this.state.selectedAmount === 4){
+			activeAmountFour = true;
+		}
 		return (
 			<div style={{width: "100%"}}>
 				<h2>Balance Low</h2>
-				<p>Your wallet is low on funds, please select what kind of Coin you would like to buy.</p>
+				<p>Your wallet has a low balance, please add some funds.</p>
+				<h5>Select an Amount to Add:</h5>
+				<div className="row">
+					<div className="col-3">
+						<button className={activeAmountOne ? "btn btn-secondary" : "btn btn-outline-secondary"} style={{padding: "1.25rem 2rem"}} onClick={() => {this.selectOption("amount", 1, 1)}}>
+							<h5 className="text-success" style={{marginBottom: "0px"}}>$1</h5>
+						</button>
+					</div>
+					<div className="col-3">
+						<button className={activeAmountTwo ? "btn btn-secondary" : "btn btn-outline-secondary"} style={{padding: "1.25rem 2rem"}} onClick={() => {this.selectOption("amount", 2, 5)}}>
+							<h5 className="text-success" style={{marginBottom: "0px"}}>$5</h5>
+						</button>
+					</div>
+					<div className="col-3">
+						<button className={activeAmountThree ? "btn btn-secondary" : "btn btn-outline-secondary"} style={{padding: "1.25rem 1.6rem"}} onClick={() => {this.selectOption("amount", 3, 10)}}>
+							<h5 className="text-success" style={{marginBottom: "0px"}}>$10</h5>
+						</button>
+					</div>
+					<div className="col-3">
+						<button className={activeAmountFour ? "btn btn-secondary" : "btn btn-outline-secondary"} style={{padding: "1.25rem 1.2rem"}} onClick={() => {this.selectOption("amount", 4, "other")}}>
+							<h5 style={{marginBottom: "0px"}}>Other</h5>
+						</button>
+					</div>
+					{activeAmountFour ? <div className="col-12" style={{marginTop: "15px"}}>
+						<div className="form-inline">
+							<div className="form-group" style={{margin: "auto"}}>
+								<label style={{marginRight: "5px"}}>Other Amount: </label>
+								<input ref={other => this.otherAmount = other} className="form-control" />
+							</div>
+						</div>
+					</div> : ""}
+				</div>
+				<br />
+				<h5>Select which Coin to buy:</h5>
 				<div style={{display: "flex"}}>
 					<div className="card" style={{width: "45%", margin: "auto"}}>
 						<div className="card-body">
 							<img src={COIN_CONFIGS.bitcoin.logo} alt="Bitcoin Logo" />
 							<h4>Bitcoin</h4>
-							{/*<h5>$1234</h5>*/}
+							<p className="text-success">$1234</p>
 						</div>
 					</div>
 					<div className="card" style={{width: "45%", margin: "auto"}}>
 						<div className="card-body">
 							<img src={COIN_CONFIGS.litecoin.logo} alt="Litecoin Logo" />
 							<h4>Litecoin</h4>
-							{/*<h5>$1234</h5>*/}
+							<p className="text-success">$1234</p>
 						</div>
 					</div>
 				</div>
