@@ -46,6 +46,8 @@ class BuyCryptoBlock extends Component {
 		let activeAmountTwo = false;
 		let activeAmountThree = false;
 		let activeAmountFour = false;
+		let activeCurrencyOne = false;
+		let activeCurrencyTwo = false;
 
 		if (this.state.selectedAmount === 1){
 			activeAmountOne = true;
@@ -55,6 +57,12 @@ class BuyCryptoBlock extends Component {
 			activeAmountThree = true;
 		} else if (this.state.selectedAmount === 4){
 			activeAmountFour = true;
+		}
+
+		if (this.state.selectedCurrency === 1){
+			activeCurrencyOne = true;
+		} else if (this.state.selectedCurrency === 2){
+			activeCurrencyTwo = true;
 		}
 		return (
 			<div style={{width: "100%"}}>
@@ -93,20 +101,22 @@ class BuyCryptoBlock extends Component {
 				</div>
 				<br />
 				<h5>Select which Coin to buy:</h5>
-				<div style={{display: "flex"}}>
-					<div className="card" style={{width: "45%", margin: "auto"}}>
-						<div className="card-body">
+				<div className="row">
+					<div className="col-6">
+						<button className={activeCurrencyOne ? "btn btn-secondary" : "btn btn-outline-secondary"} style={{padding: "1rem 1.4rem", paddingBottom: "0px"}} onClick={() => {this.selectOption("currency", 1, "bitcoin")}}>
 							<img src={COIN_CONFIGS.bitcoin.logo} alt="Bitcoin Logo" />
 							<h4>Bitcoin</h4>
-							<p className="text-success">$1234</p>
-						</div>
+							<p className="text-success" style={{marginBottom: "0.25rem"}}>$16,452</p>
+							<p className="text-info" style={{fontSize: "14px"}}>(Current Fee: $23.75)</p>
+						</button>
 					</div>
-					<div className="card" style={{width: "45%", margin: "auto"}}>
-						<div className="card-body">
+					<div className="col-6">
+						<button className={activeCurrencyTwo ? "btn btn-secondary" : "btn btn-outline-secondary"} style={{padding: "1rem 1.4rem", paddingBottom: "0px"}} onClick={() => {this.selectOption("currency", 2, "litecoin")}}>
 							<img src={COIN_CONFIGS.litecoin.logo} alt="Litecoin Logo" />
 							<h4>Litecoin</h4>
-							<p className="text-success">$1234</p>
-						</div>
+							<p className="text-success" style={{marginBottom: "0.25rem"}}>$306</p>
+							<p className="text-info" style={{fontSize: "14px"}}>(Current Fee: $0.03)</p>
+						</button>
 					</div>
 				</div>
 			</div>
