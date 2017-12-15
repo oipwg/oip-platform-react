@@ -16,7 +16,11 @@ const STATUS = {
 	TAKEN: "TAKEN",
 	VALID: "VALID",
 	INVALID: "INVALID",
-	INUSE: "INUSE"
+	INUSE: "INUSE",
+	PENDING: "PENDING",
+	WAITING: "WAITING",
+	ERROR: "ERROR",
+	SUCCESS: "SUCCESS"
 }
 
 class RegisterBlock extends Component {
@@ -43,7 +47,8 @@ class RegisterBlock extends Component {
 			email: "",
 			password: "",
 			passwordConfirm: "",
-			recaptcha: ""
+			recaptcha: "",
+			registrationStatus: STATUS.WAITING
 		}
 
 		this.register = this.register.bind(this);
@@ -79,6 +84,8 @@ class RegisterBlock extends Component {
 		this.showRecaptcha = true;
 	}
 	register(){
+		this.setState({registrationStatus: STATUS.PENDING});
+
 		let abort = false;
 		if (this.state.usernameState !== STATUS.VALID){
 			abort = true;
@@ -105,14 +112,18 @@ class RegisterBlock extends Component {
 		}
 
 		// If we are not ready, abort.
-		if (abort)
+		if (abort){
+			this.setState({registrationStatus: STATUS.WAITING});
 			return;
+		}
 
 		// If we are ready, go ahead and start the registration process.
 
 		this.props.store.dispatch(register(this.props.Core, this.state.username, this.state.email, this.state.password, this.state.recaptcha, (success) => {
 			console.log(success);
+			this.setState({registrationStatus: STATUS.SUCCESS});
 		}, (error) => {
+			this.setState({registrationStatus: STATUS.ERROR});
 			console.log(error)
 		}));
 
@@ -204,6 +215,15 @@ class RegisterBlock extends Component {
 		this.setState({recaptcha: response})
 	}
 	render() {
+		var RegisterBtnTxt = "Register";
+
+		if (this.state.registrationStatus === STATUS.PENDING){
+			RegisterBtnTxt = "Registering..."
+		} else if (this.state.registrationStatus === STATUS.SUCCESS){
+			RegisterBtnTxt = "Register Success!"
+		} else if (this.state.registrationStatus === STATUS.ERROR){
+			RegisterBtnTxt = "Register Error!"
+		}
 		return (
 	    	<div>
 				<h2>Please Register</h2>
@@ -309,7 +329,7 @@ class RegisterBlock extends Component {
 				<hr className="colorgraph" />
 				<div className="row">
 					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-secondary btn-block btn-lg" onClick={this.props.onLoginClick}>Login</button></div>
-					<div className="col-xs-12 col-md-9 order-1 order-sm-2"><button id="register" className="btn btn-success btn-block btn-lg" onClick={this.register} tabIndex="5">Register</button></div>
+					<div className="col-xs-12 col-md-9 order-1 order-sm-2"><button id="register" className="btn btn-success btn-block btn-lg" onClick={this.register} tabIndex="5">{RegisterBtnTxt}</button></div>
 				</div>
 			</div>
 		);

@@ -722,25 +722,28 @@ export const login = (Core, identifier, password) => dispatch => {
 	})
 }
 
-export const register = (Core, username, email, password, recaptcha, onSuccess, onError) => dispatch => {
+export const register = (Core, username, email, password, recaptcha, onSuccess, onError) => (dispatch, getState) => {
 	dispatch(registerStarting());
 
 	Core.User.Register(email, password, function(wallet){
-		console.log(wallet);
+		var state = getState();
 
 		let floAddress = "";
 		try {
-			floAddress = wallet.keys[0].coins.florincoin.address;
+			floAddress = state.Wallet.florincoin.mainAddress;
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		}
 
-		if (floAddress === "")
+		if (floAddress === ""){
+			onError("Error, cannot get FLo Address")
 			return;
+		}
 
-		Core.Wallet.tryFaucet(floAddress, recaptcha, function(res, txinfo){
-			console.log(res, txinfo)
-			Core.Publisher.Register(username, function(txid){
+		Core.Wallet.tryOneTimeFaucet(floAddress, recaptcha, function(res, txinfo){
+			Core.Publisher.Register(username, floAddress, email, function(pub){
+				console.log(pub);
+				dispatch(loginSuccess(pub));
 				onSuccess();
 			}, function(error){
 				onError(error);
