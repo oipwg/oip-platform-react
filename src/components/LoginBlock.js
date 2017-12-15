@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import {
-  Link
+  Redirect
 } from 'react-router-dom'
 
 import { login } from '../actions';
@@ -27,13 +27,15 @@ class LoginBlock extends Component {
 			confirmState: STATUS.NO_INPUT,
 			rememberMe: false,
 			email: "",
-			password: ""
+			password: "",
+			redirectToRegister: false
 		}
 
 		this.login = this.login.bind(this);
 		this.updateEmail = this.updateEmail.bind(this);
 		this.updatePassword = this.updatePassword.bind(this);
 		this.updateRememberMe = this.updateRememberMe.bind(this);
+		this.registerClick = this.registerClick.bind(this);
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
 		let _this = this;
@@ -89,6 +91,13 @@ class LoginBlock extends Component {
 	updateRememberMe(){
 		this.setState({rememberMe: !this.state.rememberMe });
 	}
+	registerClick(){
+		if (this.props.onRegisterClick){
+			this.props.onRegisterClick();
+		} else {
+			this.setState({redirectToRegister: true});
+		}
+	}
 	render() {
 		return (
 			<div style={{width: "100%"}}>
@@ -118,7 +127,8 @@ class LoginBlock extends Component {
 				<hr className="colorgraph" />
 				<div className="row">
 					<div className="col-12 col-sm-5 col-md-5 order-2 order-sm-1">
-						<button className="btn btn-lg btn-outline-secondary btn-block" onClick={this.props.onRegisterClick}>Register</button>
+						{this.state.redirectToRegister ? <Redirect to="/register" push /> : ""}
+						<button className="btn btn-lg btn-outline-secondary btn-block" onClick={this.registerClick}>Register</button>
 					</div>
 					<div className="col-12 col-sm-7 col-md-7 order-1 order-sm-2">
 						<button id="signin" className="btn btn-lg btn-success btn-block" onClick={this.login}>{this.state.User.isFetching ?  "loading..." : "Login"}</button>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import {
-  Link
+  Redirect
 } from 'react-router-dom'
 
 import { register } from '../actions';
@@ -9,7 +9,7 @@ import { register } from '../actions';
 import validator from 'validator';
 
 import ButtonCheckbox from './ButtonCheckbox.js';
-import Recaptcha from 'react-recaptcha';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const STATUS = { 
 	NO_INPUT: "NO_INPUT",
@@ -42,13 +42,15 @@ class RegisterBlock extends Component {
 			},
 			confirmState: STATUS.NO_INPUT,
 			verifyState: STATUS.NO_INPUT,
+			recaptchaState: STATUS.NO_INPUT,
 			verify: false,
 			username: "",
 			email: "",
 			password: "",
 			passwordConfirm: "",
 			recaptcha: "",
-			registrationStatus: STATUS.WAITING
+			registrationStatus: STATUS.WAITING,
+			redirectToLogin: false
 		}
 
 		this.register = this.register.bind(this);
@@ -58,6 +60,7 @@ class RegisterBlock extends Component {
 		this.updatePasswordConfirm = this.updatePasswordConfirm.bind(this);
 		this.updateVerify = this.updateVerify.bind(this);
 		this.recaptcha = this.recaptcha.bind(this);
+		this.loginClick = this.loginClick.bind(this);
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
 		let _this = this;
@@ -106,9 +109,12 @@ class RegisterBlock extends Component {
 		if (!this.state.verify){
 			abort = true;
 			this.setState({verifyState: STATUS.INVALID});
+		} else {
+
 		}
 		if (this.state.recaptcha === ""){
 			abort = true;
+			this.setState({verifyState: STATUS.INVALID});
 		}
 
 		// If we are not ready, abort.
@@ -212,7 +218,17 @@ class RegisterBlock extends Component {
 		this.setState({verify: !this.state.verify });
 	}
 	recaptcha(response){
-		this.setState({recaptcha: response})
+		if (response)
+			this.setState({recaptcha: response, recaptchaState: STATUS.VALID})
+		else
+			this.setState({recaptcha: response, recaptchaState: STATUS.INVALID})
+	}
+	loginClick(){
+		if (this.props.onLoginClick){
+			this.props.onLoginClick();
+		} else {
+			this.setState({redirectToLogin: true});
+		}
 	}
 	render() {
 		var RegisterBtnTxt = "Register";
@@ -317,7 +333,10 @@ class RegisterBlock extends Component {
 				</div>
 				<div className="row">
 					<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}>
-						{this.showRecaptcha ? <Recaptcha sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" verifyCallback={this.recaptcha} /> : ""}
+						{this.showRecaptcha ? <ReCAPTCHA sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" onChange={this.recaptcha} /> : ""}
+						{this.state.recaptchaState === STATUS.INVALID ? 
+							<p style={{color: "#dc3545", fontSize: "13.5px", marginTop: "5px", marginBottom: "0px"}}>Your recaptcha is invalid!</p>
+							: ""}
 					</div>
 				</div>
 				<br />
@@ -328,7 +347,8 @@ class RegisterBlock extends Component {
 				</div>
 				<hr className="colorgraph" />
 				<div className="row">
-					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-secondary btn-block btn-lg" onClick={this.props.onLoginClick}>Login</button></div>
+					{this.state.redirectToLogin ? <Redirect to="/login" push /> : ""}
+					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-secondary btn-block btn-lg" onClick={this.loginClick}>Login</button></div>
 					<div className="col-xs-12 col-md-9 order-1 order-sm-2"><button id="register" className="btn btn-success btn-block btn-lg" onClick={this.register} tabIndex="5">{RegisterBtnTxt}</button></div>
 				</div>
 			</div>

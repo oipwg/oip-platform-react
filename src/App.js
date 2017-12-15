@@ -111,7 +111,7 @@ class App extends Component {
 							<Route exact path="/" render={props => <Homepage Core={Core} store={this.props.store} {...props} />} />
 
 							<Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
-							<Route path="/register" component={RegisterPage} />
+							<Route path="/register" render={props => <RegisterPage Core={Core} store={this.props.store} {...props} />} />
 							<Route path="/dmca" component={DMCAForm} />
 
 							<Route path="/pub/:id" render={props => <PublisherPage suggestedContent={this.state.SupportedArtifacts.slice(0,10)} Core={Core} {...props} />} />
