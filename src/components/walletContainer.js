@@ -69,9 +69,9 @@ class WalletContainer extends Component {
 					for (var i = 0; i < coins[key].transactions.queued.length; i++) {
 						transactions.queued.push({...coins[key].transactions.queued[i], coin: coinInfo});
 					}
-					for (var i = 0; i < coins[key].transactions.unconfirmed.length; i++) {
-						transactions.unconfirmed.push({...coins[key].transactions.unconfirmed[i], coin: coinInfo});
-					}
+					// for (var i = 0; i < coins[key].transactions.unconfirmed.length; i++) {
+					// 	transactions.unconfirmed.push({...coins[key].transactions.unconfirmed[i], coin: coinInfo});
+					// }
 					for (var i = 0; i < coins[key].transactions.confirmed.txs.length; i++) {
 						transactions.confirmed.txs.push({...coins[key].transactions.confirmed.txs[i], coin: coinInfo});
 					}
