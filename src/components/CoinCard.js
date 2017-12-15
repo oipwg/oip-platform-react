@@ -37,7 +37,7 @@ export const COIN_CONFIGS = {
 	},
 	florincoin: {
 		order: 2,
-		name: "Flo",
+		name: "Florincoin",
 		display: 1,
 		symbol: "FLO",
 		currencyCode: "FLO",

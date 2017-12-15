@@ -27,7 +27,7 @@ class TransactionTable extends Component {
 
 	}
 	render() {
-		var passedTxs = demoTxData;
+		var passedTxs = this.props.transactions;
 		var transactions = [];
 
 		if (passedTxs){
@@ -38,10 +38,6 @@ class TransactionTable extends Component {
 						"status": {
 							"text": "Queued",
 							"color": "#868e96"
-						},
-						"coin": {
-							"name": "Florincoin",
-							"logo": flo_logo
 						}
 					})
 				}
@@ -53,10 +49,6 @@ class TransactionTable extends Component {
 						"status": {
 							"text": "Pending...",
 							"color": "#17a2b8"
-						},
-						"coin": {
-							"name": "Litecoin",
-							"logo": ltc_logo
 						}
 					})
 				}
@@ -101,9 +93,6 @@ class TransactionTable extends Component {
 								}
 							}
 						}
-						for (var adr in toAddresses){
-
-						}
 					}
 					var timestamp = tx.time;
 
@@ -111,15 +100,12 @@ class TransactionTable extends Component {
 						"to": toAddresses,
 						"from": fromAddresses,
 						"timestamp": timestamp,
-						"amount": amount,
+						"amount": parseFloat(amount.toFixed(8)),
 						"status": {
 							"text": "Successful",
 							"color": "#28a745"
 						},
-						"coin": {
-							"name": "Florincoin",
-							"logo": flo_logo
-						}
+						"coin": passedTxs.confirmed.txs[t].coin
 					})
 				}
 			}

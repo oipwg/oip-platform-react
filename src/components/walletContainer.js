@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { COIN_CONFIGS } from './CoinCard.js';
 import CoinCard from './CoinCard.js';
 import PaperWallets from './PaperWallets.js';
 import TransactionTable from './TransactionTable.js'
@@ -47,35 +48,36 @@ class WalletContainer extends Component {
 	}
 	render() {
 		var coins = this.state.Wallet;
-		var transactions = [];
+		var transactions = {
+			queued: [],
+			unconfirmed: [],
+			confirmed: { txs: [] }
+		};
 
 		for (var key in coins){
 			if (typeof coins[key] !== "object"){
 				delete coins[key];
+			} else {
+				if (coins[key].transactions){
+					var coinInfo = {}
+					try {
+						coinInfo = {
+							name: COIN_CONFIGS[key.toLowerCase()].name,
+							logo: COIN_CONFIGS[key.toLowerCase()].logo
+						}
+					} catch(e) {}
+					for (var i = 0; i < coins[key].transactions.queued.length; i++) {
+						transactions.queued.push({...coins[key].transactions.queued[i], coin: coinInfo});
+					}
+					for (var i = 0; i < coins[key].transactions.unconfirmed.length; i++) {
+						transactions.unconfirmed.push({...coins[key].transactions.unconfirmed[i], coin: coinInfo});
+					}
+					for (var i = 0; i < coins[key].transactions.confirmed.txs.length; i++) {
+						transactions.confirmed.txs.push({...coins[key].transactions.confirmed.txs[i], coin: coinInfo});
+					}
+				}
 			}
-			console.log(key)
 		}
-
-		for (var i = 0; i < 15; i++) {
-			var coin = this.getRandomInt(1,4);
-
-			if (coin === 1){
-				coin = "florincoin"
-			} else if (coin === 2){
-				coin = "litecoin"
-			} else if (coin === 3){
-				coin = "bitcoin"
-			}
-
-			transactions.push({
-				coin: coin,
-				to: "Test Publisher",
-				from: "Test User",
-				amount: Math.random(),
-				timestamp: Date.now()-(Math.random() * 10000)
-			})
-		}
-
 
 		return (
 			<div className="container">
