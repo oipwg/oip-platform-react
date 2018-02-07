@@ -343,13 +343,13 @@ export const playlistNext = restrictions => (dispatch, getState) => {
 export const selectCurrentArtifact = (Core, txid, piwik) => dispatch => {
 	dispatch(requestCurrentArtifact());
 
-	Core.Index.getArtifactFromID(txid, function(artifacts){
-		dispatch(recieveCurrentArtifact(artifacts[0]));
+	Core.Index.getArtifactFromID(txid, function(artifact){
+		dispatch(recieveCurrentArtifact(artifact));
 
-		let files = Core.Artifact.getFiles(artifacts[0]);
+		let files = Core.Artifact.getFiles(artifact);
 
-		let publisher = Core.Artifact.getPublisher(artifacts[0]);
-		let txid = Core.Artifact.getTXID(artifacts[0]);
+		let publisher = Core.Artifact.getPublisher(artifact);
+		let txid = Core.Artifact.getTXID(artifact);
 
 		for (var i = 0; i < files.length; i++) {
 			dispatch(addFileToPlaylist(files[i], txid + "|" + i, Core));

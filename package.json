@@ -36,7 +36,7 @@
     "js-file-download": "^0.4.1",
     "moment": "^2.18.1",
     "object-assign": "4.1.1",
-    "oip-js": "git+https://github.com/oipwg/oip-js.git",
+    "oip-js": "^1.0.18",
     "piwik-react-router": "^0.10.0",
     "popper.js": "^1.12.9",
     "postcss-flexbugs-fixes": "3.0.0",
