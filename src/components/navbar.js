@@ -141,7 +141,7 @@ class Navbar extends Component {
 								<div className="dropdown-divider"></div>
 								<DropdownItem onClick={this.logout}><span className="icon icon-log-out"></span> Logout</DropdownItem>
 							</DropdownMenu>
-							<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{totalbalance === 0 ? "" : "$" + parseFloat(totalbalance).toFixed(2)}</span></Link>
+							<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{this.state.User.isFetching ? "" : "$" + parseFloat(totalbalance).toFixed(2)}</span></Link>
 						</ButtonDropdown> : <Link to="/login"><button className={this.state.navDropdownOpen ? "btn btn-outline-white d-none" : "btn btn-outline-white d-none d-sm-inline-flex"} style={{margin: "auto 10px"}}>{this.state.User.isFetching ? "logging in..." : "Login"}</button></Link>}
 					</button>
 					<div id="navbarToggle" className="collapse navbar-collapse">
@@ -177,7 +177,7 @@ class Navbar extends Component {
 									<div className="dropdown-divider"></div>
 									<DropdownItem onClick={this.logout}><span className="icon icon-log-out"></span> Logout</DropdownItem>
 								</DropdownMenu>
-								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{totalbalance === 0 ? "" : "$" + parseFloat(totalbalance).toFixed(2)}</span></Link>
+								<Link to="/user/wallet/" className="btn btn-outline-success btn-bits-bg" style={{padding:"8px"}} id="bitCountBtn"><span id='bitCount'>{this.state.User.isFetching ? "" : "$" + parseFloat(totalbalance).toFixed(2)}</span></Link>
 							</ButtonDropdown> : <Link to="/login"><button className="btn btn-outline-white" style={{margin: "auto 10px"}}>{this.state.User.isFetching ? "logging in..." : "Login"}</button></Link>}
 						</div>
 					</div>
