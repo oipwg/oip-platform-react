@@ -5,7 +5,7 @@ import ShareButton from './ShareButton.js';
 import TipButtons from './TipButtons.js';
 import ReportButton from './ReportButton.js';
 
-import Identicons from 'identicons-react';
+import PublisherIcon from './PublisherIcon.js';
 
 class ContentInfo extends Component {
 	constructor(props){
@@ -61,11 +61,9 @@ class ContentInfo extends Component {
 					</div>
 				</div>
 				<div className="media">
-					<div className="d-flex mr-3 rounded-circle border border-secondary" style={{width: "50px", height: "50px"}}>
-						{this.state.isFetching ? "" : <Identicons id={publisher} width={48} size={5} /> }
-					</div>
+					{this.state.isFetching ? "" : <PublisherIcon id={publisher} style={{width: "50px", height: "50px"}} className="d-flex" /> }
 					<div className="media-body">
-						<h5 className="mt-0" style={{paddingTop: "10px", marginLeft: "-10px"}}>{this.state.isFetching ? "loading..." : pubName} 
+						<h5 className="mt-0" style={{paddingTop: "13px", marginLeft: "10px"}}>{this.state.isFetching ? "loading..." : pubName} 
 							{/* 0.9 Feature */}
 							{/*
 							<div className="btn-group">

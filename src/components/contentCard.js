@@ -4,7 +4,7 @@ import {
   Link
 } from 'react-router-dom'
 
-import Identicons from 'identicons-react';
+import PublisherIcon from './PublisherIcon.js';
 import IPFSImage from './IPFSImage.js';
 
 import { FormattedTime } from 'react-player-controls'
@@ -43,11 +43,9 @@ class ContentCard extends Component {
 					{duration ? <p className="content-card-xinfo"><FormattedTime numSeconds={duration} /></p> : <div className="content-card-xinfo-offset"></div>}
 					<div className="card-block" style={{padding: "10px",whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
 						<strong style={{}}>{title}</strong>
-						<div style={{marginBottom: "-10px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex"}}>
-							<div className="rounded-circle border border-secondary" style={{marginRight: "3px", marginBottom: "3px", display: "inline-flex", width: "32px", height: "32px"}}>
-								<Identicons id={publisher} width={30} size={5} />
-							</div>
-							<p style={{marginTop:"4px", display: "inline-flex"}}>{this.props.artifact.publisherName}</p>
+						<div style={{marginBottom: "-15px", marginTop: "5px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex"}}>
+							<PublisherIcon id={publisher} style={{width: "32px", height: "32px"}} small={true} />
+							<p style={{marginTop:"4px", marginLeft: "5px", display: "inline-flex"}}>{this.props.artifact.publisherName}</p>
 						</div>
 						{/* 0.9 Feature */}
 						{/*
