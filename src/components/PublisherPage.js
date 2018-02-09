@@ -43,11 +43,11 @@ class PublisherPage extends Component {
 	dispatchSearch(props){
 		// props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": props.match.params.id }));
 		var _this = this;
-		console.log(props.Core.Index.getPublisher(props.match.params.id, (success) => {
+		props.Core.Index.getPublisher(props.match.params.id, (success) => {
 			_this.setState({publisher: success});
 
 			props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": success.address }));
-		}, (error) => { console.error(error) }))
+		}, (error) => { console.error(error) })
 	}
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
@@ -78,7 +78,7 @@ class PublisherPage extends Component {
 							<div className="row">
 								<div className="col-sm-3">
 									<div className="userImage" style={{marginTop: "-30px"}}>
-										<PublisherIcon id={this.state.publisher.address} />
+										<PublisherIcon id={this.state.publisher.address} Core={this.props.Core} />
 									</div>
 								</div>
 

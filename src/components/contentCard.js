@@ -45,7 +45,7 @@ class ContentCard extends Component {
 						<strong style={{}}>{title}</strong>
 						<Link to={"/pub/" + publisher } onClick={function(){window.scrollTo(0, 0)}}>
 							<div style={{marginBottom: "-15px", marginTop: "5px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex"}}>
-								<PublisherIcon id={publisher} style={{width: "32px", height: "32px"}} small={true} />
+								<PublisherIcon id={publisher} Core={this.props.Core} style={{width: "32px", height: "32px"}} small={true} />
 								<p style={{marginTop:"4px", marginLeft: "5px", display: "inline-flex", color: "#000"}}>{this.props.artifact.publisherName}</p>
 							</div>
 						</Link>
