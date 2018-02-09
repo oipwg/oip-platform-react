@@ -57,4 +57,6 @@ class HTMLContainer extends Component {
 	}
 }
 
+HTMLContainer.SUPPORTED_FILE_TYPES = ["html"];
+
 export default HTMLContainer;
