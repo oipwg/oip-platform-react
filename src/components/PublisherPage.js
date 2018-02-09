@@ -88,24 +88,24 @@ class PublisherPage extends Component {
 										<div className="publishDate">
 											<p>Publishing since <span>{publishingSinceDate}</span></p>
 										</div>
-										<div className="uSocialProfile">
+										{/*<div className="uSocialProfile">
 											<a href="#"><i className="fa fa-facebook"></i></a>
 											<a href="#"><i className="fa fa-twitter"></i></a>
 
 											<a href="#"><i className="fa fa-google-plus"></i></a>
 											<a href="#"><i className="fa fa-linkedin"></i></a>
-										</div>
+										</div>*/}
 									</div>
 								</div>
 
 								<div className="col-sm-3">
 									<div className="subscribe">
 										<button type="button">Send Tip</button>
-										<button type="button">Subscribe</button>
+										{/*<button type="button">Subscribe</button>*/}
 									</div>
 								</div>
 							</div>
-							<div className="row">
+							{/*<div className="row">
 								<div className="col-sm-12">
 									<div className="aboutContent">
 										<h2>About</h2>
@@ -120,7 +120,8 @@ class PublisherPage extends Component {
 										</div>
 									</div>
 								</div>
-							</div>
+							</div>*/}
+							<hr />
 						</div>
 					</div>
 				</section>
