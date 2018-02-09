@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import {
+  Link
+} from 'react-router-dom'
+
 import ContentExtraInfo from './contentExtraInfo.js';
 import ShareButton from './ShareButton.js';
 import TipButtons from './TipButtons.js';
@@ -61,9 +65,11 @@ class ContentInfo extends Component {
 					</div>
 				</div>
 				<div className="media">
-					{this.state.isFetching ? "" : <PublisherIcon id={publisher} style={{width: "50px", height: "50px"}} className="d-flex" /> }
+					<Link to={"/pub/" + publisher}>
+						{this.state.isFetching ? "" : <PublisherIcon id={publisher} style={{width: "50px", height: "50px"}} className="d-flex" /> }
+					</Link>
 					<div className="media-body">
-						<h5 className="mt-0" style={{paddingTop: "13px", marginLeft: "10px"}}>{this.state.isFetching ? "loading..." : pubName} 
+						<h5 className="mt-0" style={{paddingTop: "13px", marginLeft: "10px"}}>{this.state.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>} 
 							{/* 0.9 Feature */}
 							{/*
 							<div className="btn-group">

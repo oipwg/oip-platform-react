@@ -19,6 +19,9 @@ class PublisherIcon extends Component {
 			this.updateAvatar(nextProps)
 	}
 	updateAvatar(props){
+		if (!props.id)
+			return;
+		
 		var size = props.small ? 64 : 200;
 		var randomTrueFalse = isNaN(props.id.slice(17,18));
 		var gender = randomTrueFalse ? "male" : "female";

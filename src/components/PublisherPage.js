@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import {
   fetchArtifactList,
@@ -19,7 +20,7 @@ class PublisherPage extends Component {
 			isInvalidated: false,
 			error: false,
 			items: [],
-			publisher: "demo"
+			publisher: {}
 		}
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
@@ -40,7 +41,13 @@ class PublisherPage extends Component {
 			this.dispatchSearch(nextProps)
 	}
 	dispatchSearch(props){
-		props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": props.match.params.id }));
+		// props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": props.match.params.id }));
+		var _this = this;
+		console.log(props.Core.Index.getPublisher(props.match.params.id, (success) => {
+			_this.setState({publisher: success});
+
+			props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": success.address }));
+		}, (error) => { console.error(error) }))
 	}
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
@@ -55,6 +62,11 @@ class PublisherPage extends Component {
 		this.unsubscribe();
 	}
 	render() {
+		let publishingSinceDate = "";
+
+		if (this.state.publisher && this.state.publisher.timestamp)
+			publishingSinceDate = moment(this.state.publisher.timestamp * 1000).calendar(null, {sameElse: "MMMM Do YYYY"});
+
 		return (
 			<div>
 				<header>
@@ -66,15 +78,15 @@ class PublisherPage extends Component {
 							<div className="row">
 								<div className="col-sm-3">
 									<div className="userImage" style={{marginTop: "-30px"}}>
-										<PublisherIcon id="FLZXRaHzVPxJJfaoM32CWT4GZHuj2rx63k" />
+										<PublisherIcon id={this.state.publisher.address} />
 									</div>
 								</div>
 
 								<div className="col-sm-6">
 									<div className="userInfo">
-										<h2>OstlerDev</h2>
+										<h2>{this.state.publisher.name}</h2>
 										<div className="publishDate">
-											<p>Publishing since <span>Dec 16, 2017</span></p>
+											<p>Publishing since <span>{publishingSinceDate}</span></p>
 										</div>
 										<div className="uSocialProfile">
 											<a href="#"><i className="fa fa-facebook"></i></a>
