@@ -57,6 +57,8 @@ const history = createBrowserHistory()
 
 const PUBLIC_URL = process.env.PUBLIC_URL;
 
+Core.settings.IPFSGatewayURL = "http://ipfs.oip.fun:8080/ipfs/"
+
 class App extends Component {
 	componentDidMount(){
 		this.props.store.dispatch(setupWalletEvents(Core));
