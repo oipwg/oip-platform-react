@@ -280,4 +280,6 @@ class AudioContainer extends Component {
 	}
 }
 
+AudioContainer.SUPPORTED_FILE_TYPES = ["mp3", "ogg", "wav"];
+
 export default AudioContainer;

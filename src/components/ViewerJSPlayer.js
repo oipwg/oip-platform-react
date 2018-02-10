@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class PDFViewer extends Component {
+class ViewerJSPlayer extends Component {
 	constructor(props){
 		super(props);
 
@@ -55,4 +55,6 @@ class PDFViewer extends Component {
 	}
 }
 
-export default PDFViewer;
+ViewerJSPlayer.SUPPORTED_FILE_TYPES = ["pdf", "odt", "odp", "ods"]
+
+export default ViewerJSPlayer;

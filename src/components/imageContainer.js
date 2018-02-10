@@ -67,4 +67,6 @@ class ImageContainer extends Component {
 	}
 }
 
+ImageContainer.SUPPORTED_FILE_TYPES = ["jpeg", "jpg", "gif", "png", "svg", "bmp", "ico"]
+
 export default ImageContainer;

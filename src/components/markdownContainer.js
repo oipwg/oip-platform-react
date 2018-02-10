@@ -80,4 +80,6 @@ class MarkdownContainer extends Component {
 	}
 }
 
+MarkdownContainer.SUPPORTED_FILE_TYPES = ["md", "txt"]
+
 export default MarkdownContainer;
