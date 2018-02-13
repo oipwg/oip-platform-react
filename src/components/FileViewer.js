@@ -68,7 +68,7 @@ class FileViewer extends Component {
 		}
 
 		if (!fileViewerComponent){
-			fileViewerComponent = <div style={{height: "100%", width: "100vw", maxWidth: "100vw"}}><h1 style={{color: "#fff", textAlign: "center", marginTop: "10%"}}>Unsupported File Format</h1></div>;
+			fileViewerComponent = <div style={{height: "100%", width: "100vw", maxWidth: "100vw"}}><h1 style={{color: "#fff", textAlign: "center", marginTop: "10%"}}>Unsupported File Format (.{extension})</h1></div>;
 		}
 
 		return fileViewerComponent;
