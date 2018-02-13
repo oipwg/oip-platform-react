@@ -38,7 +38,7 @@ class ContentCard extends Component {
 						</button>
 					</div>
 					<div className="card-img-top content-card-img">
-						<img src={"http://ipfs-one.alexandria.io:9548/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
+						<img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
 						{/*<IPFSImage Core={this.props.Core} hash={thumbnailHash} width={"100%"} height={"100%"} cover={true} />*/}
 					</div>
 					{duration ? <p className="content-card-xinfo"><FormattedTime numSeconds={duration} /></p> : <div className="content-card-xinfo-offset"></div>}
