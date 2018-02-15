@@ -57,7 +57,7 @@ const history = createBrowserHistory()
 
 const PUBLIC_URL = process.env.PUBLIC_URL;
 
-Core.settings.IPFSGatewayURL = "http://ipfs.oip.fun:8080/ipfs/"
+Core.settings.IPFSGatewayURL = "https://ipfs.oip.fun/ipfs/"
 
 class App extends Component {
 	componentDidMount(){
