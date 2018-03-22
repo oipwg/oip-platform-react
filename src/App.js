@@ -16,7 +16,7 @@ import PiwikReactRouter from 'piwik-react-router';
 
 import NotificationSystem from 'react-notification-system';
 
-import Core from 'oip-js';
+import OIPJS from 'oip-js';
 
 import { setupWalletEvents, login } from './actions';
 
@@ -57,7 +57,10 @@ const history = createBrowserHistory()
 
 const PUBLIC_URL = process.env.PUBLIC_URL;
 
-Core.settings.IPFSGatewayURL = "https://ipfs.oip.fun/ipfs/"
+var Core = OIPJS({
+	runIPFSJS: true,
+	IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
+})
 
 class App extends Component {
 	componentDidMount(){
