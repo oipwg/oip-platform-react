@@ -11,7 +11,7 @@ class UserAvatar extends Component {
 		}
 	}
 	componentDidMount(){
-		let publisher = this.props.Core.Artifact.getPublisherName(this.props.artifact);
+		let publisher = this.props.artifact.getPublisherName();
 		this.setState({
 			hash: publisher
 		})

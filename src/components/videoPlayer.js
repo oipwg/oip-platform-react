@@ -50,7 +50,7 @@ class VideoPlayer extends Component {
 
 			let shouldUpdate = false;
 
-			
+
 			if (this.state.ActiveFile.info != activeFile.info)
 				shouldUpdate = true;
 
@@ -90,7 +90,7 @@ class VideoPlayer extends Component {
 		let videoURL;
 
 		if (this.state.Artifact && this.state.ActiveFile.info){
-			videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.Artifact), this.state.ActiveFile.info));
+			videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact.getLocation(), this.state.ActiveFile.info));
 		} else {
 			videoURL = "";
 		}
@@ -98,8 +98,8 @@ class VideoPlayer extends Component {
 		let thumbnailURL = "";
 
 		if (this.state.Artifact){
-			let thumbnail = this.props.Core.Artifact.getThumbnail(this.state.Artifact);
-			thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.Artifact), thumbnail));
+			let thumbnail = this.state.Artifact.getThumbnail();
+			thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact.getLocation(), thumbnail));
 		}
 
 		let autoplay = true;
@@ -145,7 +145,7 @@ class VideoPlayer extends Component {
 					this.player.play();
 				}
 			} else {
-				this.createVideoPlayer();		
+				this.createVideoPlayer();
 			}
 		}
 	}

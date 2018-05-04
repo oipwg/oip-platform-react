@@ -114,12 +114,12 @@ export const fetchArtifactList = (Core, list_id, options) => dispatch => {
 }
 
 export const requestCurrentArtifact = () => ({
-	type: REQUEST_CURRENT_ARTIFACT	
+	type: REQUEST_CURRENT_ARTIFACT
 })
 
 export const recieveCurrentArtifact = artifact => ({
 	type: RECIEVE_CURRENT_ARTIFACT,
-	artifact: {...artifact},
+	artifact: artifact,
 	receivedAt: Date.now()
 })
 
@@ -145,7 +145,7 @@ export const addSingleComment = (comment) => ({
 export const addFileToPlaylist = (file, uid, Core) => ({
 	type: ADD_FILE_TO_PLAYLIST,
 	uid,
-	isPaid: Core.Artifact.isFilePaid(file),
+	isPaid: file.isPaid(),
 	file
 })
 
@@ -346,10 +346,10 @@ export const selectCurrentArtifact = (Core, txid, piwik) => dispatch => {
 	Core.Index.getArtifactFromID(txid, function(artifact){
 		dispatch(recieveCurrentArtifact(artifact));
 
-		let files = Core.Artifact.getFiles(artifact);
+		let files = artifact.getFiles();
 
-		let publisher = Core.Artifact.getPublisher(artifact);
-		let txid = Core.Artifact.getTXID(artifact);
+		let publisher = artifact.getMainAddress();
+		let txid = artifact.getTXID();
 
 		for (var i = 0; i < files.length; i++) {
 			dispatch(addFileToPlaylist(files[i], txid + "|" + i, Core));
@@ -380,11 +380,11 @@ export const addComment = (Core, url, comment) => dispatch => {
 }
 
 export const setCurrentFile = (Core, artifact, file) => dispatch => {
-	let files = Core.Artifact.getFiles(artifact);
+	let files = artifact.getFiles();
 
 	for (var i = 0; i < files.length; i++) {
-		if (files[i].fname === file.fname && files[i].dname === file.dname){
-			dispatch(setActiveFileInPlaylist(Core.Artifact.getTXID(artifact) + "|" + i));
+		if (files[i].getFilename() === file.getFilename() && files[i].getDisplayName() === file.getDisplayName()){
+			dispatch(setActiveFileInPlaylist(artifact.getTXID() + "|" + i));
 		}
 	}
 }
@@ -566,8 +566,8 @@ export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fi
 
 	if (!paymentAddresses[coin])
 		return;
-	
-	Core.Wallet.sendPayment(coin, fiat, fiat_amount, paymentAddresses[coin], (success) => {	
+
+	Core.Wallet.sendPayment(coin, fiat, fiat_amount, paymentAddresses[coin], (success) => {
 		if (NotificationSystem){
 			let titleStr = "Payment";
 			let msgStr = "Paid";
@@ -577,7 +577,7 @@ export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fi
 				msgStr = "Tipped";
 			}
 			NotificationSystem.addNotification({title: titleStr + " Success!", message: msgStr + " $" + Core.util.createPriceString(fiat_amount) + " to " + paymentName, level: "success", position: "tr", autoDismiss: 2})
-		}	
+		}
 
 		onSuccess(success)
 	}, (error) => {
@@ -586,11 +586,11 @@ export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fi
 }
 
 export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
-	let txid = Core.Artifact.getTXID(artifact);
-	let publisher = Core.Artifact.getPublisher(artifact);
-	let publisherName = Core.Artifact.getPublisherName(artifact);
+	let txid = artifact.getTXID();
+	let publisher = artifact.getMainAddress();
+	let publisherName = artifact.getPublisherName();
 
-	let paymentAddresses = Core.Artifact.getPaymentAddresses(artifact);
+	let paymentAddresses = artifact.getPaymentAddresses();
 
 	let id = txid;
 
@@ -606,20 +606,20 @@ export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem
 }
 
 export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
-	let txid = Core.Artifact.getTXID(artifact);
-	let publisher = Core.Artifact.getPublisher(artifact);
-	let publisherName = Core.Artifact.getPublisherName(artifact);
-	let files = Core.Artifact.getFiles(artifact);
+	let txid = artifact.getTXID();
+	let publisher = artifact.getMainAddress();
+	let publisherName = artifact.getPublisherName();
+	let files = artifact.getFiles();
 
-	let paymentAmount = file.sugPlay / Core.Artifact.getScale(artifact);
+	let paymentAmount = file.getSuggestedPlayCost() / artifact.getScale();
 
-	let paymentAddresses = Core.Artifact.getPaymentAddresses(artifact, file);
+	let paymentAddresses = artifact.getPaymentAddresses(file);
 
 	for (var i = 0; i < files.length; i++) {
-		if (files[i].fname === file.fname && files[i].dname === file.dname){
+		if (files[i].getFilename() === file.getFilename() && files[i].getDisplayName() === file.getDisplayName()){
 			let id = txid + "|" + i;
 
-			if (file.sugPlay && paymentAmount > 0){
+			if (file.getSuggestedPlayCost() && paymentAmount > 0){
 				// If file has cost
 				dispatch(paymentInProgress(id));
 
@@ -642,30 +642,30 @@ export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, 
 				piwik.push(["trackContentInteraction", "viewFile", publisher, txid, i]);
 			} catch (e) {
 				//console.log(e);
-			}	
+			}
 		}
 	}
 }
 
 export const buyFileFunc = (Core, artifact, file, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
-	let txid = Core.Artifact.getTXID(artifact);
-	let publisher = Core.Artifact.getPublisher(artifact);
-	let publisherName = Core.Artifact.getPublisherName(artifact);
-	let files = Core.Artifact.getFiles(artifact);
+	let txid = artifact.getTXID();
+	let publisher = artifact.getMainAddress();
+	let publisherName = artifact.getPublisherName();
+	let files = artifact.getFiles();
 
-	let paymentAmount = file.sugBuy / Core.Artifact.getScale(artifact);
+	let paymentAmount = file.getSuggestedBuyCost() / artifact.getScale();
 
-	let paymentAddresses = Core.Artifact.getPaymentAddresses(artifact, file);
+	let paymentAddresses = artifact.getPaymentAddresses();
 
 	let filei = 0;
 
 	for (var i = 0; i < files.length; i++) {
-		if (files[i].fname === file.fname && files[i].dname === file.dname){
+		if (files[i].getFilename() === file.getFilename() && files[i].getDisplayName() === file.getDisplayName()){
 			filei = i;
-			if (file.sugBuy && paymentAmount > 0){
+			if (file.getSuggestedBuyCost() && paymentAmount > 0){
 				// If file has cost
 				dispatch(buyInProgress(txid));
-				dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {	
+				dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
 					dispatch(setActiveFileInPlaylist(txid + "|" + filei));
 					dispatch(buyFile(txid + "|" + filei));
 
@@ -684,7 +684,7 @@ export const buyFileFunc = (Core, artifact, file, piwik, NotificationSystem, onS
 				piwik.push(["trackContentInteraction", "buyFile", publisher, txid, filei]);
 			} catch (e) {
 				//console.log(e)
-			}	
+			}
 		}
 	}
 }
@@ -772,23 +772,3 @@ export const tryDailyFaucet = (Core, recaptcha, onSuccess, onError) => dispatch 
 		onError(error);
 	})
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -47,8 +47,8 @@ class HTMLContainer extends Component {
 		let websiteURL;
 
 		if (this.state.ActiveFile && this.state.CurrentArtifact && this.state.ActiveFile.info && this.state.CurrentArtifact.artifact){
-			// websiteURL = this.props.Core.Artifact.getFirstHTMLURL(this.state.CurrentArtifact.artifact);
-			websiteURL = this.props.Core.util.buildIPFSURL(this.props.Core.Artifact.getLocation(this.state.CurrentArtifact.artifact), this.state.ActiveFile.info.fname);
+			// websiteURL = this.state.CurrentArtifact.artifact.getFirstHTMLURL();
+			websiteURL = this.props.Core.util.buildIPFSURL(this.state.CurrentArtifact.artifact.getLocation(), this.state.ActiveFile.info.getFilename());
 		}
 
 		return (

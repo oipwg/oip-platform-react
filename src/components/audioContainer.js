@@ -99,8 +99,8 @@ class AudioContainer extends Component {
 			this.setState({mainColor: "rgb(" + palette[1].join(',') + ")"})
 
 			img.style.display = "none";
-		} catch(e){ 
-			console.error(e) 
+		} catch(e){
+			console.error(e)
 		}
 	}
 	onCanPlay(canPlay){
@@ -164,22 +164,23 @@ class AudioContainer extends Component {
 		let name, artist, playlistLen = 0, paywall = false, ipfsHash = "", songURL = "";
 
 		if (this.state.ActiveFile && this.state.ActiveFile.info){
-			name = this.state.ActiveFile.info.dname ? this.state.ActiveFile.info.dname : this.state.ActiveFile.info.fname;
+			name = this.state.ActiveFile.info.getDisplayName() ? this.state.ActiveFile.info.getDisplayName() : this.state.ActiveFile.info.getFilename();
 			paywall = ((this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid) || (!this.state.ActiveFile.owned && this.state.ActiveFile.isPaid));
 
 			if (this.state.ActiveFile.currentTime === this.state.ActiveFile.duration && this.state.ActiveFile.currentTime !== 0 && this.state.ActiveFile.isPlaying)
 				this.nextSong();
 
+			console.log("art: ", this.state.CurrentArtifact)
 			if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
-				ipfsHash = this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.CurrentArtifact.artifact), this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
-				songURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.CurrentArtifact.artifact), this.state.ActiveFile.info));
-				artist = this.props.Core.Artifact.getArtist(this.state.CurrentArtifact.artifact);
+				ipfsHash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact.getLocation(), this.state.CurrentArtifact.artifact.getThumbnail());
+				songURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact.getLocation(), this.state.ActiveFile.info));
+				artist = this.state.CurrentArtifact.artifact.getDetail("artist");
 			}
 		}
 		if (this.state.FilePlaylist){
 			playlistLen = Object.keys(this.state.FilePlaylist).length - 1;
 		}
-		
+
 		return (
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio
@@ -200,7 +201,7 @@ class AudioContainer extends Component {
 								<IPFSImage Core={this.props.Core} hash={ipfsHash} onImageLoad={this.onImageLoad} />
 							</div>
 						</div>
-						{playlistLen > 1 ? 
+						{playlistLen > 1 ?
 						<div className="col-md-6 col-sm-12" style={{margin: "20px auto"}}>
 							<PlaylistScroller Core={this.props.Core} store={this.props.store} mainColor={this.state.mainColor} bgColor={this.state.bgColor} currentArtifactOnly={true} filter={{type: "Audio"}} />
 						</div> : ""}

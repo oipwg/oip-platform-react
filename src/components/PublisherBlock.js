@@ -6,12 +6,12 @@ import {
 
 class PublisherBlock extends Component {
 	componentDidMount(){
-		let thumbnail = this.props.Core.Artifact.getThumbnail(this.props.artifact);
+		let thumbnail = this.props.artifact.getThumbnail();
 
 		if (thumbnail){
 			if (this.props.Core){
 				this.updateSrc = true;
-				let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.props.artifact), thumbnail);
+				let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(this.props.artifact.getLocation(), thumbnail);
 				this.props.Core.Network.getThumbnailFromIPFS(ipfsShortURL, this.updateSrcCallback)
 			}
 		}
@@ -20,7 +20,7 @@ class PublisherBlock extends Component {
 		this.updateSrc = false;
 	}
 	constructor(props) {
-		
+
 	}
 	updateSrcCallback(srcData){
 		if (this.updateSrc){
@@ -31,12 +31,12 @@ class PublisherBlock extends Component {
 		window.scrollTo(0, 0);
 	}
 	render() {
-		let title = this.props.Core.Artifact.getTitle(this.props.artifact);
-		let txid = this.props.Core.Artifact.getTXID(this.props.artifact);
-		let paid = this.props.Core.Artifact.paid(this.props.artifact);
-		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.props.artifact));
-		
-		let duration = this.props.Core.Artifact.getDuration(this.props.artifact);
+		let title = this.props.artifact.getTitle();
+		let txid = this.props.artifact.getTXID();
+		let paid = this.props.artifact.isPaid();
+		let icon = this.props.Core.util.getEntypoIconForType(this.props.artifact.getType());
+
+		let duration = this.props.artifact.getDuration();
 
 		let userIcon = "https://gateway.ipfs.io/ipfs/QmWJ7RhZgktfnAeXn8SS2uahJC56gtkTmyNmycp4p2KheW/usericon_id76rb.png";
 

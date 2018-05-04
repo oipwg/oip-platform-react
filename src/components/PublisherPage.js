@@ -43,7 +43,7 @@ class PublisherPage extends Component {
 	dispatchSearch(props){
 		// props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": props.match.params.id }));
 		var _this = this;
-		props.Core.Index.getPublisher(props.match.params.id, (success) => {
+		props.Core.Index.getMainAddress(props.match.params.id, (success) => {
 			_this.setState({publisher: success});
 
 			props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": success.address }));

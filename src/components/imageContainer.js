@@ -33,7 +33,7 @@ class ImageContainer extends Component {
 
 		if (stateObj && this.state !== stateObj){
 			this.setState(stateObj, () => {
-				
+
 			});
 		}
 	}
@@ -50,10 +50,10 @@ class ImageContainer extends Component {
 		if (this.state.ActiveFile && ((this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid) && !this.state.ActiveFile.owned) && this.props.Core){
 			preview = true;
 
-			hash = this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.CurrentArtifact.artifact), this.props.Core.Artifact.getThumbnail(this.state.CurrentArtifact.artifact));
+			hash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact.getLocation(), this.state.CurrentArtifact.artifact.getThumbnail());
 		} else {
 			if (this.state.CurrentArtifact && this.state.ActiveFile){
-				hash = this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.state.CurrentArtifact.artifact), this.state.ActiveFile.info);
+				hash = this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact.getLocation(), this.state.ActiveFile.info);
 			}
 		}
 

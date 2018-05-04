@@ -8,10 +8,10 @@ class FilesTable extends Component {
 
 		this.state = {
 			CurrentArtifact: {
-				artifact: {}
+				artifact: undefined
 			},
 			ActiveFile: {
-				info: {}
+				info: false
 			}
 		}
 
@@ -62,14 +62,14 @@ class FilesTable extends Component {
 			}
 		}
 
-		return [...files];
+		return files;
 	}
 	getCurrentArtifactFiles(){
 		let files = this.getAllFiles();
 		let myArtifactFiles = [];
 
 		for (var file in files) {
-			if (files[file].key.split("|")[0] === this.props.Core.Artifact.getTXID(this.state.CurrentArtifact.artifact)){
+			if (files[file].key.split("|")[0] === this.state.CurrentArtifact.artifact.getTXID()){
 				myArtifactFiles.push(files[file]);
 			}
 		}
@@ -82,13 +82,13 @@ class FilesTable extends Component {
 		if (files && files.length <= 6){
 			for (var i = 0; i < files.length; i++) {
 				if (files[i].info.subtype !== "cover"){
-					if (!files[i] || !this.state.ActiveFile || !this.state.ActiveFile.info || files[i].info.fname !== this.state.ActiveFile.info.fname){
-						newFiles.push(JSON.parse(JSON.stringify(files[i])));
+					if (!files[i] || !this.state.ActiveFile || !this.state.ActiveFile.info || files[i].info.getFilename() !== this.state.ActiveFile.info.getFilename()){
+						newFiles.push(files[i]);
 					}
 				}
 			}
 		}
-			
+
 		return newFiles;
 	}
 	render() {
@@ -97,16 +97,16 @@ class FilesTable extends Component {
 		let filesCopy = [];
 
 		for (var i = 0; i < files.length; i++) {
-			let newObj = JSON.parse(JSON.stringify(files[i]));
+			let newObj = files[i];
 
-			newObj.info.icon = this.props.Core.Artifact.getEntypoIconForType(files[i].info.type);
-
+			newObj.info.icon = this.props.Core.util.getEntypoIconForType(files[i].info.getType());
 			filesCopy.push(newObj);
 		}
 
+
 		if (!this.props.extendedView)
 			filesCopy = this.stripUnimportantFiles(filesCopy);
-
+		console.log(filesCopy)
 		let _this = this;
 		return (
 			<div>
@@ -116,7 +116,7 @@ class FilesTable extends Component {
 							return <tr key={i}>
 										<th scope="row"><span className={"icon icon-" + file.info.icon} style={{margin: "auto", display: "table", marginTop: "4px"}}></span></th>
 										<td style={{verticalAlign: "middle"}}>{file.info.subtype ? file.info.subtype : file.info.type}</td>
-										<td style={{verticalAlign: "middle"}}>{file.info.dname ? file.info.dname : file.info.fname}</td>
+										<td style={{verticalAlign: "middle"}}>{file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</td>
 										<td style={{verticalAlign: "middle", width: "230px"}}>
 											<PaymentButtons artifact={_this.state.CurrentArtifact.artifact} File={file} Core={_this.props.Core} store={_this.props.store} piwik={_this.props.piwik} NotificationSystem={_this.props.NotificationSystem} />
 										</td>

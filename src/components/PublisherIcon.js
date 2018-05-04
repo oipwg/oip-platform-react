@@ -27,7 +27,7 @@ class PublisherIcon extends Component {
 
 		var _this = this;
 
-		props.Core.Index.getPublisher(props.id, (success) => {
+		props.Core.Index.getMainAddress(props.id, (success) => {
 			if (success.emailmd5 && success.emailmd5 !== ""){
 				_this.image.onerror = (error) => {
 					_this.image.onerror = () => {};

@@ -9,11 +9,10 @@ class ContentExtraInfo extends Component {
 		super(props);
 
 		this.state = {
-			extendedView: false,
-			Artifact: {}
+			extendedView: false
 		}
 
-		this.setDescriptionAndFiles = this.setDescriptionAndFiles.bind(this);
+		// this.setDescriptionAndFiles = this.setDescriptionAndFiles.bind(this);
 		this.toggleSeeMore = this.toggleSeeMore.bind(this);
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
@@ -35,62 +34,67 @@ class ContentExtraInfo extends Component {
 	componentWillUnmount(){
 		this.unsubscribe();
 	}
-	setDescriptionAndFiles(props){
-		let files = [], tmpFiles = [];
-
-		if (props.artifact){
-			files = props.Core.Artifact.getFiles(props.artifact);
-
-			for (var i = files.length - 1; i >= 0; i--) {
-				tmpFiles[i] = {};
-				tmpFiles[i].icon = props.Core.Artifact.getEntypoIconForType(files[i].type);
-				let sugPlay = files[i].sugPlay / props.Core.Artifact.getScale(props.artifact);
-				let sugBuy = files[i].sugBuy / props.Core.Artifact.getScale(props.artifact);
-
-				if (isNaN(sugPlay)){
-					sugPlay = 0;
-				}
-
-				if (isNaN(sugBuy)){
-					sugBuy = 0;
-				}
-
-				// eslint-disable-next-line
-				let playDecimal = sugPlay - parseInt(sugPlay);
-				// eslint-disable-next-line
-				let buyDecimal = sugBuy - parseInt(sugBuy);
-
-				if (playDecimal.toString().length === 3){
-					sugPlay = sugPlay.toString() + "0";
-				}
-				if (buyDecimal.toString().length === 3){
-					sugBuy = sugBuy.toString() + "0";
-				}
-
-				tmpFiles[i].fname = files[i].fname;
-				tmpFiles[i].dname = files[i].dname;
-				tmpFiles[i].type = files[i].type;
-				tmpFiles[i].subtype = files[i].subtype;
-				tmpFiles[i].disPlay = files[i].disPlay;
-				tmpFiles[i].disBuy = files[i].disBuy;
-				tmpFiles[i].sugPlay = sugPlay;
-				tmpFiles[i].sugBuy = sugBuy;
-			}
-		}
-	}
+	// setDescriptionAndFiles(props){
+	// 	let files = [], tmpFiles = [];
+	//
+	// 	if (props.artifact){
+	// 		files = props.artifact.getFiles();
+	//
+	// 		for (var i = files.length - 1; i >= 0; i--) {
+	// 			tmpFiles[i] = {};
+	// 			tmpFiles[i].icon = props.Core.util.getEntypoIconForType(files[i].type);
+	// 			let sugPlay = files[i].getSuggestedPlayCost() / props.artifact.getScale();
+	// 			let sugBuy = files[i].getSuggestedBuyCost() / props.artifact.getScale();
+	//
+	// 			if (isNaN(sugPlay)){
+	// 				sugPlay = 0;
+	// 			}
+	//
+	// 			if (isNaN(sugBuy)){
+	// 				sugBuy = 0;
+	// 			}
+	//
+	// 			// eslint-disable-next-line
+	// 			let playDecimal = sugPlay - parseInt(sugPlay);
+	// 			// eslint-disable-next-line
+	// 			let buyDecimal = sugBuy - parseInt(sugBuy);
+	//
+	// 			if (playDecimal.toString().length === 3){
+	// 				sugPlay = sugPlay.toString() + "0";
+	// 			}
+	// 			if (buyDecimal.toString().length === 3){
+	// 				sugBuy = sugBuy.toString() + "0";
+	// 			}
+	//
+	// 			tmpFiles[i].getFilename() = files[i].getFilename();
+	// 			tmpFiles[i].getDisplayName() = files[i].getDisplayName();
+	// 			tmpFiles[i].type = files[i].type;
+	// 			tmpFiles[i].subtype = files[i].subtype;
+	// 			tmpFiles[i].disPlay = files[i].disPlay;
+	// 			tmpFiles[i].disBuy = files[i].disBuy;
+	// 			tmpFiles[i].sugPlay = sugPlay;
+	// 			tmpFiles[i].sugBuy = sugBuy;
+	// 		}
+	// 	}
+	// }
 	toggleSeeMore(){
 		this.setState({ extendedView: !this.state.extendedView })
 	}
 	render() {
-		let niceTime = moment(this.props.Core.Artifact.getTimestamp(this.state.artifact) * 1000).calendar(null, {sameElse: "MMMM Do YYYY"});
-		let description = this.props.Core.Artifact.getDescription(this.state.artifact);
+		let niceTime, description;
+
+		if (this.state.artifact) {
+			let niceTime = moment(this.state.artifact.getTimestamp() * 1000).calendar(null, {sameElse: "MMMM Do YYYY"});
+			let description = this.state.artifact.getDescription();
+		}
+
 
 		return (
 			<div>
 				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.state.isFetching ? "loading..." : niceTime}</strong></p>
-				<p style={this.state.extendedView ? 
-					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"} 
-					: 
+				<p style={this.state.extendedView ?
+					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"}
+					:
 					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap", maxHeight:"150px", textOverflow: "ellipsis", overflow: "hidden"}}
 				>
 					<Linkify>{this.state.isFetching ? "loading..." : description}</Linkify>

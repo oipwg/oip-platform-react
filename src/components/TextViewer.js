@@ -40,7 +40,7 @@ class TextViewer extends Component {
 		let pdf = false;
 
 		if (this.state.ActiveFile && this.state.ActiveFile.info){
-			if (this.props.Core.util.getExtension(this.state.ActiveFile.info.fname) === "pdf" || this.props.Core.util.getExtension(this.state.ActiveFile.info.fname) === "PDF"){
+			if (this.props.Core.util.getExtension(this.state.ActiveFile.info.getFilename()) === "pdf" || this.props.Core.util.getExtension(this.state.ActiveFile.info.getFilename()) === "PDF"){
 				pdf = true;
 			}
 		}

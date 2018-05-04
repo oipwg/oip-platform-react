@@ -10,9 +10,7 @@ class Paywall extends Component {
 			ActiveFile: {
 				isPaid: false,
 				hasPaid: false,
-				info: {
-
-				}
+				info: false
 			},
 			CurrentArtifact: {
 

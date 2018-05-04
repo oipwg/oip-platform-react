@@ -16,7 +16,7 @@ import PiwikReactRouter from 'piwik-react-router';
 
 import NotificationSystem from 'react-notification-system';
 
-import OIPJS from 'oip-js';
+import { OIPJS } from 'oip-js';
 
 import { setupWalletEvents, login } from './actions';
 
@@ -59,10 +59,24 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 
 var Core = OIPJS({
 	runIPFSJS: true,
-	IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
+	IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/",
+	artifactFilters: [function(artifact){
+		if (artifact.getType() !== "Property" && artifact.getType() !== "Research")
+			return true
+		else
+			return false
+	}]
 })
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			NotificationSystem: undefined
+		};
+	}
+
 	componentDidMount(){
 		this.props.store.dispatch(setupWalletEvents(Core));
 
@@ -75,15 +89,9 @@ class App extends Component {
 		this.setState({NotificationSystem: this.refs.NotificationSystem})
 	}
 	componentWillUnmount() {
-		
+
 	}
-	constructor(props) {
-		super(props);
-		
-		this.state = {
-			NotificationSystem: undefined	
-		};
-	}
+
 	render() {
 		const supportsHistory = 'pushState' in window.history;
 
@@ -101,10 +109,11 @@ class App extends Component {
 						/>
 
 						{/* Include all components that need to be rendered above the main container content */}
-						<Navbar 
+						<Navbar
 							Core={Core}
 							store={this.props.store}
 						/>
+						
 						<LoginPrompt Core={Core} store={this.props.store} />
 						<DailyFaucetPrompt Core={Core} store={this.props.store} />
 						<SwapPrompt Core={Core} store={this.props.store} />
@@ -126,9 +135,9 @@ class App extends Component {
 							<Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
 							<Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
 							<Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-							
-							<Route path="/:id" render={props => 
-								<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />} 
+
+							<Route path="/:id" render={props =>
+								<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />}
 							/>
 
 							{/* The switch will render the last Route if no others are found (aka 404 page.) */}

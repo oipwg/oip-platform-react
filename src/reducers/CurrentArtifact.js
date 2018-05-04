@@ -3,7 +3,7 @@ import * as actions from '../actions'
 const curArtifact = (state = {
 	isFetching: false,
 	didInvalidate: false,
-	artifact: {},
+	artifact: undefined,
 	comments: []
 }, action) => {
 	switch (action.type) {

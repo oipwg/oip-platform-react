@@ -53,8 +53,8 @@ class FileViewer extends Component {
 	render() {
 		let extension, fileViewerComponent;
 
-		if (this.state.ActiveFile.info && this.state.ActiveFile.info.fname){
-			extension = this.props.Core.util.getExtension(this.state.ActiveFile.info.fname).toLowerCase();
+		if (this.state.ActiveFile.info && this.state.ActiveFile.info.getFilename()){
+			extension = this.props.Core.util.getExtension(this.state.ActiveFile.info.getFilename()).toLowerCase();
 		}
 
 		if (extension){

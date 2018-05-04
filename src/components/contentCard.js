@@ -14,14 +14,14 @@ class ContentCard extends Component {
 		window.scrollTo(0, 0);
 	}
 	render() {
-		let title = this.props.Core.Artifact.getTitle(this.props.artifact);
-		let publisher = this.props.Core.Artifact.getPublisher(this.props.artifact);
-		let txid = this.props.Core.Artifact.getTXID(this.props.artifact);
-		let paid = this.props.Core.Artifact.paid(this.props.artifact);
-		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.props.artifact));
-		let thumbnailHash = this.props.Core.util.buildIPFSShortURL(this.props.Core.Artifact.getLocation(this.props.artifact), this.props.Core.Artifact.getThumbnail(this.props.artifact));
-		
-		let duration = this.props.Core.Artifact.getDuration(this.props.artifact);
+		let title = this.props.artifact.getTitle();
+		let publisher = this.props.artifact.getMainAddress();
+		let txid = this.props.artifact.getTXID();
+		let paid = this.props.artifact.isPaid();
+		let icon = this.props.Core.util.getEntypoIconForType(this.props.artifact.getType());
+		let thumbnailHash = this.props.Core.util.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail());
+
+		let duration = this.props.artifact.getDuration();
 
 		let cardClasses = "col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 no-link-styling";
 

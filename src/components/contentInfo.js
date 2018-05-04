@@ -43,11 +43,16 @@ class ContentInfo extends Component {
 		this.unsubscribe();
 	}
 	render() {
-		let publisher = this.props.Core.Artifact.getPublisher(this.state.artifact);
-		let pubName = this.props.Core.Artifact.getPublisherName(this.state.artifact);
-		let title = this.props.Core.Artifact.getTitle(this.state.artifact);
-		let icon = this.props.Core.Artifact.getEntypoIconForType(this.props.Core.Artifact.getType(this.state.artifact));
-		let paid = this.state.artifact ? this.props.Core.Artifact.paid(this.state.artifact) : false;
+
+    let publisher, pubName, title, icon, paid;
+
+    if (this.state.artifact) {
+      publisher = this.state.artifact.getMainAddress();
+  		pubName = this.state.artifact.getPublisherName();
+  		title = this.state.artifact.getTitle();
+  		icon = this.props.Core.util.getEntypoIconForType(this.state.artifact.getType());
+  		paid = this.state.artifact ? this.state.artifact.isPaid() : false;
+    }
 
 		return (
 			<div>
@@ -69,7 +74,7 @@ class ContentInfo extends Component {
 						{this.state.isFetching ? "" : <PublisherIcon id={publisher} Core={this.props.Core} style={{width: "50px", height: "50px"}} className="d-flex" /> }
 					</Link>
 					<div className="media-body">
-						<h5 className="mt-0" style={{paddingTop: "13px", marginLeft: "10px"}}>{this.state.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>} 
+						<h5 className="mt-0" style={{paddingTop: "13px", marginLeft: "10px"}}>{this.state.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
 							{/* 0.9 Feature */}
 							{/*
 							<div className="btn-group">

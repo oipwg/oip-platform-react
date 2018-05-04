@@ -61,7 +61,7 @@ class Playlist extends Component {
 		let myArtifactFiles = [];
 
 		for (var file in files) {
-			if (files[file].key.split("|")[0] === this.props.Core.Artifact.getTXID(this.state.CurrentArtifact.artifact)){
+			if (files[file].key.split("|")[0] === this.state.CurrentArtifact.artifact.getTXID()){
 				myArtifactFiles.push(files[file]);
 			}
 		}
@@ -100,7 +100,7 @@ class Playlist extends Component {
 		DisplayFiles = this.filterFiles(DisplayFiles, this.props.filter);
 
 		if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
-			Artist = this.props.Core.Artifact.getArtist(this.state.CurrentArtifact.artifact)
+			Artist = this.state.CurrentArtifact.artifact.getDetail("artist")
 		}
 
 		return (
@@ -110,22 +110,22 @@ class Playlist extends Component {
 						<button className="btn btn-sm btn-outline-info"><span className="icon icon-controller-play"></span>Play All: Free</button>
 						<span style={{paddingLeft: "10px"}}></span>
 						<button className="btn btn-sm btn-outline-info"><span className="icon icon-download"></span> Buy All: Free</button>
-					</div> 
+					</div>
 				</li>
 				{DisplayFiles.map(function(file, i){
-					return <li key={i} className="list-group-item" style={file.info.fname === _this.state.ActiveFile.info.fname ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
+					return <li key={i} className="list-group-item" style={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
 						<div style={{padding: "4px 5px", display:"flex"}}>
 							<img className="rounded" src={""} width="40px" height="40px" alt="" />
 							<div style={{padding: "0px 10px", width:"235px"}}>
-								<div style={file.info.fname === _this.state.ActiveFile.info.fname ? {color: _this.props.bgColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"} : {color: _this.props.mainColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{Artist}</div>
-								<div style={file.info.fname === _this.state.ActiveFile.info.fname ? {color: _this.props.bgColor, fontSize:"12px", width: "100%", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "100%", display: "flex"}}>
-									<div style={{width: "200px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {file.info.dname ? file.info.dname : file.info.fname}</div>
+								<div style={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"} : {color: _this.props.mainColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{Artist}</div>
+								<div style={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontSize:"12px", width: "100%", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "100%", display: "flex"}}>
+									<div style={{width: "200px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</div>
 									<div style={{width: "30px", textAlign: "right"}}>
 										{file.info.duration > 0 ? <FormattedTime numSeconds={file.info.duration} /> : ""}
 									</div>
 								</div>
 							</div>
-							<PaymentButtons Core={_this.props.Core} store={_this.props.store} File={file} artifact={_this.state.CurrentArtifact.artifact} btnStyle={file.info.fname === _this.state.ActiveFile.info.fname ? {backgroundColor: _this.props.bgColor} : {}} />
+							<PaymentButtons Core={_this.props.Core} store={_this.props.store} File={file} artifact={_this.state.CurrentArtifact.artifact} btnStyle={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {backgroundColor: _this.props.bgColor} : {}} />
 						</div>
 					</li>
 				})}

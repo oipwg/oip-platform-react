@@ -23,8 +23,8 @@ class PaymentButtons extends Component {
 		let payForFile = function(Core, artifact, file, piwik, NotificationSystem){
 			_this.props.store.dispatch(payForFileFunc(Core, artifact, file, piwik, NotificationSystem, onSuccess, onError));
 		};
-	
-		payForFile(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem);		
+
+		payForFile(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem);
 	}
 	buyFile(){
 		if (this.props.File.owned){
@@ -41,6 +41,7 @@ class PaymentButtons extends Component {
 		window.scrollTo(0, 0);
 	}
 	render() {
+
 		let hasPaid = false;
 		let owned = false;
 		let paymentInProgress = false;
@@ -61,34 +62,38 @@ class PaymentButtons extends Component {
 		let scale = 1;
 
 		if (this.props.artifact){
-			scale = this.props.Core.Artifact.getScale(this.props.artifact);
+			scale = this.props.artifact.getPaymentScale();
 		}
 
 		if (this.props.File){
 			if (this.props.File.owned){
-				owned = true;	
+				owned = true;
 			}
 			if (this.props.File.hasPaid){
-				hasPaid = true;	
+				hasPaid = true;
 			}
 			if (this.props.File.paymentInProgress){
-				paymentInProgress = true;	
+				paymentInProgress = true;
 			}
 			if (this.props.File.paymentError){
-				paymentError = true;	
+				paymentError = true;
 			}
-			if (this.props.File.info.sugPlay){
-				sugPlay = this.props.File.info.sugPlay;
+
+			if (this.props.File.info) {
+				if (this.props.File.info.getSuggestedPlayCost()){
+					sugPlay = this.props.File.info.getSuggestedPlayCost();
+				}
+				if (this.props.File.info.getSuggestedBuyCost()){
+					sugBuy = this.props.File.info.getSuggestedBuyCost();
+				}
+				if (this.props.File.info.getDisallowPlay()){
+					disallowPlay = this.props.File.info.getDisallowPlay();
+				}
+				if (this.props.File.info.disBuy){
+					disallowBuy = this.props.File.info.getDisallowBuy();
+				}
 			}
-			if (this.props.File.info.sugBuy){
-				sugBuy = this.props.File.info.sugBuy;
-			}
-			if (this.props.File.info.disPlay){
-				disallowPlay = this.props.File.info.disPlay;
-			}
-			if (this.props.File.info.disBuy){
-				disallowBuy = this.props.File.info.disBuy;
-			}
+
 		}
 
 		sugPlay = sugPlay / scale;
@@ -136,14 +141,14 @@ class PaymentButtons extends Component {
 		return (
 			<div>
 				<div style={{width: disallowBuy ? "100%" : "50%", textAlign: disallowBuy ? "center" : "right", display: disallowPlay ? "" : "inline-block", paddingRight: "3px"}}>
-				{ disallowPlay ? "" : 
+				{ disallowPlay ? "" :
 					<button  className={"pad-5 btn btn-" + viewBtnType} onClick={this.viewFile} style={this.props.btnStyle} >
 						<span className="icon icon-controller-play" style={{marginRight: "5px"}}></span>{viewString}
 					</button>
 				}
 				</div>
 				<div style={{width: disallowPlay ? "100%" : "50%", textAlign: disallowPlay ? "center" : "left", display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
-				{ disallowBuy ? "" : 
+				{ disallowBuy ? "" :
 					<button className={"pad-5 btn btn-" + buyBtnType} onClick={this.buyFile} style={this.props.btnStyle}>
 						<span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
 					</button>
