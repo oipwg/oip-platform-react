@@ -6,6 +6,7 @@ import {
 
 import PublisherIcon from './PublisherIcon.js';
 import IPFSImage from './IPFSImage.js';
+import ArtifactIcon from './ArtifactIcon.js';
 
 import { FormattedTime } from 'react-player-controls'
 
@@ -18,7 +19,6 @@ class ContentCard extends Component {
 		let publisher = this.props.artifact.getMainAddress();
 		let txid = this.props.artifact.getTXID();
 		let paid = this.props.artifact.isPaid();
-		let icon = this.props.Core.util.getEntypoIconForType(this.props.artifact.getType());
 		let thumbnailHash = this.props.Core.util.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail());
 
 		let duration = this.props.artifact.getDuration();
@@ -32,8 +32,7 @@ class ContentCard extends Component {
 				<div className="card">
 					<div style={{marginBottom:"-26px", marginTop: "-1px", zIndex: "1"}}>
 						<button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px", border: "none", backgroundColor: "rgba(0,0,0,0.5)"}}>
-							{ paid ? <span className="icon icon-credit" style={{color: "rgb(63, 255, 63)"}}></span> : ''}
-							<span className={"icon icon-" + icon}></span>
+							<ArtifactIcon artifact={this.props.artifact} />
 						</button>
 					</div>
 					<div className="card-img-top content-card-img">

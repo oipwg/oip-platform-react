@@ -9,6 +9,7 @@ import ShareButton from './ShareButton.js';
 import TipButtons from './TipButtons.js';
 import ReportButton from './ReportButton.js';
 
+import ArtifactIcon from './ArtifactIcon.js';
 import PublisherIcon from './PublisherIcon.js';
 
 class ContentInfo extends Component {
@@ -50,7 +51,6 @@ class ContentInfo extends Component {
       publisher = this.state.artifact.getMainAddress();
   		pubName = this.state.artifact.getPublisherName();
   		title = this.state.artifact.getTitle();
-  		icon = this.props.Core.util.getEntypoIconForType(this.state.artifact.getType());
   		paid = this.state.artifact ? this.state.artifact.isPaid() : false;
     }
 
@@ -58,7 +58,7 @@ class ContentInfo extends Component {
 			<div>
 				<div className="row">
 					<div className="col-10">
-						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}>{this.state.isFetching ? "" : <div style={{display: "inline"}}>{ paid ? <span className="icon icon-credit" style={{color: "#28a745"}}></span> : ''}<span className={"icon icon-" + icon} style={{marginRight:"10px"}}></span></div>}{this.state.isFetching ? "loading..." : title}</h3>
+						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}>{this.state.isFetching ? "" : <ArtifactIcon artifact={this.state.artifact} />}{this.state.isFetching ? "loading..." : title}</h3>
 					</div>
 					<div className="col-2">
 						<div style={{float: "right", marginTop: "2px"}}>
