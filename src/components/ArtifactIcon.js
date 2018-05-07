@@ -31,8 +31,11 @@ class ArtifactIcon extends Component {
 			case "Research":
 				icon = "lab-flask";
 				break;
+			case "Property":
+				icon = "home";
+				break;
 			default:
-				icon = "";
+				icon = "bug";
 				break;
 		}
 
