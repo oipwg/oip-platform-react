@@ -1,7 +1,7 @@
 {
-  "name": "alexandria-boostrap-react",
-  "homepage": "https://alexandria.io",
-  "author": "Skylar Ostler <me@skylarostler.com>",
+  "name": "oip-platform-react",
+  "homepage": "https://oip.wiki",
+  "author": "Sky Young <sky@alexandria.io>",
   "version": "1.0.0",
   "dependencies": {
     "autoprefixer": "7.1.1",
