@@ -27,7 +27,6 @@ class ContentCard extends Component {
 
 		if (this.props.size === "large")
 			cardClasses = "col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 no-link-styling";
-
 		return (
 			<Link to={"/" + txid.substring(0,6) } onClick={function(){window.scrollTo(0, 0)}} className={cardClasses} title={title} >
 				<div className="card">
