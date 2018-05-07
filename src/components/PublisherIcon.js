@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 
+import Avatars from '@dicebear/avatars';
+import MaleSpriteCollection from '@dicebear/avatars-male-sprites';
+import FemaleSpriteCollection from '@dicebear/avatars-female-sprites';
+
+let maleAvatars = new Avatars(MaleSpriteCollection);
+let femaleAvatars = new Avatars(FemaleSpriteCollection);
+
 class PublisherIcon extends Component {
 	constructor(props){
 		super(props);
@@ -48,7 +55,7 @@ class PublisherIcon extends Component {
 		var gender = randomTrueFalse ? "male" : "female";
 
 		this.setState({
-			avatarSrc: "https://avatars.dicebear.com/v1/" + gender + "/" + props.id + "/" + size + ".png"
+			avatarSrc: "data:image/svg+xml;utf8," + (gender === "male" ? maleAvatars.create(props.id) : femaleAvatars.create(props.id))
 		})
 	}
 	render() {

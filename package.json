@@ -4,6 +4,9 @@
   "author": "Sky Young <sky@alexandria.io>",
   "version": "1.0.0",
   "dependencies": {
+    "@dicebear/avatars": "^2.0.2",
+    "@dicebear/avatars-female-sprites": "^1.0.3",
+    "@dicebear/avatars-male-sprites": "^1.0.3",
     "autoprefixer": "7.1.1",
     "axios": "^0.16.2",
     "babel-core": "6.25.0",
