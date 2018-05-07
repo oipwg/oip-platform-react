@@ -43,7 +43,7 @@ class PublisherPage extends Component {
 	dispatchSearch(props){
 		// props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": props.match.params.id }));
 		var _this = this;
-		props.Core.Index.getMainAddress(props.match.params.id, (success) => {
+		props.Core.Index.getPublisher(props.match.params.id, (success) => {
 			_this.setState({publisher: success});
 
 			props.store.dispatch(fetchArtifactList(props.Core, SEARCH_PAGE_LIST, { "search-for": success.address }));
@@ -111,7 +111,7 @@ class PublisherPage extends Component {
 										<h2>About</h2>
 										<p>
 											Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-											<span className="extraPart"> 
+											<span className="extraPart">
 												It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 											</span>
 										</p>
