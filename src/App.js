@@ -59,13 +59,7 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 
 var Core = OIPJS({
 	runIPFSJS: true,
-	IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/",
-	artifactFilters: [function(artifact){
-		if (artifact.getType() !== "Property" && artifact.getType() !== "Research")
-			return true
-		else
-			return false
-	}]
+	IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
 })
 
 class App extends Component {
