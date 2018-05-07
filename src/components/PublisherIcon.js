@@ -48,7 +48,7 @@ class PublisherIcon extends Component {
 		var gender = randomTrueFalse ? "male" : "female";
 
 		this.setState({
-			avatarSrc: "https://avatars.dicebear.com/v1/" + gender + "/" + props.id + "/" + size + ".png"
+			avatarSrc: "https://avatars.dicebear.com/v2/" + gender + "/" + props.id + ".svg"
 		})
 	}
 	render() {
