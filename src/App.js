@@ -58,7 +58,7 @@ const history = createBrowserHistory()
 const PUBLIC_URL = process.env.PUBLIC_URL;
 
 var Core = OIPJS({
-	runIPFSJS: true,
+	runIPFSJS: false,
 	IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
 })
 
@@ -94,7 +94,7 @@ class App extends Component {
 		return (
 			<Provider store={this.props.store}>
 				<ConnectedRouter history={history}>
-					<div>
+					<div className="container-fluid">
 						{/* This is to add transitions to the app, fade, etc. */}
 						<CSSTransitionGroup
 							transitionName="fade"
@@ -107,7 +107,7 @@ class App extends Component {
 							Core={Core}
 							store={this.props.store}
 						/>
-						
+
 						<LoginPrompt Core={Core} store={this.props.store} />
 						<DailyFaucetPrompt Core={Core} store={this.props.store} />
 						<SwapPrompt Core={Core} store={this.props.store} />
