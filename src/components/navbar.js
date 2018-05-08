@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 
+import LoginButton from './LoginButton'
+import UploadButton from './UploadButton'
 import {logout} from '../actions';
 
 import {
@@ -154,12 +155,8 @@ class Navbar extends Component {
                 </div>
 
                 <div className="user-container d-flex">
-                    <Link to="/user/upload">
-                        <button type="button" className="upload-button btn btn-outline-warning">Upload</button>
-                    </Link>
-                    <Link to="/login">
-                        <button type="button" className="login-button btn btn-outline-dark">Login</button>
-                    </Link>
+                    <UploadButton/>
+                    <LoginButton/>
                 </div>
 
             </nav>
