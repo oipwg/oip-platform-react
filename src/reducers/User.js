@@ -13,7 +13,7 @@ export const User = (state = {
 		case actions.LOGIN_FETCHING:
 			return {
 				...state,
-				isFetching: action.isFetching ? action.isFetching : true
+				isFetching: true
 			}
 		case actions.LOGIN_FAILURE:
 			return {

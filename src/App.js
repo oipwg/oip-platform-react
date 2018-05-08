@@ -97,7 +97,7 @@ class App extends Component {
 		return (
 			<Provider store={this.props.store}>
 				<ConnectedRouter history={history}>
-					<div className="container-fluid">
+					<div>
 						{/* This is to add transitions to the app, fade, etc. */}
 						<CSSTransitionGroup
 							transitionName="fade"

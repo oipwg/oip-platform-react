@@ -6,12 +6,12 @@ import { Wallet } from './Wallet.js';
 import { User } from './User.js';
 
 const pageType = (state = 'ARTIFACT_LIST', action) => {
-	switch (action.type) {
-		case action.page_type:
-			return action.page_type
-		default:
-			return state
-	}
+    switch (action.type) {
+        case action.page_type:
+            return action.page_type
+        default:
+            return state
+    }
 }
 
 const rootReducer = {

@@ -136,22 +136,26 @@ class Navbar extends Component {
 
             {this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm}/> : ""}
 
-            <nav className="navbar navbar-header navbar-expand-xl fixed-top">
+            <nav className="navbar-header navbar navbar-expand-sm fixed-top">
 
-                <Link className="navbar-brand navbar-logo" to="/">
-                    <img className="d-inline-block align-middle navbar-brand-img" src={LogoImg} alt=""/>
+                <Link className="navbar-logo navbar-brand" to="/">
+                    <img className="navbar-brand-img d-inline-block align-middle" src={LogoImg} alt=""/>
                 </Link>
+                <button className="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
 
-                <div id="navbarToggle" className="collapse navbar-collapse">
-
+                <div id="navbarSupportedContent" className="collapse navbar-collapse">
                     <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
-
+                    <div className="user-container d-flex">
+                        <UploadButton/>
+                        <LoginButton/>
+                    </div>
                 </div>
 
-                <div className="user-container d-flex">
-                    <UploadButton/>
-                    <LoginButton/>
-                </div>
+
 
             </nav>
         </div>;
