@@ -30,7 +30,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 // Import custom CSS to override Bootstrap
 import './assets/css/custom.css';
 
-import Navbar from './components/navbar.js';
+import Navbar from './components/Navbar.js';
 
 import Homepage from './components/homepage.js';
 import MiniMusicPlayer from './components/miniMusicPlayer.js';
