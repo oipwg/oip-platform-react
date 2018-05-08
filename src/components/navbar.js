@@ -151,17 +151,16 @@ class Navbar extends Component {
                             </div>
                         </form>
                     </div>
-
-                    <div className="user-container">
-                        <Link to="/user/upload">
-                            <button type="button" className="upload-button btn btn-outline-warning">Upload</button>
-                        </Link>
-                        <Link to="/login">
-                            <button type="button" className="login-button btn btn-outline-dark">Login</button>
-                        </Link>
-                    </div>
                 </div>
 
+                <div className="user-container d-flex">
+                    <Link to="/user/upload">
+                        <button type="button" className="upload-button btn btn-outline-warning">Upload</button>
+                    </Link>
+                    <Link to="/login">
+                        <button type="button" className="login-button btn btn-outline-dark">Login</button>
+                    </Link>
+                </div>
 
             </nav>
         </div>;
