@@ -27,6 +27,8 @@ import './assets/css/entypo.css';
 import './assets/css/alexandria.css';
 // Import Bootstrap 4 JS
 import 'bootstrap/dist/js/bootstrap.js';
+// Import custom CSS to override Bootstrap
+import './assets/css/custom.css';
 
 import Navbar from './components/navbar.js';
 
@@ -59,6 +61,7 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 
 var Core = OIPJS({
 	runIPFSJS: false,
+	OIPdURL: "https://snowflake.oip.fun/alexandria/v2",
 	IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
 })
 
