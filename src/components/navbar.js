@@ -137,8 +137,7 @@ class Navbar extends Component {
                     <img className="d-inline-block align-middle navbar-brand-img" src={LogoImg} alt=""/>
                 </Link>
 
-                <div id="navbarToggle" className="collapse navbar-collapse d-flex">
-
+                <div id="navbarToggle" className="collapse navbar-collapse">
 
                     <div className="oip-searchbar mx-auto mr-auto">
                         <form className="form-inline">
