@@ -48,7 +48,7 @@ class ContentInfo extends Component {
     let publisher, pubName, title, icon, paid;
 
     if (this.state.artifact) {
-      publisher = this.state.artifact.getMainAddress();
+      	publisher = this.state.artifact.getMainAddress();
   		pubName = this.state.artifact.getPublisherName();
   		title = this.state.artifact.getTitle();
   		paid = this.state.artifact ? this.state.artifact.isPaid() : false;
