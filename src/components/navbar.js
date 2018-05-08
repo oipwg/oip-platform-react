@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 
+import NavbarSearchBar from './NavbarSearchBar'
 import LoginButton from './LoginButton'
 import UploadButton from './UploadButton'
+
 import {logout} from '../actions';
 
 import {
@@ -10,7 +12,6 @@ import {
 } from 'react-router-dom'
 
 import LogoImg from '../assets/img/oip-basic.svg';
-import AvatarImg from '../assets/img/sky.jpg';
 
 class Navbar extends Component {
     constructor(props) {
@@ -87,7 +88,10 @@ class Navbar extends Component {
     }
 
     updateTextInput(e) {
-        this.setState({search: false, searchTerm: this.refs.search.value});
+        this.setState({
+            search: false,
+            searchTerm: e.target.value
+        });
     }
 
     handleKeyPress(event) {
@@ -140,18 +144,8 @@ class Navbar extends Component {
 
                 <div id="navbarToggle" className="collapse navbar-collapse">
 
-                    <div className="oip-searchbar mx-auto mr-auto">
-                        <form className="form-inline">
-                            <div className="input-group">
-                                <input ref="search" type="text" className="form-control outline-dark"
-                                       placeholder="Search..."
-                                       onInput={this.updateTextInput} onKeyPress={this.handleKeyPress}/>
-                                <span className="input-group-btn">
-                                    <button className="btn btn-outline-dark" type="button" onClick={this.searchForArtifacts}>Search</button>
-                                </span>
-                            </div>
-                        </form>
-                    </div>
+                    <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
+
                 </div>
 
                 <div className="user-container d-flex">
