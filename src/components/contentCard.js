@@ -1,61 +1,51 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { Link } from 'react-router-dom'
 
 import PublisherIcon from './PublisherIcon.js';
-import IPFSImage from './IPFSImage.js';
 import ArtifactIcon from './ArtifactIcon.js';
 
 import { FormattedTime } from 'react-player-controls'
 
-class ContentCard extends Component {
-	scrollToTop(){
+const ContentCard = (props) => {
+	const scrollToTop = () => {
 		window.scrollTo(0, 0);
 	}
-	render() {
-		console.log(this.props)
-		let title = this.props.artifact.getTitle();
-		let publisher = this.props.artifact.getMainAddress();
-		let txid = this.props.artifact.getTXID();
-		let paid = this.props.artifact.isPaid();
-		let thumbnailHash = this.props.Core.util.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail());
 
-		let duration = this.props.artifact.getDuration();
+    let title = props.artifact.getTitle();
+    let publisher = props.artifact.getMainAddress();
+    let txid = props.artifact.getTXID();
 
-		let cardClasses = "col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 no-link-styling";
+    let duration = props.artifact.getDuration();
 
-		if (this.props.size === "large")
-			cardClasses = "col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 no-link-styling";
-		return (
-			<Link to={"/" + txid.substring(0,6) } onClick={function(){window.scrollTo(0, 0)}} className={cardClasses} title={title} >
-				<div className="card">
-					<div style={{marginBottom:"-26px", marginTop: "-1px", zIndex: "1"}}>
-						<button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px", border: "none", backgroundColor: "rgba(0,0,0,0.5)"}}>
-							<ArtifactIcon artifact={this.props.artifact} />
-						</button>
-					</div>
-					<div className="card-img-top content-card-img">
-						<img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
-						{/*<IPFSImage Core={this.props.Core} hash={thumbnailHash} width={"100%"} height={"100%"} cover={true} />*/}
-					</div>
-					{duration ? <p className="content-card-xinfo"><FormattedTime numSeconds={duration} /></p> : <div className="content-card-xinfo-offset"></div>}
-					<div className="card-block" style={{padding: "10px",whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
-						<strong style={{}}>{title}</strong>
-						<Link to={"/pub/" + publisher } onClick={function(){window.scrollTo(0, 0)}}>
-							<div style={{marginBottom: "-15px", marginTop: "5px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex"}}>
-								<PublisherIcon id={publisher} Core={this.props.Core} style={{width: "32px", height: "32px"}} small={true} />
-								<p style={{marginTop:"4px", marginLeft: "5px", display: "inline-flex", color: "#000"}}>{this.props.artifact.publisherName}</p>
-							</div>
-						</Link>
-						{/* 0.9 Feature */}
-						{/*
-						<button className="btn btn-sm btn-outline-secondary view-btn">{this.props.views} Views</button>
-						*/}
-					</div>
-				</div>
-			</Link>
-		);
-	}
+    let cardClasses = "col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 no-link-styling";
+
+    if (props.size === "large")
+        cardClasses = "col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 no-link-styling";
+    return (
+        <Link to={"/" + txid.substring(0,6) } onClick={scrollToTop} className={cardClasses} title={title} >
+            <div className="card">
+                <div style={{marginBottom:"-26px", marginTop: "-1px", zIndex: "1"}}>
+                    <button className="btn btn-outline-primary btn-white" style={{padding: "3px 5px", border: "none", backgroundColor: "rgba(0,0,0,0.5)"}}>
+                        <ArtifactIcon artifact={props.artifact} />
+                    </button>
+                </div>
+                <div className="card-img-top content-card-img">
+                    <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
+                </div>
+                {duration ? <p className="content-card-xinfo"><FormattedTime numSeconds={duration} /></p> : <div className="content-card-xinfo-offset"></div>}
+                <div className="card-block" style={{padding: "10px",whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
+                    <strong style={{}}>{title}</strong>
+                    <Link to={"/pub/" + publisher } onClick={function(){window.scrollTo(0, 0)}}>
+                        <div style={{marginBottom: "-15px", marginTop: "5px", maxWidth: "80%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex"}}>
+                            <PublisherIcon id={publisher} Core={props.Core} style={{width: "32px", height: "32px"}} small={true} />
+                            <p style={{marginTop:"4px", marginLeft: "5px", display: "inline-flex", color: "#000"}}>{props.artifact.publisherName}</p>
+                        </div>
+                    </Link>
+                </div>
+            </div>
+        </Link>
+    );
 }
 
 export default ContentCard;
