@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import STLViewer from 'stl-viewer';
-
 class STLContainer extends Component {
 	constructor(props){
 		super(props);
@@ -53,17 +51,8 @@ class STLContainer extends Component {
 		}
 
 		return (
-			<div style={{width: "inherit", height: "100%", borderBottom: "1px solid rgba(0,0,0,0.2)"}}>
-				<STLViewer
-					url={stlURL}
-					width={1000}
-					height={600}
-					modelColor='#B92C2C'
-					backgroundColor='#EAEAEA'
-					rotate={true}
-					orbitControls={true}
-					style={{margin: "auto auto"}}
-				/>
+			<div>
+				<h1>STL CONTAINER</h1>
 			</div>
 		);
 	}
