@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import NavbarSearchBar from './NavbarSearchBar'
 import LoginButton from './LoginButton'
 import UploadButton from './UploadButton'
+import UserNav from './UserNav'
 
 import {logout} from '../actions';
 
@@ -151,7 +152,7 @@ class Navbar extends Component {
                     <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
                     <div className="user-container d-flex">
                         <UploadButton/>
-                        <LoginButton/>
+                        {this.state.User.isLoggedIn ? <UserNav/> : <LoginButton/>}
                     </div>
                 </div>
 
