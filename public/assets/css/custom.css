@@ -1,4 +1,45 @@
 .navbar-header {
-  background-color: pink;
-  box-shadow: 0px 2px 4px;
+  background-color: white;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.07);
+}
+
+.navbar-brand-img {
+  height: 32px;
+  width: auto;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-brand {
+  margin-left: 30px;
+}
+.avatar-container {
+  height: 32px;
+  width: 32px;
+}
+
+.avatar-img {
+  max-width:100%;
+  max-height:100%;
+  border-radius: 50%;
+}
+
+.Navbar {
+  height: 72px;
+  top: 0;
+}
+
+.navbar-header {
+  position: relative;
+  height: 100%
+}
+
+.Main {
+  padding-top: 72px;
+}
+
+.content-cards-container {
+  margin-top: 27px;
 }
