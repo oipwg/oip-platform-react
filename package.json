@@ -34,7 +34,6 @@
     "history": "^4.7.2",
     "html-webpack-plugin": "2.29.0",
     "identicon.js": "^2.3.1",
-    "identicons-react": "^0.1.0",
     "jest": "20.0.4",
     "jquery": "^3.2.1",
     "js-file-download": "^0.4.1",
