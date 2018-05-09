@@ -13,6 +13,7 @@ class ContentCard extends Component {
 		window.scrollTo(0, 0);
 	}
 	render() {
+		console.log(this.props)
 		let title = this.props.artifact.getTitle();
 		let publisher = this.props.artifact.getMainAddress();
 		let txid = this.props.artifact.getTXID();

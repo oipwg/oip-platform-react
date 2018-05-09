@@ -8,8 +8,6 @@ const ContentCardsContainer = (props) => {
 
         {props.opts.isFetching ? <p>Loading...</p> : ""}
         {props.opts.error ? <p>Oops! Looks like something went wrong...</p> : ""}
-        {props.opts.items.length === 0 ? <i>No results found!</i> : null}
-
         <div className="row">
             { props.opts.items.map((artifact, i) => {
                 return <ContentCard
