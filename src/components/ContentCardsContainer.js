@@ -7,8 +7,8 @@ class ContentCardsContainer extends Component {
 		let _this = this;
 
 		return (
-			<div className="container" style={{marginTop: "100px", marginBottom:"200px"}}>
-				<h4 style={{marginBottom: "25px"}}>{this.props.title}</h4>
+			<div className="content-cards-container container">
+				<h4 >{this.props.title}</h4>
 				{this.props.opts.isFetching ? <p>Loading...</p> : ""}
 				{this.props.opts.error ? <p>Oops! Looks like something went wrong...</p> : ""}
 				<div className="row">

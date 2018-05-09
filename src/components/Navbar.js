@@ -133,11 +133,11 @@ class Navbar extends Component {
             totalbalance = flobalance + btcbalance + ltcbalance;
         }
 
-        return <div>
+        return <div className="Navbar fixed-top">
 
             {this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm}/> : ""}
 
-            <nav className="navbar-header navbar navbar-expand-sm fixed-top">
+            <nav className="navbar-header navbar navbar-expand-sm">
 
                 <Link className="navbar-logo navbar-brand" to="/">
                     <img className="navbar-brand-img d-inline-block align-middle" src={LogoImg} alt=""/>

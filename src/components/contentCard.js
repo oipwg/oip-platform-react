@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import {
-  Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import PublisherIcon from './PublisherIcon.js';
 import IPFSImage from './IPFSImage.js';

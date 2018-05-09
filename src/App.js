@@ -97,7 +97,7 @@ class App extends Component {
 		return (
 			<Provider store={this.props.store}>
 				<ConnectedRouter history={history}>
-					<div>
+					<div className="App">
 						{/* This is to add transitions to the app, fade, etc. */}
 						<CSSTransitionGroup
 							transitionName="fade"
@@ -118,28 +118,30 @@ class App extends Component {
 						<NotificationSystem ref="NotificationSystem" />
 
 						{/* Include all components that need to be rendered in the main container content */}
-						<Switch>
-							<Route exact path="/" render={props => <Homepage Core={Core} store={this.props.store} {...props} />} />
+						<div className="Main">
+                            <Switch>
+                                <Route exact path="/" render={props => <Homepage Core={Core} store={this.props.store} {...props} />} />
 
-							<Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
-							<Route path="/register" render={props => <RegisterPage Core={Core} store={this.props.store} {...props} />} />
-							<Route path="/dmca" component={DMCAForm} />
+                                <Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
+                                <Route path="/register" render={props => <RegisterPage Core={Core} store={this.props.store} {...props} />} />
+                                <Route path="/dmca" component={DMCAForm} />
 
-							<Route path="/pub/:id" render={props => <PublisherPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
+                                <Route path="/pub/:id" render={props => <PublisherPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
 
-							<Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
+                                <Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
 
-							<Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-							<Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-							<Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
+                                <Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
+                                <Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
+                                <Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
 
-							<Route path="/:id" render={props =>
-								<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />}
-							/>
+                                <Route path="/:id" render={props =>
+                                    <ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />}
+                                />
 
-							{/* The switch will render the last Route if no others are found (aka 404 page.) */}
-							<Route component={NoMatch} />
-						</Switch>
+                                {/* The switch will render the last Route if no others are found (aka 404 page.) */}
+                                <Route component={NoMatch} />
+                            </Switch>
+						</div>
 
 						{/* Include all components that need to be rendered after the main container content */}
 						<MiniMusicPlayer display="false" />
