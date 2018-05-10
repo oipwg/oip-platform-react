@@ -4,7 +4,7 @@ import {
   Link
 } from 'react-router-dom'
 
-import ContentExtraInfo from './contentExtraInfo.js';
+import ContentExtraInfo from './ContentExtraInfo.js';
 import ShareButton from './ShareButton.js';
 import TipButtons from './TipButtons.js';
 import ReportButton from './ReportButton.js';

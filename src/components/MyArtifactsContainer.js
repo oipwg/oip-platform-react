@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-import MyArtifactListComponent from './myArtifactListComponent.js'
+import MyArtifactListComponent from './MyArtifactListComponent.js'
 
 class MyArtifactsContainer extends Component {
 	constructor(props) {

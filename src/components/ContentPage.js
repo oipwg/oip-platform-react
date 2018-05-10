@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import ContentContainer from './contentContainer.js'
-import ContentInfo from './contentInfo.js'
+import ContentContainer from './ContentContainer.js'
+import ContentInfo from './ContentInfo.js'
 import IssoCommentBox from './isso/IssoCommentBox.js'
 import IssoComments from './isso/IssoComments.js'
 import ContentCard from './ContentCard.js'

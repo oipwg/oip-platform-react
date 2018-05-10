@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import SidebarContainer from './sidebarContainer.js';
-import PublishContainer from './publishContainer.js';
-import MyArtifactsContainer from './myArtifactsContainer.js';
-import AnalyticsContainer from './analyticsContainer.js';
-import WalletContainer from './walletContainer.js';
-import SettingsContainer from './settingsContainer.js';
-import ViewArtifactContainer from './viewArtifactContainer.js';
-import EditArtifactContainer from './editArtifactContainer.js';
+import SidebarContainer from './SidebarContainer.js';
+import PublishContainer from './PublishContainer.js';
+import MyArtifactsContainer from './MyArtifactsContainer.js';
+import AnalyticsContainer from './AnalyticsContainer.js';
+import WalletContainer from './WalletContainer.js';
+import SettingsContainer from './SettingsContainer.js';
+import ViewArtifactContainer from './ViewArtifactContainer.js';
+import EditArtifactContainer from './EditArtifactContainer.js';
 
 class UserPage extends Component {
 	constructor(props) {

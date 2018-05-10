@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import AudioContainer from './audioContainer.js';
-import VideoPlayer from './videoPlayer.js';
-import ImageContainer from './imageContainer.js';
+import AudioContainer from './AudioContainer.js';
+import VideoPlayer from './VideoPlayer.js';
+import ImageContainer from './ImageContainer.js';
 import ViewerJSPlayer from './ViewerJSPlayer.js';
-import MarkdownContainer from './markdownContainer.js';
-import HTMLContainer from './htmlContainer.js';
-import CodeContainer from './codeContainer.js';
-import STLContainer from './stlContainer.js';
+import MarkdownContainer from './MarkdownContainer.js';
+import HTMLContainer from './HtmlContainer.js';
+import CodeContainer from './CodeContainer.js';
+import STLContainer from './StlContainer.js';
 
 var PLAYERS = [
 	AudioContainer, 

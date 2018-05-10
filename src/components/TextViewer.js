@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import MarkdownContainer from './markdownContainer.js';
+import MarkdownContainer from './MarkdownContainer.js';
 import PDFViewer from './pdfViewer.js';
 
 class TextViewer extends Component {

@@ -34,9 +34,9 @@ import './assets/js/fontawesome-all.min';
 
 import Navbar from './components/Navbar.js';
 
-import Homepage from './components/homepage.js';
-import MiniMusicPlayer from './components/miniMusicPlayer.js';
-import ContentPage from './components/contentPage.js';
+import Homepage from './components/Homepage.js';
+import MiniMusicPlayer from './components/MiniMusicPlayer.js';
+import ContentPage from './components/ContentPage.js';
 import PublisherPage from './components/PublisherPage.js';
 import UserPage from './components/UserPage.js';
 
