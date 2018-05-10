@@ -24,19 +24,21 @@ const ContentCard = (props) => {
 
                         <div className="card-img-top content-card-img">
                             <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
+                            <button className="btn btn-outline-light card-media-type m-1"><ArtifactIcon artifact={props.artifact} /></button>
+                            {duration ? <span className="content-card-xinfo m-1 "><FormattedTime numSeconds={duration} /></span> : null}
                         </div>
 
 
-                        <div style={{}} className="card-img-overlay p-2">
-                            <button className="btn btn-outline-light card-title m-0"><ArtifactIcon artifact={props.artifact} /></button>
-                            {duration ? <span className="content-card-xinfo "><FormattedTime numSeconds={duration} /></span> : <div className="content-card-xinfo-offset"></div>}
-                        </div>
+                        {/*<div style={{}} className="card-img-overlay p-2">*/}
+
+
+                        {/*</div>*/}
                     </Link>
 
                     <div className="card-body p-0">
                         <span style={{fontSize: 14}} className="card-title">{title}</span>
                         <Link to={"/pub/" + publisher } onClick={scrollToTop}>
-                            <PublisherIcon id={publisher} Core={props.Core} small={true} pubName={"Ryan"} />
+                            <PublisherIcon id={publisher} Core={props.Core} small={true} pubName={props.artifact.publisherName} />
                         </Link>
                     </div>
                 </div>
