@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ContentCard from './contentCard.js'
+import ContentCard from './ContentCard.js'
 
 const ContentCardsContainer = (props) => {
     return <div className="container mt-4">

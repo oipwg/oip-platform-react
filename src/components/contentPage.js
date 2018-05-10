@@ -4,7 +4,7 @@ import ContentContainer from './contentContainer.js'
 import ContentInfo from './contentInfo.js'
 import IssoCommentBox from './isso/IssoCommentBox.js'
 import IssoComments from './isso/IssoComments.js'
-import ContentCard from './contentCard.js'
+import ContentCard from './ContentCard.js'
 
 import {
   selectCurrentArtifact,
