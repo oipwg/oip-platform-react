@@ -1,33 +1,9 @@
 .navbar-header {
-  background-color: white;
   box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.07);
 }
-
 .navbar-brand-img {
-  height: 32px;
-  width: auto;
-}
-
-.navbar-toggler {
-  border: none;
-}
-
-.navbar-brand {
-  margin-left: 30px;
-}
-
-.Navbar {
-  height: 54px;
-  top: 0;
-}
-
-.navbar-header {
-  position: relative;
-  height: 100%
-}
-
-.Main {
-    padding-top: 54px;
+    height: 32px;
+    margin: auto;
 }
 
 

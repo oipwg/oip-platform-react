@@ -133,13 +133,9 @@ class Navbar extends Component {
             totalbalance = flobalance + btcbalance + ltcbalance;
         }
 
-        return <div className="Navbar fixed-top">
-
+        return <nav className="navbar-header navbar navbar-expand-sm">
             {this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm}/> : ""}
-
-            <nav className="navbar-header navbar navbar-expand-sm">
-
-                <Link className="navbar-logo navbar-brand" to="/">
+                <Link className="navbar-logo navbar-brand ml-3" to="/">
                     <img className="navbar-brand-img d-inline-block align-middle" src={LogoImg} alt=""/>
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -155,11 +151,7 @@ class Navbar extends Component {
                         {this.state.User.isLoggedIn ? <UserNav/> : <LoginButton/>}
                     </div>
                 </div>
-
-
-
             </nav>
-        </div>;
     }
 }
 
