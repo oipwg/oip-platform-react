@@ -19,27 +19,27 @@ const ContentCard = (props) => {
     let duration = props.artifact.getDuration();
 
     return (
-            <div className="card border-0 mb-5" style={{width: 210}}>
-                <Link to={"/" + txid.substring(0,6) } onClick={scrollToTop} className="" title={title} >
+                <div className="card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1">
+                    <Link to={"/" + txid.substring(0,6) } onClick={scrollToTop} className="" title={title} >
 
-                    <div className="card-img-top content-card-img">
-                        <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
-                    </div>
+                        <div className="card-img-top content-card-img">
+                            <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
+                        </div>
 
 
-                    <div style={{maxHeight: 138}} className="card-img-overlay p-2">
-                        <button className="btn btn-outline-light card-title m-0"><ArtifactIcon artifact={props.artifact} /></button>
-                        {duration ? <p className="content-card-xinfo"><FormattedTime numSeconds={duration} /></p> : <div className="content-card-xinfo-offset"></div>}
-                    </div>
-                </Link>
-
-                <div className="card-body p-0">
-                    <span style={{fontSize: 14}} className="card-title">{title}</span>
-                    <Link to={"/pub/" + publisher } onClick={scrollToTop}>
-                        <PublisherIcon id={publisher} Core={props.Core} small={true} pubName={"Ryan"} />
+                        <div style={{}} className="card-img-overlay p-2">
+                            <button className="btn btn-outline-light card-title m-0"><ArtifactIcon artifact={props.artifact} /></button>
+                            {duration ? <span className="content-card-xinfo "><FormattedTime numSeconds={duration} /></span> : <div className="content-card-xinfo-offset"></div>}
+                        </div>
                     </Link>
+
+                    <div className="card-body p-0">
+                        <span style={{fontSize: 14}} className="card-title">{title}</span>
+                        <Link to={"/pub/" + publisher } onClick={scrollToTop}>
+                            <PublisherIcon id={publisher} Core={props.Core} small={true} pubName={"Ryan"} />
+                        </Link>
+                    </div>
                 </div>
-            </div>
     );
 };
 
