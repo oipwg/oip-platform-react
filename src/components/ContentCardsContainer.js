@@ -7,7 +7,7 @@ const ContentCardsContainer = (props) => {
         <div className="">
 
             <div className="mb-4">
-                <span style={{fontWeight: 'bold'}} className="card-container-title">
+                <span className="card-container-title">
                     {props.title}
                 </span>
             </div>

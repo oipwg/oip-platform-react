@@ -50,7 +50,6 @@ class PublisherIcon extends Component {
 		if (!props.id)
 			return
 
-		var size = props.small ? 64 : 200;
 		var randomTrueFalse = isNaN(props.id.slice(17,18));
 		var gender = randomTrueFalse ? "male" : "female";
 
@@ -60,8 +59,9 @@ class PublisherIcon extends Component {
 	}
 	render() {
 		return (
-			<div style={this.props.style} className="userImage">
-				<img ref={image => this.image = image} style={this.props.style} src={this.state.avatarSrc} />
+			<div className="userImage">
+				<img className="border-0" ref={image => this.image = image} style={{maxWidth: 20}} src={this.state.avatarSrc} />
+                <span style={{fontFamily: 'Roboto', fontSize: 13}} className="card-subtitle ml-2 text-muted">{this.props.pubName}</span>
 			</div>
 		);
 	}
