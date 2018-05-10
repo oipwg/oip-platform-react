@@ -29,19 +29,6 @@
 .Main {
     padding-top: 54px;
 }
-
-.card-container {
-    margin-right: 90px;
-    margin-left: 90px;
-}
-
-.content-cards-container {
-    margin-top: 24px;
-}
-
-.content-cards-title-container {
-    margin-bottom: 24px;
-}
 .card-container-title {
     font-family: Roboto, Avenir, Helvetica;
 }

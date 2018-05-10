@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import ContentCard from './contentCard.js'
 
 const ContentCardsContainer = (props) => {
-    return <div className="content-cards-container">
-        <div className="card-container">
+    return <div className="container mt-4">
+        <div className="">
 
-            <div className="content-cards-title-container">
+            <div className="mb-4">
                 <span className="card-container-title">
                     {props.title}
                 </span>
