@@ -37,7 +37,7 @@ const ContentCard = (props) => {
                             </Link>
                         </div>
                     </div>
-            </div>
+                </div>
 
     );
 };
