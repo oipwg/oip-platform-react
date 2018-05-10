@@ -26,8 +26,6 @@ const ContentCard = (props) => {
                         <div className="card-img-overlay">
                             <button className="btn btn-outline-light card-title"><ArtifactIcon artifact={props.artifact} /></button>
                             {duration ? <p className="content-card-xinfo"><FormattedTime numSeconds={duration} /></p> : <div className="content-card-xinfo-offset"></div>}
-                        </div>
-
                     </Link>
 
                     <div className="row">
