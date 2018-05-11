@@ -25,7 +25,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 // Import custom entypo css class & Alexandria css class
 import './assets/css/entypo.css';
 import './assets/css/alexandria.css';
+
 // Import Bootstrap 4 JS
+import 'jquery/dist/jquery';
+import 'popper.js/dist/umd/popper';
 import 'bootstrap/dist/js/bootstrap.js';
 // Import custom CSS to override Bootstrap
 import './assets/css/custom.css';

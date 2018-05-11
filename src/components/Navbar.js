@@ -64,6 +64,7 @@ class Navbar extends Component {
     }
 
     render() {
+        console.log("my props", this.props);
         let totalbalance = 0;
 
         if (this.props && this.props.Wallet) {
