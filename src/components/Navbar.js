@@ -61,7 +61,7 @@ class Navbar extends Component {
 
         return <nav className="navbar-header navbar navbar-expand-sm">
             {this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm}/> : null}
-                <Link className="navbar-logo navbar-brand ml-3" to="/">
+                <Link className="navbar-logo navbar-brand ml-5" to="/">
                     <img className="navbar-brand-img d-inline-block align-middle" src={LogoImg} alt=""/>
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
