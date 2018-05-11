@@ -94,7 +94,7 @@ class Navbar extends Component {
                     <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
                     <div className="user-container d-flex justify-content-end">
                         <UploadButton/>
-                        {this.props.User.isLoggedIn ? <UserNav/> : <LoginButton/>}
+                        {this.props.User.isLoggedIn ? <UserNav pubName={this.props.User.publisher.name}/> : <LoginButton/>}
                     </div>
                 </div>
             </nav>
