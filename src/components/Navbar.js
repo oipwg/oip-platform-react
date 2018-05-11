@@ -1,19 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions/index.js'
-import { bindActionCreators } from 'redux';
+import { Link, Redirect } from 'react-router-dom'
 
 import NavbarSearchBar from './NavbarSearchBar'
 import LoginButton from './LoginButton'
 import UploadButton from './UploadButton'
 import UserNav from './UserNav'
-
-import {logout} from '../actions';
-
-import {
-    Link,
-    Redirect
-} from 'react-router-dom'
+import { logout } from '../actions/index.js'
 
 import LogoImg from '../assets/img/oip-basic.svg';
 
@@ -29,7 +22,6 @@ class Navbar extends Component {
         this.searchForArtifacts = this.searchForArtifacts.bind(this);
         this.updateTextInput = this.updateTextInput.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.logout = this.logout.bind(this);
     }
 
     searchForArtifacts() {
@@ -51,15 +43,6 @@ class Navbar extends Component {
         if (event.key === 'Enter') {
             event.preventDefault();
             this.searchForArtifacts();
-        }
-    }
-
-    logout() {
-        console.log("LOGOUT");
-        try {
-            this.props.store.dispatch(logout("test"));
-        } catch (e) {
-            console.error(e);
         }
     }
 
@@ -95,7 +78,7 @@ class Navbar extends Component {
                     <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
                     <div className="user-container d-flex justify-content-end">
                         <UploadButton/>
-                        {this.props.User.isLoggedIn ? <UserNav pubName={this.props.User.publisher.name}/> : <LoginButton/>}
+                        {this.props.User.isLoggedIn ? <UserNav logout={this.props.logout} pubName={this.props.User.publisher.name}/> : <LoginButton/>}
                     </div>
                 </div>
             </nav>
@@ -108,11 +91,8 @@ const mapStateToProps = state => {
         Wallet: state.Wallet
     }
 }
-
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(actions, dispatch)
-    };
+const mapDispatchToProps = {
+    logout
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
