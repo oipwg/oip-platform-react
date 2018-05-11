@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions/index.js'
+import { bindActionCreators } from 'redux';
 
 import NavbarSearchBar from './NavbarSearchBar'
 import LoginButton from './LoginButton'
@@ -19,65 +22,14 @@ class Navbar extends Component {
         super(props);
 
         this.state = {
-            dropdownOpen: false,
-            dropdown2Open: false,
-            navDropdownOpen: false,
-            User: {},
-            Wallet: {
-                florincoin: {balance: 0, usd: 0},
-                bitcoin: {balance: 0, usd: 0},
-                litecoin: {balance: 0, usd: 0}
-            },
             searchTerm: "",
             search: false
         };
 
-        this.toggle = this.toggle.bind(this);
-        this.toggle2 = this.toggle2.bind(this);
         this.searchForArtifacts = this.searchForArtifacts.bind(this);
         this.updateTextInput = this.updateTextInput.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
-        this.onNavbarToggleClick = this.onNavbarToggleClick.bind(this);
         this.logout = this.logout.bind(this);
-        this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-        let _this = this;
-
-        this.unsubscribe = this.props.store.subscribe(() => {
-            _this.stateDidUpdate();
-        });
-    }
-
-    stateDidUpdate() {
-        let newState = this.props.store.getState();
-
-        let User = newState.User;
-        let Wallet = newState.Wallet;
-
-        this.setState({
-            User,
-            Wallet
-        });
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
-    }
-
-    componentDidMount() {
-        this.stateDidUpdate();
-    }
-
-    toggle() {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        });
-    }
-
-    toggle2() {
-        this.setState({
-            dropdown2Open: !this.state.dropdown2Open
-        });
     }
 
     searchForArtifacts() {
@@ -111,24 +63,18 @@ class Navbar extends Component {
         }
     }
 
-    onNavbarToggleClick() {
-        this.setState({
-            navDropdownOpen: !this.state.navDropdownOpen
-        })
-    }
-
     render() {
         let totalbalance = 0;
 
-        if (this.state && this.state.Wallet) {
+        if (this.props && this.props.Wallet) {
             let flobalance = 0, btcbalance = 0, ltcbalance = 0;
 
-            if (this.state.Wallet.florincoin && this.state.Wallet.florincoin.usd)
-                flobalance = parseFloat(this.state.Wallet.florincoin.usd);
-            if (this.state.Wallet.bitcoin && this.state.Wallet.bitcoin.usd)
-                btcbalance = parseFloat(this.state.Wallet.bitcoin.usd);
-            if (this.state.Wallet.litecoin && this.state.Wallet.litecoin.usd)
-                ltcbalance = parseFloat(this.state.Wallet.litecoin.usd);
+            if (this.props.Wallet.florincoin && this.props.Wallet.florincoin.usd)
+                flobalance = parseFloat(this.props.Wallet.florincoin.usd);
+            if (this.props.Wallet.bitcoin && this.props.Wallet.bitcoin.usd)
+                btcbalance = parseFloat(this.props.Wallet.bitcoin.usd);
+            if (this.props.Wallet.litecoin && this.props.Wallet.litecoin.usd)
+                ltcbalance = parseFloat(this.props.Wallet.litecoin.usd);
 
             totalbalance = flobalance + btcbalance + ltcbalance;
         }
@@ -148,11 +94,24 @@ class Navbar extends Component {
                     <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
                     <div className="user-container d-flex justify-content-end">
                         <UploadButton/>
-                        {this.state.User.isLoggedIn ? <UserNav/> : <LoginButton/>}
+                        {this.props.User.isLoggedIn ? <UserNav/> : <LoginButton/>}
                     </div>
                 </div>
             </nav>
     }
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+    return {
+        User: state.User,
+        Wallet: state.Wallet
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
