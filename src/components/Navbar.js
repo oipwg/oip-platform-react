@@ -77,7 +77,7 @@ class Navbar extends Component {
                 <div id="navbarSupportedContent" className="collapse navbar-collapse">
                     <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
                     <div className="user-container d-flex justify-content-end">
-                        <UploadButton/>
+                        <UploadButton isLoggedIn={this.props.User.isLoggedIn}/>
                         {this.props.User.isLoggedIn ? <UserNav logout={this.props.logout} pubName={this.props.User.publisher.name}/> : <LoginButton/>}
                     </div>
                 </div>
