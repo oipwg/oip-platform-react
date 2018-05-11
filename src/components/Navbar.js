@@ -48,23 +48,19 @@ class Navbar extends Component {
 
     render() {
         console.log("my props", this.props);
+
         let totalbalance = 0;
-
-        if (this.props && this.props.Wallet) {
+        if (this.props.User.isLoggedIn && this.props.Wallet) {
             let flobalance = 0, btcbalance = 0, ltcbalance = 0;
-
-            if (this.props.Wallet.florincoin && this.props.Wallet.florincoin.usd)
                 flobalance = parseFloat(this.props.Wallet.florincoin.usd);
-            if (this.props.Wallet.bitcoin && this.props.Wallet.bitcoin.usd)
                 btcbalance = parseFloat(this.props.Wallet.bitcoin.usd);
-            if (this.props.Wallet.litecoin && this.props.Wallet.litecoin.usd)
                 ltcbalance = parseFloat(this.props.Wallet.litecoin.usd);
 
             totalbalance = flobalance + btcbalance + ltcbalance;
         }
 
         return <nav className="navbar-header navbar navbar-expand-sm">
-            {this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm}/> : ""}
+            {this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm}/> : null}
                 <Link className="navbar-logo navbar-brand ml-3" to="/">
                     <img className="navbar-brand-img d-inline-block align-middle" src={LogoImg} alt=""/>
                 </Link>
@@ -78,7 +74,7 @@ class Navbar extends Component {
                     <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
                     <div className="user-container d-flex justify-content-end">
                         <UploadButton isLoggedIn={this.props.User.isLoggedIn}/>
-                        {this.props.User.isLoggedIn ? <UserNav logout={this.props.logout} pubName={this.props.User.publisher.name}/> : <LoginButton/>}
+                        {this.props.User.isLoggedIn ? <UserNav balance={totalbalance} logout={this.props.logout} pubName={this.props.User.publisher.name}/> : <LoginButton/>}
                     </div>
                 </div>
             </nav>
