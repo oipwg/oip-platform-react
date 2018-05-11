@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const UserNav = (props) => {
     return (
@@ -7,10 +8,12 @@ const UserNav = (props) => {
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {props.pubName}
             </button>
-            <div style={{left: -107}} className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a className="dropdown-item" href="#">Action</a>
-                <a className="dropdown-item" href="#">Another action</a>
-                <a className="dropdown-item" href="#">Something else here</a>
+            <div style={{left: -73}} className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <Link className="dropdown-item d-flex align-items-center justify-content-start" to="#" ><i style={{color: 'red', width: 20}} className="fas fa-cloud-upload-alt mr-2"/>Upload</Link>
+                <Link className="dropdown-item d-flex align-items-center justify-content-start" to="#"><i style={{color: 'grey', width: 20}} className="fas fa-wallet mr-2"/>Wallet</Link>
+                <Link className="dropdown-item d-flex align-items-center justify-content-start" to="#"><i style={{color: 'grey', width: 20}} className="fas fa-cogs mr-2"/>Settings</Link>
+                <div className="dropdown-divider"></div>
+                <Link className="dropdown-item d-flex align-items-center justify-content-start" to="#"><i style={{color: 'green', width: 20}} className="fas fa-sign-out-alt mr-2"/>Logout</Link>
             </div>
         </div>
 
