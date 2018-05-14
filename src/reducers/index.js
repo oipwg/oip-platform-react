@@ -4,6 +4,7 @@ import { FilePlaylist } from './FilePlaylist.js';
 import { VolumeControls } from './VolumeControls.js';
 import { Wallet } from './Wallet.js';
 import { User } from './User.js';
+import { Core } from './Core.js'
 
 const pageType = (state = 'ARTIFACT_LIST', action) => {
     switch (action.type) {
@@ -21,7 +22,8 @@ const rootReducer = {
 	ArtifactLists,
 	CurrentArtifact,
 	FilePlaylist,
-	VolumeControls
+	VolumeControls,
+	Core
 }
 
 export default rootReducer

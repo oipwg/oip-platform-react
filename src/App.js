@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 
 import { connect } from 'react-redux';
-import { setupWalletEvents, login } from './actions';
+import { setupWalletEvents, setCoreToStore, login } from './actions';
 
 import { CSSTransitionGroup } from 'react-transition-group'
 
@@ -84,6 +84,7 @@ class App extends Component {
 
 	componentDidMount(){
 		this.props.setupWalletEvents(Core);
+		this.props.setCoreToStore(Core);
 
 		try {
 			if (localStorage.username && localStorage.pw){
@@ -99,7 +100,7 @@ class App extends Component {
 
 		piwik.connectToHistory(history);
 
-		return (
+        return (
 			<Provider store={this.props.store}>
 				<ConnectedRouter history={history}>
 					<div className="App">
@@ -124,7 +125,8 @@ class App extends Component {
 						{/* Include all components that need to be rendered in the main container content */}
 						<div className="Main">
                             <Switch>
-                                <Route exact path="/" render={props => <Homepage Core={Core} store={this.props.store} {...props} />} />
+                                {/*<Route exact path="/" component={Homepage} />*/}
+                                <Route exact path="/" render={props => <Homepage Core={Core} {...props} />} />
 
                                 <Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
                                 <Route path="/register" render={props => <RegisterPage Core={Core} store={this.props.store} {...props} />} />
@@ -179,14 +181,14 @@ const NoMatch = ({ match }) => (
 
 function mapStateToProps(state) {
     return {
-    	ReduxStore: state,
         User: state.User
     }
 }
 
 const mapDispatchToProps = {
    login,
-	setupWalletEvents
+	setupWalletEvents,
+    setCoreToStore
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

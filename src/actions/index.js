@@ -63,6 +63,13 @@ export const REGISTER_ERROR = 'REGISTER_ERROR'
 
 export const PAUSED = 'PAUSED'
 
+export const SET_CORE_TO_STORE = 'SET_CORE_TO_STORE'
+
+export const setCoreToStore = Core => ({
+	type: SET_CORE_TO_STORE,
+	Core
+})
+
 export const setPageType = pg_type => ({
 	type: SET_PAGE_TYPE,
 	pg_type
