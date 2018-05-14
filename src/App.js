@@ -126,8 +126,8 @@ class App extends Component {
 						<div className="Main">
                             <Switch>
                                 <Route exact path="/" component={Homepage} />
+                                <Route exact path="/login" component={LoginPage} />
 
-                                <Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
                                 <Route path="/register" render={props => <RegisterPage Core={Core} store={this.props.store} {...props} />} />
                                 <Route path="/dmca" component={DMCAForm} />
 

@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-
-import {
-  Redirect
-} from 'react-router-dom'
-
-import { login } from '../actions';
-
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux';
 import validator from 'validator';
 
 import ButtonCheckbox from './ButtonCheckbox.js';
+import { login } from '../actions';
 
 const STATUS = { 
 	NO_INPUT: "NO_INPUT",
@@ -36,31 +32,10 @@ class LoginBlock extends Component {
 		this.updatePassword = this.updatePassword.bind(this);
 		this.updateRememberMe = this.updateRememberMe.bind(this);
 		this.registerClick = this.registerClick.bind(this);
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let User = newState.User;
-
-		this.setState({
-			User
-		});
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
 	login(){
-		this.props.store.dispatch(login(this.props.Core, this.state.email, this.state.password));
+		this.props.dispatch(login(this.props.Core, this.state.email, this.state.password));
 
 		if (this.state.rememberMe){
 			try {
@@ -69,6 +44,7 @@ class LoginBlock extends Component {
 			} catch (e) {}
 		}
 	}
+
 	updateEmail(){
 		let newState = this.state.emailState;
 
@@ -80,6 +56,7 @@ class LoginBlock extends Component {
 
 		this.setState({email: this.email.value, emailState: newState});
 	}
+
 	updatePassword(){
 		let newState = STATUS.VALID;
 
@@ -88,9 +65,11 @@ class LoginBlock extends Component {
 
 		this.setState({password: this.password.value, passwordState: newState});
 	}
+
 	updateRememberMe(){
 		this.setState({rememberMe: !this.state.rememberMe });
 	}
+
 	registerClick(){
 		if (this.props.onRegisterClick){
 			this.props.onRegisterClick();
@@ -98,6 +77,7 @@ class LoginBlock extends Component {
 			this.setState({redirectToRegister: true});
 		}
 	}
+
 	render() {
 		return (
 			<div style={{width: "100%"}}>
@@ -131,7 +111,7 @@ class LoginBlock extends Component {
 						<button className="btn btn-lg btn-outline-secondary btn-block" onClick={this.registerClick}>Register</button>
 					</div>
 					<div className="col-12 col-sm-7 col-md-7 order-1 order-sm-2">
-						<button id="signin" className="btn btn-lg btn-success btn-block" onClick={this.login}>{this.state.User.isFetching ?  "loading..." : "Login"}</button>
+						<button id="signin" className="btn btn-lg btn-success btn-block" onClick={this.login}>{this.props.User.isFetching ?  "loading..." : "Login"}</button>
 					</div>
 				</div>
 			</div>
@@ -139,4 +119,4 @@ class LoginBlock extends Component {
 	}
 }
 
-export default LoginBlock;
+export default connect()(LoginBlock);
