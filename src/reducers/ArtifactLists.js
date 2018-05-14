@@ -29,6 +29,7 @@ const artifactList = (state = {
 				...state,
 				isFetching: false,
 				didInvalidate: false,
+				error: false,
 				items: action.items,
 				lastUpdated: action.receivedAt
 			}

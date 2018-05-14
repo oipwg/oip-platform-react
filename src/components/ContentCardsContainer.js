@@ -3,6 +3,9 @@ import React from 'react';
 import ContentCard from './ContentCard.js'
 
 const ContentCardsContainer = (props) => {
+
+    let contentLoaded = (props.content !== undefined)
+
     return <div className="container mt-4">
         <div className="">
 
@@ -12,17 +15,17 @@ const ContentCardsContainer = (props) => {
                 </span>
             </div>
 
-            {props.opts.isFetching ? <p>Loading...</p> : ""}
-            {props.opts.error ? <p>Oops! Looks like something went wrong...</p> : ""}
+            {contentLoaded ? (props.content.isFetching ? <p>Loading...</p> : "") : null}
+            {contentLoaded ? (props.content.error ? <p>Oops! Looks like something went wrong...</p> : "") : null}
 
             <div className="row no-gutters d-flex justify-content-between">
-                { props.opts.items.map((artifact, i) => {
+                { contentLoaded ? (props.content.items.map((artifact, i) => {
                     return <ContentCard
                         key={i}
                         artifact={artifact}
                         Core={props.Core}
                     />
-                })}
+                })) : (null) }
             </div>
         </div>
     </div>
