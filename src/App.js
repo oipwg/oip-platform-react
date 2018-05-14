@@ -125,8 +125,7 @@ class App extends Component {
 						{/* Include all components that need to be rendered in the main container content */}
 						<div className="Main">
                             <Switch>
-                                {/*<Route exact path="/" component={Homepage} />*/}
-                                <Route exact path="/" render={props => <Homepage Core={Core} {...props} />} />
+                                <Route exact path="/" component={Homepage} />
 
                                 <Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
                                 <Route path="/register" render={props => <RegisterPage Core={Core} store={this.props.store} {...props} />} />

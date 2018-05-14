@@ -12,6 +12,7 @@ class Homepage extends Component {
 	}
 
 	render() {
+		console.log("HOMEPAGE: ", this.props)
 		return (
 			<ContentCardsContainer
 				Core={this.props.Core}
@@ -23,7 +24,8 @@ class Homepage extends Component {
 }
 function mapStateToProps(state) {
     return {
-		content: state.ArtifactLists[LATEST_CONTENT_LIST]
+		content: state.ArtifactLists[LATEST_CONTENT_LIST],
+		Core: state.Core.Core
     }
 }
 
