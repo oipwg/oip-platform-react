@@ -21,18 +21,11 @@ const ContentCard = (props) => {
     return (
                 <div className="card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1">
                     <Link to={"/" + txid.substring(0,6) } onClick={scrollToTop} className="" title={title} >
-
                         <div className="card-img-top content-card-img">
                             <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
                             <button className="btn btn-outline-light card-media-type m-1"><ArtifactIcon artifact={props.artifact} /></button>
                             {duration ? <span className="content-card-xinfo m-1 "><FormattedTime numSeconds={duration} /></span> : null}
                         </div>
-
-
-                        {/*<div style={{}} className="card-img-overlay p-2">*/}
-
-
-                        {/*</div>*/}
                     </Link>
 
                     <div className="card-body p-0">
