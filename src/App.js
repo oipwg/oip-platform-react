@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import {
     BrowserRouter as Router,
     Route,
-    Switch
+    Switch,
+	Redirect
 } from 'react-router-dom'
 
 import { connect } from 'react-redux';
@@ -98,7 +99,7 @@ class App extends Component {
 	}
 
 	render() {
-		console.log("In App: ", this.props)
+		console.log("Is logged in: ", this.props.User.isLoggedIn)
 		const supportsHistory = 'pushState' in window.history;
 
 		piwik.connectToHistory(history);
@@ -139,9 +140,24 @@ class App extends Component {
 
                                 <Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
 
-                                <Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-                                <Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-                                <Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
+                                <Route path="/user/:page/:type/:id" render={props => (
+                                    this.props.User.isLoggedIn ? (
+										<UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />
+                                    ) : ( <Redirect to="/"/> )
+                                )} />
+
+                                <Route path="/user/:page/:type" render={props => (
+                                    this.props.User.isLoggedIn ? (
+										<UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />
+                                ) : ( <Redirect to="/"/> )
+								)} />
+
+
+                                <Route path="/user/:page" render={props => (
+                                	this.props.User.isLoggedIn ? (
+                                        <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />
+									) : ( <Redirect to="/"/> )
+								)} />
 
                                 <Route path="/:id" render={props =>
                                     <ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />}
