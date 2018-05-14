@@ -2,10 +2,14 @@
 import React, { Component } from 'react';
 
 import {
-	BrowserRouter as Router,
-	Route,
-	Switch
+    BrowserRouter as Router,
+    Route,
+    Switch
 } from 'react-router-dom'
+
+import { connect } from 'react-redux';
+import { setupWalletEvents, login } from './actions';
+
 import { CSSTransitionGroup } from 'react-transition-group'
 
 import createBrowserHistory from 'history/createBrowserHistory'
@@ -18,7 +22,6 @@ import NotificationSystem from 'react-notification-system';
 
 import { OIPJS } from 'oip-js';
 
-import { setupWalletEvents, login } from './actions';
 
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
@@ -80,11 +83,11 @@ class App extends Component {
 	}
 
 	componentDidMount(){
-		this.props.store.dispatch(setupWalletEvents(Core));
+		this.props.setupWalletEvents(Core);
 
 		try {
 			if (localStorage.username && localStorage.pw){
-				this.props.store.dispatch(login(Core, localStorage.username, localStorage.pw));
+				this.props.login(Core, localStorage.username, localStorage.pw);
 			}
 		} catch (e) {}
 
@@ -95,6 +98,7 @@ class App extends Component {
 	}
 
 	render() {
+		console.log("In App: ", this.props)
 		const supportsHistory = 'pushState' in window.history;
 
 		piwik.connectToHistory(history);
@@ -164,4 +168,16 @@ const NoMatch = ({ match }) => (
 	</div>
 )
 
-export default App;
+function mapStateToProps(state) {
+    return {
+    	ReduxStore: state,
+        User: state.User
+    }
+}
+
+const mapDispatchToProps = {
+   login,
+	setupWalletEvents
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
