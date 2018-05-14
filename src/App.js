@@ -23,7 +23,6 @@ import NotificationSystem from 'react-notification-system';
 
 import { OIPJS } from 'oip-js';
 
-
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
 // Import custom entypo css class & Alexandria css class
@@ -94,9 +93,6 @@ class App extends Component {
 
 		this.setState({NotificationSystem: this.refs.NotificationSystem})
 	}
-	componentWillUnmount() {
-
-	}
 
 	render() {
 		console.log("Is logged in: ", this.props.User.isLoggedIn)
@@ -151,7 +147,6 @@ class App extends Component {
 										<UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />
                                 ) : ( <Redirect to="/"/> )
 								)} />
-
 
                                 <Route path="/user/:page" render={props => (
                                 	this.props.User.isLoggedIn ? (
