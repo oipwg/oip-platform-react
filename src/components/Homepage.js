@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
-import {
-  fetchArtifactList,
-  LATEST_CONTENT_LIST
-} from '../actions'
+import {connect} from "react-redux";
+import { fetchArtifactList, LATEST_CONTENT_LIST } from '../actions'
 
 import ContentCardsContainer from './ContentCardsContainer.js';
 
@@ -25,14 +23,9 @@ class Homepage extends Component {
 			_this.stateDidUpdate();
 		});
 	}
-	setupConnection(){
-		let _this = this;
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
-	}
+
 	componentDidMount(){
-		this.props.store.dispatch(fetchArtifactList(this.props.Core, LATEST_CONTENT_LIST));
+		this.props.dispatch(fetchArtifactList(this.props.Core, LATEST_CONTENT_LIST));
 	}
 	stateDidUpdate(){
 		let newState = this.props.store.getState();
@@ -47,6 +40,7 @@ class Homepage extends Component {
 		this.unsubscribe();
 	}
 	render() {
+		console.log(this.props)
 		return (
 			<ContentCardsContainer
 				Core={this.props.Core}
@@ -57,4 +51,4 @@ class Homepage extends Component {
 	}
 }
 
-export default Homepage;
+export default connect()(Homepage);
