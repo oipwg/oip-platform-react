@@ -95,7 +95,6 @@ class App extends Component {
 	}
 
 	render() {
-		console.log("Is logged in: ", this.props.User.isLoggedIn)
 		const supportsHistory = 'pushState' in window.history;
 
 		piwik.connectToHistory(history);
@@ -114,7 +113,6 @@ class App extends Component {
 						{/* Include all components that need to be rendered above the main container content */}
 						<Navbar
 							Core={Core}
-							store={this.props.store}
 						/>
 
 						<LoginPrompt Core={Core} store={this.props.store} />
