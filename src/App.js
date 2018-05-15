@@ -133,7 +133,7 @@ class App extends Component {
 
                                 <Route path="/pub/:id" render={props => <PublisherPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
 
-                                <Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
+                                <Route path="/search/:id" render={props => <SearchPage  {...props} />} />
 
                                 <Route path="/user/:page/:type/:id" render={props => (
                                     this.props.User.isLoggedIn ? (
