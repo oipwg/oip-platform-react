@@ -19,7 +19,8 @@ const ContentCardsContainer = (props) => {
             {contentLoaded ? (props.content.error ? <p>Oops! Looks like something went wrong...</p> : "") : null}
 
             <div className="row no-gutters d-flex justify-content-between">
-                { contentLoaded ? (props.content.items.map((artifact, i) => {
+                { contentLoaded && !props.content.error && !props.content.isFetching ? (
+                    props.content.items.map((artifact, i) => {
                     return <ContentCard
                         key={i}
                         artifact={artifact}
