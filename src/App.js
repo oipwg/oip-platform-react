@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 
 import { connect } from 'react-redux';
-import { setupWalletEvents, setCoreToStore, login } from './actions';
+import { setupWalletEvents, setCoreToStore, login, setNotificationSys } from './actions';
 
 import { CSSTransitionGroup } from 'react-transition-group'
 
@@ -76,15 +76,11 @@ var Core = OIPJS({
 class App extends Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {
-			NotificationSystem: undefined
-		};
 	}
 
 	componentDidMount(){
-		this.props.setupWalletEvents(Core);
-		this.props.setCoreToStore(Core);
+		this.props.setupWalletEvents(this.props.Core);
+        this.props.setNotificationSys(this.refs.NotificationSystem);
 
 		try {
 			if (localStorage.username && localStorage.pw){
@@ -92,10 +88,10 @@ class App extends Component {
 			}
 		} catch (e) {}
 
-		this.setState({NotificationSystem: this.refs.NotificationSystem})
 	}
 
 	render() {
+	    console.log("PROPS", this.props)
 		const supportsHistory = 'pushState' in window.history;
 
 		piwik.connectToHistory(history);
@@ -127,34 +123,32 @@ class App extends Component {
                             <Switch>
                                 <Route exact path="/" component={Homepage} />
                                 <Route exact path="/login" component={LoginPage} />
+                                <Route path="/dmca" component={DMCAForm} />
+                                <Route path="/search/:id" render={props => <SearchPage  {...props} />} />
 
                                 <Route path="/register" render={props => <RegisterPage Core={Core} store={this.props.store} {...props} />} />
-                                <Route path="/dmca" component={DMCAForm} />
-
-                                <Route path="/pub/:id" render={props => <PublisherPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-
-                                <Route path="/search/:id" render={props => <SearchPage  {...props} />} />
+                                <Route path="/pub/:id" render={props => <PublisherPage Core={Core} store={this.props.store} NotificationSystem={this.props.NotificationSystem} {...props} />} />
 
                                 <Route path="/user/:page/:type/:id" render={props => (
                                     this.props.User.isLoggedIn ? (
-										<UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />
+										<UserPage Core={Core} store={this.props.store} NotificationSystem={this.props.NotificationSystem} {...props} />
                                     ) : ( <Redirect to="/"/> )
                                 )} />
 
                                 <Route path="/user/:page/:type" render={props => (
                                     this.props.User.isLoggedIn ? (
-										<UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />
+										<UserPage Core={Core} store={this.props.store} NotificationSystem={this.props.NotificationSystem} {...props} />
                                 ) : ( <Redirect to="/"/> )
 								)} />
 
                                 <Route path="/user/:page" render={props => (
                                 	this.props.User.isLoggedIn ? (
-                                        <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />
+                                        <UserPage Core={Core} store={this.props.store} NotificationSystem={this.props.NotificationSystem} {...props} />
 									) : ( <Redirect to="/"/> )
 								)} />
 
                                 <Route path="/:id" render={props =>
-                                    <ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />}
+                                    <ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.props.NotificationSystem} />}
                                 />
 
                                 {/* The switch will render the last Route if no others are found (aka 404 page.) */}
@@ -179,15 +173,19 @@ const NoMatch = ({ match }) => (
 )
 
 function mapStateToProps(state) {
+    console.log("STATEME: ", state)
     return {
-        User: state.User
+        User: state.User,
+        Core: state.Core.Core,
+        NotificationSystem: state.NotificationSystem.NotificationSystem
     }
 }
 
 const mapDispatchToProps = {
    login,
 	setupWalletEvents,
-    setCoreToStore
+    setCoreToStore,
+    setNotificationSys
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

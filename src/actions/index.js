@@ -65,6 +65,13 @@ export const PAUSED = 'PAUSED'
 
 export const SET_CORE_TO_STORE = 'SET_CORE_TO_STORE'
 
+export const SET_NOTIFICATION_SYS = "SET_NOTIFICATION_SYS"
+
+export const setNotificationSys = (notificationSystem) => ({
+	type: SET_NOTIFICATION_SYS,
+	notificationSystem
+})
+
 export const setCoreToStore = Core => ({
 	type: SET_CORE_TO_STORE,
 	Core
