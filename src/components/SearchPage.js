@@ -14,11 +14,6 @@ class SearchPage extends Component {
         }
     }
 
-    componentDidMount() {
-	    console.log("searchpage: COMPONENTDIDMOUNT: ")
-	    this.props.dispatch(fetchArtifactList(this.props.Core, SEARCH_PAGE_LIST, { "search-for": this.props.match.params.id }));
-    }
-
 	static getDerivedStateFromProps(nextProps, prevState){
 	    console.log("searchpage: GETDERIVEDSTATEFROMPROPS")
 		if (prevState.searchTerm !== nextProps.match.params.id)
