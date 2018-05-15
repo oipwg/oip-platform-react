@@ -91,7 +91,6 @@ class App extends Component {
 	}
 
 	render() {
-	    console.log("PROPS", this.props)
 		const supportsHistory = 'pushState' in window.history;
 
 		piwik.connectToHistory(history);
@@ -108,9 +107,7 @@ class App extends Component {
 						/>
 
 						{/* Include all components that need to be rendered above the main container content */}
-						<Navbar
-							Core={Core}
-						/>
+						<Navbar />
 
 						<LoginPrompt Core={Core} store={this.props.store} />
 						<DailyFaucetPrompt Core={Core} store={this.props.store} />
@@ -173,7 +170,6 @@ const NoMatch = ({ match }) => (
 )
 
 function mapStateToProps(state) {
-    console.log("STATEME: ", state)
     return {
         User: state.User,
         Core: state.Core.Core,
@@ -182,7 +178,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-   login,
+    login,
 	setupWalletEvents,
     setCoreToStore,
     setNotificationSys
