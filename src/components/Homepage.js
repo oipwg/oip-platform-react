@@ -12,7 +12,6 @@ class Homepage extends Component {
 	}
 
 	render() {
-		console.log("HOMEPAGE: ", this.props)
 		return (
 			<ContentCardsContainer
 				Core={this.props.Core}

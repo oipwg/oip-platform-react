@@ -48,8 +48,6 @@ class Navbar extends Component {
     }
 
     render() {
-        console.log("my props", this.props);
-
         let totalbalance = 0;
         if (this.props.User.isLoggedIn && this.props.Wallet) {
             let flobalance = 0, btcbalance = 0, ltcbalance = 0;
