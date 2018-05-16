@@ -58,7 +58,6 @@ class DailyFaucetBlock extends Component {
 
 function mapStateToProps(state) {
     return {
-        Wallet: state.Wallet,
         Core: state.Core.Core
     }
 }
