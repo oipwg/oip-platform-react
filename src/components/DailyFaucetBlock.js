@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
 import { tryDailyFaucet } from '../actions';
+import {connect} from "react-redux";
 
 class DailyFaucetBlock extends Component {
 	constructor(props){
@@ -72,4 +73,16 @@ class DailyFaucetBlock extends Component {
 	}
 }
 
-export default DailyFaucetBlock;
+function mapStateToProps(state) {
+    return {
+        Wallet: state.Wallet,
+        Core: state.Core.Core
+    }
+}
+
+const mapDispatchToProps = {
+    setTryFaucet,
+    faucetPrompt
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DailyFaucetBlock);
