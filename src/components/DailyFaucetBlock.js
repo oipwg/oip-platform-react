@@ -14,28 +14,11 @@ class DailyFaucetBlock extends Component {
 			recaptcha: ""
 		};
 
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.recaptcha = this.recaptcha.bind(this);
 		this.tryDailyFaucet = this.tryDailyFaucet.bind(this);
 
-		let _this = this;
+	}
 
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
-	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
-
-		// let showPrompt = newState.Wallet.buyPrompt;
-		// this.setState({showPrompt: showPrompt});
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
 	recaptcha(response){
 		if (response)
 			this.setState({recaptchaState: "RESPONSE_RECEIVED", recaptcha: response})
@@ -49,11 +32,11 @@ class DailyFaucetBlock extends Component {
 		}
 
 		let onSuccess = this.props.onFaucetReceive;
-		this.props.store.dispatch(tryDailyFaucet(this.props.Core, this.state.recaptcha, function(success){
+		this.props.tryDailyFaucet(this.props.Core, this.state.recaptcha, function(success){
 			onSuccess();
 		}, function(error){
 			// Needs error response...
-		}))
+		})
 	}
 	render() {
 		return (
@@ -80,9 +63,6 @@ function mapStateToProps(state) {
     }
 }
 
-const mapDispatchToProps = {
-    setTryFaucet,
-    faucetPrompt
-}
+const mapDispatchToProps = { tryDailyFaucet };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DailyFaucetBlock);

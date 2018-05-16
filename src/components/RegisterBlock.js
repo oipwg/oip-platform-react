@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
-import {
-  Redirect
-} from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { register } from '../actions';
 
@@ -61,29 +59,15 @@ class RegisterBlock extends Component {
 		this.updateVerify = this.updateVerify.bind(this);
 		this.recaptcha = this.recaptcha.bind(this);
 		this.loginClick = this.loginClick.bind(this);
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let User = newState.User;
-
-		this.setState({
-			User
-		});
-	}
 	componentWillUnmount(){
-		this.unsubscribe();
 		this.showRecaptcha = false;
 	}
 	componentDidMount(){
-		this.stateDidUpdate();
+        let User = this.props.User;
+        this.setState({ User });
 		this.showRecaptcha = true;
 	}
 	register(){
@@ -125,13 +109,13 @@ class RegisterBlock extends Component {
 
 		// If we are ready, go ahead and start the registration process.
 
-		this.props.store.dispatch(register(this.props.Core, this.state.username, this.state.email, this.state.password, this.state.recaptcha, (success) => {
+		this.props.register(this.props.Core, this.state.username, this.state.email, this.state.password, this.state.recaptcha, (success) => {
 			console.log(success);
 			this.setState({registrationStatus: STATUS.SUCCESS});
 		}, (error) => {
 			this.setState({registrationStatus: STATUS.ERROR});
 			console.log(error)
-		}));
+		});
 
 		try {
 			localStorage.setItem("username", this.state.email);
@@ -356,4 +340,14 @@ class RegisterBlock extends Component {
 	}
 }
 
-export default RegisterBlock;
+function mapStateToProps(state) {
+	return {
+        User: state.User,
+        Core: state.Core.Core
+	}
+}
+
+const mapDispatchToProps = { register };
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterBlock);
