@@ -14,7 +14,6 @@ class SwapPrompt extends Component {
 		}
 
 		this.togglePrompt = this.togglePrompt.bind(this);
-		this.onSwap = this.onSwap.bind(this);
 	}
 
 	componentDidMount(){
@@ -24,9 +23,6 @@ class SwapPrompt extends Component {
 	togglePrompt(){
 		this.setState({showPrompt: !this.state.showPrompt})
 	}
-	onSwap(){
-		this.setState({showPrompt: !this.state.showPrompt})
-	}
 
 	render() {
 		return (
@@ -34,7 +30,7 @@ class SwapPrompt extends Component {
 				{this.state.showPrompt ? 
 				<Modal isOpen={this.state.showPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
-						<SwapBlock onSwap={this.onSwap} />
+						<SwapBlock />
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.togglePrompt}>Cancel</Button>
