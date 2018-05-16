@@ -9,27 +9,13 @@ import SettingsContainer from './SettingsContainer.js';
 import ViewArtifactContainer from './ViewArtifactContainer.js';
 import EditArtifactContainer from './EditArtifactContainer.js';
 
-class UserPage extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-
-		}
-	}
-	componentDidMount(){
-		
-	}
-	componentWillUnmount() {
-		
-	}
-	render() {
+const UserPage = (props) => {
 		return (
 			<SidebarContainer>
 			{(() => {
-				switch(this.props.match.params.page){
+				switch(props.match.params.page){
 					case "artifacts":
-						switch(this.props.match.params.type){
+						switch(props.match.params.type){
 							case 'view':
 								return <ViewArtifactContainer />
 							case 'edit':
@@ -42,7 +28,7 @@ class UserPage extends Component {
 					case "upload":
 						return <PublishContainer />
 					case "wallet":
-						return <WalletContainer Core={this.props.Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} />
+						return <WalletContainer />
 					case "settings":
 						return <SettingsContainer />
 					default:
@@ -51,7 +37,6 @@ class UserPage extends Component {
 			})()}
 		</SidebarContainer>
 		);
-	}
 }
 
 export default UserPage;
