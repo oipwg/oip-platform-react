@@ -49,10 +49,15 @@ class Navbar extends Component {
 
     render() {
         let totalbalance = 0;
-        if (this.props.User.isLoggedIn && this.props.Wallet) {
+
+        if (this.props && this.props.Wallet){
             let flobalance = 0, btcbalance = 0, ltcbalance = 0;
+
+            if (this.props.Wallet.florincoin && this.props.Wallet.florincoin.usd)
                 flobalance = parseFloat(this.props.Wallet.florincoin.usd);
+            if (this.props.Wallet.bitcoin && this.props.Wallet.bitcoin.usd)
                 btcbalance = parseFloat(this.props.Wallet.bitcoin.usd);
+            if (this.props.Wallet.litecoin && this.props.Wallet.litecoin.usd)
                 ltcbalance = parseFloat(this.props.Wallet.litecoin.usd);
 
             totalbalance = flobalance + btcbalance + ltcbalance;

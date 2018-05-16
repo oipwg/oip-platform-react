@@ -81,12 +81,7 @@ class CoinCard extends Component {
 		this.paperWalletPrinted = this.paperWalletPrinted.bind(this);
 		this.downloadBackup = this.downloadBackup.bind(this);
 	}
-	componentDidMount(){
-		
-	}
-	componentWillUnmount() {
-		
-	}
+
 	toggleSettingsMenu(){
 		this.setState({settingsDropdown: !this.state.settingsDropdown});
 	}
@@ -171,7 +166,7 @@ class CoinCard extends Component {
 						{buy === "coinbase" ? <BuyButton coinName={name} address={mainAddress} currency={currency} /> : ""}
 						{trade ? <SwapButton coinName={name} address={mainAddress} /> : ""}
 						<QRButton coinName={name} address={mainAddress} />
-						<SendButton Core={this.props.Core} store={this.props.store} coinName={name} coin={this.props.coin} coinCode={currencyCode} maxSend={this.props.info.balance} NotificationSystem={this.props.NotificationSystem} />
+						<SendButton coinName={name} coin={this.props.coin} coinCode={currencyCode} maxSend={this.props.info.balance}  />
 					</div>
 					{this.state.printPaperWallet ? <PaperWallet print={true} logo={logo} bg={paperWalletBG} public={mainAddress} private={privKey} onPrint={this.paperWalletPrinted} /> : ""}
 				</div>

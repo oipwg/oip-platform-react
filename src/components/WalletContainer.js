@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import { COIN_CONFIGS } from './CoinCard.js';
 import CoinCard from './CoinCard.js';
 import PaperWallets from './PaperWallets.js';
@@ -8,36 +8,8 @@ import TransactionTable from './TransactionTable.js'
 class WalletContainer extends Component {
 	constructor(props){
 		super(props);
-
-		this.state = {
-			Wallet: {}
-		};
-
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let User = newState.User;
-		let Wallet = newState.Wallet;
-
-		this.setState({
-			User,
-			Wallet
-		});
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
 	toggleSendModal(){
 		this.setState({ sendModal: !this.state.sendModal });
 	}
@@ -47,7 +19,7 @@ class WalletContainer extends Component {
 		return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 	}
 	render() {
-		var coins = this.state.Wallet;
+		var coins = this.props.Wallet;
 		var transactions = {
 			queued: [],
 			unconfirmed: [],
@@ -90,7 +62,7 @@ class WalletContainer extends Component {
 							if (key === "bitcoin_testnet")
 								return <div key={key} />
 
-							return <CoinCard key={key} coin={key} info={this.state.Wallet[key]} Core={this.props.Core} store={this.props.store} NotificationSystem={this.props.NotificationSystem} />
+							return <CoinCard key={key} coin={key} info={this.props.Wallet[key]} />
 						})}
 					</div>
 				</div>
@@ -104,4 +76,10 @@ class WalletContainer extends Component {
 	}
 }
 
-export default WalletContainer;
+function mapStateToProps(state) {
+	return {
+		Wallet: state.Wallet
+	}
+}
+
+export default connect(mapStateToProps)(WalletContainer);
