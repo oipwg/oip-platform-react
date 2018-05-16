@@ -109,7 +109,7 @@ class App extends Component {
 						{/* Include all components that need to be rendered above the main container content */}
 						<Navbar />
 
-						<LoginPrompt Core={Core} store={this.props.store} />
+						<LoginPrompt />
 						<DailyFaucetPrompt Core={Core} store={this.props.store} />
 						<SwapPrompt Core={Core} store={this.props.store} />
 						<BuyPrompt Core={Core} store={this.props.store} />

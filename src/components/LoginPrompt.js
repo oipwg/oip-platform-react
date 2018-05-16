@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
@@ -14,34 +15,23 @@ class LoginPrompt extends Component {
 			type: "login"
 		}
 
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.togglePrompt = this.togglePrompt.bind(this);
 		this.toggleLoginRegister = this.toggleLoginRegister.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let showPrompt = newState.User.loginModalPrompt;
-		this.setState({showPrompt: showPrompt});
-	}
 	componentDidMount(){
-		this.stateDidUpdate();
+        let showPrompt = this.props.User.loginModalPrompt;
+        this.setState({showPrompt: showPrompt});
 	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
+
 	togglePrompt(){
 		this.setState({showPrompt: !this.state.showPrompt})
 	}
+
 	toggleLoginRegister(){
 		this.setState({type: this.state.type === "login" ? "register" : "login"});
 	}
+
 	render() {
 
 		return (
@@ -63,4 +53,12 @@ class LoginPrompt extends Component {
 	}
 }
 
-export default LoginPrompt;
+function mapStateToProps(state) {
+    return {
+    	store: state,
+        User: state.User,
+        Core: state.Core.Core
+    }
+}
+
+export default connect(mapStateToProps)(LoginPrompt);
