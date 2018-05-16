@@ -111,7 +111,7 @@ class App extends Component {
 						<LoginPrompt />
 						<DailyFaucetPrompt />
 						<SwapPrompt />
-						<BuyPrompt Core={Core} store={this.props.store} />
+						<BuyPrompt />
 						<NotificationSystem ref="NotificationSystem" />
 
 						{/* Include all components that need to be rendered in the main container content */}

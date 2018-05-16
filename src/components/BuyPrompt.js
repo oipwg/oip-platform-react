@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { connect } from 'react-redux';
+import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
 import BuyCryptoBlock from './BuyCryptoBlock.js';
 
@@ -13,28 +13,16 @@ class BuyPrompt extends Component {
 			type: "login"
 		}
 
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.togglePrompt = this.togglePrompt.bind(this);
 		this.toggleLoginRegister = this.toggleLoginRegister.bind(this);
 
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let showPrompt = newState.Wallet.buyPrompt;
-		this.setState({showPrompt: showPrompt});
-	}
 	componentDidMount(){
-		this.stateDidUpdate();
+        let showPrompt = this.props.Wallet.buyPrompt;
+        this.setState({showPrompt: showPrompt});
 	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
+
 	togglePrompt(){
 		this.setState({showPrompt: !this.state.showPrompt})
 	}
@@ -48,7 +36,7 @@ class BuyPrompt extends Component {
 				{this.state.showPrompt ? 
 				<Modal isOpen={this.state.showPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
-						<BuyCryptoBlock Core={this.props.Core} store={this.props.store} onRegisterClick={this.toggleLoginRegister} />
+						<BuyCryptoBlock onRegisterClick={this.toggleLoginRegister} />
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.togglePrompt}>Cancel</Button>
@@ -61,4 +49,10 @@ class BuyPrompt extends Component {
 	}
 }
 
-export default BuyPrompt;
+function mapStateToProps(state) {
+	return {
+		Wallet: state.Wallet
+	}
+}
+
+export default connect(mapStateToProps)(BuyPrompt);
