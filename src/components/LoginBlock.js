@@ -119,4 +119,10 @@ class LoginBlock extends Component {
 	}
 }
 
-export default connect()(LoginBlock);
+function mapStateToProps(state) {
+    return {
+        Core: state.Core.Core
+    }
+}
+
+export default connect(mapStateToProps)(LoginBlock);

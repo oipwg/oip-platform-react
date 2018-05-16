@@ -39,7 +39,7 @@ class LoginPrompt extends Component {
 				{this.state.showPrompt ? 
 				<Modal isOpen={this.state.showPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
-						{this.state.type === "login" ? <LoginBlock Core={this.props.Core} store={this.props.store} onRegisterClick={this.toggleLoginRegister} /> : "" }
+						{this.state.type === "login" ? <LoginBlock onRegisterClick={this.toggleLoginRegister} /> : "" }
 						{this.state.type === "register" ? <RegisterBlock Core={this.props.Core} store={this.props.store} onLoginClick={this.toggleLoginRegister} /> : "" }
 					</ModalBody>
 					<ModalFooter>
