@@ -46,7 +46,7 @@ class DailyFaucetPrompt extends Component {
 				{this.state.showPrompt ? 
 				<Modal isOpen={this.state.showPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
-						<DailyFaucetBlock Core={this.props.Core} store={this.props.store} onFaucetReceive={this.onFaucetReceive} onFaucetCancel={this.onFaucetCancel} />
+						<DailyFaucetBlock onFaucetReceive={this.onFaucetReceive} onFaucetCancel={this.onFaucetCancel} />
 					</ModalBody>
 				</Modal> 
 				: 
