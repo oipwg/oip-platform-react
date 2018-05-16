@@ -109,7 +109,7 @@ class App extends Component {
 						<Navbar />
 
 						<LoginPrompt />
-						<DailyFaucetPrompt Core={Core} store={this.props.store} />
+						<DailyFaucetPrompt />
 						<SwapPrompt Core={Core} store={this.props.store} />
 						<BuyPrompt Core={Core} store={this.props.store} />
 						<NotificationSystem ref="NotificationSystem" />
