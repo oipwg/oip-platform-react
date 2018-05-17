@@ -84,7 +84,6 @@ class PublisherPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("MAPSTATETOPROPS: ", state)
 	return {
 		Core: state.Core.Core,
         publisher: state.PublisherPage.publisher,
