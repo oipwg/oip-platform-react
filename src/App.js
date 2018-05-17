@@ -123,7 +123,8 @@ class App extends Component {
                                 <Route path="/register" component={RegisterPage} />
 
                                 <Route path="/search/:id" render={props => <SearchPage  {...props} />} />
-                                <Route path="/pub/:id" render={props => <PublisherPage Core={Core} store={this.props.store} NotificationSystem={this.props.NotificationSystem} {...props} />} />
+
+                                <Route path="/pub/:id" render={props => <PublisherPage {...props} />} />
 
                                 <Route path="/user/:page/:type/:id" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
 

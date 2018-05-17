@@ -64,8 +64,22 @@ export const REGISTER_ERROR = 'REGISTER_ERROR'
 export const PAUSED = 'PAUSED'
 
 export const SET_CORE_TO_STORE = 'SET_CORE_TO_STORE'
-
 export const SET_NOTIFICATION_SYS = "SET_NOTIFICATION_SYS"
+export const SET_PUBLISHER_PAGE_PUBLISHER = "FETCH_PUBLISHER_PAGE_PUBLISHER"
+export const PUBLISHER_PAGE_LIST = "PUBLISHER_PAGE_LIST"
+
+export const fetchPublisherPage = (Core, list_id, pubId) => dispatch => {
+	Core.Index.getPublisher(pubId, (success) => {
+		console.log("fetchPublisherPage Success")
+		dispatch(fetchArtifactList(Core, list_id, { "search-for": success.address}))
+		dispatch(setPublisherPagePublisher(success))
+	}, (error) => {console.error("getPublisher error:", error)})
+}
+
+export const setPublisherPagePublisher = (publisher) => ({
+	type: SET_PUBLISHER_PAGE_PUBLISHER,
+	publisher
+})
 
 export const setNotificationSys = (notificationSystem) => ({
 	type: SET_NOTIFICATION_SYS,
@@ -107,7 +121,6 @@ export const requestArtifactListError = (page, errorText) => ({
 
 export const fetchArtifactList = (Core, list_id, options) => dispatch => {
 	dispatch(requestArtifactList(list_id));
-
 	if (list_id === LATEST_CONTENT_LIST){
 		Core.Index.getSupportedArtifacts(function(artifacts){
 			dispatch(recieveArtifactList(list_id, artifacts.slice(0,100)));
@@ -119,6 +132,12 @@ export const fetchArtifactList = (Core, list_id, options) => dispatch => {
 			dispatch(recieveArtifactList(list_id, results));
 		}, function(err){
 			dispatch(requestArtifactListError(list_id, err));
+		});
+	} else if (list_id === PUBLISHER_PAGE_LIST) {
+		Core.Index.search(options, function(results){
+			dispatch(recieveArtifactList(list_id, results));
+		}, function(err){
+            dispatch(requestArtifactListError(list_id, err));
 		});
 	} else {
 		Core.Index.getRandomSuggested(function(results){

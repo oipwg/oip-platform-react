@@ -6,6 +6,7 @@ import { Wallet } from './Wallet.js';
 import { User } from './User.js';
 import { Core } from './Core.js'
 import { NotificationSystem } from "./NotificationSystem";
+import { PublisherPage } from './PublisherPage'
 
 const pageType = (state = 'ARTIFACT_LIST', action) => {
     switch (action.type) {
@@ -25,7 +26,8 @@ const rootReducer = {
 	FilePlaylist,
 	VolumeControls,
 	Core,
-	NotificationSystem
+	NotificationSystem,
+	PublisherPage
 }
 
 export default rootReducer
