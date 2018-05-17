@@ -33,46 +33,16 @@ class PublisherPage extends Component {
 
         return (
             <div>
-                <header>
-                    {/*<!--There will be dynamic header part-->*/}
-                </header>
-                <section className="about">
-                    <div className="user-identity">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-sm-3">
-                                    <div className="userImage" style={{marginTop: "-30px"}}>
-                                        <PublisherIcon id={this.props.publisher.address} Core={this.props.Core} />
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-6">
-                                    <div className="userInfo">
-                                        <h2>{this.props.publisher.name}</h2>
-                                        <div className="publishDate">
-                                            <p>Publishing since <span>{publishingSinceDate}</span></p>
-                                        </div>
-                                        {/*<div className="uSocialProfile">
-											<a href="#"><i className="fa fa-facebook"></i></a>
-											<a href="#"><i className="fa fa-twitter"></i></a>
-											<a href="#"><i className="fa fa-google-plus"></i></a>
-											<a href="#"><i className="fa fa-linkedin"></i></a>
-										</div>*/}
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-3">
-                                    <div className="subscribe">
-                                        <button type="button">Send Tip</button>
-                                        {/*<button type="button">Subscribe</button>*/}
-                                    </div>
-                                </div>
-                            </div>
-                            <hr />
-                        </div>
+                <div className="jumbotron jumbotron-fluid bg-info" style={{height: 300}}>
+                    <div className="container">
+                        <h1 className="display-4">{this.props.publisher.name}</h1>
+                        <p className="lead">Publishing since <span>{publishingSinceDate}</span></p>
+                        <PublisherIcon id={this.props.publisher.address} Core={this.props.Core} />
+                        <button className="btn btn-light" type="button">Send Tip</button>
+                        <button className="btn btn-danger" type="button">Subscribe</button>
                     </div>
-                </section>
-                <div style={{marginTop: "-75px"}}></div>
+                </div>
+
                 <ContentCardsContainer
                     Core={this.props.Core}
                     title={"Latest Artifacts"}
