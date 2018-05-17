@@ -7,7 +7,7 @@ import { fetchPublisherPage, PUBLISHER_PAGE_LIST } from '../actions'
 import ContentCardsContainer from './ContentCardsContainer.js'
 import PublisherIcon from './PublisherIcon.js';
 
-import '../assets/css/oipPublisher.css';
+// import '../assets/css/oipPublisher.css';
 
 class PublisherPage extends Component {
     constructor(props){
@@ -37,9 +37,12 @@ class PublisherPage extends Component {
                     <div className="container">
                         <h1 className="display-4">{this.props.publisher.name}</h1>
                         <p className="lead">Publishing since <span>{publishingSinceDate}</span></p>
-                        <PublisherIcon id={this.props.publisher.address} Core={this.props.Core} />
-                        <button className="btn btn-light" type="button">Send Tip</button>
-                        <button className="btn btn-danger" type="button">Subscribe</button>
+                        <div className="userRow row">
+                            {/*<div className="publisher-icon"></div>*/}
+                            <div className="pubIcon"><PublisherIcon id={this.props.publisher.address} /></div>
+                            <button className="btn btn-light" type="button">Send Tip</button>
+                            <button className="btn btn-danger" type="button">Subscribe</button>
+                        </div>
                     </div>
                 </div>
 
