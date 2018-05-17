@@ -31,7 +31,7 @@ const ContentCard = (props) => {
                     <div className="card-body p-0">
                         <span style={{fontSize: 14}} className="card-title">{title}</span>
                         <Link to={"/pub/" + publisher } onClick={scrollToTop}>
-                            <PublisherIcon id={publisher} Core={props.Core} small={true} pubName={props.artifact.publisherName} />
+                            <PublisherIcon id={publisher} small={true} pubName={props.artifact.publisherName} />
                         </Link>
                     </div>
                 </div>

@@ -27,24 +27,10 @@ class PublisherIcon extends Component {
 			this.updateAvatar(nextProps)
 	}
 	updateAvatar(props){
-		if (!props.id || !props.Core)
+		if (!props.id)
 			return;
 
 		this.setDiceBearAvatar(props)
-
-		var _this = this;
-
-		props.Core.Index.getPublisher(props.id, (success) => {
-			if (success.emailmd5 && success.emailmd5 !== ""){
-				_this.image.onerror = (error) => {
-					_this.image.onerror = () => {};
-
-					_this.setDiceBearAvatar(props);
-				}
-
-				_this.setState({avatarSrc: "https://www.gravatar.com/avatar/" + success.emailmd5 + "?s=200&r=pg&d=404"});
-			}
-		}, (error) => {  });
 	}
 	setDiceBearAvatar(props){
 		if (!props.id)

@@ -27,7 +27,6 @@ class SearchPage extends Component {
 	render() {
 		return (
 			<ContentCardsContainer
-				Core={this.props.Core}
 				title={"Search Results"}
 				content={this.props.content}
 			/>

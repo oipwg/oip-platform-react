@@ -24,7 +24,6 @@ const ContentCardsContainer = (props) => {
                     return <ContentCard
                         key={i}
                         artifact={artifact}
-                        Core={props.Core}
                     />
                 })) : (null) }
             </div>
