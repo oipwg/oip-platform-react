@@ -76,7 +76,7 @@ class PublisherPage extends Component {
                 <ContentCardsContainer
                     Core={this.props.Core}
                     title={"Latest Artifacts"}
-                    opts={this.props.content}
+                    content={this.props.content}
                 />
             </div>
         );
