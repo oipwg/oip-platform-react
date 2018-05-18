@@ -106,7 +106,6 @@ class FilesTable extends Component {
 
 		if (!this.props.extendedView)
 			filesCopy = this.stripUnimportantFiles(filesCopy);
-		console.log(filesCopy)
 		let _this = this;
 		return (
 			<div>

@@ -128,7 +128,7 @@ class App extends Component {
 
 
                                 <Route path="/:id" render={props =>
-                                    <ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.props.NotificationSystem} />}
+                                    <ContentPage {...props} store={this.props.store}  piwik={piwik} NotificationSystem={this.props.NotificationSystem} />}
                                 />
 
                                 {/* The switch will render the last Route if no others are found (aka 404 page.) */}
