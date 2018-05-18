@@ -11,7 +11,7 @@ import EditArtifactContainer from './EditArtifactContainer.js';
 
 const UserPage = (props) => {
 		return (
-			<SidebarContainer>
+			<div>
 			{(() => {
 				switch(props.match.params.page){
 					case "artifacts":
@@ -35,7 +35,7 @@ const UserPage = (props) => {
 						return <div>404</div>
 				}
 			})()}
-		</SidebarContainer>
+		</div>
 		);
 }
 
