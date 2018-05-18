@@ -31,7 +31,7 @@ class PublisherPage extends Component {
 
         return (
             <div>
-                <div className="jumbotron jumbotron-fluid bg-info" style={{height: 300}}>
+                <div className="jumbotron jumbotron-fluid bg-info" style={{height: 350}}>
                     <div className="container">
                         <h1 className="display-4">{this.props.publisher.name}</h1>
                         <p className="lead">Publishing since <span>{publishingSinceDate}</span></p>

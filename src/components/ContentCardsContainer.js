@@ -5,7 +5,6 @@ import ContentCard from './ContentCard.js'
 const ContentCardsContainer = (props) => {
 
     let contentLoaded = (props.content !== undefined)
-
     return <div className="container mt-4">
         <div className="">
 
@@ -16,7 +15,7 @@ const ContentCardsContainer = (props) => {
             </div>
 
             {contentLoaded ? (props.content.isFetching ? <p>Loading...</p> : "") : null}
-            {contentLoaded ? (props.content.error ? <p>Oops! Looks like something went wrong...</p> : "") : null}
+            {contentLoaded ? (props.content.error ? <p>Oops! Looks like something went wrong... Try refreshing!</p> : "") : null}
 
             <div className="row no-gutters d-flex justify-content-between">
                 { contentLoaded && !props.content.error && !props.content.isFetching ? (
