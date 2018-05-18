@@ -91,7 +91,6 @@ class App extends Component {
 
 	render() {
 		const supportsHistory = 'pushState' in window.history;
-
 		piwik.connectToHistory(history);
 
         return (
@@ -123,20 +122,10 @@ class App extends Component {
                                 <Route path="/register" component={RegisterPage} />
                                 <Route path="/search/:id" render={props => <SearchPage  {...props} />} />
                                 <Route path="/pub/:id" render={props => <PublisherPage {...props} />} />
+                                <Route path="/user/:page" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
+								<Route path="/user/:page/:type" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
+								<Route path="/user/:page/:type/:id" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
 
-                                <Route path="/user/:page/:type/:id" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
-
-                                <Route path="/user/:page/:type" render={props => (
-                                    this.props.User.isLoggedIn ? (
-										<UserPage Core={Core} store={this.props.store} NotificationSystem={this.props.NotificationSystem} {...props} />
-                                ) : ( <Redirect to="/"/> )
-								)} />
-
-                                <Route path="/user/:page" render={props => (
-                                	this.props.User.isLoggedIn ? (
-                                        <UserPage Core={Core} store={this.props.store} NotificationSystem={this.props.NotificationSystem} {...props} />
-									) : ( <Redirect to="/"/> )
-								)} />
 
                                 <Route path="/:id" render={props =>
                                     <ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.props.NotificationSystem} />}
