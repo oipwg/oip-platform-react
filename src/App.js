@@ -18,10 +18,6 @@ import { Provider } from 'react-redux'
 
 import PiwikReactRouter from 'piwik-react-router';
 
-import NotificationSystem from 'react-notification-system';
-
-import { OIPJS } from 'oip-js';
-
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
 // Import custom entypo css class & Alexandria css class
