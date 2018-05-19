@@ -36,13 +36,11 @@ class ContentPage extends Component {
     }
 
     render() {
-        let _this = this;
-
         let artifactTXID = "";
         if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact)
             artifactTXID = this.state.CurrentArtifact.artifact.txid;
 
-        console.log("my special props: ", this.props.ArtifactList, "current", this.props.CurrentArtifact)
+        console.log("Artifact List ", this.props.ArtifactList, "Current Artifact", this.props.CurrentArtifact)
         return (
             <div className="content-page">
                 <ContentContainer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
@@ -60,13 +58,12 @@ class ContentPage extends Component {
                         </div>
                         <div id='suggested' className="col-12 col-md-3" style={{marginTop: "30px"}}>
                             <h5>Suggested Content</h5>
-                            {this.state.ArtifactList.map(function(content, i){
+                            {this.props.ArtifactList ? (this.props.ArtifactList.items.map(function(content, i){
                                 return <ContentCard
                                     key={i}
                                     artifact={content}
-                                    Core={_this.props.Core}
                                 />
-                            })}
+                            })) : (null)}
                         </div>
                     </div>
                 </div>
