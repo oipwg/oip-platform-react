@@ -64,14 +64,6 @@ const piwik = PiwikReactRouter({
 
 const history = createBrowserHistory()
 
-const PUBLIC_URL = process.env.PUBLIC_URL;
-
-var Core = OIPJS({
-	runIPFSJS: false,
-	OIPdURL: "https://snowflake.oip.fun/alexandria/v2",
-	IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
-})
-
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -83,14 +75,13 @@ class App extends Component {
 
 		try {
 			if (localStorage.username && localStorage.pw){
-				this.props.login(Core, localStorage.username, localStorage.pw);
+				this.props.login(this.props.Core, localStorage.username, localStorage.pw);
 			}
 		} catch (e) {}
 
 	}
 
 	render() {
-		const supportsHistory = 'pushState' in window.history;
 		piwik.connectToHistory(history);
 
         return (
