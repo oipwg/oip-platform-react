@@ -114,11 +114,7 @@ class App extends Component {
                                 <Route path="/user/:page" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
 								<Route path="/user/:page/:type" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
 								<Route path="/user/:page/:type/:id" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
-
-
-                                <Route path="/:id" render={props =>
-                                    <ContentPage {...props} store={this.props.store}  piwik={piwik} NotificationSystem={this.props.NotificationSystem} />}
-                                />
+                                <Route path="/:id" render={props => <ContentPage {...props} store={this.props.store}  piwik={piwik} />}/>
 
                                 {/* The switch will render the last Route if no others are found (aka 404 page.) */}
                                 <Route component={NoMatch} />
