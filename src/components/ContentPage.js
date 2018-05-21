@@ -48,7 +48,7 @@ class ContentPage extends Component {
                         <div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
                             <ContentInfo Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
                             <br />
-                            {(this.state.CurrentArtifact && artifactTXID !== "") ?
+                            {(this.props.CurrentArtifact && artifactTXID !== "") ?
                                 <div>
                                     <IssoCommentBox Core={this.props.Core} store={this.props.store} url={artifactTXID} />
                                     <IssoComments Core={this.props.Core} store={this.props.store} url={artifactTXID} />
