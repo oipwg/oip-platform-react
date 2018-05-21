@@ -78,7 +78,8 @@ function mapStateToProps(state) {
         Core: state.Core.Core,
         NotificationSystem: state.NotificationSystem.NotificationSystem,
         ArtifactList: state.ArtifactLists[RANDOM_ARTIFACT_LIST],
-        CurrentArtifact: state.CurrentArtifact
+        CurrentArtifact: state.CurrentArtifact,
+        piwik: state.Piwik.piwik
     }
 }
 

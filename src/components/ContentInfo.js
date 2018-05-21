@@ -69,7 +69,7 @@ class ContentInfo extends Component {
 				</div>
 				<div className="media">
 					<Link to={"/pub/" + publisher}>
-						{this.state.isFetching ? "" : <PublisherIcon id={publisher} Core={this.props.Core} style={{width: "50px", height: "50px"}} className="d-flex" /> }
+						{this.state.isFetching ? "" : <PublisherIcon id={publisher} style={{width: "50px", height: "50px"}} className="d-flex" /> }
 					</Link>
 					<div className="media-body">
 						<h5 className="mt-0" style={{paddingTop: "13px", marginLeft: "10px"}}>{this.state.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
