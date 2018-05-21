@@ -7,7 +7,7 @@ import { User } from './User.js';
 import { Core } from './Core.js'
 import { NotificationSystem } from "./NotificationSystem";
 import { PublisherPage } from './PublisherPage';
-import {Piwik} from './Piwik';
+import { Piwik } from './Piwik';
 
 const pageType = (state = 'ARTIFACT_LIST', action) => {
     switch (action.type) {
