@@ -55,11 +55,6 @@ import SwapPrompt from './components/SwapPrompt.js'
 import BuyPrompt from './components/BuyPrompt.js'
 import DailyFaucetPrompt from './components/DailyFaucetPrompt.js';
 
-const piwik = PiwikReactRouter({
-	url: 'piwik.alexandria.io',
-	siteId: 1
-})
-
 const history = createBrowserHistory()
 
 class App extends Component {
@@ -82,7 +77,7 @@ class App extends Component {
 	render() {
         return (
 			<Provider store={this.props.store}>
-				<ConnectedRouter history={piwik.connectToHistory(history)}>
+				<ConnectedRouter history={this.props.piwik.connectToHistory(history)}>
 					<div className="App">
 						{/* This is to add transitions to the app, fade, etc. */}
 						<CSSTransitionGroup
@@ -112,7 +107,7 @@ class App extends Component {
                                 <Route path="/user/:page" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
 								<Route path="/user/:page/:type" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
 								<Route path="/user/:page/:type/:id" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
-                                <Route path="/:id" render={props => <ContentPage {...props} store={this.props.store}  piwik={piwik} />}/>
+                                <Route path="/:id" render={props => <ContentPage {...props} store={this.props.store}  piwik={this.props.piwik} />}/>
 
                                 {/* The switch will render the last Route if no others are found (aka 404 page.) */}
                                 <Route component={NoMatch} />
@@ -139,7 +134,8 @@ function mapStateToProps(state) {
     return {
         User: state.User,
         Core: state.Core.Core,
-        NotificationSystem: state.NotificationSystem.NotificationSystem
+        NotificationSystem: state.NotificationSystem.NotificationSystem,
+		piwik: state.Piwik.piwik
     }
 }
 

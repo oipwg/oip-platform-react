@@ -38,6 +38,7 @@ class ContentPage extends Component {
         let artifactTXID = "";
         if (this.props.CurrentArtifact && this.props.CurrentArtifact.artifact) {
             artifactTXID = this.props.CurrentArtifact.artifact.txid;
+            console.log(artifactTXID)
         }
 
         return (
