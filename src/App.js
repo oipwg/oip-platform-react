@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 
 import { connect } from 'react-redux';
-import { setupWalletEvents, setCoreToStore, login, setNotificationSys } from './actions';
+import { setupWalletEvents, login, setNotificationSys } from './actions';
 
 import { CSSTransitionGroup } from 'react-transition-group'
 
@@ -146,7 +146,6 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     login,
 	setupWalletEvents,
-    setCoreToStore,
     setNotificationSys
 }
 

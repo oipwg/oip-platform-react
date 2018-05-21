@@ -67,6 +67,12 @@ export const SET_CORE_TO_STORE = 'SET_CORE_TO_STORE'
 export const SET_NOTIFICATION_SYS = "SET_NOTIFICATION_SYS"
 export const SET_PUBLISHER_PAGE_PUBLISHER = "FETCH_PUBLISHER_PAGE_PUBLISHER"
 export const PUBLISHER_PAGE_LIST = "PUBLISHER_PAGE_LIST"
+export const SET_PIWIK = "SET_PIWKIK"
+
+export const setPiwik = (piwik) => ({
+	type: SET_PIWIK,
+	piwik
+})
 
 export const fetchPublisherPage = (Core, list_id, pubId) => dispatch => {
 	Core.Index.getPublisher(pubId, (success) => {

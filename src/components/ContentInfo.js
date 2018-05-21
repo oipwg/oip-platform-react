@@ -16,9 +16,7 @@ class ContentInfo extends Component {
 	constructor(props){
 		super(props);
 
-		this.state = {
-
-		}
+		this.state = {}
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
