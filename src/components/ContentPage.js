@@ -36,10 +36,10 @@ class ContentPage extends Component {
 
     render() {
         let artifactTXID = "";
-        if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact)
-            artifactTXID = this.state.CurrentArtifact.artifact.txid;
+        if (this.props.CurrentArtifact && this.props.CurrentArtifact.artifact) {
+            artifactTXID = this.props.CurrentArtifact.artifact.txid;
+        }
 
-        console.log("Artifact List ", this.props.ArtifactList, "Current Artifact", this.props.CurrentArtifact)
         return (
             <div className="content-page">
                 <ContentContainer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
