@@ -17,9 +17,7 @@ class ContentPage extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            ArtifactList: []
-        }
+        this.state = {}
 
     }
 
@@ -27,6 +25,7 @@ class ContentPage extends Component {
         console.log("GETDERIVED: ", nextProps, prevState)
         if (nextProps.match.params.id !== prevState.paramsId) {
             nextProps.selectCurrentArtifact(nextProps.Core, nextProps.match.params.id, nextProps.piwik);
+            //Fetch suggested content
             nextProps.fetchArtifactList(nextProps.Core, RANDOM_ARTIFACT_LIST);
         }
 
