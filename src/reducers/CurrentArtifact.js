@@ -50,7 +50,7 @@ const curArtifact = (state = {
 	}
 }
 
-export const CurrentArtifact = (state = { }, action) => {
+export const CurrentArtifact = (state = {}, action) => {
 	switch (action.type) {
 		case actions.INVALIDATE_CURRENT_ARTIFACT:
 		case actions.REQUEST_CURRENT_ARTIFACT_ERROR:
