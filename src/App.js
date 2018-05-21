@@ -80,11 +80,9 @@ class App extends Component {
 	}
 
 	render() {
-		piwik.connectToHistory(history);
-
         return (
 			<Provider store={this.props.store}>
-				<ConnectedRouter history={history}>
+				<ConnectedRouter history={piwik.connectToHistory(history)}>
 					<div className="App">
 						{/* This is to add transitions to the app, fade, etc. */}
 						<CSSTransitionGroup
