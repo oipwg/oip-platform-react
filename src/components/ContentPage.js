@@ -44,8 +44,8 @@ class ContentPage extends Component {
             <div className="content-page">
                 <ContentContainer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
                 <div className="container">
-                    <div className="row">
-                        <div id="media-info" className="col-12 col-md-9" style={{marginTop: "30px"}}>
+                    <div className="row" style={{marginTop: "30px"}}>
+                        <div id="media-info" className="col-12 col-md-9" >
                             <ContentInfo Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
                             <br />
                             {(this.props.CurrentArtifact && artifactTXID !== "") ?
@@ -55,7 +55,7 @@ class ContentPage extends Component {
                                 </div>
                                 : ""}
                         </div>
-                        <div id='suggested' className="col-12 col-md-3" style={{marginTop: "30px"}}>
+                        <div id='suggested' className="col-12 col-md-3">
                             <h5>Suggested Content</h5>
                             {this.props.ArtifactList ? (this.props.ArtifactList.items.map(function(content, i){
                                 return <ContentCard
