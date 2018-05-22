@@ -16,6 +16,8 @@ class VideoPlayer extends Component {
 
 		this.createVideoPlayer = this.createVideoPlayer.bind(this);
 		this.updateVideoPlayer = this.updateVideoPlayer.bind(this);
+		this.buildIPFSURL = this.buildIPFSURL.bind(this);
+		this.buildIPFSShortURL = this.buildIPFSShortURL.bind(this);
 
 		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 
@@ -25,7 +27,30 @@ class VideoPlayer extends Component {
 			_this.stateDidUpdate();
 		});
 	}
-	shouldComponentUpdate(nextProps, nextState){
+
+    buildIPFSShortURL(location, file) {
+        if (!location || !file)
+            return "";
+
+        return location + "/" + file.fname;
+    }
+
+    buildIPFSURL(hash, fname) {
+        let trailURL = "";
+        if (!fname) {
+            let parts = hash.split('/');
+            if (parts.length == 2) {
+                trailURL = parts[0] + "/" + encodeURIComponent(parts[1]);
+            } else {
+                trailURL = hash;
+            }
+        } else {
+            trailURL = hash + "/" + encodeURIComponent(fname);
+        }
+        return "https://gateway.ipfs.io/ipfs/" + trailURL;
+    }
+
+        shouldComponentUpdate(nextProps, nextState){
 		if (this.state.ActiveFile.info != nextState.ActiveFile.info || (!this.state.ActiveFile.info.hasPaid && nextState.ActiveFile.hasPaid)){
 			return true;
 		}
@@ -90,7 +115,7 @@ class VideoPlayer extends Component {
 		let videoURL;
 
 		if (this.state.Artifact && this.state.ActiveFile.info){
-			videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact.getLocation(), this.state.ActiveFile.info));
+			videoURL = this.buildIPFSURL(this.buildIPFSShortURL(this.state.Artifact.getLocation(), this.state.ActiveFile.info));
 		} else {
 			videoURL = "";
 		}
@@ -99,7 +124,7 @@ class VideoPlayer extends Component {
 
 		if (this.state.Artifact){
 			let thumbnail = this.state.Artifact.getThumbnail();
-			thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact.getLocation(), thumbnail));
+			thumbnailURL = this.buildIPFSURL(this.buildIPFSShortURL(this.state.Artifact.getLocation(), thumbnail));
 		}
 
 		let autoplay = true;
