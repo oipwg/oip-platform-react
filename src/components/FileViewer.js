@@ -4,7 +4,6 @@ import AudioContainer from './AudioContainer.js';
 import VideoPlayer from './VideoPlayer.js';
 import ImageContainer from './ImageContainer.js';
 import ViewerJSPlayer from './ViewerJSPlayer.js';
-import MarkdownContainer from './MarkdownContainer.js';
 import HTMLContainer from './HtmlContainer.js';
 import CodeContainer from './CodeContainer.js';
 import STLContainer from './StlContainer.js';
@@ -15,8 +14,7 @@ var PLAYERS = [
 	VideoPlayer, 
 	ImageContainer, 
 	ViewerJSPlayer,
-	MarkdownContainer,
-	HTMLContainer, 
+	HTMLContainer,
 	CodeContainer,
 	STLContainer,
 	TextViewer
