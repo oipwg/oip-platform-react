@@ -12,7 +12,6 @@ class ContentPage extends Component {
     }
 
     render() {
-        console.log("this.props", this.props)
         return (
             <div className="content-page">
                 <ContentContainer

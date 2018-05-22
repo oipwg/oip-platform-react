@@ -14,12 +14,12 @@ class ContentContainer extends Component {
 	render() {
 		let type, loading = false, haveLoadedState = false;
 
-		if (this.props.ActiveFile != undefined) {
+		if (this.props.ActiveFile) {
             if (this.props.ActiveFile.info && this.props.ActiveFile.info.type){
                 haveLoadedState = true;
                 type = this.props.ActiveFile.info.type;
             }
-		} else {console.log("Active File Undefined")}
+		}
 
 
 		if (this.props.Artifact && this.props.ArtifactState.isFetching) {
@@ -39,8 +39,6 @@ class ContentContainer extends Component {
 				<Paywall
 					ActiveFile={this.props.ActiveFile}
                     Artifact={this.props.Artifact}
-					//whats this contentRef do
-					contentRef={this.content}
 				/>
 			</div>
 		);

@@ -33,7 +33,6 @@ class IssoComments extends Component {
     }
 
 	render() {
-		console.log("isso state", this.state)
 		return (
 			<div id="isso-root">
 				{this.state.comments.map(function(comment, i){

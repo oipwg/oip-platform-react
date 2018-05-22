@@ -35,17 +35,15 @@ class ContentPageWrapper extends Component {
         let artifactTXID = "";
         if (this.props.Artifact) {
             artifactTXID = this.props.Artifact.txid;
-            console.log(artifactTXID)
         }
-
         return (
             <div>
                 <ContentPage
                     Artifact={this.props.Artifact}
                     ArtifactState={this.props.ArtifactState}
 
-                    ArtifactList={this.state.ArtifactList}
-                    ActiveFile={this.state.ActiveFile}
+                    ArtifactList={this.props.ArtifactList}
+                    ActiveFile={this.props.ActiveFile}
                     artifactTXID={artifactTXID}
                     addComment={this.props.addComment}
                 />
