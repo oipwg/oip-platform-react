@@ -405,6 +405,7 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
 
 		state.Piwik.piwik.push(['trackContentImpression', publisher, txid, ""])
 	}, function(err){
+		console.error("selectCurrentArtifact error: ", err)
 		dispatch(requestCurrentArtifactError(err));
 	});
 }

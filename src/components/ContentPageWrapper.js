@@ -21,7 +21,6 @@ class ContentPageWrapper extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        console.log("CONTENTPAGE GDSFP", nextProps, prevState)
         if (nextProps.match.params.id !== prevState.paramsId) {
             nextProps.selectCurrentArtifact(nextProps.match.params.id);
             nextProps.fetchArtifactList(RANDOM_ARTIFACT_LIST);
@@ -33,10 +32,10 @@ class ContentPageWrapper extends Component {
     }
 
     render() {
-        console.log("CONTENTPAGEWRAPPER RENDER", this.state)
         let artifactTXID = "";
-        if (this.props.CurrentArtifact && this.props.CurrentArtifact.artifact) {
-            artifactTXID = this.props.CurrentArtifact.artifact.txid;
+        if (this.props.Artifact) {
+            artifactTXID = this.props.Artifact.txid;
+            console.log(artifactTXID)
         }
 
         return (
@@ -58,7 +57,6 @@ class ContentPageWrapper extends Component {
 
 
 function mapStateToProps(state) {
-    console.log('CONTENTPAGEWRAPPER MAPSTATETOPROPS', state)
     return {
         Artifact: state.CurrentArtifact.artifact,
         ArtifactState: state.CurrentArtifact,

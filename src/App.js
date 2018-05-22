@@ -33,7 +33,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 // Import custom CSS to override Bootstrap
 import './assets/css/custom.css';
 // Import Font Awesome 5 SVG
-import './assets/js/fontawesome-all.min';
+// import './assets/js/fontawesome-all.min';
 
 import Navbar from './components/Navbar.js';
 

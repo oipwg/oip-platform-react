@@ -12,6 +12,7 @@ class ContentPage extends Component {
     }
 
     render() {
+        console.log("this.props", this.props)
         return (
             <div className="content-page">
                 <ContentContainer
@@ -24,10 +25,14 @@ class ContentPage extends Component {
                         <div id="media-info" className="col-12 col-md-9" >
                             <ContentInfo Artifact={this.props.Artifact} ArtifactState={this.props.ArtifactState} />
                             <br />
-                            {(this.props.Artifact && this.props.artifactTXID !== "") ?
+                            {(this.props.Artifact && this.props.Artifact.txid !== "") ?
                                 <div>
-                                    <IssoCommentBox  addComment={this.props.addComment} url={this.props.artifactTXID} />
-                                    <IssoComments />
+                                    <IssoCommentBox  addComment={this.props.addComment} url={this.props.Artifact.txid} />
+                                    <IssoComments
+                                        Artifact={this.props.Artifact}
+                                        ArtifactState={this.props.ArtifactState}
+                                        comments={this.props.ArtifactState.comments}
+                                    />
                                 </div>
                                 : ""}
                         </div>

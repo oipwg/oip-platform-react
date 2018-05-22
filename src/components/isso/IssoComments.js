@@ -13,31 +13,27 @@ class IssoComments extends Component {
 			comments: []
 		}
 	}
-    static getDerivedStateFromProps(nextProps, prevState) {
-		let comments
-        if (nextProps.CurrentArtifact.artifact.txid !== prevState.txid) {
-           comments = nextProps.CurrentArtifact.comments;
+    static getDerivedStateFromProps(nextProps) {
+        let comments = nextProps.comments;
+		if (!comments) {
+			comments = []
+		}
 
-           if (!comments) {
-           	comments = []
-		   }
-
-		   comments.sort((a,b) => {
-		   	if (a.created > b.created) {
-		   		return -1;
+		comments.sort((a,b) => {
+			if (a.created > b.created) {
+				return -1;
 			} else {
-		   		return 1
+				return 1
 			}
-		   })
-        }
-
+		})
         return {
         	comments: comments,
-            txid: nextProps.CurrentArtifact.artifact.txid
+            txid: nextProps.Artifact.txid
         }
     }
 
 	render() {
+		console.log("isso state", this.state)
 		return (
 			<div id="isso-root">
 				{this.state.comments.map(function(comment, i){
