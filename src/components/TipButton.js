@@ -32,16 +32,22 @@ class TipButton extends Component {
 			else if (this.props.amount)
 				amount = this.props.amount
 
-			this.props.store.dispatch(tipFunc(this.props.Core, this.props.artifact, amount, this.props.piwik, this.props.NotificationSystem, function(success){
-				_this.setState({tipping: false, tipSuccess: true, tipError: false});
-			}, function(error){
-				_this.setState({tipping: false, tipSuccess: false, tipError: true});
-				console.error(error);
-			}));
+			//WHAT TO DO WITH THIS DISPATCH??? PASS IN PROPS?
+
+			// this.props.store.dispatch(tipFunc(this.props.Core, this.props.artifact, amount, this.props.piwik, this.props.NotificationSystem, function(success){
+			// 	_this.setState({tipping: false, tipSuccess: true, tipError: false});
+			// }, function(error){
+			// 	_this.setState({tipping: false, tipSuccess: false, tipError: true});
+			// 	console.error(error);
+			// }));
 		}
 	}
 	render() {
-		let text = this.props.amount ? "$" + this.props.Core.util.createPriceString(this.props.amount) : "Other";
+		//WHAT TO DO WITH THIS??? PASS IN PROPS?
+		// let text = this.props.amount ? "$" + this.props.Core.util.createPriceString(this.props.amount) : "Other";
+		//temporary
+		let text = "Other";
+
 		let color = "success";
 
 		if (this.state.tipping){
@@ -60,7 +66,11 @@ class TipButton extends Component {
 		}
 
 		return (
-			<button className={"btn-margin-right btn btn-sm btn-outline-" + color} onClick={this.tip}>{this.state.customStart ? "" : <span className="fa fa-send-o"></span>} {this.state.customStart ? <input ref="custom" type="number" style={{width: "30px"}} /> : text}{this.state.customStart ? <span className="fa fa-send-o"></span> : ""}</button>
+			<button
+				className={"btn-margin-right btn btn-sm btn-outline-" + color}
+				onClick={this.tip}>{this.state.customStart ? "" : <span className="fa fa-send-o"></span>}
+				{this.state.customStart ? <input ref="custom" type="number" style={{width: "30px"}} /> : text}
+				{this.state.customStart ? <span className="fa fa-send-o"></span> : ""}</button>
 		);
 	}
 }

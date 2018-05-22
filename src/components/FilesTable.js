@@ -6,56 +6,21 @@ class FilesTable extends Component {
 	constructor(props){
 		super(props);
 
-		this.state = {
-			CurrentArtifact: {
-				artifact: undefined
-			},
-			ActiveFile: {
-				info: false
-			}
-		}
+		this.state = {}
 
 		this.stripUnimportantFiles = this.stripUnimportantFiles.bind(this);
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.getAllFiles = this.getAllFiles.bind(this);
 		this.getCurrentArtifactFiles = this.getCurrentArtifactFiles.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let currentArtifact = newState.CurrentArtifact;
-		let FilePlaylist = newState.FilePlaylist;
-		let active = newState.FilePlaylist.active;
-		let activeFile = newState.FilePlaylist[active];
-
-		if (currentArtifact && this.state !== currentArtifact){
-			this.setState({
-				CurrentArtifact: currentArtifact,
-				ActiveFile: activeFile,
-				FilePlaylist
-			});
-		}
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
 	getAllFiles(){
 		let files = [];
 
-		if (this.state.CurrentArtifact && this.state.FilePlaylist){
-			for (var key in this.state.FilePlaylist) {
+		if (this.props.CurrentArtifact && this.props.FilePlaylist){
+			for (var key in this.props.FilePlaylist) {
 				// This just makes sure we are not getting the "active" key from the FilePlaylist obj
 				if (key.split("|").length === 2){
-					let newObj = this.state.FilePlaylist[key];
+					let newObj = this.props.FilePlaylist[key];
 					newObj.key = key.toString();
 					files.push(newObj);
 				}
@@ -69,7 +34,7 @@ class FilesTable extends Component {
 		let myArtifactFiles = [];
 
 		for (var file in files) {
-			if (files[file].key.split("|")[0] === this.state.CurrentArtifact.artifact.getTXID()){
+			if (files[file].key.split("|")[0] === this.props.CurrentArtifact.artifact.getTXID()){
 				myArtifactFiles.push(files[file]);
 			}
 		}
@@ -82,7 +47,7 @@ class FilesTable extends Component {
 		if (files && files.length <= 6){
 			for (var i = 0; i < files.length; i++) {
 				if (files[i].info.subtype !== "cover"){
-					if (!files[i] || !this.state.ActiveFile || !this.state.ActiveFile.info || files[i].info.getFilename() !== this.state.ActiveFile.info.getFilename()){
+					if (!files[i] || !this.props.ActiveFile || !this.props.ActiveFile.info || files[i].info.getFilename() !== this.props.ActiveFile.info.getFilename()){
 						newFiles.push(files[i]);
 					}
 				}
@@ -99,7 +64,7 @@ class FilesTable extends Component {
 		for (var i = 0; i < files.length; i++) {
 			let newObj = files[i];
 
-			newObj.info.icon = this.props.Core.util.getEntypoIconForType(files[i].info.getType());
+			// newObj.info.icon = this.props.Core.util.getEntypoIconForType(files[i].info.getType());
 			filesCopy.push(newObj);
 		}
 
@@ -117,7 +82,7 @@ class FilesTable extends Component {
 										<td style={{verticalAlign: "middle"}}>{file.info.subtype ? file.info.subtype : file.info.type}</td>
 										<td style={{verticalAlign: "middle"}}>{file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</td>
 										<td style={{verticalAlign: "middle", width: "230px"}}>
-											<PaymentButtons artifact={_this.state.CurrentArtifact.artifact} File={file} Core={_this.props.Core} store={_this.props.store} piwik={_this.props.piwik} NotificationSystem={_this.props.NotificationSystem} />
+											{/*<PaymentButtons artifact={_this.props.CurrentArtifact.artifact} File={file} Core={_this.props.Core} store={_this.props.store} piwik={_this.props.piwik} NotificationSystem={_this.props.NotificationSystem} />*/}
 										</td>
 									</tr>
 						})}

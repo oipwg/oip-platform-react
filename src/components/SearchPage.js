@@ -15,9 +15,8 @@ class SearchPage extends Component {
     }
 
 	static getDerivedStateFromProps(nextProps, prevState){
-	    console.log("searchpage: GETDERIVEDSTATEFROMPROPS")
 		if (prevState.searchTerm !== nextProps.match.params.id)
-            nextProps.dispatch(fetchArtifactList(nextProps.Core, SEARCH_PAGE_LIST, { "search-for": nextProps.match.params.id }))
+            nextProps.dispatch(fetchArtifactList(SEARCH_PAGE_LIST, { "search-for": nextProps.match.params.id }))
 
         return {
 		    searchTerm: nextProps.match.params.id
@@ -36,8 +35,7 @@ class SearchPage extends Component {
 
 function mapStateToProps(state) {
     return {
-        content: state.ArtifactLists[SEARCH_PAGE_LIST],
-        Core: state.Core.Core
+        content: state.ArtifactLists[SEARCH_PAGE_LIST]
     }
 }
 

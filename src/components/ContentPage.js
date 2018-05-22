@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import ContentContainer from './ContentContainer.js'
 import ContentInfo from './ContentInfo.js'
@@ -7,52 +6,28 @@ import IssoCommentBox from './isso/IssoCommentBox.js'
 import IssoComments from './isso/IssoComments.js'
 import ContentCard from './ContentCard.js'
 
-import {
-  selectCurrentArtifact,
-  fetchArtifactList,
-  RANDOM_ARTIFACT_LIST
-} from '../actions'
-
 class ContentPage extends Component {
     constructor(props){
         super(props);
-
-        this.state = {}
-
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        console.log("GETDERIVED: ", nextProps, prevState)
-        if (nextProps.match.params.id !== prevState.paramsId) {
-            nextProps.selectCurrentArtifact(nextProps.Core, nextProps.match.params.id, nextProps.piwik);
-            //Fetch suggested content
-            nextProps.fetchArtifactList(nextProps.Core, RANDOM_ARTIFACT_LIST);
-        }
-
-        return {
-            paramsId: nextProps.match.params.id
-        }
     }
 
     render() {
-        let artifactTXID = "";
-        if (this.props.CurrentArtifact && this.props.CurrentArtifact.artifact) {
-            artifactTXID = this.props.CurrentArtifact.artifact.txid;
-            console.log(artifactTXID)
-        }
-
         return (
             <div className="content-page">
-                <ContentContainer Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
+                <ContentContainer
+                    Artifact={this.props.Artifact}
+                    ArtifactState={this.props.ArtifactState}
+                    ActiveFile={this.props.ActiveFile}
+                />
                 <div className="container">
                     <div className="row" style={{marginTop: "30px"}}>
                         <div id="media-info" className="col-12 col-md-9" >
-                            <ContentInfo Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
+                            <ContentInfo Artifact={this.props.Artifact} ArtifactState={this.props.ArtifactState} />
                             <br />
-                            {(this.props.CurrentArtifact && artifactTXID !== "") ?
+                            {(this.props.Artifact && this.props.artifactTXID !== "") ?
                                 <div>
-                                    <IssoCommentBox Core={this.props.Core} store={this.props.store} url={artifactTXID} />
-                                    <IssoComments Core={this.props.Core} store={this.props.store} url={artifactTXID} />
+                                    <IssoCommentBox  addComment={this.props.addComment} url={this.props.artifactTXID} />
+                                    <IssoComments />
                                 </div>
                                 : ""}
                         </div>
@@ -72,20 +47,4 @@ class ContentPage extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    // console.log('content page, ', state)
-    return {
-        Core: state.Core.Core,
-        NotificationSystem: state.NotificationSystem.NotificationSystem,
-        ArtifactList: state.ArtifactLists[RANDOM_ARTIFACT_LIST],
-        CurrentArtifact: state.CurrentArtifact,
-        piwik: state.Piwik.piwik
-    }
-}
-
-const mapDispatchToProps = {
-    selectCurrentArtifact,
-    fetchArtifactList
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContentPage);
+export default ContentPage;

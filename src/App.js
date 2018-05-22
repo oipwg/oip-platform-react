@@ -39,7 +39,7 @@ import Navbar from './components/Navbar.js';
 
 import Homepage from './components/Homepage.js';
 import MiniMusicPlayer from './components/MiniMusicPlayer.js';
-import ContentPage from './components/ContentPage.js';
+import ContentPageWrapper from './components/ContentPageWrapper.js';
 import PublisherPage from './components/PublisherPage.js';
 import UserPage from './components/UserPage.js';
 
@@ -107,7 +107,7 @@ class App extends Component {
                                 <Route path="/user/:page" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
 								<Route path="/user/:page/:type" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
 								<Route path="/user/:page/:type/:id" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
-                                <Route path="/:id" render={props => <ContentPage {...props} store={this.props.store} />}/>
+                                <Route path="/:id" render={props => <ContentPageWrapper {...props} />}/>
 
                                 {/* The switch will render the last Route if no others are found (aka 404 page.) */}
                                 <Route component={NoMatch} />

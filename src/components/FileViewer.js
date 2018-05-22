@@ -23,38 +23,13 @@ var PLAYERS = [
 class FileViewer extends Component {
 	constructor(props){
 		super(props);
-
-		this.state = {
-			ActiveFile: {}
-		};
-
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let CurrentArtifact = newState.CurrentArtifact;
-		let active = newState.FilePlaylist.active;
-		let currentFile = newState.FilePlaylist[active];
-
-		if (currentFile && this.state !== currentFile){
-			this.setState({CurrentArtifact: CurrentArtifact, ActiveFile: currentFile});
-		}
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
 	render() {
 		let extension, fileViewerComponent;
 
-		if (this.state.ActiveFile.info && this.state.ActiveFile.info.getFilename()){
-			extension = this.props.Core.util.getExtension(this.state.ActiveFile.info.getFilename()).toLowerCase();
+		if (this.props.ActiveFile && this.props.ActiveFile.info && this.props.ActiveFile.info.getFilename()){
+			// extension = this.props.Core.util.getExtension(this.props.ActiveFile.info.getFilename()).toLowerCase();
 		}
 
 		if (extension){
@@ -62,7 +37,7 @@ class FileViewer extends Component {
 				if (Player.SUPPORTED_FILE_TYPES){
 					for (var SupportedFileType of Player.SUPPORTED_FILE_TYPES){
 						if (extension === SupportedFileType){
-							fileViewerComponent = React.createElement(Player, {Core: this.props.Core, store: this.props.store})
+							// fileViewerComponent = React.createElement(Player, {Core: this.props.Core, store: this.props.store})
 						}
 					}
 				}

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-// import fileDownload from 'js-file-download';
-
 import { payForFileFunc, buyFileFunc, promptLogin } from '../actions';
 
 class PaymentButtons extends Component {
@@ -20,17 +18,17 @@ class PaymentButtons extends Component {
 			console.log(error);
 		}
 		let _this = this;
-		let payForFile = function(Core, artifact, file, piwik, NotificationSystem){
-			_this.props.store.dispatch(payForFileFunc(Core, artifact, file, piwik, NotificationSystem, onSuccess, onError));
+		let payForFile = function(artifact, file){
+			_this.props.store.dispatch(payForFileFunc(artifact, file, onSuccess, onError));
 		};
 
-		payForFile(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem);
+		payForFile(this.props.artifact, this.props.File.info);
 	}
 	buyFile(){
 		if (this.props.File.owned){
 			this.dlStarted = true;
 		} else {
-			this.props.store.dispatch(buyFileFunc(this.props.Core, this.props.artifact, this.props.File.info, this.props.piwik, this.props.NotificationSystem, function(success){
+			this.props.store.dispatch(buyFileFunc(this.props.artifact, this.props.File.info, function(success){
 				//scrollToTop();
 			}, function(error){
 				console.log(error);
@@ -99,8 +97,9 @@ class PaymentButtons extends Component {
 		sugPlay = sugPlay / scale;
 		sugBuy = sugBuy / scale;
 
-		sugPlay = this.props.Core.util.createPriceString(sugPlay);
-		sugBuy = this.props.Core.util.createPriceString(sugBuy);
+		//what to do with Core
+		// sugPlay = this.props.Core.util.createPriceString(sugPlay);
+		// sugBuy = this.props.Core.util.createPriceString(sugBuy);
 
 		if (sugPlay === 0 || sugPlay === "0"){
 			viewString = "Free";
@@ -158,17 +157,5 @@ class PaymentButtons extends Component {
 		)
 	}
 }
-
-/*
-<div className="col-5">
-	<button className="btn btn-outline-success" style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}} onclick="unlockContent()"><span className="icon icon-wallet"	style={{marginRight: "5px"}}></span>Pay 3 bits</button>
-</div>
-<div className="col-2" style={{paddingTop: "5px"}}>
-	or
-</div>
-<div className="col-5">
-	<button className="btn btn-outline-danger" style={{float:"left", marginRight: "25px", marginLeft: "-25px", padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "0px"}}></span>Watch an Ad</button>
-</div>
-*/
 
 export default PaymentButtons;

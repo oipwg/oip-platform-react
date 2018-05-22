@@ -8,13 +8,12 @@ import ContentCardsContainer from './ContentCardsContainer.js';
 class Homepage extends Component {
 
 	componentDidMount(){
-		this.props.dispatch(fetchArtifactList(this.props.Core, LATEST_CONTENT_LIST));
+		this.props.dispatch(fetchArtifactList(LATEST_CONTENT_LIST));
 	}
 
 	render() {
 		return (
 			<ContentCardsContainer
-				Core={this.props.Core}
 				title={"Latest Content"}
 				content={this.props.content}
 			/>
@@ -23,8 +22,7 @@ class Homepage extends Component {
 }
 function mapStateToProps(state) {
     return {
-		content: state.ArtifactLists[LATEST_CONTENT_LIST],
-		Core: state.Core.Core
+		content: state.ArtifactLists[LATEST_CONTENT_LIST]
     }
 }
 

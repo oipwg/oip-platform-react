@@ -16,7 +16,7 @@ class PublisherPage extends Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.match.params.id !== prevState.pubId) {
-            nextProps.fetchPublisherPage(nextProps.Core, PUBLISHER_PAGE_LIST, nextProps.match.params.id)
+            nextProps.fetchPublisherPage(PUBLISHER_PAGE_LIST, nextProps.match.params.id)
         }
         return {
             pubId: nextProps.match.params.id

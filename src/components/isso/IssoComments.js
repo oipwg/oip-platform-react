@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import IssoComment from './IssoComment.js'
 
 import './isso.css';
+import {RANDOM_ARTIFACT_LIST} from "../../actions";
 
 class IssoComments extends Component {
 	constructor(props){
@@ -11,39 +12,31 @@ class IssoComments extends Component {
 		this.state = {
 			comments: []
 		}
-
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
+    static getDerivedStateFromProps(nextProps, prevState) {
+		let comments
+        if (nextProps.CurrentArtifact.artifact.txid !== prevState.txid) {
+           comments = nextProps.CurrentArtifact.comments;
 
-		let comments = newState.CurrentArtifact.comments;
+           if (!comments) {
+           	comments = []
+		   }
 
-		if (!comments)
-			comments = []
-
-		comments.sort((a,b) => {
-			if (a.created > b.created){
-				return -1;
+		   comments.sort((a,b) => {
+		   	if (a.created > b.created) {
+		   		return -1;
 			} else {
-				return 1;
+		   		return 1
 			}
-		})
+		   })
+        }
 
-		this.setState({comments: comments});
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
+        return {
+        	comments: comments,
+            txid: nextProps.CurrentArtifact.artifact.txid
+        }
+    }
+
 	render() {
 		return (
 			<div id="isso-root">

@@ -74,10 +74,11 @@ export const setPiwik = (piwik) => ({
 	piwik
 })
 
-export const fetchPublisherPage = (Core, list_id, pubId) => dispatch => {
-	Core.Index.getPublisher(pubId, (success) => {
+export const fetchPublisherPage = (list_id, pubId) => (dispatch, getState) => {
+	let state = getState();
+	state.Core.Core.Index.getPublisher(pubId, (success) => {
 		console.log("fetchPublisherPage Success")
-		dispatch(fetchArtifactList(Core, list_id, { "search-for": success.address}))
+		dispatch(fetchArtifactList(list_id, { "search-for": success.address}))
 		dispatch(setPublisherPagePublisher(success))
 	}, (error) => {console.error("getPublisher error:", error)})
 }
@@ -125,28 +126,31 @@ export const requestArtifactListError = (page, errorText) => ({
 	errorText
 })
 
-export const fetchArtifactList = (Core, list_id, options) => dispatch => {
+export const fetchArtifactList = (list_id, options) => (dispatch, getState) => {
 	dispatch(requestArtifactList(list_id));
+
+	let state = getState();
+
 	if (list_id === LATEST_CONTENT_LIST){
-		Core.Index.getSupportedArtifacts(function(artifacts){
+		state.Core.Core.Index.getSupportedArtifacts(function(artifacts){
 			dispatch(recieveArtifactList(list_id, artifacts.slice(0,100)));
 		}, function(err){
 			dispatch(requestArtifactListError(list_id));
 		})
 	} else if (list_id === SEARCH_PAGE_LIST) {
-		Core.Index.search(options, function(results){
+		state.Core.Core.Index.search(options, function(results){
 			dispatch(recieveArtifactList(list_id, results));
 		}, function(err){
 			dispatch(requestArtifactListError(list_id, err));
 		});
 	} else if (list_id === PUBLISHER_PAGE_LIST) {
-		Core.Index.search(options, function(results){
+		state.Core.Core.Index.search(options, function(results){
 			dispatch(recieveArtifactList(list_id, results));
 		}, function(err){
             dispatch(requestArtifactListError(list_id, err));
 		});
 	} else {
-		Core.Index.getRandomSuggested(function(results){
+		state.Core.Core.Index.getRandomSuggested(function(results){
 			dispatch(recieveArtifactList(list_id, results))
 		})
 	}
@@ -379,10 +383,11 @@ export const playlistNext = restrictions => (dispatch, getState) => {
 	}
 }
 
-export const selectCurrentArtifact = (Core, txid, piwik) => dispatch => {
+export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
 	dispatch(requestCurrentArtifact());
 
-	Core.Index.getArtifactFromID(txid, function(artifact){
+	let state = getState();
+	state.Core.Core.Index.getArtifactFromID(txid, function(artifact){
 		dispatch(recieveCurrentArtifact(artifact));
 
 		let files = artifact.getFiles();
@@ -391,14 +396,14 @@ export const selectCurrentArtifact = (Core, txid, piwik) => dispatch => {
 		let txid = artifact.getTXID();
 
 		for (var i = 0; i < files.length; i++) {
-			dispatch(addFileToPlaylist(files[i], txid + "|" + i, Core));
+			dispatch(addFileToPlaylist(files[i], txid + "|" + i, state.Core.Core));
 		}
 
 		dispatch(setActiveFileInPlaylist(txid + "|" + 0));
 
-		dispatch(getComments(Core, txid));
+		dispatch(getComments(state.Core.Core, txid));
 
-		piwik.push(['trackContentImpression', publisher, txid, ""])
+		state.Piwik.piwik.push(['trackContentImpression', publisher, txid, ""])
 	}, function(err){
 		dispatch(requestCurrentArtifactError(err));
 	});
@@ -412,9 +417,11 @@ export const getComments = (Core, url) => dispatch => {
 	})
 }
 
-export const addComment = (Core, url, comment) => dispatch => {
-	Core.Comments.add(url, comment, function(res){
-		dispatch(getComments(Core, url));
+export const addComment = (url, comment) => (dispatch, getState) => {
+	let state = getState();
+
+	state.Core.Core.Comments.add(url, comment, function(res){
+		dispatch(getComments(state.Core, url));
 	})
 }
 
@@ -644,7 +651,9 @@ export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem
 	}
 }
 
-export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
+export const payForFileFunc = (artifact, file, onSuccess, onError) => (dispatch, getState) => {
+	let state = getState();
+
 	let txid = artifact.getTXID();
 	let publisher = artifact.getMainAddress();
 	let publisherName = artifact.getPublisherName();
@@ -662,7 +671,7 @@ export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, 
 				// If file has cost
 				dispatch(paymentInProgress(id));
 
-				dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
+				dispatch(tryPaymentSend(state.Core.Core, state.NotificationSystem.NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
 					dispatch(payForFile(id));
 					dispatch(setActiveFileInPlaylist(id));
 
@@ -678,7 +687,7 @@ export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, 
 			}
 
 			try {
-				piwik.push(["trackContentInteraction", "viewFile", publisher, txid, i]);
+				state.Piwik.piwik.push(["trackContentInteraction", "viewFile", publisher, txid, i]);
 			} catch (e) {
 				//console.log(e);
 			}
@@ -686,7 +695,9 @@ export const payForFileFunc = (Core, artifact, file, piwik, NotificationSystem, 
 	}
 }
 
-export const buyFileFunc = (Core, artifact, file, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
+export const buyFileFunc = (artifact, file, onSuccess, onError) => (dispatch, getState) => {
+	let state = getState();
+
 	let txid = artifact.getTXID();
 	let publisher = artifact.getMainAddress();
 	let publisherName = artifact.getPublisherName();
@@ -704,7 +715,7 @@ export const buyFileFunc = (Core, artifact, file, piwik, NotificationSystem, onS
 			if (file.getSuggestedBuyCost() && paymentAmount > 0){
 				// If file has cost
 				dispatch(buyInProgress(txid));
-				dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
+				dispatch(tryPaymentSend(state.Core.Core, state.NotificationSystem.NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
 					dispatch(setActiveFileInPlaylist(txid + "|" + filei));
 					dispatch(buyFile(txid + "|" + filei));
 
@@ -720,7 +731,7 @@ export const buyFileFunc = (Core, artifact, file, piwik, NotificationSystem, onS
 			}
 
 			try {
-				piwik.push(["trackContentInteraction", "buyFile", publisher, txid, filei]);
+				state.Piwik.piwik.push(["trackContentInteraction", "buyFile", publisher, txid, filei]);
 			} catch (e) {
 				//console.log(e)
 			}

@@ -38,7 +38,7 @@ const artifactList = (state = {
 	}
 }
 
-export const ArtifactLists = (state = { }, action) => {
+export const ArtifactLists = (state = {}, action) => {
 	switch (action.type) {
 		case actions.INVALIDATE_ARTIFACT_LIST:
 		case actions.REQUEST_ARTIFACT_LIST_ERROR:
