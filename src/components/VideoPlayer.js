@@ -115,6 +115,7 @@ class VideoPlayer extends Component {
 		options.autoplay = autoplay;
 		options.sources = [{src: videoURL, type: 'video/mp4'}];
 
+		console.log("OPTIONSN IN VIDEO PLAYER", options)
 		return options;
 	}
 	createVideoPlayer() {

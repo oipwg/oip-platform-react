@@ -29,7 +29,10 @@ class FileViewer extends Component {
 		let extension, fileViewerComponent;
 
 		if (this.props.ActiveFile && this.props.ActiveFile.info && this.props.ActiveFile.info.getFilename()){
-			// extension = this.props.Core.util.getExtension(this.props.ActiveFile.info.getFilename()).toLowerCase();
+            let splitFilename = this.props.ActiveFile.info.getFilename().split(".");
+            let indexToGrab = splitFilename.length - 1;
+
+            extension = splitFilename[indexToGrab].toLowerCase();
 		}
 
 		if (extension){
@@ -37,7 +40,7 @@ class FileViewer extends Component {
 				if (Player.SUPPORTED_FILE_TYPES){
 					for (var SupportedFileType of Player.SUPPORTED_FILE_TYPES){
 						if (extension === SupportedFileType){
-							// fileViewerComponent = React.createElement(Player, {Core: this.props.Core, store: this.props.store})
+							fileViewerComponent = React.createElement(Player, {props: this.props})
 						}
 					}
 				}

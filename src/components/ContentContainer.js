@@ -33,7 +33,11 @@ class ContentContainer extends Component {
 					style=	  { (this.props.ActiveFile && this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid && !this.props.ActiveFile.owned) ? {overflow: "scroll"} : {}}
 				>
 					{ (!haveLoadedState || loading) ? <div style={{height: "100%", width: "100vw", maxWidth: "100vw"}} className="spinner-container"><Spinner name="wave" color="aqua" /></div> : ''}
-					<FileViewer ActiveFile={this.props.ActiveFile} />
+					<FileViewer
+						Artifact={this.props.Artifact}
+						ArtifactState={this.props.ArtifactState}
+						ActiveFile={this.props.ActiveFile}
+					/>
 				</div>
 
 				<Paywall
