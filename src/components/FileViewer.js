@@ -23,7 +23,32 @@ var PLAYERS = [
 class FileViewer extends Component {
 	constructor(props){
 		super(props);
+
+		this.buildIPFSShortURL = this.buildIPFSShortURL.bind(this);
+		this.buildIPFSURL = this.buildIPFSURL.bind(this);
 	}
+
+    buildIPFSShortURL(location, file) {
+        if (!location || !file)
+            return "";
+
+        return location + "/" + file.fname;
+    }
+
+    buildIPFSURL(hash, fname) {
+        let trailURL = "";
+        if (!fname) {
+            let parts = hash.split('/');
+            if (parts.length == 2) {
+                trailURL = parts[0] + "/" + encodeURIComponent(parts[1]);
+            } else {
+                trailURL = hash;
+            }
+        } else {
+            trailURL = hash + "/" + encodeURIComponent(fname);
+        }
+        return "https://gateway.ipfs.io/ipfs/" + trailURL;
+    }
 
 	render() {
 		let extension, fileViewerComponent;
@@ -40,7 +65,12 @@ class FileViewer extends Component {
 				if (Player.SUPPORTED_FILE_TYPES){
 					for (var SupportedFileType of Player.SUPPORTED_FILE_TYPES){
 						if (extension === SupportedFileType){
-							fileViewerComponent = React.createElement(Player, {props: this.props})
+							fileViewerComponent = React.createElement(Player,
+								{Artifact: this.props.Artifact,
+									ActiveFile: this.props.ActiveFile,
+                                    buildIPFSShortURL: this.buildIPFSShortURL,
+                                    buildIPFSURL: this.buildIPFSURL
+								})
 						}
 					}
 				}
