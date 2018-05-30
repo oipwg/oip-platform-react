@@ -3,83 +3,56 @@ import axios from 'axios';
 
 var ReactMarkdown = require('react-markdown');
 
-class TextViewer extends Component {
-	constructor(props){
-		super(props);
+class MarkdownContainer extends Component {
+    constructor(props) {
+        super(props);
 
-		this.state = {
-			markdown: ""
-		}
+        this.state = {
+            markdown: ""
+        }
+    }
 
-		this.getMarkdown = this.getMarkdown.bind(this);
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.Artifact != prevState.Artifact || nextProps.ActiveFile != prevState.ActiveFile) {
+            return {
+                Artifact: nextProps.Artifact,
+                ActiveFile: nextProps.ActiveFile,
+                markdown: nextProps.buildIPFSURL(nextProps.Artifact.getLocation() + "/" + nextProps.ActiveFile.info.getFilename())
+            }
+        } else {return null}
+    }
 
-		let updateState = this.stateDidUpdate;
+    componentDidUpdate(prevProps, prevState) {
+		if (prevState.markdown != this.state.markdown) {
+            let _this = this;
 
-		this.unsubscribe = this.props.store.subscribe(() => {
-			updateState();
-		});
-	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
-
-		let currentArtifact, active, activeFile;
-
-		if (newState.CurrentArtifact)
-			currentArtifact = newState.CurrentArtifact;
-		if (newState.FilePlaylist){
-			active = newState.FilePlaylist.active;
-			activeFile = newState.FilePlaylist[active];
-		}
-
-		let stateObj = {
-			CurrentArtifact: currentArtifact,
-			ActiveFile: activeFile
-		}
-
-		if (stateObj && this.state !== stateObj){
-			let getMarkdown = this.getMarkdown;
-			this.setState(stateObj, () => {
-				getMarkdown();
-			});
+            this.serverRequest = axios
+                .get(this.state.markdown)
+                .then(function(result) {
+                    _this.setState({
+                        markdown: result.data
+                    });
+                });
 		}
 	}
-	componentWillUnmount(){
-		this.unsubscribe();
 
-		if (this.serverRequest){
-			try {
-				this.serverRequest.abort();
-			} catch(e){}
-		}
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	getMarkdown(){
-		if (this.state.ActiveFile && this.state.CurrentArtifact && this.state.ActiveFile.info && this.state.CurrentArtifact.artifact){
-			let markdownURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.CurrentArtifact.artifact.getLocation(), this.state.ActiveFile.info));
+    componentWillUnmount(){
+        if (this.serverRequest){
+            try {
+                this.serverRequest.abort();
+            } catch(e){}
+        }
+    }
 
-			let _this = this;
-
-			this.serverRequest = axios
-			.get(markdownURL)
-			.then(function(result) {
-				_this.setState({
-					markdown: result.data
-				});
-			});
-		}
-	}
-	render() {
-		return (
-			<div className="justify-content-center markdownContainer" style={{height: "100%", margin: "0px auto"}}>
-				<ReactMarkdown source={this.state.markdown} />
-			</div>
-		);
-	}
+    render() {
+        return (
+            <div className="justify-content-center markdownContainer" style={{height: "100%", margin: "0px auto"}}>
+                <ReactMarkdown source={this.state.markdown} />
+            </div>
+        );
+    }
 }
 
-TextViewer.SUPPORTED_FILE_TYPES = ["md", "txt"]
+MarkdownContainer.SUPPORTED_FILE_TYPES = ["md", "txt"]
 
-export default TextViewer;
+export default MarkdownContainer;

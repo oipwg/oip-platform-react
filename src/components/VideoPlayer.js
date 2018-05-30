@@ -136,6 +136,7 @@ class VideoPlayer extends Component {
     }
 
     render() {
+        console.log("player", this.player)
         return (
             <div data-vjs-player>
                 <video ref={ node => this.videoNode = node } className="video-js vjs-big-play-centered">
