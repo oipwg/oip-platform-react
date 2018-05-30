@@ -14,7 +14,6 @@ class VideoPlayer extends Component {
             autoplay: true
         }
 
-        this.createVideoPlayer = this.createVideoPlayer.bind(this);
         this.updateVideoPlayer = this.updateVideoPlayer.bind(this);
 
     }
