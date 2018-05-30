@@ -18,9 +18,9 @@ class VideoPlayer extends Component {
 
     }
     static getDerivedStateFromProps(nextProps, prevState) {
-        let autoplay = nextProps.autoplay, videoURL = prevState.sources.src, thumbnailURL = prevState.poster;
+        let autoplay = prevState.autoplay, videoURL = prevState.sources.src, thumbnailURL = prevState.poster;
         if (nextProps.Artifact && nextProps.ActiveFile && nextProps.ActiveFile.info && nextProps.ActiveFile.hasPaid) {
-            if (nextProps.ActiveFile.info != prevState.ActiveFile.info || nextProps.ActiveFile.hasPaid != prevState.ActiveFile.hasPaid) {
+            if (nextProps.ActiveFile.info != prevState.ActiveFile.info || (nextProps.ActiveFile.hasPaid && !prevState.ActiveFile.hasPaid)) {
                 //THEN UPDATE
                 if (this.player) {
                    let thumbnail;
@@ -130,31 +130,9 @@ class VideoPlayer extends Component {
                     this.player.play();
                 }
             } else {
-                this.createVideoPlayer();
+                this.player = videojs(this.videoNode, this.getPlayerOptions());
             }
         }
-    }
-
-    buildIPFSShortURL(location, file) {
-        if (!location || !file)
-            return "";
-
-        return location + "/" + file.fname;
-    }
-
-    buildIPFSURL(hash, fname) {
-        let trailURL = "";
-        if (!fname) {
-            let parts = hash.split('/');
-            if (parts.length == 2) {
-                trailURL = parts[0] + "/" + encodeURIComponent(parts[1]);
-            } else {
-                trailURL = hash;
-            }
-        } else {
-            trailURL = hash + "/" + encodeURIComponent(fname);
-        }
-        return "https://gateway.ipfs.io/ipfs/" + trailURL;
     }
 
     render() {
