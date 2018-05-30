@@ -11,22 +11,23 @@ class FilesTable extends Component {
 		this.stripUnimportantFiles = this.stripUnimportantFiles.bind(this);
 		this.getAllFiles = this.getAllFiles.bind(this);
 		this.getCurrentArtifactFiles = this.getCurrentArtifactFiles.bind(this);
+		this.getEntypoIconForType = this.getEntypoIconForType(this);
 	}
 
 	getAllFiles(){
 		let files = [];
 
-		if (this.props.CurrentArtifact && this.props.FilePlaylist){
-			for (var key in this.props.FilePlaylist) {
+		if (this.props.Artifact){
+			let FilePlaylist = this.props.Artifact.getFiles();
+			for (var key in FilePlaylist) {
 				// This just makes sure we are not getting the "active" key from the FilePlaylist obj
 				if (key.split("|").length === 2){
-					let newObj = this.props.FilePlaylist[key];
+					let newObj = FilePlaylist[key];
 					newObj.key = key.toString();
 					files.push(newObj);
 				}
 			}
 		}
-
 		return files;
 	}
 	getCurrentArtifactFiles(){
@@ -34,7 +35,7 @@ class FilesTable extends Component {
 		let myArtifactFiles = [];
 
 		for (var file in files) {
-			if (files[file].key.split("|")[0] === this.props.CurrentArtifact.artifact.getTXID()){
+			if (files[file].key.split("|")[0] === this.props.Artifact.getTXID()){
 				myArtifactFiles.push(files[file]);
 			}
 		}
@@ -56,6 +57,37 @@ class FilesTable extends Component {
 
 		return newFiles;
 	}
+
+    getEntypoIconForType(type){
+        let icon;
+
+        switch(type){
+            case "Audio":
+                icon = "beamed-note";
+                break;
+            case "Video":
+                icon = "clapperboard";
+                break;
+            case "Image":
+                icon = "image";
+                break;
+            case "Text":
+                icon = "text";
+                break;
+            case "Software":
+                icon = "code";
+                break;
+            case "Web":
+                icon = "code";
+                break;
+            default:
+                icon = "";
+                break;
+        }
+
+        return icon;
+    }
+
 	render() {
 		let files = this.getCurrentArtifactFiles();
 
@@ -64,14 +96,16 @@ class FilesTable extends Component {
 		for (var i = 0; i < files.length; i++) {
 			let newObj = files[i];
 
-			// newObj.info.icon = this.props.Core.util.getEntypoIconForType(files[i].info.getType());
+			newObj.info.icon = this.getEntypoIconForType(files[i].info.getType());
 			filesCopy.push(newObj);
 		}
 
 
 		if (!this.props.extendedView)
 			filesCopy = this.stripUnimportantFiles(filesCopy);
-		let _this = this;
+
+		// let _this = this;
+		console.log("props", this.props)
 		return (
 			<div>
 				<table className="table table-sm table-striped table-bordered text-center table-hover table-responsive table-inverse" style={{width: "100%", verticalAlign: "middle"}}>

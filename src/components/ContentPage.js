@@ -22,7 +22,11 @@ class ContentPage extends Component {
                 <div className="container">
                     <div className="row" style={{marginTop: "30px"}}>
                         <div id="media-info" className="col-12 col-md-9" >
-                            <ContentInfo Artifact={this.props.Artifact} ArtifactState={this.props.ArtifactState} />
+                            <ContentInfo
+                                Artifact={this.props.Artifact}
+                                ArtifactState={this.props.ArtifactState}
+                                ActiveFile={this.props.ActiveFile}
+                            />
                             <br />
                             {(this.props.Artifact && this.props.Artifact.txid !== "") ?
                                 <div>

@@ -19,7 +19,7 @@ class ContentInfo extends Component {
 
     let publisher, pubName, title, icon, paid, artifact;
 
-    if (this.props.Artifact ) {
+    if (this.props.Artifact) {
     	artifact = this.props.Artifact;
         publisher = artifact.getMainAddress();
         pubName = artifact.getPublisherName();
@@ -51,7 +51,11 @@ class ContentInfo extends Component {
 						</h5>
 					</div>
 				</div>
-				<ContentExtraInfo Artifact={this.props.Artifact} ArtifactState={this.props.ArtifactState}/>
+				<ContentExtraInfo
+					Artifact={this.props.Artifact}
+					ArtifactState={this.props.ArtifactState}
+					ActiveFile={this.props.ActiveFile}
+				/>
 			</div>
 		);
 	}

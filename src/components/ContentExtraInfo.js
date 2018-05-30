@@ -39,7 +39,12 @@ class ContentExtraInfo extends Component {
 				>
 					<Linkify>{this.props.ArtifactState.isFetching ? "loading..." : description}</Linkify>
 				</p>
-				<FilesTable extendedView={this.state.extendedView} />
+				<FilesTable
+					Artifact={this.props.Artifact}
+					ArtifactState={this.props.ArtifactState}
+					ActiveFile={this.props.ActiveFile}
+					extendedView={this.state.extendedView}
+				/>
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
 					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />
 					<button className="btn btn-sm btn-outline-secondary" style={{borderColor: "#333", color: "#333", margin: "0px auto", display:"block", backgroundColor:"#fff"}} onClick={this.toggleSeeMore}>{this.state.extendedView ? "See Less" : "See More"}</button>
