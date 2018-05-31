@@ -25,13 +25,14 @@ class PlaylistScroller extends Component {
 				}} />
 				<div className="scrollbar" style={{height: "32vh", overflowY: "scroll", margin: "auto", marginTop: "10px", marginBottom: "100px", maxWidth: "450px"}}>
 					{/*<h3 style={{color: this.props.mainColor, textAlign: "center"}}></h3>*/}
-					<Playlist 
-						Core={this.props.Core} 
-						store={this.props.store}
+					<Playlist
 						mainColor={this.props.mainColor}
 						bgColor={this.props.bgColor}
 						currentArtifactOnly={this.props.currentArtifactOnly}
 						filter={this.props.filter}
+                        Artifact={this.props.Artifact}
+                        ActiveFile={this.props.ActiveFile}
+                        FilePlaylist={this.props.FilePlaylist}
 					/>
 				</div>
 			</div>

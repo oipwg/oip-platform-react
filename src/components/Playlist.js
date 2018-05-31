@@ -8,46 +8,19 @@ class Playlist extends Component {
 	constructor(props){
 		super(props);
 
-		this.state = {
-
-		}
-
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.getCurrentArtifactFiles = this.getCurrentArtifactFiles.bind(this);
 		this.getAllFiles = this.getAllFiles.bind(this);
 
-		let _this = this;
+	}
 
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
-	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
-
-		let CurrentArtifact = newState.CurrentArtifact;
-		let FilePlaylist = newState.FilePlaylist;
-		let active = newState.FilePlaylist.active;
-		let currentFile = newState.FilePlaylist[active];
-
-		if (currentFile && this.state !== currentFile){
-			this.setState({CurrentArtifact: CurrentArtifact, ActiveFile: currentFile, FilePlaylist: FilePlaylist});
-		}
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
 	getAllFiles(){
 		let files = [];
 
-		if (this.state.CurrentArtifact && this.state.FilePlaylist){
-			for (var key in this.state.FilePlaylist) {
+		if (this.props.Artifact && this.props.FilePlaylist){
+			for (var key in this.props.FilePlaylist) {
 				// This just makes sure we are not getting the "active" key from the FilePlaylist obj
 				if (key.split("|").length === 2){
-					let newObj = this.state.FilePlaylist[key];
+					let newObj = this.props.FilePlaylist[key];
 					newObj.key = key.toString();
 					files.push(newObj);
 				}
@@ -61,7 +34,7 @@ class Playlist extends Component {
 		let myArtifactFiles = [];
 
 		for (var file in files) {
-			if (files[file].key.split("|")[0] === this.state.CurrentArtifact.artifact.getTXID()){
+			if (files[file].key.split("|")[0] === this.props.Artifact.getTXID()){
 				myArtifactFiles.push(files[file]);
 			}
 		}
@@ -99,8 +72,8 @@ class Playlist extends Component {
 
 		DisplayFiles = this.filterFiles(DisplayFiles, this.props.filter);
 
-		if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
-			Artist = this.state.CurrentArtifact.artifact.getDetail("artist")
+		if (this.props.Artifact){
+			Artist = this.props.Artifact.getDetail("artist")
 		}
 
 		return (
@@ -113,19 +86,19 @@ class Playlist extends Component {
 					</div>
 				</li>
 				{DisplayFiles.map(function(file, i){
-					return <li key={i} className="list-group-item" style={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
+					return <li key={i} className="list-group-item" style={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
 						<div style={{padding: "4px 5px", display:"flex"}}>
 							<img className="rounded" src={""} width="40px" height="40px" alt="" />
 							<div style={{padding: "0px 10px", width:"235px"}}>
-								<div style={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"} : {color: _this.props.mainColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{Artist}</div>
-								<div style={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontSize:"12px", width: "100%", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "100%", display: "flex"}}>
+								<div style={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"} : {color: _this.props.mainColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{Artist}</div>
+								<div style={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontSize:"12px", width: "100%", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "100%", display: "flex"}}>
 									<div style={{width: "200px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</div>
 									<div style={{width: "30px", textAlign: "right"}}>
 										{file.info.duration > 0 ? <FormattedTime numSeconds={file.info.duration} /> : ""}
 									</div>
 								</div>
 							</div>
-							<PaymentButtons Core={_this.props.Core} store={_this.props.store} File={file} artifact={_this.state.CurrentArtifact.artifact} btnStyle={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {backgroundColor: _this.props.bgColor} : {}} />
+							{/*<PaymentButtons  File={file} artifact={_this.props.Artifact} btnStyle={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {backgroundColor: _this.props.bgColor} : {}} />*/}
 						</div>
 					</li>
 				})}
