@@ -52,7 +52,7 @@ class AudioContainer extends Component {
 		this.audio.addEventListener("pause", this.onAudioPause)
 
         if (this.props.VolumeControls && this.props.VolumeControls.volume && this.audio)
-            this.audio.volume = VolumeControls.volume;
+            this.audio.volume = this.props.VolumeControls.volume;
 	}
 
 	onImageLoad(img){
@@ -73,7 +73,7 @@ class AudioContainer extends Component {
 	}
 	onTimeUpdate(event){
 		if (event && event.srcElement && this && this.audio){
-			this.props.updateFileCurrentTime(this.props.active, event.srcElement.currentTime));
+			this.props.updateFileCurrentTime(this.props.active, event.srcElement.currentTime);
 
 			if (this.props.ActiveFile.duration !== event.srcElement.duration && event.srcElement.duration)
 				this.updateFileDuration(this.props.active, event.srcElement.duration);
@@ -161,7 +161,7 @@ class AudioContainer extends Component {
 								{name} - {artist}
 							</h3>
 							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
-								<IPFSImage hash={ipfsHash} onImageLoad={this.onImageLoad} />
+								{/*<IPFSImage hash={ipfsHash} onImageLoad={this.onImageLoad} />*/}
 							</div>
 						</div>
 						{playlistLen > 1 ?
