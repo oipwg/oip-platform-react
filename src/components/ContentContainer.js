@@ -37,6 +37,18 @@ class ContentContainer extends Component {
 						Artifact={this.props.Artifact}
 						ArtifactState={this.props.ArtifactState}
 						ActiveFile={this.props.ActiveFile}
+						// For AudioContainer
+                        VolumeControls={this.props.VolumeControls}
+                        FilePlaylist={this.props.FilePlaylist}
+                        active={this.props.active}
+						// Dispatch function for AudioContainer
+                        updateFileCurrentTime={this.props.updateFileCurrentTime}
+                        isPlayableFile={this.props.isPlayableFile}
+                        isSeekableFile={this.props.isSeekableFile}
+                        updateFileDuration={this.props.updateFileDuration}
+                        setVolume={this.props.setVolume}
+                        setMute={this.props.setMute}
+                        playlistNext={this.props.playlistNext}
 					/>
 				</div>
 

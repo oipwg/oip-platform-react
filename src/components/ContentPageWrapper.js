@@ -10,7 +10,14 @@ import {
     tipFunc,
     addComment,
     payForFileFunc,
-    buyFileFunc
+    buyFileFunc,
+    updateFileCurrentTime,
+    isPlayableFile,
+    isSeekableFile,
+    updateFileDuration,
+    setVolume,
+    setMute,
+    playlistNext
 } from '../actions'
 
 class ContentPageWrapper extends Component {
@@ -41,11 +48,23 @@ class ContentPageWrapper extends Component {
                 <ContentPage
                     Artifact={this.props.Artifact}
                     ArtifactState={this.props.ArtifactState}
-
                     ArtifactList={this.props.ArtifactList}
                     ActiveFile={this.props.ActiveFile}
                     artifactTXID={artifactTXID}
                     addComment={this.props.addComment}
+                    // For AudioContainer
+                    VolumeControls={this.props.VolumeControls}
+                    FilePlaylist={this.props.FilePlaylist}
+                    active={this.props.active}
+                    // Dispatch function for AudioContainer
+                    updateFileCurrentTime={this.props.updateFileCurrentTime}
+                    isPlayableFile={this.props.isPlayableFile}
+                    isSeekableFile={this.props.isSeekableFile}
+                    updateFileDuration={this.props.updateFileDuration}
+                    setVolume={this.props.setVolume}
+                    setMute={this.props.setMute}
+                    playlistNext={this.props.playlistNext}
+
                 />
             </div>
 
@@ -59,7 +78,10 @@ function mapStateToProps(state) {
         Artifact: state.CurrentArtifact.artifact,
         ArtifactState: state.CurrentArtifact,
         ArtifactList: state.ArtifactLists[RANDOM_ARTIFACT_LIST],
-        ActiveFile: state.FilePlaylist[state.FilePlaylist.active]
+        ActiveFile: state.FilePlaylist[state.FilePlaylist.active],
+        VolumeControls: state.VolumeControls,
+        FilePlaylist: state.FilePlaylist,
+        active: state.FilePlaylist.active
     }
 }
 
@@ -69,7 +91,16 @@ const mapDispatchToProps = {
     tipFunc,
     addComment,
     payForFileFunc,
-    buyFileFunc
+    buyFileFunc,
+    // For AudioContainer
+    updateFileCurrentTime,
+    isPlayableFile,
+    isSeekableFile,
+    updateFileDuration,
+    setVolume,
+    setMute,
+    playlistNext
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentPageWrapper)

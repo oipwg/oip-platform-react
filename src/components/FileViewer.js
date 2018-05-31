@@ -69,7 +69,19 @@ class FileViewer extends Component {
 								{Artifact: this.props.Artifact,
 									ActiveFile: this.props.ActiveFile,
                                     buildIPFSShortURL: this.buildIPFSShortURL,
-                                    buildIPFSURL: this.buildIPFSURL
+                                    buildIPFSURL: this.buildIPFSURL,
+                                    // For AudioContainer
+                                    VolumeControls: this.props.VolumeControls,
+									FilePlaylist: this.props.FilePlaylist,
+									active: this.props.active,
+									// Dispatch function for AudioContainer
+									updateFileCurrentTime: this.props.updateFileCurrentTime,
+									isPlayableFile: this.props.isPlayableFile,
+									isSeekableFile: this.props.isSeekableFile,
+									updateFileDuration: this.props.updateFileDuration,
+									setVolume: this.props.setVolume,
+									setMute: this.props.setMute,
+									playlistNext: this.props.playlistNext
 								})
 						}
 					}
