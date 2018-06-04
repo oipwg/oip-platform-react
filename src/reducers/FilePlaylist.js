@@ -14,7 +14,7 @@ const file = (state = {
 	isSeekable: false,
 	duration: 0,
 	currentTime: 0,
-	info: {}
+	info: undefined
 }, action) => {
 	switch (action.type) {
 		case actions.ADD_FILE_TO_PLAYLIST:

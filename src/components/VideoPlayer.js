@@ -96,6 +96,6 @@ class VideoPlayer extends Component {
     }
 }
 
-VideoPlayer.SUPPORTED_FILE_TYPES = ["mp4", "webm", "ogg"];
+VideoPlayer.SUPPORTED_FILE_TYPES = ["mp4"];
 
 export default VideoPlayer;
