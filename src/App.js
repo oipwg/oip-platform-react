@@ -131,7 +131,6 @@ const NoMatch = ({ match }) => (
 )
 
 function mapStateToProps(state) {
-	console.log("app state", state)
     return {
         User: state.User,
         Core: state.Core.Core,

@@ -32,7 +32,7 @@ class FileViewer extends Component {
         if (!location || !file)
             return "";
 
-        return location + "/" + file.fname;
+        return location + "/" + file;
     }
 
     buildIPFSURL(hash, fname) {

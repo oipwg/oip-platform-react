@@ -14,25 +14,26 @@ class VideoPlayer extends Component {
             autoplay: true
         }
 
-        this.updateVideoPlayer = this.updateVideoPlayer.bind(this);
-
     }
     static getDerivedStateFromProps(nextProps, prevState) {
         let autoplay = prevState.autoplay, videoURL = prevState.sources.src, thumbnailURL = prevState.poster;
-        if (nextProps.Artifact && nextProps.ActiveFile && nextProps.ActiveFile.info && nextProps.ActiveFile.hasPaid) {
-            if (nextProps.ActiveFile.info != prevState.ActiveFile.info || (nextProps.ActiveFile.hasPaid && !prevState.ActiveFile.hasPaid)) {
-                //THEN UPDATE
-                if (this.player) {
-                   let thumbnail;
+        if (nextProps.ActiveFile && nextProps.ActiveFile.info) {
+            if (prevState.ActiveFile && prevState.ActiveFile.info) {
+                if (nextProps.ActiveFile.info != prevState.ActiveFile.info || (nextProps.ActiveFile.hasPaid && !prevState.ActiveFile.hasPaid)) {
+                    //THEN UPDATE
+                    if (this.player) {
+                        let thumbnail;
 
-                   videoURL = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), nextProps.ActiveFile.info))
-                   if (nextProps.Artifact.getThumbnail()) { thumbnail = nextProps.Artifact.getThumbnail()} else {thumbnail = ""}
-                   thumbnailURL = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), thumbnail));
+                        videoURL = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), nextProps.ActiveFile.info.getFilename()))
+                        if (nextProps.Artifact.getThumbnail()) { thumbnail = nextProps.Artifact.getThumbnail()} else {thumbnail = ""}
+                        thumbnailURL = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), thumbnail));
 
-                    if (!this.state.ActiveFile.hasPaid && !this.state.ActiveFile.isOwned){
-                        autoplay = false;
+                        if (!this.props.ActiveFile.hasPaid && !this.props.ActiveFile.owned){
+                            // console.log("Step 4 Check")
+                            autoplay = false;
+                        }
+
                     }
-
                 }
             }
         }
@@ -49,7 +50,7 @@ class VideoPlayer extends Component {
         this.player = videojs(this.videoNode, this.getPlayerOptions());
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(){
         if (!this.player) {
             this.player = videojs(this.videoNode, this.getPlayerOptions());
         }
@@ -58,6 +59,9 @@ class VideoPlayer extends Component {
         this.player.poster(this.state.poster),
         this.player.src(this.state.sources)
 
+        if (!this.props.DisplayPaywall){
+            this.player.play();
+        }
     }
 
     componentWillUnmount(){
@@ -79,22 +83,23 @@ class VideoPlayer extends Component {
 
         let videoURL;
 
-        if (this.state.Artifact && this.state.ActiveFile.info){
-            videoURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact.getLocation(), this.state.ActiveFile.info));
+        if (this.props.Artifact && this.props.ActiveFile.info){
+            console.log("building videoURL")
+            videoURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.ActiveFile.info.getFilename()));
         } else {
             videoURL = "";
         }
 
         let thumbnailURL = "";
 
-        if (this.state.Artifact){
-            let thumbnail = this.state.Artifact.getThumbnail();
-            thumbnailURL = this.props.Core.util.buildIPFSURL(this.props.Core.util.buildIPFSShortURL(this.state.Artifact.getLocation(), thumbnail));
+        if (this.props.Artifact){
+            let thumbnail = this.props.Artifact.getThumbnail();
+            thumbnailURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), thumbnail.getFilename()));
         }
 
         let autoplay = true;
 
-        if (this.state.ActiveFile.isPaid && (!this.state.ActiveFile.hasPaid && !this.state.ActiveFile.isOwned)){
+        if (this.props.ActiveFile.isPaid && (!this.props.ActiveFile.hasPaid && !this.props.ActiveFile.owned)){
             autoplay = false;
         }
 
@@ -104,35 +109,8 @@ class VideoPlayer extends Component {
 
         options.autoplay = autoplay;
         options.sources = [{src: videoURL, type: 'video/mp4'}];
-
+        console.log("OPTIONS", options)
         return options;
-    }
-
-    updateVideoPlayer(){
-        if (this.state.Artifact && this.state.ActiveFile){
-            if (this.player){
-                try {
-                    //this.player.reset();
-                } catch(e){}
-
-                let options = this.getPlayerOptions();
-
-                if (options.poster){
-                    this.player.poster = options.poster;
-                }
-
-                this.player.autoplay(options.autoplay);
-
-                this.player.src(options.sources);
-                console.log(options);
-
-                if (!this.props.DisplayPaywall){
-                    this.player.play();
-                }
-            } else {
-                this.player = videojs(this.videoNode, this.getPlayerOptions());
-            }
-        }
     }
 
     render() {

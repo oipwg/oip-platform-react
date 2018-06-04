@@ -105,7 +105,7 @@ class FilesTable extends Component {
 			filesCopy = this.stripUnimportantFiles(filesCopy);
 
 		// let _this = this;
-		console.log("props", this.props)
+
 		return (
 			<div>
 				<table className="table table-sm table-striped table-bordered text-center table-hover table-responsive table-inverse" style={{width: "100%", verticalAlign: "middle"}}>
