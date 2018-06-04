@@ -9,58 +9,68 @@ class VideoPlayer extends Component {
         super(props);
 
         this.state = {
-            sources: {src: "", type: 'video/mp4'},
-            poster: "",
-            autoplay: true
+            options: {
+                sources: {src: "", type: 'video/mp4'},
+                poster: "",
+                autoplay: true,
+                controls: true,
+                preload: "auto"
+            }
         }
 
     }
     static getDerivedStateFromProps(nextProps, prevState) {
-        let autoplay = prevState.autoplay, videoURL = prevState.sources.src, thumbnailURL = prevState.poster;
-        if (nextProps.ActiveFile && nextProps.ActiveFile.info) {
-            if (prevState.ActiveFile && prevState.ActiveFile.info) {
-                if (nextProps.ActiveFile.info != prevState.ActiveFile.info || (nextProps.ActiveFile.hasPaid && !prevState.ActiveFile.hasPaid)) {
-                    //THEN UPDATE
-                    if (this.player) {
-                        let thumbnail;
+        console.log("deriveStateFromProps", nextProps, prevState)
+        let options = prevState.options;
 
-                        videoURL = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), nextProps.ActiveFile.info.getFilename()))
-                        if (nextProps.Artifact.getThumbnail()) { thumbnail = nextProps.Artifact.getThumbnail()} else {thumbnail = ""}
-                        thumbnailURL = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), thumbnail));
+        if (nextProps.Artifact && nextProps.ActiveFile && nextProps.ActiveFile.info) {
+            options.sources.src = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), nextProps.ActiveFile.info.getFilename()))
 
-                        if (!this.props.ActiveFile.hasPaid && !this.props.ActiveFile.owned){
-                            // console.log("Step 4 Check")
-                            autoplay = false;
-                        }
+            let thumbnail = nextProps.Artifact.getThumbnail();
+            options.poster = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), thumbnail.getFilename()));
 
-                    }
-                }
+            if (nextProps.ActiveFile.isPaid && (nextProps.ActiveFile.hasPaid && !nextProps.ActiveFile.owned)){
+                options.autoplay = false;
             }
-        }
 
+            options.autoplay = false;
+        }
         return {
             ActiveFile: nextProps.ActiveFile,
-            sources: {src: videoURL, type: 'video/mp4'},
-            poster: thumbnailURL,
-            autoplay: autoplay
+            options: options
         }
     }
 
     componentDidMount(){
-        this.player = videojs(this.videoNode, this.getPlayerOptions());
+        console.log("component did mount and spawning node")
+        this.player = videojs(this.videoNode, this.state.options, function onPlayerReady() {
+            console.log("onPlayerReady", this)
+        });
     }
 
     componentDidUpdate(){
-        if (!this.player) {
-            this.player = videojs(this.videoNode, this.getPlayerOptions());
-        }
+        console.log("componentDidUpdate")
 
-        this.player.autoplay(this.state.autoplay),
-        this.player.poster(this.state.poster),
-        this.player.src(this.state.sources)
+        if (this.player) {
+            console.log("updating player")
+            let opts = this.player.options_;
 
-        if (!this.props.DisplayPaywall){
-            this.player.play();
+            if (opts.autoplay != this.state.options.autoplay) {
+                this.player.autoplay(this.state.options.autoplay)
+                console.log('autoplay updated')
+            }
+            if (opts.post != this.state.options.poster) {
+                this.player.poster(this.state.options.poster)
+                console.log('poster updated')
+            }
+            if (opts.sources != this.state.options.sources) {
+                this.player.src(this.state.options.sources)
+                console.log('src updated')
+            }
+
+            if (!this.props.DisplayPaywall){
+                this.player.play();
+            }
         }
     }
 
@@ -75,48 +85,10 @@ class VideoPlayer extends Component {
         }
     }
 
-    getPlayerOptions() {
-        var options = {};
-
-        options.controls = true;
-        options.preload = "auto";
-
-        let videoURL;
-
-        if (this.props.Artifact && this.props.ActiveFile.info){
-            console.log("building videoURL")
-            videoURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.ActiveFile.info.getFilename()));
-        } else {
-            videoURL = "";
-        }
-
-        let thumbnailURL = "";
-
-        if (this.props.Artifact){
-            let thumbnail = this.props.Artifact.getThumbnail();
-            thumbnailURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), thumbnail.getFilename()));
-        }
-
-        let autoplay = true;
-
-        if (this.props.ActiveFile.isPaid && (!this.props.ActiveFile.hasPaid && !this.props.ActiveFile.owned)){
-            autoplay = false;
-        }
-
-        if (thumbnailURL){
-            options.poster = thumbnailURL;
-        }
-
-        options.autoplay = autoplay;
-        options.sources = [{src: videoURL, type: 'video/mp4'}];
-        console.log("OPTIONS", options)
-        return options;
-    }
-
     render() {
         console.log("player", this.player)
         return (
-            <div data-vjs-player>
+            <div>
                 <video ref={ node => this.videoNode = node } className="video-js vjs-big-play-centered">
                 </video>
             </div>
