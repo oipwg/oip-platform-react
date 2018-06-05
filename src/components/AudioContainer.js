@@ -138,15 +138,12 @@ class AudioContainer extends Component {
 			if (this.props.Artifact){
 				ipfsHash = this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.Artifact.getThumbnail());
 				songURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.ActiveFile.info.getFilename()));
-				console.log("songURL", songURL)
-				console.log("Artifact", this.props.Artifact)
 				artist = this.props.Artifact.getDetail("artist");
 			}
 		}
 		if (this.props.FilePlaylist){
 			playlistLen = Object.keys(this.props.FilePlaylist).length - 1; //14
 		}
-		console.log("this audio", this.audio)
 		return (
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio
@@ -246,6 +243,7 @@ class AudioContainer extends Component {
 							volume={this.props.VolumeControls.volume}
 							onVolumeChange={this.onVolumeChange}
 							isEnabled={this.props.ActiveFile.isPlayable}
+							style={this.props.VolumeControls.isMuted ? {display: "none"} : null}
 						/>
 					</div>
 				</div>
