@@ -51,6 +51,8 @@ class AudioContainer extends Component {
 		this.audio.addEventListener("play", this.onAudioPlay)
 		this.audio.addEventListener("pause", this.onAudioPause)
 
+		this.audio.crossOrigin = "anonymous";
+
         if (this.props.VolumeControls && this.props.VolumeControls.volume && this.audio)
             this.audio.volume = this.props.VolumeControls.volume;
 	}
@@ -75,8 +77,8 @@ class AudioContainer extends Component {
 		if (event && event.srcElement && this && this.audio){
 			this.props.updateFileCurrentTime(this.props.active, event.srcElement.currentTime);
 
-			if (this.props.ActiveFile.duration !== event.srcElement.duration && event.srcElement.duration)
-				this.updateFileDuration(this.props.active, event.srcElement.duration);
+			if (this.props.ActiveFile.info.getDuration() !== event.srcElement.duration && event.srcElement.duration)
+				this.props.updateFileDuration(this.props.active, event.srcElement.duration);
 		}
 	}
 	onAudioPlay(){
@@ -130,21 +132,21 @@ class AudioContainer extends Component {
 		if (this.props.ActiveFile && this.props.ActiveFile.info){
 			name = this.props.ActiveFile.info.getDisplayName() ? this.props.ActiveFile.info.getDisplayName() : this.props.ActiveFile.info.getFilename();
 			paywall = ((this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid) || (!this.props.ActiveFile.owned && this.props.ActiveFile.isPaid));
-
 			if (this.props.ActiveFile.currentTime === this.props.ActiveFile.duration && this.props.ActiveFile.currentTime !== 0 && this.props.ActiveFile.isPlaying)
 				this.nextSong();
 
 			if (this.props.Artifact){
 				ipfsHash = this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.Artifact.getThumbnail());
-				songURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.ActiveFile.info));
+				songURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.ActiveFile.info.getFilename()));
 				console.log("songURL", songURL)
+				console.log("Artifact", this.props.Artifact)
 				artist = this.props.Artifact.getDetail("artist");
 			}
 		}
 		if (this.props.FilePlaylist){
-			playlistLen = Object.keys(this.props.FilePlaylist).length - 1;
+			playlistLen = Object.keys(this.props.FilePlaylist).length - 1; //14
 		}
-
+		console.log("this audio", this.audio)
 		return (
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio

@@ -48,6 +48,7 @@ class ContentContainer extends Component {
                         setVolume={this.props.setVolume}
                         setMute={this.props.setMute}
                         playlistNext={this.props.playlistNext}
+						isPlayingFile={this.props.isPlayingFile}
 					/>
 				</div>
 

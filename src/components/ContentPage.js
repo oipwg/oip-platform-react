@@ -5,6 +5,7 @@ import ContentInfo from './ContentInfo.js'
 import IssoCommentBox from './isso/IssoCommentBox.js'
 import IssoComments from './isso/IssoComments.js'
 import ContentCard from './ContentCard.js'
+import {isPlayingFile} from "../actions";
 
 class ContentPage extends Component {
     constructor(props){
@@ -30,6 +31,7 @@ class ContentPage extends Component {
                     setVolume={this.props.setVolume}
                     setMute={this.props.setMute}
                     playlistNext={this.props.playlistNext}
+                    isPlayingFile={this.props.isPlayingFile}
                 />
                 <div className="container">
                     <div className="row" style={{marginTop: "30px"}}>
