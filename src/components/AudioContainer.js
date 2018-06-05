@@ -148,8 +148,9 @@ class AudioContainer extends Component {
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio
 					ref={audio => this.audio = audio}
-					autoPlay={!paywall}
+					// autoPlay={!paywall}
 					controls={true}
+                    autoPlay={paywall}
 					src={songURL}
 					style={{display: "none"}}
 					>
@@ -158,7 +159,7 @@ class AudioContainer extends Component {
 					<div className="row" style={{height: "90%"}}>
 						<div className={playlistLen > 1 ? "col-md-6 col-sm-12" : "col-12"} style={{margin: "auto"}}>
 							<h3 className="text-center" style={{color: this.state.mainColor}}>
-								{name} - {artist}
+								{name ? name : "Unknown"} - {artist ? artist : "Unknown"}
 							</h3>
 							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
 								{/*<IPFSImage hash={ipfsHash} onImageLoad={this.onImageLoad} />*/}

@@ -37,7 +37,6 @@ class Playlist extends Component {
 				myArtifactFiles.push(files[file]);
 			}
 		}
-
 		return myArtifactFiles;
 	}
 	filterFiles(files, filter){
@@ -69,7 +68,6 @@ class Playlist extends Component {
 		}
 
 		DisplayFiles = this.filterFiles(DisplayFiles, this.props.filter);
-
 		if (this.props.Artifact){
 			//in current version, some artifacts may not have 'details'
 			Artist = this.props.Artifact.getDetail("artist")
@@ -89,11 +87,11 @@ class Playlist extends Component {
 						<div style={{padding: "4px 5px", display:"flex"}}>
 							<img className="rounded" src={""} width="40px" height="40px" alt="" />
 							<div style={{padding: "0px 10px", width:"235px"}}>
-								<div style={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"} : {color: _this.props.mainColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{Artist}</div>
+								<div style={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"} : {color: _this.props.mainColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{Artist ? Artist : "Unknown"}</div>
 								<div style={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontSize:"12px", width: "100%", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "100%", display: "flex"}}>
 									<div style={{width: "200px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</div>
 									<div style={{width: "30px", textAlign: "right"}}>
-										{file.info.duration > 0 ? <FormattedTime numSeconds={file.info.duration} /> : ""}
+										{file.info.getDuration() > 0 ? <FormattedTime numSeconds={file.info.getDuration()} /> : ""}
 									</div>
 								</div>
 							</div>

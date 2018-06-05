@@ -388,7 +388,6 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
 
 	let state = getState();
 	state.Core.Core.Index.getArtifactFromID(txid, function(artifact){
-		console.log("in Action: ", artifact)
 		dispatch(recieveCurrentArtifact(artifact));
 
 		let files = artifact.getFiles();
@@ -427,7 +426,7 @@ export const addComment = (url, comment) => (dispatch, getState) => {
 	})
 }
 
-export const setCurrentFile = (Core, artifact, file) => dispatch => {
+export const setCurrentFile = (artifact, file) => dispatch => {
 	let files = artifact.getFiles();
 
 	for (var i = 0; i < files.length; i++) {
