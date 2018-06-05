@@ -20,7 +20,6 @@ class VideoPlayer extends Component {
 
     }
     static getDerivedStateFromProps(nextProps, prevState) {
-        console.log("deriveStateFromProps", nextProps, prevState)
         let options = prevState.options;
 
         if (nextProps.Artifact && nextProps.ActiveFile && nextProps.ActiveFile.info) {
@@ -42,30 +41,21 @@ class VideoPlayer extends Component {
     }
 
     componentDidMount(){
-        console.log("component did mount and spawning node")
-        this.player = videojs(this.videoNode, this.state.options, function onPlayerReady() {
-            console.log("onPlayerReady", this)
-        });
+        this.player = videojs(this.videoNode, this.state.options);
     }
 
     componentDidUpdate(){
-        console.log("componentDidUpdate")
-
         if (this.player) {
-            console.log("updating player")
             let opts = this.player.options_;
 
             if (opts.autoplay != this.state.options.autoplay) {
                 this.player.autoplay(this.state.options.autoplay)
-                console.log('autoplay updated')
             }
             if (opts.post != this.state.options.poster) {
                 this.player.poster(this.state.options.poster)
-                console.log('poster updated')
             }
             if (opts.sources != this.state.options.sources) {
                 this.player.src(this.state.options.sources)
-                console.log('src updated')
             }
 
             if (!this.props.DisplayPaywall){

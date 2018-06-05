@@ -137,6 +137,7 @@ class AudioContainer extends Component {
 			if (this.props.Artifact){
 				ipfsHash = this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.Artifact.getThumbnail());
 				songURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.ActiveFile.info));
+				console.log("songURL", songURL)
 				artist = this.props.Artifact.getDetail("artist");
 			}
 		}
