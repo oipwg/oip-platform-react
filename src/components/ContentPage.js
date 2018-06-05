@@ -32,6 +32,7 @@ class ContentPage extends Component {
                     setMute={this.props.setMute}
                     playlistNext={this.props.playlistNext}
                     isPlayingFile={this.props.isPlayingFile}
+                    setCurrentFile={this.props.setCurrentFile}
                 />
                 <div className="container">
                     <div className="row" style={{marginTop: "30px"}}>

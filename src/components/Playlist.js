@@ -10,7 +10,7 @@ class Playlist extends Component {
 
 		this.getCurrentArtifactFiles = this.getCurrentArtifactFiles.bind(this);
 		this.getAllFiles = this.getAllFiles.bind(this);
-
+		this.handleListClick = this.handleListClick.bind(this)
 	}
 
 	getAllFiles(){
@@ -55,6 +55,11 @@ class Playlist extends Component {
 			return files;
 		}
 	}
+
+	handleListClick(artifact, file) {
+		this.props.setCurrentFile(artifact, file)
+	}
+
 	render() {
 		let _this = this;
 
@@ -83,7 +88,7 @@ class Playlist extends Component {
 					</div>
 				</li>
 				{DisplayFiles.map(function(file, i){
-					return <li key={i} className="list-group-item" style={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
+					return <li key={i} onClick={() => {_this.handleListClick(_this.props.Artifact, file) } } className="list-group-item" style={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
 						<div style={{padding: "4px 5px", display:"flex"}}>
 							<img className="rounded" src={""} width="40px" height="40px" alt="" />
 							<div style={{padding: "0px 10px", width:"235px"}}>

@@ -33,6 +33,7 @@ class PlaylistScroller extends Component {
                         Artifact={this.props.Artifact}
                         ActiveFile={this.props.ActiveFile}
                         FilePlaylist={this.props.FilePlaylist}
+                        setCurrentFile={this.props.setCurrentFile}
 					/>
 				</div>
 			</div>

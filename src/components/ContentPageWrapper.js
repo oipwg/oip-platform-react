@@ -18,7 +18,8 @@ import {
     setVolume,
     setMute,
     playlistNext,
-    isPlayingFile
+    isPlayingFile,
+    setCurrentFile
 } from '../actions'
 
 class ContentPageWrapper extends Component {
@@ -66,6 +67,7 @@ class ContentPageWrapper extends Component {
                     setMute={this.props.setMute}
                     playlistNext={this.props.playlistNext}
                     isPlayingFile={this.props.isPlayingFile}
+                    setCurrentFile={this.props.setCurrentFile}
 
                 />
             </div>
@@ -102,7 +104,8 @@ const mapDispatchToProps = {
     setVolume,
     setMute,
     playlistNext,
-    isPlayingFile
+    isPlayingFile,
+    setCurrentFile
 
 }
 

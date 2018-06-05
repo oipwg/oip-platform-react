@@ -82,7 +82,8 @@ class FileViewer extends Component {
 									setVolume: this.props.setVolume,
 									setMute: this.props.setMute,
 									playlistNext: this.props.playlistNext,
-									isPlayingFile: this.props.isPlayingFile
+									isPlayingFile: this.props.isPlayingFile,
+                                    setCurrentFile: this.props.setCurrentFile
 								})
 						}
 					}
