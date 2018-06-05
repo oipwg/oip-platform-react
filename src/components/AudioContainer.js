@@ -172,7 +172,7 @@ class AudioContainer extends Component {
 								FilePlaylist={this.props.FilePlaylist}
 								mainColor={this.state.mainColor}
 								bgColor={this.state.bgColor}
-								currentArtifactOnly={true}
+                                currentArtifactOnly={true}
 								filter={{type: "Audio"}} />
 						</div> : ""}
 					</div>
