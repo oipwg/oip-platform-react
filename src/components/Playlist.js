@@ -71,6 +71,7 @@ class Playlist extends Component {
 		DisplayFiles = this.filterFiles(DisplayFiles, this.props.filter);
 
 		if (this.props.Artifact){
+			//in current version, some artifacts may not have 'details'
 			Artist = this.props.Artifact.getDetail("artist")
 		}
 
@@ -84,7 +85,6 @@ class Playlist extends Component {
 					</div>
 				</li>
 				{DisplayFiles.map(function(file, i){
-					console.log("DisplayFiles: ", file, i)
 					return <li key={i} className="list-group-item" style={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
 						<div style={{padding: "4px 5px", display:"flex"}}>
 							<img className="rounded" src={""} width="40px" height="40px" alt="" />

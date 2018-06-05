@@ -185,7 +185,7 @@ export const addSingleComment = (comment) => ({
 	comment
 })
 
-export const addFileToPlaylist = (file, uid, Core) => ({
+export const addFileToPlaylist = (file, uid) => ({
 	type: ADD_FILE_TO_PLAYLIST,
 	uid,
 	isPaid: file.isPaid(),
@@ -388,6 +388,7 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
 
 	let state = getState();
 	state.Core.Core.Index.getArtifactFromID(txid, function(artifact){
+		console.log("in Action: ", artifact)
 		dispatch(recieveCurrentArtifact(artifact));
 
 		let files = artifact.getFiles();
