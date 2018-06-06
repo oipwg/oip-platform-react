@@ -660,7 +660,7 @@ export const payForFileFunc = (artifact, file, onSuccess, onError) => (dispatch,
 	let publisherName = artifact.getPublisherName();
 	let files = artifact.getFiles();
 
-	let paymentAmount = file.getSuggestedPlayCost() / artifact.getScale();
+	let paymentAmount = file.getSuggestedPlayCost() / artifact.getPaymentScale();
 
 	let paymentAddresses = artifact.getPaymentAddresses(file);
 
@@ -704,7 +704,7 @@ export const buyFileFunc = (artifact, file, onSuccess, onError) => (dispatch, ge
 	let publisherName = artifact.getPublisherName();
 	let files = artifact.getFiles();
 
-	let paymentAmount = file.getSuggestedBuyCost() / artifact.getScale();
+	let paymentAmount = file.getSuggestedBuyCost() / artifact.getPaymentScale();
 
 	let paymentAddresses = artifact.getPaymentAddresses();
 

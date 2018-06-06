@@ -34,6 +34,9 @@ class PlaylistScroller extends Component {
                         ActiveFile={this.props.ActiveFile}
                         FilePlaylist={this.props.FilePlaylist}
                         setCurrentFile={this.props.setCurrentFile}
+						// For Payment Buttons
+                        payForFileFunc={this.props.payForFileFunc}
+                        buyFileFunc={this.props.buyFileFunc}
 					/>
 				</div>
 			</div>

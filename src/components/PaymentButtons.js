@@ -20,7 +20,7 @@ class PaymentButtons extends Component {
 		}
 		let _this = this;
 		let payForFile = function(artifact, file){
-			_this.props.store.dispatch(payForFileFunc(artifact, file, onSuccess, onError));
+			_this.props.payForFileFunc(artifact, file, onSuccess, onError);
 		};
 
 		payForFile(this.props.artifact, this.props.File.info);
@@ -29,11 +29,11 @@ class PaymentButtons extends Component {
 		if (this.props.File.owned){
 			this.dlStarted = true;
 		} else {
-			this.props.store.dispatch(buyFileFunc(this.props.artifact, this.props.File.info, function(success){
+			this.props.buyFileFunc(this.props.artifact, this.props.File.info, function(success){
 				//scrollToTop();
 			}, function(error){
 				console.log(error);
-			}));
+			});
 		}
 	}
 

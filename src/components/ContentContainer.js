@@ -50,6 +50,9 @@ class ContentContainer extends Component {
                         playlistNext={this.props.playlistNext}
 						isPlayingFile={this.props.isPlayingFile}
                         setCurrentFile={this.props.setCurrentFile}
+						// For Payment Buttons
+                        payForFileFunc={this.props.payForFileFunc}
+                        buyFileFunc={this.props.buyFileFunc}
 					/>
 				</div>
 
