@@ -8,6 +8,7 @@ class PaymentButtons extends Component {
 
 		this.viewFile = this.viewFile.bind(this);
 		this.buyFile = this.buyFile.bind(this);
+		this.createPriceString = this.createPriceString.bind(this);
 	}
 	viewFile(){
 		let scrollToTop = this.scrollToTop;
@@ -35,6 +36,24 @@ class PaymentButtons extends Component {
 			}));
 		}
 	}
+
+    createPriceString(price){
+        // This function assumes the scale has already been applied, and you are passing it a float value
+        var priceStr = parseFloat(price.toFixed(3));
+
+        if (isNaN(priceStr)){
+            return 0;
+        }
+
+        let priceDecimal = priceStr - parseInt(priceStr);
+
+        if (priceDecimal.toString().length === 3){
+            priceStr = priceStr.toString() + "0";
+        }
+
+        return priceStr.toString();
+    }
+
 	scrollToTop(){
 		window.scrollTo(0, 0);
 	}
@@ -98,8 +117,8 @@ class PaymentButtons extends Component {
 		sugBuy = sugBuy / scale;
 
 		//what to do with Core
-		// sugPlay = this.props.Core.util.createPriceString(sugPlay);
-		// sugBuy = this.props.Core.util.createPriceString(sugBuy);
+		sugPlay = this.createPriceString(sugPlay);
+		sugBuy = this.createPriceString(sugBuy);
 
 		if (sugPlay === 0 || sugPlay === "0"){
 			viewString = "Free";

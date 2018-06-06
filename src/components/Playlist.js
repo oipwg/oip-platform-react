@@ -100,7 +100,10 @@ class Playlist extends Component {
 									</div>
 								</div>
 							</div>
-							{/*<PaymentButtons  File={file} artifact={_this.props.Artifact} btnStyle={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {backgroundColor: _this.props.bgColor} : {}} />*/}
+							<PaymentButtons
+								File={file}
+								artifact={_this.props.Artifact}
+								btnStyle={file.info.getFilename() === _this.props.ActiveFile.info.getFilename() ? {backgroundColor: _this.props.bgColor} : {}} />
 						</div>
 					</li>
 				})}
