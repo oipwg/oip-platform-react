@@ -5,7 +5,6 @@ import ContentInfo from './ContentInfo.js'
 import IssoCommentBox from './isso/IssoCommentBox.js'
 import IssoComments from './isso/IssoComments.js'
 import ContentCard from './ContentCard.js'
-import {isPlayingFile} from "../actions";
 
 class ContentPage extends Component {
     constructor(props){

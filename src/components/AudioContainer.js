@@ -70,10 +70,12 @@ class AudioContainer extends Component {
 		}
 	}
 	onCanPlay(canPlay){
+		console.log("ONCANPLAY")
 		this.props.isPlayableFile(this.props.active, true);
 		this.props.isSeekableFile(this.props.active, true);
 	}
 	onTimeUpdate(event){
+		console.log("ONTIMEUPDATE")
 		if (event && event.srcElement && this && this.audio){
 			this.props.updateFileCurrentTime(this.props.active, event.srcElement.currentTime);
 
@@ -82,6 +84,7 @@ class AudioContainer extends Component {
 		}
 	}
 	onAudioPlay(){
+		console.log("ONAUIDIOPLAY")
 		this.props.isPlayingFile(this.props.active, true);
 	}
 	onAudioPause(){
@@ -148,9 +151,8 @@ class AudioContainer extends Component {
 			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio
 					ref={audio => this.audio = audio}
-					// autoPlay={!paywall}
+					autoPlay={!paywall}
 					controls={true}
-                    autoPlay={paywall}
 					src={songURL}
 					style={{display: "none"}}
 					>

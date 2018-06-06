@@ -57,7 +57,7 @@ class Playlist extends Component {
 	}
 
 	handleListClick(artifact, file) {
-		this.props.setCurrentFile(artifact, file)
+		(file.key !== this.props.ActiveFile.key) ? (this.props.setCurrentFile(artifact, file)) : (null)
 	}
 
 	render() {
