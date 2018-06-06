@@ -25,8 +25,11 @@ class VideoPlayer extends Component {
         if (nextProps.Artifact && nextProps.ActiveFile && nextProps.ActiveFile.info) {
             options.sources.src = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), nextProps.ActiveFile.info.getFilename()))
 
-            let thumbnail = nextProps.Artifact.getThumbnail();
-            options.poster = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), thumbnail.getFilename()));
+            let thumbnail
+            if (nextProps.Artifact.getThumbnail()) {
+                thumbnail = nextProps.Artifact.getThumbnail()
+                options.poster = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), thumbnail.getFilename()));
+            }
 
             if (nextProps.ActiveFile.isPaid && (nextProps.ActiveFile.hasPaid && !nextProps.ActiveFile.owned)){
                 options.autoplay = false;
@@ -76,7 +79,6 @@ class VideoPlayer extends Component {
     }
 
     render() {
-        console.log("player", this.player)
         return (
             <div>
                 <video ref={ node => this.videoNode = node } className="video-js vjs-big-play-centered">
