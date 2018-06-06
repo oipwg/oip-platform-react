@@ -3,7 +3,7 @@ import axios from 'axios';
 
 var ReactMarkdown = require('react-markdown');
 
-class MarkdownContainer extends Component {
+class TextViewer extends Component {
     constructor(props) {
         super(props);
 
@@ -53,6 +53,6 @@ class MarkdownContainer extends Component {
     }
 }
 
-MarkdownContainer.SUPPORTED_FILE_TYPES = ["md", "txt"]
+TextViewer.SUPPORTED_FILE_TYPES = ["md", "txt"]
 
-export default MarkdownContainer;
+export default TextViewer;
