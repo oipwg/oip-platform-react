@@ -8,32 +8,36 @@ class TextViewer extends Component {
         super(props);
 
         this.state = {
-            markdown: ""
+            markdownURL: "",
+            markdownData: ""
         }
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
+        console.log("GETDERIVED", prevState)
         if (nextProps.Artifact != prevState.Artifact || nextProps.ActiveFile != prevState.ActiveFile) {
             return {
                 Artifact: nextProps.Artifact,
                 ActiveFile: nextProps.ActiveFile,
-                markdown: nextProps.buildIPFSURL(nextProps.Artifact.getLocation() + "/" + nextProps.ActiveFile.info.getFilename())
+                markdownURL: nextProps.buildIPFSURL(nextProps.Artifact.getLocation() + "/" + nextProps.ActiveFile.info.getFilename())
             }
         } else {return null}
     }
 
     componentDidUpdate(prevProps, prevState) {
-		if (prevState.markdown != this.state.markdown) {
+        if (prevState.markdownData == "" || prevState.markdownURL != this.state.markdownURL) {
             let _this = this;
-
             this.serverRequest = axios
-                .get(this.state.markdown)
+                .get(this.state.markdownURL)
                 .then(function(result) {
                     _this.setState({
-                        markdown: result.data
+                        markdownData: result.data
                     });
+                })
+                .catch(function (error) {
+                    console.log(error);
                 });
-		}
+        }
 	}
 
     componentWillUnmount(){
@@ -46,8 +50,8 @@ class TextViewer extends Component {
 
     render() {
         return (
-            <div className="justify-content-center markdownContainer" style={{height: "100%", margin: "0px auto"}}>
-                <ReactMarkdown source={this.state.markdown} />
+            <div className="justify-content-center markdownContainer" style={{height: "100%"}}>
+                <ReactMarkdown source={this.state.markdownData} />
             </div>
         );
     }
