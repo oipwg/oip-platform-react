@@ -25,7 +25,7 @@ class ImageContainer extends Component {
 			<div className="align-middle" style={{height: "100%", width: "100vw", verticalAlign: "middle"}}>
 				<div className="img-container" style={{height: "inherit", width: "auto", maxWidth: "100%", display: "block",margin: "auto"}}>
 					{/*<IPFSImage hash={hash} cover={preview} width={preview ? "100%" : ""} />*/}
-                    <img src={url} alt={"You're image is supposed to be here!"}/>
+                    <img src={url} alt={"Your image is supposed to be here!"}/>
 				</div>
 			</div>
 		);

@@ -8,11 +8,9 @@ class HTMLContainer extends Component {
 	render() {
 		let websiteURL;
 
-		if (this.props.ActiveFile && this.props.Artifact && this.props.ActiveFile.info && this.props.artifact){
-			// websiteURL = this.props.Artifact.getFirstHTMLURL();
+		if (this.props.ActiveFile && this.props.Artifact && this.props.ActiveFile.info){
 			websiteURL = this.props.buildIPFSURL(this.props.Artifact.getLocation(), this.props.ActiveFile.info.getFilename());
 		}
-
 		return (
 			<iframe title="html_doc" style={{width:"inherit", height:"100%", overflow: "hidden", backgroundColor: "#fff", borderBottom: "1px solid rgba(0,0,0,0.2)"}} frameBorder="0" src={websiteURL}></iframe>
 		);
