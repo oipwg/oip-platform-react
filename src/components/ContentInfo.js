@@ -55,6 +55,7 @@ class ContentInfo extends Component {
 					Artifact={this.props.Artifact}
 					ArtifactState={this.props.ArtifactState}
 					ActiveFile={this.props.ActiveFile}
+                    FilePlaylist={this.props.FilePlaylist}
 				/>
 			</div>
 		);

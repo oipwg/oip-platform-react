@@ -41,9 +41,9 @@ class ContentExtraInfo extends Component {
 				</p>
 				<FilesTable
 					Artifact={this.props.Artifact}
-					ArtifactState={this.props.ArtifactState}
 					ActiveFile={this.props.ActiveFile}
 					extendedView={this.state.extendedView}
+					FilePlaylist={this.props.FilePlaylist}
 				/>
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
 					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />

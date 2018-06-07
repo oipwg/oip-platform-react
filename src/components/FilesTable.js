@@ -11,15 +11,16 @@ class FilesTable extends Component {
 		this.stripUnimportantFiles = this.stripUnimportantFiles.bind(this);
 		this.getAllFiles = this.getAllFiles.bind(this);
 		this.getCurrentArtifactFiles = this.getCurrentArtifactFiles.bind(this);
-		this.getEntypoIconForType = this.getEntypoIconForType(this);
+		this.getEntypoIconForType = this.getEntypoIconForType.bind(this);
 	}
 
 	getAllFiles(){
 		let files = [];
 
-		if (this.props.Artifact){
-			let FilePlaylist = this.props.Artifact.getFiles();
-			for (var key in FilePlaylist) {
+		if (this.props.FilePlaylist){
+			let FilePlaylist = this.props.FilePlaylist;
+			console.log("FILEPLAYLIST", FilePlaylist)
+			for (var key in FilePlaylist) {``
 				// This just makes sure we are not getting the "active" key from the FilePlaylist obj
 				if (key.split("|").length === 2){
 					let newObj = FilePlaylist[key];
@@ -32,6 +33,7 @@ class FilesTable extends Component {
 	}
 	getCurrentArtifactFiles(){
 		let files = this.getAllFiles();
+		console.log("GET CURRENT", files)
 		let myArtifactFiles = [];
 
 		for (var file in files) {
@@ -90,7 +92,6 @@ class FilesTable extends Component {
 
 	render() {
 		let files = this.getCurrentArtifactFiles();
-
 		let filesCopy = [];
 
 		for (var i = 0; i < files.length; i++) {
@@ -103,8 +104,6 @@ class FilesTable extends Component {
 
 		if (!this.props.extendedView)
 			filesCopy = this.stripUnimportantFiles(filesCopy);
-
-		// let _this = this;
 
 		return (
 			<div>

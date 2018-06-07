@@ -43,6 +43,7 @@ class ContentPage extends Component {
                                 Artifact={this.props.Artifact}
                                 ArtifactState={this.props.ArtifactState}
                                 ActiveFile={this.props.ActiveFile}
+                                FilePlaylist={this.props.FilePlaylist}
                             />
                             <br />
                             {(this.props.Artifact && this.props.Artifact.txid !== "") ?
