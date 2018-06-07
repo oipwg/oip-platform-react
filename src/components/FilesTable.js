@@ -91,6 +91,7 @@ class FilesTable extends Component {
     }
 
 	render() {
+		let _this = this;
 		let files = this.getCurrentArtifactFiles();
 		let filesCopy = [];
 
@@ -100,7 +101,6 @@ class FilesTable extends Component {
 			newObj.info.icon = this.getEntypoIconForType(files[i].info.getType());
 			filesCopy.push(newObj);
 		}
-
 
 		if (!this.props.extendedView)
 			filesCopy = this.stripUnimportantFiles(filesCopy);
@@ -115,7 +115,12 @@ class FilesTable extends Component {
 										<td style={{verticalAlign: "middle"}}>{file.info.subtype ? file.info.subtype : file.info.type}</td>
 										<td style={{verticalAlign: "middle"}}>{file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</td>
 										<td style={{verticalAlign: "middle", width: "230px"}}>
-											{/*<PaymentButtons artifact={_this.props.CurrentArtifact.artifact} File={file} Core={_this.props.Core} store={_this.props.store} piwik={_this.props.piwik} NotificationSystem={_this.props.NotificationSystem} />*/}
+											<PaymentButtons
+												artifact={_this.props.Artifact}
+												File={file}
+                                                payForFileFunc={_this.props.payForFileFunc}
+                                                buyFileFunc={_this.props.buyFileFunc}
+											/>
 										</td>
 									</tr>
 						})}
