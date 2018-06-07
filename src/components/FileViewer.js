@@ -7,7 +7,7 @@ import ViewerJSPlayer from './ViewerJSPlayer.js';
 import HTMLContainer from './HtmlContainer.js';
 import CodeContainer from './CodeContainer.js';
 import STLContainer from './StlContainer.js';
-import TextViewer from './TextViewer';
+import MarkdownContainer from './MarkdownContainer';
 
 var PLAYERS = [
 	AudioContainer, 
@@ -17,7 +17,7 @@ var PLAYERS = [
 	HTMLContainer,
 	CodeContainer,
 	STLContainer,
-	TextViewer
+	MarkdownContainer
 ];
 
 class FileViewer extends Component {
