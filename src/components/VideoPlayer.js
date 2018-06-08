@@ -79,7 +79,7 @@ class VideoPlayer extends Component {
 
     render() {
         return (
-            <div>
+            <div className="h-100">
                 <video ref={ node => this.videoNode = node } className="video-js vjs-big-play-centered">
                 </video>
             </div>
