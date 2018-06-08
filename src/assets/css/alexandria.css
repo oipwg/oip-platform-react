@@ -217,7 +217,7 @@ body > canvas {
 	}
 	.content-container {
 		height: auto;
-    /*max-height: 60vh;*/
+    max-height: 60vh;
 		min-height: 30vh;
 	}
 	.content > div {
@@ -242,7 +242,7 @@ body > canvas {
 	}
 	.content-container {
 		height: auto;
-	    /*max-height: 50vh;*/
+	    max-height: 50vh;
 		min-height: 22vh;
 	}
 	.content > div {
