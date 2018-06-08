@@ -8,7 +8,6 @@ class ImageContainer extends Component {
 	render() {
 		let hash = "";
 		let preview = false;
-		console.log("HASH ONE ", hash)
 		if (this.props.ActiveFile && ((this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid) && !this.props.ActiveFile.owned)){
 			preview = true;
 			//.getThumbnail returns undefined because no subType: Image
@@ -22,12 +21,9 @@ class ImageContainer extends Component {
 		let url = this.props.buildIPFSURL(hash);
 
 		return (
-			<div className="align-middle" style={{height: "100%", width: "100vw", verticalAlign: "middle"}}>
-				<div className="img-container" style={{height: "inherit", width: "auto", maxWidth: "100%", display: "block",margin: "auto"}}>
-					{/*<IPFSImage hash={hash} cover={preview} width={preview ? "100%" : ""} />*/}
-                    <img src={url} alt={"Your image is supposed to be here!"}/>
+				<div className="d-flex justify-content-center">
+					<img className="img-fluid" style={{backgroundColor: "#fff"}} src={url} alt={"Your image is supposed to be here!"}/>
 				</div>
-			</div>
 		);
 	}
 }
