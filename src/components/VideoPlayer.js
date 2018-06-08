@@ -35,7 +35,6 @@ class VideoPlayer extends Component {
                 options.autoplay = false;
             }
 
-            options.autoplay = false;
         }
         return {
             ActiveFile: nextProps.ActiveFile,
