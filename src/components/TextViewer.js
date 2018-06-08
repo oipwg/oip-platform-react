@@ -45,8 +45,8 @@ class TextViewer extends Component {
 
     render() {
         return (
-            <div className="justify-content-center" style={{height: "100%", backgroundColor: "white", padding: "0px 90px", overflow: "scroll", whiteSpace: "pre-wrap"}}>
-                <pre>{this.state.textData}</pre>
+            <div className="justify-content-center" style={{height: "100%", backgroundColor: "white", padding: "0px 50px", overflow: "scroll"}}>
+                <pre style={{whiteSpace: "pre-wrap", wordWrap: "break-word"}}>{this.state.textData}</pre>
             </div>
         );
     }
