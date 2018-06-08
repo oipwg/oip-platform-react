@@ -7,8 +7,8 @@ class STLContainer extends Component {
 	render() {
 		let stlURL;
 
-		if (this.props.ActiveFile && this.props.Artifact && this.props.ActiveFile.info && this.props.artifact){
-			stlURL = this.props.buildIPFSURL(this.props.CurrentArtifact.artifact.getLocation(), this.state.ActiveFile.info.getFilename());
+		if (this.props.ActiveFile && this.props.Artifact && this.props.ActiveFile.info){
+			stlURL = this.props.buildIPFSURL(this.props.artifact.getLocation(), this.state.ActiveFile.info.getFilename());
 		}
 
 		return (

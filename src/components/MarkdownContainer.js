@@ -14,7 +14,6 @@ class MarkdownContainer extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        console.log("GETDERIVED", prevState)
         if (nextProps.Artifact != prevState.Artifact || nextProps.ActiveFile != prevState.ActiveFile) {
             return {
                 markdownURL: nextProps.buildIPFSURL(nextProps.Artifact.getLocation() + "/" + nextProps.ActiveFile.info.getFilename())

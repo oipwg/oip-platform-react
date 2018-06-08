@@ -26,7 +26,7 @@ class Paywall extends Component {
 				subtype = "Movie"
 		}
 		return (
-			<div className='paywall' style={(this.props.ActiveFile && this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid && !this.props.ActiveFile.owned && !this.props.CurrentArtifact.isFetching) ? {} : {display: "none"}}>
+			<div className='paywall' style={(this.props.ActiveFile && this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid && !this.props.ActiveFile.owned && !this.props.ArtifactState.isFetching) ? {} : {display: "none"}}>
 				<div className="d-flex align-items-center justify-content-center text-center paywall-container">
 					<div style={{width: "80%"}}>
 						<h4 style={{marginBottom: "0px"}}>To {textAccess} this {(!subtype || subtype === "" || subtype === "Basic") ? type : subtype}</h4>

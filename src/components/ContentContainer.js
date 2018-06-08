@@ -59,6 +59,7 @@ class ContentContainer extends Component {
 				<Paywall
 					ActiveFile={this.props.ActiveFile}
                     Artifact={this.props.Artifact}
+					ArtifactState={this.props.ArtifactState}
 				/>
 			</div>
 		);
