@@ -10,7 +10,6 @@ class ImageContainer extends Component {
 		let preview = false;
 		if (this.props.ActiveFile && ((this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid) && !this.props.ActiveFile.owned)){
 			preview = true;
-			//.getThumbnail returns undefined because no subType: Image
 			hash = this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.Artifact.getThumbnail().getFilename());
 		} else {
 			if (this.props.Artifact && this.props.ActiveFile){
@@ -22,6 +21,7 @@ class ImageContainer extends Component {
 
 		return (
 				<div className="d-flex justify-content-center">
+                    {/*<IPFSImage Core={this.props.Core} hash={hash} width={preview ? "100%" : ""} cover={preview} />*/}
 					<img className="img-fluid" style={{backgroundColor: "#fff"}} src={url} alt={"Your image is supposed to be here!"}/>
 				</div>
 		);
