@@ -32,7 +32,12 @@ class Paywall extends Component {
 						<h4 style={{marginBottom: "0px"}}>To {textAccess} this {(!subtype || subtype === "" || subtype === "Basic") ? type : subtype}</h4>
 						<span>please...</span>
 						<br/>
-						<PaymentButtons artifact={this.props.Artifact} File={this.props.ActiveFile} />
+						<PaymentButtons
+							artifact={this.props.Artifact}
+							File={this.props.ActiveFile}
+							payForFileFunc={this.props.payForFileFunc}
+							buyFileFunc={this.props.buyFileFunc}
+							/>
 						<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 					</div>
 				</div>

@@ -60,6 +60,8 @@ class ContentContainer extends Component {
 					ActiveFile={this.props.ActiveFile}
                     Artifact={this.props.Artifact}
 					ArtifactState={this.props.ArtifactState}
+                    payForFileFunc={this.props.payForFileFunc}
+                    buyFileFunc={this.props.buyFileFunc}
 				/>
 			</div>
 		);

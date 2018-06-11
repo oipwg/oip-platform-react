@@ -76,12 +76,6 @@ class PaymentButtons extends Component {
 		let viewString = "";
 		let buyString = "";
 
-		let scale = 1;
-
-		if (this.props.artifact){
-			scale = this.props.artifact.getPaymentScale();
-		}
-
 		if (this.props.File){
 			if (this.props.File.owned){
 				owned = true;
@@ -113,10 +107,6 @@ class PaymentButtons extends Component {
 
 		}
 
-		sugPlay = sugPlay / scale;
-		sugBuy = sugBuy / scale;
-
-		//what to do with Core
 		sugPlay = this.createPriceString(sugPlay);
 		sugBuy = this.createPriceString(sugBuy);
 
