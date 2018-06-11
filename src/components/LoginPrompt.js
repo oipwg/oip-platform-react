@@ -11,17 +11,11 @@ class LoginPrompt extends Component {
 		super(props);
 
 		this.state = {
-			showPrompt: false,
 			type: "login"
 		}
 
 		this.togglePrompt = this.togglePrompt.bind(this);
 		this.toggleLoginRegister = this.toggleLoginRegister.bind(this);
-	}
-
-	componentDidMount(){
-        let showPrompt = this.props.User.loginModalPrompt;
-        this.setState({showPrompt: showPrompt});
 	}
 
 	togglePrompt(){
@@ -36,10 +30,10 @@ class LoginPrompt extends Component {
 
 		return (
 			<div>
-				{this.state.showPrompt ? 
-				<Modal isOpen={this.state.showPrompt} toggle={this.togglePrompt} className={this.props.className}>
+				{this.props.User.loginModalPrompt ?
+				<Modal isOpen={this.props.User.loginModalPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
-						{this.state.type === "login" ? <LoginBlock onRegisterClick={this.toggleLoginRegister} /> : "" }
+						{this.state.type === "login" ? <LoginBlock User={this.props.User} onRegisterClick={this.toggleLoginRegister} /> : "" }
 						{this.state.type === "register" ? <RegisterBlock Core={this.props.Core} store={this.props.store} onLoginClick={this.toggleLoginRegister} /> : "" }
 					</ModalBody>
 					<ModalFooter>
