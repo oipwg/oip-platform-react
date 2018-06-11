@@ -524,7 +524,6 @@ export const promptTryFaucet = (Core, onSuccess, onError) => (dispatch, getState
 }
 
 export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
-	console.log(paymentAddresses);
 	let retryTryPaymentSend = function(){
 		dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError));
 	}
@@ -535,21 +534,24 @@ export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat,
 	let state = getState();
 
 	if (state.User.isLoggedIn){
-		var canProcessWith = {};
-		for (var acceptedCoin in paymentAddresses){
-			var tmpFiat = fiat;
+		// @TODO: Re-add payment logic
+		// Removed by Sky Young 6/11/2018
+		// var canProcessWith = {};
+		// for (var acceptedCoin in paymentAddresses){
+		// 	var tmpFiat = fiat;
 
-			// If we are using the coin, then just check against the balance
-			if (fiat === acceptedCoin)
-				tmpFiat = "balance";
+		// 	// If we are using the coin, then just check against the balance
+		// 	if (fiat === acceptedCoin)
+		// 		tmpFiat = "balance";
 
-			if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][tmpFiat] && state.Wallet[acceptedCoin][tmpFiat] >= fiat_amount){
-				canProcessWith[acceptedCoin] = paymentAddresses[acceptedCoin];
-			}
-		}
-		if (Object.keys(canProcessWith).length > 0){
-			console.log(canProcessWith);
-			processTransaction(canProcessWith);
+		// 	if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][tmpFiat] && state.Wallet[acceptedCoin][tmpFiat] >= fiat_amount){
+		// 		canProcessWith[acceptedCoin] = paymentAddresses[acceptedCoin];
+		// 	}
+		// }
+
+		// if (Object.keys(canProcessWith).length > 0){
+		if (true) {
+			processTransaction({});
 		} else {
 			let swapFrom = [];
 			let swapTo = [];
@@ -597,39 +599,44 @@ export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fi
 	console.log("sendPayment", paymentAddresses, fiat, fiat_amount, type, paymentName);
 	let state = getState();
 
+	onSuccess("Done!")
+
 	// Default send with lowest fee, this is just hardcoded for now...
-	let coin = "";
 
-	if (paymentAddresses.florincoin){
-		coin = "florincoin"
-	} else if (paymentAddresses.litecoin){
-		coin = "litecoin"
-	} else if (paymentAddresses.bitcoin){
-		coin = "bitcoin"
-	} else if (paymentAddresses === {}){
-		onError("not enough balance in selected wallets...");
-		return;
-	}
+	// @TODO: Add this payment logic back
+	// Sky Young 6/11/2018
+	// let coin = "";
 
-	if (!paymentAddresses[coin])
-		return;
+	// if (paymentAddresses.florincoin){
+	// 	coin = "florincoin"
+	// } else if (paymentAddresses.litecoin){
+	// 	coin = "litecoin"
+	// } else if (paymentAddresses.bitcoin){
+	// 	coin = "bitcoin"
+	// } else if (paymentAddresses === {}){
+	// 	onError("not enough balance in selected wallets...");
+	// 	return;
+	// }
 
-	Core.Wallet.sendPayment(coin, fiat, fiat_amount, paymentAddresses[coin], (success) => {
-		if (NotificationSystem){
-			let titleStr = "Payment";
-			let msgStr = "Paid";
+	// if (!paymentAddresses[coin])
+	// 	return;
 
-			if (type && type === "tip"){
-				titleStr = "Tip";
-				msgStr = "Tipped";
-			}
-			NotificationSystem.addNotification({title: titleStr + " Success!", message: msgStr + " $" + Core.util.createPriceString(fiat_amount) + " to " + paymentName, level: "success", position: "tr", autoDismiss: 2})
-		}
+	// Core.Wallet.sendPayment(coin, fiat, fiat_amount, paymentAddresses[coin], (success) => {
+	// 	if (NotificationSystem){
+	// 		let titleStr = "Payment";
+	// 		let msgStr = "Paid";
 
-		onSuccess(success)
-	}, (error) => {
-		onError(error);
-	})
+	// 		if (type && type === "tip"){
+	// 			titleStr = "Tip";
+	// 			msgStr = "Tipped";
+	// 		}
+	// 		NotificationSystem.addNotification({title: titleStr + " Success!", message: msgStr + " $" + Core.util.createPriceString(fiat_amount) + " to " + paymentName, level: "success", position: "tr", autoDismiss: 2})
+	// 	}
+
+	// 	onSuccess(success)
+	// }, (error) => {
+	// 	onError(error);
+	// })
 }
 
 export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
