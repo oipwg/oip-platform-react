@@ -128,8 +128,6 @@ class AudioContainer extends Component {
 		this.props.playlistNext({type: "Audio"});
 	}
 	render() {
-		//console.log("audioState: ", this.state);
-
 		let name, artist, playlistLen = 0, paywall = false, ipfsHash = "", songURL = "";
 
 		if (this.props.ActiveFile && this.props.ActiveFile.info){
@@ -148,7 +146,7 @@ class AudioContainer extends Component {
 			playlistLen = Object.keys(this.props.FilePlaylist).length - 1; //14
 		}
 		return (
-			<div className="" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
+			<div className="audio-container" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio
 					ref={audio => this.audio = audio}
 					autoPlay={!paywall}
@@ -186,10 +184,12 @@ class AudioContainer extends Component {
 						</div> : ""}
 					</div>
 				</div>
+
 				<div style={{width:"102%", height: "200px", position: "absolute", bottom: "10px", marginLeft: "-10px"}}>
 					<AudioVisualizer audio={this.audio} mainColor={this.state.mainColor} />
 				</div>
-				<div style={{width:"100%", height: "40px", position: "absolute", bottom: "0px", borderTop: "1px solid " + this.state.mainColor, display: "flex", backgroundColor: this.state.bgColor}}>
+
+				<div className="" style={{width:"100%", height: "40px", position: "absolute", bottom: "0px", borderTop: "1px solid " + this.state.mainColor, display: "flex", backgroundColor: this.state.bgColor}}>
 					<div style={{width: "auto", height: "auto", margin: "auto", borderRight: "1px solid " + this.state.mainColor, display: "flex"}} onClick={this.toggleAudio}>
 						<PlaybackControls
 							isPlayable={this.props.ActiveFile.isPlayable}
