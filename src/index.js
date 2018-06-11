@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
@@ -25,10 +25,14 @@ let middleware = [ logger, thunk, routerMiddleware(history) ];
 
 reducers.router = routerReducer;
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 let store = createStore(
   combineReducers(reducers),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({name: "Alexandria React"}),
-  applyMiddleware(...middleware)
+  composeEnhancers(
+  	applyMiddleware(...middleware)
+  )
 )
 
 ReactDOM.render(
