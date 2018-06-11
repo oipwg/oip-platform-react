@@ -70,12 +70,10 @@ class AudioContainer extends Component {
 		}
 	}
 	onCanPlay(canPlay){
-		console.log("ONCANPLAY")
 		this.props.isPlayableFile(this.props.active, true);
 		this.props.isSeekableFile(this.props.active, true);
 	}
 	onTimeUpdate(event){
-		console.log("ONTIMEUPDATE")
 		if (event && event.srcElement && this && this.audio){
 			this.props.updateFileCurrentTime(this.props.active, event.srcElement.currentTime);
 
@@ -84,7 +82,6 @@ class AudioContainer extends Component {
 		}
 	}
 	onAudioPlay(){
-		console.log("ONAUIDIOPLAY")
 		this.props.isPlayingFile(this.props.active, true);
 	}
 	onAudioPause(){
@@ -132,7 +129,9 @@ class AudioContainer extends Component {
 
 		if (this.props.ActiveFile && this.props.ActiveFile.info){
 			name = this.props.ActiveFile.info.getDisplayName() ? this.props.ActiveFile.info.getDisplayName() : this.props.ActiveFile.info.getFilename();
-			paywall = ((this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid) || (!this.props.ActiveFile.owned && this.props.ActiveFile.isPaid));
+			//Ryan Chacon: added && !this.props.ActiveFile.hasPaid so that the paywall will be false after they paid for a play even though they don't own the artifact
+			paywall = ((this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid) || (!this.props.ActiveFile.owned && this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid));
+
 			if (this.props.ActiveFile.currentTime === this.props.ActiveFile.duration && this.props.ActiveFile.currentTime !== 0 && this.props.ActiveFile.isPlaying)
 				this.nextSong();
 
@@ -145,6 +144,7 @@ class AudioContainer extends Component {
 		if (this.props.FilePlaylist){
 			playlistLen = Object.keys(this.props.FilePlaylist).length - 1; //14
 		}
+
 		return (
 			<div className="audio-container" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio

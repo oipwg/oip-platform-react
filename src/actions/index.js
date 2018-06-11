@@ -670,14 +670,13 @@ export const payForFileFunc = (artifact, file, onSuccess, onError) => (dispatch,
 	let paymentAmount = file.getSuggestedPlayCost() / artifact.getPaymentScale();
 
 	let paymentAddresses = artifact.getPaymentAddresses(file);
-	console.log('payment Amount, ', paymentAmount)
+
 	for (var i = 0; i < files.length; i++) {
 		if (files[i].getFilename() === file.getFilename() && files[i].getDisplayName() === file.getDisplayName()){
 			let id = txid + "|" + i;
 
 			if (file.getSuggestedPlayCost() && paymentAmount > 0){
 				// If file has cost
-				console.log("file has cost: ", file)
 				dispatch(paymentInProgress(id));
 
 				dispatch(tryPaymentSend(state.Core.Core, state.NotificationSystem.NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
@@ -691,7 +690,6 @@ export const payForFileFunc = (artifact, file, onSuccess, onError) => (dispatch,
 				}));
 			} else {
 				// If it is free
-				console.log('file is free', file)
 				dispatch(payForFile(id));
 				dispatch(setActiveFileInPlaylist(id));
 			}
