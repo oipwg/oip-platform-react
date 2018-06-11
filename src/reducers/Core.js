@@ -1,11 +1,19 @@
-import * as actions from '../actions/index.js'
-import {OIPJS} from "oip-js";
+import demoArtifacts from '../demoContent';
 
-export const Core = (state = {Core: OIPJS({
-        runIPFSJS: false,
-        OIPdURL: "https://snowflake.oip.fun/alexandria/v2",
-        IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
-    })}, action) => {
+import * as actions from '../actions/index.js'
+import { OIPJS, Artifact } from "oip-js";
+
+var _core = OIPJS({
+    runIPFSJS: false,
+    OIPdURL: "https://snowflake.oip.fun/alexandria/v2",
+    IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
+})
+
+_core.Index.addToDb("SupportedArtifacts", demoArtifacts)
+
+console.log(JSON.stringify(demoArtifacts[0].toJSON()))
+
+export const Core = (state = {Core: _core }, action) => {
     switch (action.type) {
         case actions.SET_CORE_TO_STORE:
             console.log("ACTION :", action);
