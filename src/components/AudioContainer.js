@@ -57,6 +57,20 @@ class AudioContainer extends Component {
             this.audio.volume = this.props.VolumeControls.volume;
 	}
 
+	static getDerivedStateFromProps(nextProps, prevState) {
+	    if (nextProps.ActiveFile.hasPaid != prevState.hasPaid) {
+	        return {
+	            hasPaid: nextProps.ActiveFile.hasPaid
+            }
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+	    if (prevState.hasPaid == false && this.state.hasPaid) {
+	        this.audio.play()
+        }
+    }
+
 	onImageLoad(img){
 		try {
 			let colorThief = new ColorThief();

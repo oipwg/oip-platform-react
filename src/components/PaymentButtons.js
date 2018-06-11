@@ -11,6 +11,7 @@ class PaymentButtons extends Component {
 		this.createPriceString = this.createPriceString.bind(this);
 	}
 	viewFile(){
+
 		let scrollToTop = this.scrollToTop;
 		let onSuccess = function(success){
 			scrollToTop();
