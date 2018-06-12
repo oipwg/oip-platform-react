@@ -107,6 +107,7 @@ class Playlist extends Component {
 								// For Payment Buttons
                                 payForFileFunc={_this.props.payForFileFunc}
                                 buyFileFunc={_this.props.buyFileFunc}
+                                isPlayingFile={_this.props.isPlayingFile}
 							/>
 
 						</div>

@@ -63,11 +63,21 @@ class AudioContainer extends Component {
 	            hasPaid: nextProps.ActiveFile.hasPaid
             }
         }
+        if (nextProps.ActiveFile.isPlaying != prevState.isPlaying) {
+	    	return {
+	    		isPlaying: nextProps.ActiveFile.isPlaying
+			}
+		}
     }
 
     componentDidUpdate(prevProps, prevState) {
 	    if (prevState.hasPaid == false && this.state.hasPaid) {
 	        this.audio.play()
+        }
+        if (prevState.isPlaying != this.state.isPlaying) {
+            if (this.state.isPlaying) {
+            	this.audio.play()
+			} else {this.audio.pause()}
         }
     }
 
@@ -193,6 +203,7 @@ class AudioContainer extends Component {
                                 // For Payment Buttons
                                 payForFileFunc={this.props.payForFileFunc}
                                 buyFileFunc={this.props.buyFileFunc}
+								isPlayingFile={this.props.isPlayingFile}
                             />
 
 						</div> : ""}

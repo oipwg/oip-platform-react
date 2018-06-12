@@ -24,7 +24,19 @@ class PaymentButtons extends Component {
 			_this.props.payForFileFunc(artifact, file, onSuccess, onError);
 		};
 
-		payForFile(this.props.artifact, this.props.File.info);
+		if (this.props.File.isPaid && !this.props.File.hasPaid) {
+            payForFile(this.props.artifact, this.props.File.info);
+		} else {
+            if (this.props.File.isPlaying) {
+                // PAUSE
+				console.log("This File is playing, so lets pause it")
+				this.props.isPlayingFile(this.props.File.key, !this.props.File.isPlaying)
+            } else {
+            	// Play
+                console.log("This File is not playing, so lets play it")
+                this.props.isPlayingFile(this.props.File.key, !this.props.File.isPlaying)
+            }
+        }
 	}
 	buyFile(){
 		if (this.props.File.owned){
