@@ -22,7 +22,8 @@ class AudioContainer extends Component {
 			showNext: false,
 			hasNext: false,
 			bgColor: "#000",
-			mainColor: "#fff"
+			mainColor: "#fff",
+            prevTimestamp: 0
 		};
 
 		this.onImageLoad = this.onImageLoad.bind(this);
@@ -100,11 +101,17 @@ class AudioContainer extends Component {
 		this.props.isSeekableFile(this.props.active, true);
 	}
 	onTimeUpdate(event){
-		if (event && event.srcElement && this && this.audio){
-			this.props.updateFileCurrentTime(this.props.active, event.srcElement.currentTime);
+	    let currentTimestamp = Date.now()
+        const timeInterval = 500; //Milliseconds
 
-			if (this.props.ActiveFile.info.getDuration() !== event.srcElement.duration && event.srcElement.duration)
-				this.props.updateFileDuration(this.props.active, event.srcElement.duration);
+		if (event && event.srcElement && this && this.audio){
+		    if (currentTimestamp >= this.state.prevTimestamp + timeInterval) {
+                this.props.updateFileCurrentTime(this.props.active, event.srcElement.currentTime);
+                this.setState({prevTimestamp: currentTimestamp})
+
+                if (this.props.ActiveFile.info.getDuration() !== event.srcElement.duration && event.srcElement.duration)
+                    this.props.updateFileDuration(this.props.active, event.srcElement.duration);
+            }
 		}
 	}
 	onAudioPlay(){
