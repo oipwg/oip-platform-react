@@ -68,6 +68,8 @@ class AudioContainer extends Component {
 	    		isPlaying: nextProps.ActiveFile.isPlaying
 			}
 		}
+
+		return null
     }
 
     componentDidUpdate(prevProps, prevState) {
