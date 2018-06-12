@@ -6,4 +6,7 @@
     margin: auto;
 }
 
+.ProgressBar-elapsed {
+    transition: width 0.5s linear;
+}
 
