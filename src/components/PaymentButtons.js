@@ -20,6 +20,9 @@ class PaymentButtons extends Component {
 			console.log(error);
 		}
 		let _this = this;
+
+		this.props.setCurrentFile(this.props.artifact, this.props.File);
+
 		let payForFile = function(artifact, file){
 			_this.props.payForFileFunc(artifact, file, onSuccess, onError);
 		};

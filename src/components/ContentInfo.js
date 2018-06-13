@@ -58,6 +58,8 @@ class ContentInfo extends Component {
                     FilePlaylist={this.props.FilePlaylist}
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
+                    isPlayingFile={this.props.isPlayingFile}
+                    setCurrentFile={this.props.setCurrentFile}
 				/>
 			</div>
 		);

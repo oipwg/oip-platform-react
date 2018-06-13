@@ -46,6 +46,8 @@ class ContentPage extends Component {
                                 FilePlaylist={this.props.FilePlaylist}
                                 payForFileFunc={this.props.payForFileFunc}
                                 buyFileFunc={this.props.buyFileFunc}
+                                isPlayingFile={this.props.isPlayingFile}
+                                setCurrentFile={this.props.setCurrentFile}
                             />
                             <br />
                             {(this.props.Artifact && this.props.Artifact.txid !== "") ?

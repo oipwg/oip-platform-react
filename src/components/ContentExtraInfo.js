@@ -46,6 +46,8 @@ class ContentExtraInfo extends Component {
 					FilePlaylist={this.props.FilePlaylist}
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
+                    isPlayingFile={this.props.isPlayingFile}
+                    setCurrentFile={this.props.setCurrentFile}
 				/>
 				<div className="" style={{width: "100%", marginTop: "-5px"}}>
 					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />

@@ -88,6 +88,10 @@ class FilesTable extends Component {
         return icon;
     }
 
+    handleListClick(artifact, file) {
+        (file.key !== this.props.ActiveFile.key) ? (this.props.setCurrentFile(artifact, file)) : (null)
+    }
+
 	render() {
 		let _this = this;
 		let files = this.getCurrentArtifactFiles();
@@ -108,7 +112,7 @@ class FilesTable extends Component {
 				<table className="table table-sm table-striped table-bordered text-center table-hover table-responsive table-inverse" style={{width: "100%", verticalAlign: "middle"}}>
 					<tbody>
 						{filesCopy.map(function(file, i){
-							return <tr key={i}>
+							return <tr key={i} >
 										<th scope="row"><span className={"icon icon-" + file.info.icon} style={{margin: "auto", display: "table", marginTop: "4px"}}></span></th>
 										<td style={{verticalAlign: "middle"}}>{file.info.subtype ? file.info.subtype : file.info.type}</td>
 										<td style={{verticalAlign: "middle"}}>{file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</td>
@@ -118,6 +122,8 @@ class FilesTable extends Component {
 												File={file}
                                                 payForFileFunc={_this.props.payForFileFunc}
                                                 buyFileFunc={_this.props.buyFileFunc}
+                                                isPlayingFile={_this.props.isPlayingFile}
+                                                setCurrentFile={_this.props.setCurrentFile}
 											/>
 										</td>
 									</tr>
