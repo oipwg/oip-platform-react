@@ -399,7 +399,20 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
 			dispatch(addFileToPlaylist(files[i], txid + "|" + i, state.Core.Core));
 		}
 
-		dispatch(setActiveFileInPlaylist(txid + "|" + 0));
+		if (artifact.getSubtype() == 'Tomogram') {
+
+            for (var i = 0; i < files.length; i++) {
+                let splitFilename = files[i].getFilename().split(".");
+                let indexToGrab = splitFilename.length - 1;
+                const extension = splitFilename[indexToGrab].toLowerCase();
+                if (extension === 'mp4') {
+                    dispatch(setActiveFileInPlaylist(txid + "|" + i));
+                }
+            }
+        } else {
+            dispatch(setActiveFileInPlaylist(txid + "|" + 0));
+        }
+
 
 		dispatch(getComments(state.Core.Core, txid));
 
