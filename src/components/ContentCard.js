@@ -17,8 +17,14 @@ const ContentCard = (props) => {
     let publisher = props.artifact.getMainAddress();
     let txid = props.artifact.getTXID();
     let duration = props.artifact.getDuration();
+    let contentCardClass = "";
+
+    if (props.parent == 'ContentPage') {
+        contentCardClass = "card col border-0 mb-4 p-1"
+    } else { contentCardClass = "card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1"}
+
     return (
-                <div className={props.parent ? (null) : "card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1"}>
+                <div className={contentCardClass}>
                     <Link to={"/" + txid.substring(0,6) } onClick={scrollToTop} className="" title={title} >
                         <div className="card-img-top content-card-img">
                             <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
