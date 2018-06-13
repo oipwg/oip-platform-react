@@ -67,6 +67,7 @@ class ContentPage extends Component {
                                 return <ContentCard
                                     key={i}
                                     artifact={content}
+                                    parent={"ContentPage"}
                                 />
                             })) : (null)}
                         </div>
