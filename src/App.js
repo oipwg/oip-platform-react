@@ -13,7 +13,7 @@ import { setupWalletEvents, login, setNotificationSys } from './actions';
 import { CSSTransitionGroup } from 'react-transition-group'
 
 import createBrowserHistory from 'history/createBrowserHistory'
-import { ConnectedRouter, push } from 'react-router-redux'
+import { ConnectedRouter } from 'react-router-redux'
 import { Provider } from 'react-redux'
 
 import NotificationSystem from 'react-notification-system';
@@ -31,7 +31,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 // Import custom CSS to override Bootstrap
 import './assets/css/custom.css';
 // Import Font Awesome 5 SVG
-// import './assets/js/fontawesome-all.min';
+import './assets/js/fontawesome-all.min';
 
 import Navbar from './components/Navbar.js';
 
