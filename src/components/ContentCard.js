@@ -19,7 +19,7 @@ const ContentCard = (props) => {
     let duration = props.artifact.getDuration();
     let contentCardClass = "";
 
-    if (props.parent == 'ContentPage') {
+    if (props.parent === 'ContentPage') {
         contentCardClass = "card col border-0 mb-4 p-1"
     } else { contentCardClass = "card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1"}
 

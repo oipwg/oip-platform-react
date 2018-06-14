@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import SidebarContainer from './SidebarContainer.js';
 import PublishContainer from './PublishContainer.js';
 import MyArtifactsContainer from './MyArtifactsContainer.js';
 import AnalyticsContainer from './AnalyticsContainer.js';

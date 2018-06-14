@@ -60,7 +60,6 @@ export const Wallet = (state = {
 				...state,
 				tryFaucet: action.tryFaucet
 			}
-		case actions.PROMPT_BUY:
 		case actions.UPDATE_WALLET:
 			return action.walletState
 		default:

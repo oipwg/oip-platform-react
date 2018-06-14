@@ -399,7 +399,7 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
 			dispatch(addFileToPlaylist(files[i], txid + "|" + i, state.Core.Core));
 		}
 
-		if (artifact.getSubtype() == 'Tomogram') {
+		if (artifact.getSubtype() === 'Tomogram') {
             for (var i = 0; i < files.length; i++) {
                 let splitFilename = files[i].getFilename().split(".");
                 let indexToGrab = splitFilename.length - 1;

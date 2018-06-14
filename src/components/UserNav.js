@@ -26,4 +26,3 @@ const UserNav = (props) => {
 }
 
 export default UserNav
-{/*<button type="button" className="login-button btn btn-outline-dark">{props.pubName}</button>*/}

@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-
-import createHistory from 'history/createBrowserHistory'
-
 import { combineReducers } from 'redux'
-import reducers from './reducers'
 
+import reducers from './reducers'
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -16,8 +13,6 @@ import registerServiceWorker from './registerServiceWorker';
 const logger = createLogger({
     collapsed: true
 });
-
-const history = createHistory()
 
 let middleware = [ logger, thunk ];
 

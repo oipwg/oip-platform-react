@@ -2,14 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { COIN_CONFIGS } from './CoinCard.js';
 import CoinCard from './CoinCard.js';
-import PaperWallets from './PaperWallets.js';
 import TransactionTable from './TransactionTable.js'
 
 class WalletContainer extends Component {
-	constructor(props){
-		super(props);
-	}
-
 	toggleSendModal(){
 		this.setState({ sendModal: !this.state.sendModal });
 	}

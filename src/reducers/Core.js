@@ -1,7 +1,7 @@
 import demoArtifacts from '../demoContent';
 
 import * as actions from '../actions/index.js'
-import { OIPJS, Artifact } from "oip-js";
+import { OIPJS } from "oip-js";
 
 var _core = OIPJS({
     runIPFSJS: false,
@@ -11,12 +11,11 @@ var _core = OIPJS({
 
 _core.Index.addToDb("SupportedArtifacts", demoArtifacts)
 
-console.log(JSON.stringify(demoArtifacts[0].toJSON()))
+// console.log(JSON.stringify(demoArtifacts[0].toJSON()))
 
 export const Core = (state = {Core: _core }, action) => {
     switch (action.type) {
         case actions.SET_CORE_TO_STORE:
-            console.log("ACTION :", action);
             return {
                 ...state,
                 Core: action.Core

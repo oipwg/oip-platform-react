@@ -7,10 +7,6 @@ import IssoComments from './isso/IssoComments.js'
 import ContentCard from './ContentCard.js'
 
 class ContentPage extends Component {
-    constructor(props){
-        super(props);
-    }
-
     render() {
         return (
             <div className="content-page">

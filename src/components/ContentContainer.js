@@ -7,12 +7,8 @@ import FileViewer from './FileViewer.js';
 import Paywall from './Paywall.js';
 
 class ContentContainer extends Component {
-	constructor(props){
-		super(props);
-	}
-
 	render() {
-		let type, loading = false, haveLoadedState = false;
+		let loading = false, haveLoadedState = false;
 
 		if (this.props.ActiveFile) {
             if (this.props.ActiveFile.info){

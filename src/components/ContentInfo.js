@@ -11,20 +11,15 @@ import ArtifactIcon from './ArtifactIcon.js';
 import PublisherIcon from './PublisherIcon.js';
 
 class ContentInfo extends Component {
-	constructor(props){
-		super(props);
-	}
-
 	render() {
-
-    let publisher, pubName, title, icon, paid, artifact;
+    let publisher, pubName, title, artifact;
 
     if (this.props.Artifact) {
     	artifact = this.props.Artifact;
         publisher = artifact.getMainAddress();
         pubName = artifact.getPublisherName();
         title = artifact.getTitle();
-        paid = artifact ? artifact.isPaid() : false;
+        // paid = artifact ? artifact.isPaid() : false; declare above ^ let...
 	}
 
 		return (

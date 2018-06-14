@@ -56,9 +56,6 @@ import DailyFaucetPrompt from './components/DailyFaucetPrompt.js';
 const history = createBrowserHistory()
 
 class App extends Component {
-	constructor(props) {
-		super(props);
-	}
 
 	componentDidMount(){
 		this.props.setupWalletEvents(this.props.Core);

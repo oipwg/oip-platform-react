@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 import { COIN_CONFIGS } from './CoinCard.js';
 
 class SwapBlock extends Component {
-	constructor(props){
-		super(props);
-	}
 	render() {
 		return (
 			<div style={{width: "100%"}}>
