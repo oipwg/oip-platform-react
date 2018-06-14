@@ -62,6 +62,7 @@ class ContentContainer extends Component {
 					ArtifactState={this.props.ArtifactState}
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
+                    setCurrentFile={this.props.setCurrentFile}
 				/>
 			</div>
 		);

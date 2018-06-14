@@ -3,7 +3,6 @@ import React from 'react';
 import ContentCard from './ContentCard.js'
 
 const ContentCardsContainer = (props) => {
-    console.log("CCC, ", props)
     let contentLoaded = (props.content !== undefined)
     return <div className="container mt-4">
         <div className="">

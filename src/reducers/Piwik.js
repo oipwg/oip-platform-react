@@ -7,7 +7,6 @@ export const Piwik = (state = {piwik: PiwikReactRouter({
     })}, action) => {
     switch (action.type) {
         case actions.SET_PIWIK:
-            console.log("ACTION :", action);
             return {
                 ...state,
                 piwik: action.piwik

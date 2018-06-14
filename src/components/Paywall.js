@@ -37,7 +37,8 @@ class Paywall extends Component {
 							File={this.props.ActiveFile}
 							payForFileFunc={this.props.payForFileFunc}
 							buyFileFunc={this.props.buyFileFunc}
-							/>
+                            setCurrentFile={this.props.setCurrentFile}
+                        />
 						<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 					</div>
 				</div>
