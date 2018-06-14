@@ -20,9 +20,8 @@ class ImageContainer extends Component {
 		let url = this.props.buildIPFSURL(hash);
 
 		return (
-				<div className="d-flex justify-content-center">
-                    {/*<IPFSImage Core={this.props.Core} hash={hash} width={preview ? "100%" : ""} cover={preview} />*/}
-					<img className="img-fluid" style={{backgroundColor: "#fff"}} src={url} alt={"Your image is supposed to be here!"}/>
+				<div className="d-flex justify-content-center" style={{height: "100%"}}>
+					<img style={{backgroundColor: "#fff", maxHeight: '100%', maxWidth: '100%', objectFit: 'contain'}} src={url} alt="Your image is supposed to be here!" />
 				</div>
 		);
 	}
@@ -31,3 +30,4 @@ class ImageContainer extends Component {
 ImageContainer.SUPPORTED_FILE_TYPES = ["jpeg", "jpg", "gif", "png", "svg", "bmp", "ico"]
 
 export default ImageContainer;
+
