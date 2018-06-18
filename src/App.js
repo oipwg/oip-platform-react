@@ -8,8 +8,9 @@ import {
 } from 'react-router-dom'
 
 import { connect } from 'react-redux';
-import { setupWalletEvents, login } from './actions';
 
+import {login} from "./actions/User/thunks";
+import {setupWalletEvents} from "./actions/Wallet/thunks";
 import {setNotificationSystem} from "./actions/NotificationSystem/actions";
 
 import { CSSTransitionGroup } from 'react-transition-group'

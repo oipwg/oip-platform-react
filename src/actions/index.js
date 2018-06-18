@@ -307,55 +307,55 @@ export const setPageType = pg_type => ({
 // 	isSeekable
 // })
 
-export const setVolume = volume => ({
-	type: CHANGE_VOLUME,
-	volume
-})
+// export const setVolume = volume => ({
+// 	type: CHANGE_VOLUME,
+// 	volume
+// })
+//
+// export const setMute = mute => ({
+// 	type: CHANGE_MUTE,
+// 	isMuted: mute
+// })
 
-export const setMute = mute => ({
-	type: CHANGE_MUTE,
-	isMuted: mute
-})
-
-export const updateWallet = walletState => ({
-	type: UPDATE_WALLET,
-	walletState
-})
-
-export const updateWalletFunc = walletState => (dispatch, getState) => {
-	let newState = walletState;
-	let prevState = getState().Wallet;
-
-	for (var coin in prevState){
-		// console.log(coin, )
-		if (newState[coin] && newState[coin].usd === 0 && prevState[coin] && prevState[coin].usd && prevState[coin].usd > 0){
-			newState[coin].usd = prevState[coin].usd
-		}
-		if (typeof prevState[coin] !== "object"){
-			newState[coin] = prevState[coin];
-		}
-	}
-
-	dispatch(updateWallet(newState));
-}
-
-export const updateUSD = (coin, usd) => ({
-	type: UPDATE_USD,
-	coin,
-	usd
-})
-
-export const updateBalance = (coin, balance) => ({
-	type: UPDATE_BALANCE,
-	coin,
-	balance
-})
-
-export const updateAddresses = (coin, balance) => ({
-	type: UPDATE_ADDRESSES,
-	coin,
-	balance
-})
+// export const updateWallet = walletState => ({
+// 	type: UPDATE_WALLET,
+// 	walletState
+// })
+//
+// export const updateWalletFunc = walletState => (dispatch, getState) => {
+// 	let newState = walletState;
+// 	let prevState = getState().Wallet;
+//
+// 	for (var coin in prevState){
+// 		// console.log(coin, )
+// 		if (newState[coin] && newState[coin].usd === 0 && prevState[coin] && prevState[coin].usd && prevState[coin].usd > 0){
+// 			newState[coin].usd = prevState[coin].usd
+// 		}
+// 		if (typeof prevState[coin] !== "object"){
+// 			newState[coin] = prevState[coin];
+// 		}
+// 	}
+//
+// 	dispatch(updateWallet(newState));
+// }
+//
+// export const updateUSD = (coin, usd) => ({
+// 	type: UPDATE_USD,
+// 	coin,
+// 	usd
+// })
+//
+// export const updateBalance = (coin, balance) => ({
+// 	type: UPDATE_BALANCE,
+// 	coin,
+// 	balance
+// })
+//
+// export const updateAddresses = (coin, balance) => ({
+// 	type: UPDATE_ADDRESSES,
+// 	coin,
+// 	balance
+// })
 
 export const loginFetching = () => ({
 	type: LOGIN_FETCHING
@@ -804,26 +804,26 @@ export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem
 // 	}
 // }
 
-export const setupWalletEvents = (Core) => dispatch => {
-	Core.Wallet.on("bal-update", function(newState){
-		dispatch(updateWalletFunc(newState));
-
-		Core.Data.getBTCPrice(function(price){
-			if (newState.bitcoin && newState.bitcoin.balance && newState.bitcoin.balance > 0)
-				dispatch(updateUSD('bitcoin', parseFloat(price * newState.bitcoin.balance)))
-		})
-
-		Core.Data.getFLOPrice(function(price){
-			if (newState.florincoin && newState.florincoin.balance && newState.florincoin.balance > 0)
-				dispatch(updateUSD('florincoin', parseFloat(price * newState.florincoin.balance)))
-		})
-
-		Core.Data.getLTCPrice(function(price){
-			if (newState.litecoin && newState.litecoin.balance && newState.litecoin.balance > 0)
-				dispatch(updateUSD('litecoin', parseFloat(price * newState.litecoin.balance)))
-		})
-	})
-}
+// export const setupWalletEvents = (Core) => dispatch => {
+// 	Core.Wallet.on("bal-update", function(newState){
+// 		dispatch(updateWalletFunc(newState));
+//
+// 		Core.Data.getBTCPrice(function(price){
+// 			if (newState.bitcoin && newState.bitcoin.balance && newState.bitcoin.balance > 0)
+// 				dispatch(updateUSD('bitcoin', parseFloat(price * newState.bitcoin.balance)))
+// 		})
+//
+// 		Core.Data.getFLOPrice(function(price){
+// 			if (newState.florincoin && newState.florincoin.balance && newState.florincoin.balance > 0)
+// 				dispatch(updateUSD('florincoin', parseFloat(price * newState.florincoin.balance)))
+// 		})
+//
+// 		Core.Data.getLTCPrice(function(price){
+// 			if (newState.litecoin && newState.litecoin.balance && newState.litecoin.balance > 0)
+// 				dispatch(updateUSD('litecoin', parseFloat(price * newState.litecoin.balance)))
+// 		})
+// 	})
+// }
 
 export const login = (Core, identifier, password) => dispatch => {
 	dispatch(loginFetching());
