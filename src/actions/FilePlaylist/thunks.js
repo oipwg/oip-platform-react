@@ -1,5 +1,5 @@
-import {buyError, buyInProgress, buyFile, setActiveFileInPlaylist} from "./actions";
-import { tryPaymentSend } from "../index"; // from '../PaymentLogic (this needs to change)
+import {buyError, buyInProgress, buyFile, setActiveFileInPlaylist, payForFile, paymentError, paymentInProgress} from "./actions";
+import {tryPaymentSend} from "../index"; // from '../PaymentLogic (this needs to change)
 
 // -------------------------------------------------------------------------------------------------
 // BUY FILE
@@ -82,6 +82,53 @@ export const setCurrentFile = (artifact, file) => dispatch => {
     for (var i = 0; i < files.length; i++) {
         if (files[i].getFilename() === file.info.getFilename() && files[i].getDisplayName() === file.info.getDisplayName()){
             dispatch(setActiveFileInPlaylist(artifact.getTXID() + "|" + i));
+        }
+    }
+}
+
+// -------------------------------------------------------------------------------------------------
+// Pay For File
+
+export const payForFileFunc = (artifact, file, onSuccess, onError) => (dispatch, getState) => {
+    let state = getState();
+
+    let txid = artifact.getTXID();
+    let publisher = artifact.getMainAddress();
+    let publisherName = artifact.getPublisherName();
+    let files = artifact.getFiles();
+
+    let paymentAmount = file.getSuggestedPlayCost() / artifact.getPaymentScale();
+
+    let paymentAddresses = artifact.getPaymentAddresses(file);
+
+    for (var i = 0; i < files.length; i++) {
+        if (files[i].getFilename() === file.getFilename() && files[i].getDisplayName() === file.getDisplayName()){
+            let id = txid + "|" + i;
+
+            if (file.getSuggestedPlayCost() && paymentAmount > 0){
+                // If file has cost
+                dispatch(paymentInProgress(id));
+
+                dispatch(tryPaymentSend(state.Core.Core, state.NotificationSystem.NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
+                    dispatch(payForFile(id));
+                    dispatch(setActiveFileInPlaylist(id));
+
+                    onSuccess(success)
+                }, (error) => {
+                    dispatch(paymentError(id));
+                    onError(error);
+                }));
+            } else {
+                // If it is free
+                dispatch(payForFile(id));
+                dispatch(setActiveFileInPlaylist(id));
+            }
+
+            try {
+                state.Piwik.piwik.push(["trackContentInteraction", "viewFile", publisher, txid, i]);
+            } catch (e) {
+                //console.log(e);
+            }
         }
     }
 }

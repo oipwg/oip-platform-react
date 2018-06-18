@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { payForFileFunc, buyFileFunc, promptLogin } from '../actions';
-
 class PaymentButtons extends Component {
 	constructor(props){
 		super(props);
