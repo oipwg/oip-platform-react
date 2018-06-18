@@ -14,14 +14,13 @@ import {
     updateFileDuration,
     setVolume,
     setMute,
-    playlistNext,
     isPlayingFile,
     setCurrentFile
 } from '../actions'
 
 import {fetchArtifactList} from "../actions/ArtifactLists/thunks";
-import {selectCurrentArtifact} from "../actions/CurrentArtifact/thunks";
-import {addComment} from "../actions/CurrentArtifact/thunks";
+import {selectCurrentArtifact, addComment} from "../actions/CurrentArtifact/thunks";
+import {playlistNext} from "../actions/FilePlaylist/thunks";
 
 class ContentPageWrapper extends Component {
     constructor(props) {
