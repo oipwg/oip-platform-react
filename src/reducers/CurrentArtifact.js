@@ -1,4 +1,4 @@
-import * as actions from '../actions'
+import * as actions from '../actions/CurrentArtifact/actions'
 
 const curArtifact = (state = {
 	isFetching: false,

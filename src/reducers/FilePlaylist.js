@@ -1,4 +1,4 @@
-import * as actions from '../actions'
+import * as actions from '../actions/FilePlaylist/actions'
 
 const file = (state = {
 	owned: false,

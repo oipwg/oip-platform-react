@@ -1,4 +1,4 @@
-import * as actions from '../actions'
+import * as actions from '../actions/VolumeControls/actions'
 
 export const VolumeControls = (state = {
 	isMuted: false,

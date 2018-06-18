@@ -1,4 +1,4 @@
-import * as actions from '../actions'
+import * as actions from '../actions/Wallet/actions'
 
 const Coin = (state = {
 	balance: 0,

@@ -1,4 +1,4 @@
-import * as actions from '../actions'
+import * as actions from '../actions/User/actions'
 
 export const User = (state = {
 	isFetching: false,

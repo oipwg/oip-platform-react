@@ -1,4 +1,4 @@
-import * as actions from '../actions/index.js'
+import * as actions from '../actions/Piwik/actions'
 import PiwikReactRouter from 'piwik-react-router';
 
 export const Piwik = (state = {piwik: PiwikReactRouter({

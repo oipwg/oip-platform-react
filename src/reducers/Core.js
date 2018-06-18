@@ -1,6 +1,6 @@
 import demoArtifacts from '../demoContent';
 
-import * as actions from '../actions/index.js'
+import * as actions from '../actions/Core/actions'
 import { OIPJS } from "oip-js";
 
 var _core = OIPJS({
