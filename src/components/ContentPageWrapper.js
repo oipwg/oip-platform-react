@@ -6,7 +6,6 @@ import ContentPage from './ContentPage'
 import {
     RANDOM_ARTIFACT_LIST,
     tipFunc,
-    addComment,
     payForFileFunc,
     buyFileFunc,
     updateFileCurrentTime,
@@ -22,6 +21,7 @@ import {
 
 import {fetchArtifactList} from "../actions/ArtifactLists/thunks";
 import {selectCurrentArtifact} from "../actions/CurrentArtifact/thunks";
+import {addComment} from "../actions/CurrentArtifact/thunks";
 
 class ContentPageWrapper extends Component {
     constructor(props) {

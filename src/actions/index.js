@@ -201,24 +201,24 @@ export const setPageType = pg_type => ({
 // 	}
 // }
 
-export const requestCurrentArtifact = () => ({
-	type: REQUEST_CURRENT_ARTIFACT
-})
-
-export const recieveCurrentArtifact = artifact => ({
-	type: RECIEVE_CURRENT_ARTIFACT,
-	artifact: artifact,
-	receivedAt: Date.now()
-})
-
-export const invalidateCurrentArtifact = () => ({
-	type: INVALIDATE_CURRENT_ARTIFACT
-})
-
-export const requestCurrentArtifactError = error => ({
-	type: REQUEST_CURRENT_ARTIFACT_ERROR,
-	error
-})
+// export const requestCurrentArtifact = () => ({
+// 	type: REQUEST_CURRENT_ARTIFACT
+// })
+//
+// export const recieveCurrentArtifact = artifact => ({
+// 	type: RECIEVE_CURRENT_ARTIFACT,
+// 	artifact: artifact,
+// 	receivedAt: Date.now()
+// })
+//
+// export const invalidateCurrentArtifact = () => ({
+// 	type: INVALIDATE_CURRENT_ARTIFACT
+// })
+//
+// export const requestCurrentArtifactError = error => ({
+// 	type: REQUEST_CURRENT_ARTIFACT_ERROR,
+// 	error
+// })
 
 export const setComments = (comments) => ({
 	type: SET_COMMENTS,
@@ -467,21 +467,21 @@ export const playlistNext = restrictions => (dispatch, getState) => {
 // 	});
 // }
 
-export const getComments = (Core, url) => dispatch => {
-	Core.Comments.get(url, function(res){
-		if (res && res.data && res.data.replies){
-			dispatch(setComments(res.data.replies))
-		}
-	})
-}
-
-export const addComment = (url, comment) => (dispatch, getState) => {
-	let state = getState();
-
-	state.Core.Core.Comments.add(url, comment, function(res){
-		dispatch(getComments(state.Core, url));
-	})
-}
+// export const getComments = (Core, url) => dispatch => {
+// 	Core.Comments.get(url, function(res){
+// 		if (res && res.data && res.data.replies){
+// 			dispatch(setComments(res.data.replies))
+// 		}
+// 	})
+// }
+//
+// export const addComment = (url, comment) => (dispatch, getState) => {
+// 	let state = getState();
+//
+// 	state.Core.Core.Comments.add(url, comment, function(res){
+// 		dispatch(getComments(state.Core, url));
+// 	})
+// }
 
 export const setCurrentFile = (artifact, file) => dispatch => {
 	let files = artifact.getFiles();

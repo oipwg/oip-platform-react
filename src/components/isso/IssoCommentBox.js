@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { addComment } from '../../actions'
-
 class IssoCommentBox extends Component {
 	constructor(props){
 		super(props);

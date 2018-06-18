@@ -59,3 +59,14 @@ export const getComments = (Core, url) => dispatch => {
         }
     })
 }
+
+// -------------------------------------------------------------------------------------------------
+// ADD COMMENT
+
+export const addComment = (url, comment) => (dispatch, getState) => {
+    let state = getState();
+
+    state.Core.Core.Comments.add(url, comment, function(res){
+        dispatch(getComments(state.Core, url));
+    })
+}
