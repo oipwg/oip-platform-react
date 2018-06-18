@@ -4,20 +4,15 @@ import { connect } from 'react-redux';
 import ContentPage from './ContentPage'
 
 import {
-    RANDOM_ARTIFACT_LIST,
     tipFunc,
-    updateFileCurrentTime,
-    isPlayableFile,
-    isSeekableFile,
-    updateFileDuration,
-    setVolume,
-    setMute,
-    isPlayingFile,
 } from '../actions'
 
+import {setVolume, setMute} from "../actions/VolumeControls/actions";
+import {RANDOM_ARTIFACT_LIST} from "../actions/ArtifactLists/actions";
 import {fetchArtifactList} from "../actions/ArtifactLists/thunks";
 import {selectCurrentArtifact, addComment} from "../actions/CurrentArtifact/thunks";
 import {playlistNext, setCurrentFile, payForFileFunc, buyFileFunc} from "../actions/FilePlaylist/thunks";
+import {updateFileCurrentTime, isPlayingFile, isPlayableFile, isSeekableFile, updateFileDuration} from "../actions/FilePlaylist/actions";
 
 class ContentPageWrapper extends Component {
     constructor(props) {

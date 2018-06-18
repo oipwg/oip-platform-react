@@ -237,75 +237,75 @@ export const setPageType = pg_type => ({
 // 	file
 // })
 
-export const setActiveFileInPlaylist = uid => ({
-	type: SET_ACTIVE_FILE_IN_PLAYLIST,
-	uid
-})
+// export const setActiveFileInPlaylist = uid => ({
+// 	type: SET_ACTIVE_FILE_IN_PLAYLIST,
+// 	uid
+// })
+//
+// export const payForFile = uid => ({
+// 	type: PAY_FOR_FILE,
+// 	uid
+// })
 
-export const payForFile = uid => ({
-	type: PAY_FOR_FILE,
-	uid
-})
+// export const buyFile = uid => ({
+// 	type: BUY_FILE,
+// 	uid
+// })
 
-export const buyFile = uid => ({
-	type: BUY_FILE,
-	uid
-})
+// export const paymentInProgress = uid => ({
+// 	type: PAYMENT_IN_PROGRESS,
+// 	uid
+// })
+//
+// export const paymentError = uid => ({
+// 	type: PAYMENT_ERROR,
+// 	uid
+// })
+//
+// export const buyInProgress = uid => ({
+// 	type: BUY_IN_PROGRESS,
+// 	uid
+// })
+//
+// export const buyError = uid => ({
+// 	type: BUY_ERROR,
+// 	uid
+// })
+//
+// export const clearPaymentProgressError = uid => ({
+// 	type: CLEAR_PAY_PROGRESS_ERROR,
+// 	uid
+// })
 
-export const paymentInProgress = uid => ({
-	type: PAYMENT_IN_PROGRESS,
-	uid
-})
-
-export const paymentError = uid => ({
-	type: PAYMENT_ERROR,
-	uid
-})
-
-export const buyInProgress = uid => ({
-	type: BUY_IN_PROGRESS,
-	uid
-})
-
-export const buyError = uid => ({
-	type: BUY_ERROR,
-	uid
-})
-
-export const clearPaymentProgressError = uid => ({
-	type: CLEAR_PAY_PROGRESS_ERROR,
-	uid
-})
-
-export const updateFileCurrentTime = (uid, currentTime) => ({
-	type: UPDATE_CURRENT_TIME,
-	uid,
-	currentTime
-})
-
-export const updateFileDuration = (uid, duration) => ({
-	type: UPDATE_DURATION,
-	uid,
-	duration
-})
-
-export const isPlayingFile = (uid, isPlaying) => ({
-	type: UPDATE_IS_PLAYING,
-	uid,
-	isPlaying
-})
-
-export const isPlayableFile = (uid, isPlayable) => ({
-	type: UPDATE_IS_PLAYABLE,
-	uid,
-	isPlayable
-})
-
-export const isSeekableFile = (uid, isSeekable) => ({
-	type: UPDATE_IS_SEEKABLE,
-	uid,
-	isSeekable
-})
+// export const updateFileCurrentTime = (uid, currentTime) => ({
+// 	type: UPDATE_CURRENT_TIME,
+// 	uid,
+// 	currentTime
+// })
+//
+// export const updateFileDuration = (uid, duration) => ({
+// 	type: UPDATE_DURATION,
+// 	uid,
+// 	duration
+// })
+//
+// export const isPlayingFile = (uid, isPlaying) => ({
+// 	type: UPDATE_IS_PLAYING,
+// 	uid,
+// 	isPlaying
+// })
+//
+// export const isPlayableFile = (uid, isPlayable) => ({
+// 	type: UPDATE_IS_PLAYABLE,
+// 	uid,
+// 	isPlayable
+// })
+//
+// export const isSeekableFile = (uid, isSeekable) => ({
+// 	type: UPDATE_IS_SEEKABLE,
+// 	uid,
+// 	isSeekable
+// })
 
 export const setVolume = volume => ({
 	type: CHANGE_VOLUME,
