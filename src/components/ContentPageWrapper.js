@@ -5,7 +5,6 @@ import ContentPage from './ContentPage'
 
 import {
     selectCurrentArtifact,
-    fetchArtifactList,
     RANDOM_ARTIFACT_LIST,
     tipFunc,
     addComment,
@@ -21,6 +20,8 @@ import {
     isPlayingFile,
     setCurrentFile
 } from '../actions'
+
+import {fetchArtifactList} from "../actions/ArtifactLists/thunks";
 
 class ContentPageWrapper extends Component {
     constructor(props) {

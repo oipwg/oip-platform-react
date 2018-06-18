@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import {connect} from "react-redux";
-import {fetchArtifactList, LATEST_CONTENT_LIST} from '../actions'
+import {fetchArtifactList} from "../actions/ArtifactLists/thunks";
+import {LATEST_CONTENT_LIST} from "../actions/ArtifactLists/actions";
 
 import ContentCardsContainer from './ContentCardsContainer.js';
 
