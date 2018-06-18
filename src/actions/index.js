@@ -104,11 +104,6 @@ export const UPDATE_WALLET = 'UPDATE_WALLET'
 // --------------MISC--------------------------------------------------------------
 // --------------------------------------------------------------------------------
 
-export const PLAYLIST_SKIP_BACK = 'PLAYLIST_SKIP_BACK'
-export const PLAYLIST_NEXT = 'PLAYLIST_NEXT'
-export const PLAYLIST_PAUSE = 'PLAYLIST_PAUSE'
-export const PLAYLIST_PLAY = 'PLAYLIST_PLAY'
-export const PAUSED = 'PAUSED'
 
 export const SET_PAGE_TYPE = 'SET_PAGE_TYPE'
 export const SEARCH_FOR_ARTIFACTS = "SEARCH_FOR_ARTIFACTS";
