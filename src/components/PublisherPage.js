@@ -37,13 +37,10 @@ class PublisherPage extends Component {
                         <p className="lead">Publishing since <span>{publishingSinceDate}</span></p>
                         <div className="userRow">
 
-
                             <PublisherIcon width={40} id={this.props.publisher.address} />
 
                             <button className="btn btn-light mr-2" type="button">Send Tip</button>
                             <button className="btn btn-danger" type="button">Subscribe</button>
-
-
 
                         </div>
                     </div>

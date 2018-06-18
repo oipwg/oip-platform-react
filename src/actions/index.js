@@ -65,7 +65,7 @@ export const PAUSED = 'PAUSED'
 
 export const SET_CORE_TO_STORE = 'SET_CORE_TO_STORE'
 export const SET_NOTIFICATION_SYS = "SET_NOTIFICATION_SYS"
-export const SET_PUBLISHER_PAGE_PUBLISHER = "FETCH_PUBLISHER_PAGE_PUBLISHER"
+export const SET_PUBLISHER_PAGE_PUBLISHER = "SET_PUBLISHER_PAGE_PUBLISHER"
 export const PUBLISHER_PAGE_LIST = "PUBLISHER_PAGE_LIST"
 export const SET_PIWIK = "SET_PIWKIK"
 
@@ -77,7 +77,7 @@ export const setPiwik = (piwik) => ({
 export const fetchPublisherPage = (list_id, pubId) => (dispatch, getState) => {
 	let state = getState();
 	state.Core.Core.Index.getPublisher(pubId, (success) => {
-		console.log("fetchPublisherPage Success")
+		console.log("getPublisher Success", success)
 		dispatch(fetchArtifactList(list_id, { "search-for": success.address}))
 		dispatch(setPublisherPagePublisher(success))
 	}, (error) => {console.error("getPublisher error:", error)})
@@ -128,7 +128,6 @@ export const requestArtifactListError = (page, errorText) => ({
 
 export const fetchArtifactList = (list_id, options) => (dispatch, getState) => {
 	dispatch(requestArtifactList(list_id));
-
 	let state = getState();
 
 	if (list_id === LATEST_CONTENT_LIST){

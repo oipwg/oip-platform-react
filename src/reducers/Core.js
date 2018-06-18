@@ -5,8 +5,8 @@ import { OIPJS } from "oip-js";
 
 var _core = OIPJS({
     runIPFSJS: false,
-    OIPdURL: "https://snowflake.oip.fun/alexandria/v2",
-    IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
+    IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/",
+    debug: true
 })
 
 _core.Index.addToDb("SupportedArtifacts", demoArtifacts)

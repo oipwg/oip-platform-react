@@ -39,7 +39,7 @@
     "js-file-download": "^0.4.1",
     "moment": "^2.18.1",
     "object-assign": "4.1.1",
-    "oip-js": "1.1.32",
+    "oip-js": "1.1.33",
     "piwik-react-router": "^0.12.1",
     "popper.js": "^1.14.3",
     "postcss-flexbugs-fixes": "3.0.0",
