@@ -483,15 +483,15 @@ export const registerStarting = () => ({
 // 	})
 // }
 
-export const setCurrentFile = (artifact, file) => dispatch => {
-	let files = artifact.getFiles();
-
-	for (var i = 0; i < files.length; i++) {
-		if (files[i].getFilename() === file.info.getFilename() && files[i].getDisplayName() === file.info.getDisplayName()){
-			dispatch(setActiveFileInPlaylist(artifact.getTXID() + "|" + i));
-		}
-	}
-}
+// export const setCurrentFile = (artifact, file) => dispatch => {
+// 	let files = artifact.getFiles();
+//
+// 	for (var i = 0; i < files.length; i++) {
+// 		if (files[i].getFilename() === file.info.getFilename() && files[i].getDisplayName() === file.info.getDisplayName()){
+// 			dispatch(setActiveFileInPlaylist(artifact.getTXID() + "|" + i));
+// 		}
+// 	}
+// }
 
 export const promptLogin = (onSuccess, onError) => (dispatch, getState) => {
 	dispatch(loginPrompt(true));
