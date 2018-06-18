@@ -47,7 +47,6 @@ export const BUY_ERROR = 'BUY_ERROR'
 export const BUY_IN_PROGRESS = 'BUY_IN_PROGRESS'
 export const ADD_FILE_TO_PLAYLIST = 'ADD_FILE_TO_PLAYLIST'
 export const PAY_FOR_FILE = 'PAY_FOR_FILE'
-export const PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS'
 export const SET_FILE_PLAYLIST = 'SET_FILE_PLAYLIST'
 
 // --------------------------------------------------------------------------------
@@ -105,9 +104,7 @@ export const UPDATE_WALLET = 'UPDATE_WALLET'
 // --------------------------------------------------------------------------------
 
 
-export const SET_PAGE_TYPE = 'SET_PAGE_TYPE'
-export const SEARCH_FOR_ARTIFACTS = "SEARCH_FOR_ARTIFACTS";
-export const UPDATE_COIN = 'UPDATE_COIN'
+
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
@@ -143,11 +140,7 @@ export const UPDATE_COIN = 'UPDATE_COIN'
 // 	Core
 // })
 
-//NOT USED / MISC
-export const setPageType = pg_type => ({
-	type: SET_PAGE_TYPE,
-	pg_type
-})
+
 
 // export const requestArtifactList = page => ({
 // 	type: REQUEST_ARTIFACT_LIST,
@@ -357,54 +350,54 @@ export const setPageType = pg_type => ({
 // 	balance
 // })
 
-export const loginFetching = () => ({
-	type: LOGIN_FETCHING
-})
+// export const loginFetching = () => ({
+// 	type: LOGIN_FETCHING
+// })
+//
+// export const loginSuccess = (publisher) => ({
+// 	type: LOGIN_SUCCESS,
+// 	publisher
+// })
+//
+// export const loginFailure = () => ({
+// 	type: LOGIN_FAILURE
+// })
 
-export const loginSuccess = (publisher) => ({
-	type: LOGIN_SUCCESS,
-	publisher
-})
+// export const logoutAction = () => ({
+// 	type: LOGOUT
+// })
+//
+// export const logout = () => (dispatch) => {
+// 	try {
+// 		localStorage.username = "";
+// 		localStorage.pw = "";
+// 	} catch(e){ console.error(e) }
+// 	dispatch(logoutAction())
+// }
 
-export const loginFailure = () => ({
-	type: LOGIN_FAILURE
-})
-
-export const logoutAction = () => ({
-	type: LOGOUT
-})
-
-export const logout = () => (dispatch) => {
-	try {
-		localStorage.username = "";
-		localStorage.pw = "";
-	} catch(e){ console.error(e) }
-	dispatch(logoutAction())
-}
-
-export const loginPrompt = (prompt) => ({
-	type: PROMPT_LOGIN,
-	prompt
-})
-
-export const buyPrompt = (prompt) => ({
-	type: PROMPT_BUY,
-	prompt
-})
-
-export const swapPrompt = (prompt) => ({
-	type: PROMPT_SWAP,
-	prompt
-})
-
-export const faucetPrompt = (prompt) => ({
-	type: PROMPT_DAILY_FAUCET,
-	prompt
-})
-
-export const registerStarting = () => ({
-	type: REGISTER_START
-})
+// export const loginPrompt = (prompt) => ({
+// 	type: PROMPT_LOGIN,
+// 	prompt
+// })
+//
+// export const buyPrompt = (prompt) => ({
+// 	type: PROMPT_BUY,
+// 	prompt
+// })
+//
+// export const swapPrompt = (prompt) => ({
+// 	type: PROMPT_SWAP,
+// 	prompt
+// })
+//
+// export const faucetPrompt = (prompt) => ({
+// 	type: PROMPT_DAILY_FAUCET,
+// 	prompt
+// })
+//
+// export const registerStarting = () => ({
+// 	type: REGISTER_START
+// })
 
 // export const playlistNext = restrictions => (dispatch, getState) => {
 // 	let FilePlaylist = getState().FilePlaylist;
@@ -493,208 +486,208 @@ export const registerStarting = () => ({
 // 	}
 // }
 
-export const promptLogin = (onSuccess, onError) => (dispatch, getState) => {
-	dispatch(loginPrompt(true));
+// export const promptLogin = (onSuccess, onError) => (dispatch, getState) => {
+// 	dispatch(loginPrompt(true));
+//
+// 	var succeeded = false;
+// 	let checkLogin = setInterval(() => {
+// 		let state = getState();
+// 		if (state.User.isLoggedIn && !succeeded){
+// 			let shouldContinue = true;
+// 			for (var coin in state.Wallet) {
+// 				if (state.Wallet[coin].balance > 0 && (!state.Wallet[coin].usd || state.Wallet[coin].usd === 0)){
+// 					shouldContinue = false;
+// 				}
+// 			}
+// 			if (shouldContinue){
+// 				succeeded = true;
+// 				clearInterval(checkLogin);
+// 				onSuccess();
+// 			}
+// 		}
+// 	}, 1000)
+// }
 
-	var succeeded = false;
-	let checkLogin = setInterval(() => {
-		let state = getState();
-		if (state.User.isLoggedIn && !succeeded){
-			let shouldContinue = true;
-			for (var coin in state.Wallet) {
-				if (state.Wallet[coin].balance > 0 && (!state.Wallet[coin].usd || state.Wallet[coin].usd === 0)){
-					shouldContinue = false;
-				}
-			}
-			if (shouldContinue){
-				succeeded = true;
-				clearInterval(checkLogin);
-				onSuccess();
-			}
-		}
-	}, 1000)
-}
+// export const promptCurrencyBuy = (coin, fiat, fiat_amount, paymentAddresses, onSuccess, onError) => (dispatch, getState) => {
+// 	dispatch(buyPrompt(true));
+//
+// 	var succeeded = false;
+// 	let checkBuy = setInterval(() => {
+// 		let state = getState();
+// 		for (var coin in paymentAddresses){
+// 			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
+// 				succeeded = true;
+// 				clearInterval(checkBuy);
+// 				dispatch(buyPrompt(false));
+// 				onSuccess();
+// 			}
+// 		}
+// 	}, 1000)
+// }
 
-export const promptCurrencyBuy = (coin, fiat, fiat_amount, paymentAddresses, onSuccess, onError) => (dispatch, getState) => {
-	dispatch(buyPrompt(true));
+// export const promptSwap = (coin, fiat, fiat_amount, paymentAddresses, onSuccess, onError) => (dispatch, getState) => {
+// 	dispatch(swapPrompt(true));
+//
+// 	var succeeded = false;
+// 	let checkSwap = setInterval(() => {
+// 		let state = getState();
+// 		for (var coin in paymentAddresses){
+// 			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
+// 				succeeded = true;
+// 				clearInterval(checkSwap);
+// 				dispatch(swapPrompt(false));
+// 				onSuccess();
+// 			}
+// 		}
+// 	}, 1000)
+// }
 
-	var succeeded = false;
-	let checkBuy = setInterval(() => {
-		let state = getState();
-		for (var coin in paymentAddresses){
-			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
-				succeeded = true;
-				clearInterval(checkBuy);
-				dispatch(buyPrompt(false));
-				onSuccess();
-			}
-		}
-	}, 1000)
-}
+// export const promptTryFaucet = (Core, onSuccess, onError) => (dispatch, getState) => {
+// 	let intlState = getState();
+//
+// 	var succeeded = false;
+// 	var heardFromCheck = false;
+// 	let checkFaucet = setInterval(() => {
+// 		let state = getState();
+// 		if (state && state.Wallet && state.Wallet.florincoin){
+// 			if (state.Wallet.tryFaucet === false && !succeeded && heardFromCheck){
+// 				succeeded = true;
+// 				clearInterval(checkFaucet);
+// 				onSuccess();
+// 			}
+// 		}
+// 	}, 200)
+//
+// 	Core.Wallet.checkDailyFaucet(intlState.Wallet.florincoin.mainAddress, (canReceive) => {
+// 		if (canReceive){
+// 			dispatch(faucetPrompt(true));
+// 			heardFromCheck = true;
+// 		} else {
+// 			dispatch(setTryFaucet(false));
+// 			clearInterval(checkFaucet);
+// 			onSuccess();
+// 		}
+// 	}, (error) => {
+// 		dispatch(setTryFaucet(false));
+// 		onError(error);
+// 	})
+// }
 
-export const promptSwap = (coin, fiat, fiat_amount, paymentAddresses, onSuccess, onError) => (dispatch, getState) => {
-	dispatch(swapPrompt(true));
+// export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+// 	let retryTryPaymentSend = function(){
+// 		dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+// 	}
+// 	let processTransaction = function(addrList){
+// 		dispatch(sendPayment(Core, NotificationSystem, addrList, fiat, fiat_amount, type, paymentName, onSuccess, onError));
+// 	}
+//
+// 	let state = getState();
+//
+// 	if (state.User.isLoggedIn){
+// 		// @TODO: Re-add payment logic
+// 		// Removed by Sky Young 6/11/2018
+// 		// var canProcessWith = {};
+// 		// for (var acceptedCoin in paymentAddresses){
+// 		// 	var tmpFiat = fiat;
+//
+// 		// 	// If we are using the coin, then just check against the balance
+// 		// 	if (fiat === acceptedCoin)
+// 		// 		tmpFiat = "balance";
+//
+// 		// 	if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][tmpFiat] && state.Wallet[acceptedCoin][tmpFiat] >= fiat_amount){
+// 		// 		canProcessWith[acceptedCoin] = paymentAddresses[acceptedCoin];
+// 		// 	}
+// 		// }
+//
+// 		// if (Object.keys(canProcessWith).length > 0){
+// 		if (true) {
+// 			processTransaction({});
+// 		} else {
+// 			let swapFrom = [];
+// 			let swapTo = [];
+//
+// 			for (var coin in state.Wallet) {
+// 				console.log(state.Wallet[coin][fiat], fiat_amount);
+// 				if (state.Wallet[coin][fiat] >= fiat_amount){
+// 					swapFrom.push(coin);
+// 				}
+// 			}
+//
+// 			for (var coin in paymentAddresses) {
+// 				swapTo.push(coin)
+// 			}
+//
+// 			if (swapFrom.length > 0){
+// 				dispatch(promptSwap(coin, fiat, fiat_amount, paymentAddresses, retryTryPaymentSend, onError));
+// 			} else {
+// 				var faucetUSDValue = 0.005;
+//
+// 				var canProcessWithIfFaucet = {};
+//
+// 				for (var acceptedCoin in paymentAddresses){
+// 					if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][fiat]){
+// 						var currentBalance = state.Wallet[acceptedCoin][fiat];
+// 						if (parseFloat(currentBalance) + faucetUSDValue >= fiat_amount){
+// 							canProcessWithIfFaucet[acceptedCoin] = paymentAddresses[acceptedCoin];
+// 						}
+// 					}
+// 				}
+//
+// 				if (state.Wallet.tryFaucet && Object.keys(canProcessWithIfFaucet).length > 0){
+// 					dispatch(promptTryFaucet(Core, retryTryPaymentSend, onError))
+// 				} else {
+// 					dispatch(promptCurrencyBuy(coin, fiat, fiat_amount, paymentAddresses, retryTryPaymentSend, onError))
+// 				}
+// 			}
+// 		}
+// 	} else {
+// 		dispatch(promptLogin(retryTryPaymentSend, onError));
+// 	}
+// }
 
-	var succeeded = false;
-	let checkSwap = setInterval(() => {
-		let state = getState();
-		for (var coin in paymentAddresses){
-			if (state.Wallet[coin][fiat] >= fiat_amount && !succeeded){
-				succeeded = true;
-				clearInterval(checkSwap);
-				dispatch(swapPrompt(false));
-				onSuccess();
-			}
-		}
-	}, 1000)
-}
-
-export const promptTryFaucet = (Core, onSuccess, onError) => (dispatch, getState) => {
-	let intlState = getState();
-
-	var succeeded = false;
-	var heardFromCheck = false;
-	let checkFaucet = setInterval(() => {
-		let state = getState();
-		if (state && state.Wallet && state.Wallet.florincoin){
-			if (state.Wallet.tryFaucet === false && !succeeded && heardFromCheck){
-				succeeded = true;
-				clearInterval(checkFaucet);
-				onSuccess();
-			}
-		}
-	}, 200)
-
-	Core.Wallet.checkDailyFaucet(intlState.Wallet.florincoin.mainAddress, (canReceive) => {
-		if (canReceive){
-			dispatch(faucetPrompt(true));
-			heardFromCheck = true;
-		} else {
-			dispatch(setTryFaucet(false));
-			clearInterval(checkFaucet);
-			onSuccess();
-		}
-	}, (error) => {
-		dispatch(setTryFaucet(false));
-		onError(error);
-	})
-}
-
-export const tryPaymentSend = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
-	let retryTryPaymentSend = function(){
-		dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError));
-	}
-	let processTransaction = function(addrList){
-		dispatch(sendPayment(Core, NotificationSystem, addrList, fiat, fiat_amount, type, paymentName, onSuccess, onError));
-	}
-
-	let state = getState();
-
-	if (state.User.isLoggedIn){
-		// @TODO: Re-add payment logic
-		// Removed by Sky Young 6/11/2018
-		// var canProcessWith = {};
-		// for (var acceptedCoin in paymentAddresses){
-		// 	var tmpFiat = fiat;
-
-		// 	// If we are using the coin, then just check against the balance
-		// 	if (fiat === acceptedCoin)
-		// 		tmpFiat = "balance";
-
-		// 	if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][tmpFiat] && state.Wallet[acceptedCoin][tmpFiat] >= fiat_amount){
-		// 		canProcessWith[acceptedCoin] = paymentAddresses[acceptedCoin];
-		// 	}
-		// }
-
-		// if (Object.keys(canProcessWith).length > 0){
-		if (true) {
-			processTransaction({});
-		} else {
-			let swapFrom = [];
-			let swapTo = [];
-
-			for (var coin in state.Wallet) {
-				console.log(state.Wallet[coin][fiat], fiat_amount);
-				if (state.Wallet[coin][fiat] >= fiat_amount){
-					swapFrom.push(coin);
-				}
-			}
-
-			for (var coin in paymentAddresses) {
-				swapTo.push(coin)
-			}
-
-			if (swapFrom.length > 0){
-				dispatch(promptSwap(coin, fiat, fiat_amount, paymentAddresses, retryTryPaymentSend, onError));
-			} else {
-				var faucetUSDValue = 0.005;
-
-				var canProcessWithIfFaucet = {};
-
-				for (var acceptedCoin in paymentAddresses){
-					if (state.Wallet[acceptedCoin] && state.Wallet[acceptedCoin][fiat]){
-						var currentBalance = state.Wallet[acceptedCoin][fiat];
-						if (parseFloat(currentBalance) + faucetUSDValue >= fiat_amount){
-							canProcessWithIfFaucet[acceptedCoin] = paymentAddresses[acceptedCoin];
-						}
-					}
-				}
-
-				if (state.Wallet.tryFaucet && Object.keys(canProcessWithIfFaucet).length > 0){
-					dispatch(promptTryFaucet(Core, retryTryPaymentSend, onError))
-				} else {
-					dispatch(promptCurrencyBuy(coin, fiat, fiat_amount, paymentAddresses, retryTryPaymentSend, onError))
-				}
-			}
-		}
-	} else {
-		dispatch(promptLogin(retryTryPaymentSend, onError));
-	}
-}
-
-export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
-	console.log("sendPayment", paymentAddresses, fiat, fiat_amount, type, paymentName);
-	let state = getState();
-
-	onSuccess("Done!")
-
-	// Default send with lowest fee, this is just hardcoded for now...
-
-	// @TODO: Add this payment logic back
-	// Sky Young 6/11/2018
-	// let coin = "";
-
-	// if (paymentAddresses.florincoin){
-	// 	coin = "florincoin"
-	// } else if (paymentAddresses.litecoin){
-	// 	coin = "litecoin"
-	// } else if (paymentAddresses.bitcoin){
-	// 	coin = "bitcoin"
-	// } else if (paymentAddresses === {}){
-	// 	onError("not enough balance in selected wallets...");
-	// 	return;
-	// }
-
-	// if (!paymentAddresses[coin])
-	// 	return;
-
-	// Core.Wallet.sendPayment(coin, fiat, fiat_amount, paymentAddresses[coin], (success) => {
-	// 	if (NotificationSystem){
-	// 		let titleStr = "Payment";
-	// 		let msgStr = "Paid";
-
-	// 		if (type && type === "tip"){
-	// 			titleStr = "Tip";
-	// 			msgStr = "Tipped";
-	// 		}
-	// 		NotificationSystem.addNotification({title: titleStr + " Success!", message: msgStr + " $" + Core.util.createPriceString(fiat_amount) + " to " + paymentName, level: "success", position: "tr", autoDismiss: 2})
-	// 	}
-
-	// 	onSuccess(success)
-	// }, (error) => {
-	// 	onError(error);
-	// })
-}
+// export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fiat_amount, type, paymentName, onSuccess, onError) => (dispatch, getState) => {
+// 	console.log("sendPayment", paymentAddresses, fiat, fiat_amount, type, paymentName);
+// 	let state = getState();
+//
+// 	onSuccess("Done!")
+//
+// 	// Default send with lowest fee, this is just hardcoded for now...
+//
+// 	// @TODO: Add this payment logic back
+// 	// Sky Young 6/11/2018
+// 	// let coin = "";
+//
+// 	// if (paymentAddresses.florincoin){
+// 	// 	coin = "florincoin"
+// 	// } else if (paymentAddresses.litecoin){
+// 	// 	coin = "litecoin"
+// 	// } else if (paymentAddresses.bitcoin){
+// 	// 	coin = "bitcoin"
+// 	// } else if (paymentAddresses === {}){
+// 	// 	onError("not enough balance in selected wallets...");
+// 	// 	return;
+// 	// }
+//
+// 	// if (!paymentAddresses[coin])
+// 	// 	return;
+//
+// 	// Core.Wallet.sendPayment(coin, fiat, fiat_amount, paymentAddresses[coin], (success) => {
+// 	// 	if (NotificationSystem){
+// 	// 		let titleStr = "Payment";
+// 	// 		let msgStr = "Paid";
+//
+// 	// 		if (type && type === "tip"){
+// 	// 			titleStr = "Tip";
+// 	// 			msgStr = "Tipped";
+// 	// 		}
+// 	// 		NotificationSystem.addNotification({title: titleStr + " Success!", message: msgStr + " $" + Core.util.createPriceString(fiat_amount) + " to " + paymentName, level: "success", position: "tr", autoDismiss: 2})
+// 	// 	}
+//
+// 	// 	onSuccess(success)
+// 	// }, (error) => {
+// 	// 	onError(error);
+// 	// })
+// }
 
 // export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
 // 	let txid = artifact.getTXID();
@@ -871,10 +864,10 @@ export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fi
 // 	})
 // }
 
-export const setTryFaucet = (newValue) => ({
-	type: SET_TRY_FAUCET,
-	tryFaucet: newValue
-})
+// export const setTryFaucet = (newValue) => ({
+// 	type: SET_TRY_FAUCET,
+// 	tryFaucet: newValue
+// })
 
 // export const tryDailyFaucet = (Core, recaptcha, onSuccess, onError) => dispatch => {
 // 	Core.Wallet.tryDailyFaucet(Core.Wallet.getMainAddress('florincoin'), recaptcha, function(success){

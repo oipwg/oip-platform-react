@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import { tryPaymentSend } from '../actions'
+import { tryPaymentSend } from '../actions/Payment/thunks'
 
 class SendButton extends Component {
 	constructor(props) {

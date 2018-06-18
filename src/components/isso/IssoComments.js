@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import IssoComment from './IssoComment.js'
 
 import './isso.css';
-import {RANDOM_ARTIFACT_LIST} from "../../actions";
 
 class IssoComments extends Component {
 	constructor(props){

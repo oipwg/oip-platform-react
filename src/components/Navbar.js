@@ -7,7 +7,7 @@ import LoginButton from './LoginButton'
 import UploadButton from './UploadButton'
 import UserNav from './UserNav'
 
-import { logout } from '../actions/index.js'
+import { logout } from '../actions/User/thunks'
 
 import LogoImg from '../assets/img/oip-basic.svg';
 
