@@ -1,14 +1,26 @@
-//import Core from 'alexandria-core';
-
-export const SET_PAGE_TYPE = 'SET_PAGE_TYPE'
-
-export const SEARCH_FOR_ARTIFACTS = "SEARCH_FOR_ARTIFACTS";
-export const RANDOM_ARTIFACT_LIST = 'RANDOM_ARTIFACT_LIST'
+// --------------------------------------------------------------------------------
+// --------------------ARTIFACT LIST ----------------------------------------------
+// --------------------------------------------------------------------------------
 
 export const REQUEST_ARTIFACT_LIST = 'REQUEST_ARTIFACT_LIST'
 export const RECIEVE_ARTIFACT_LIST = 'RECIEVE_ARTIFACT_LIST'
 export const INVALIDATE_ARTIFACT_LIST = 'INVALIDATE_ARTIFACT_LIST'
 export const REQUEST_ARTIFACT_LIST_ERROR = 'REQUEST_ARTIFACT_LIST_ERROR'
+
+export const LATEST_CONTENT_LIST = 'LATEST_CONTENT_LIST'
+export const SEARCH_PAGE_LIST = 'SEARCH_PAGE_LIST'
+export const PUBLISHER_PAGE_LIST = "PUBLISHER_PAGE_LIST"
+export const RANDOM_ARTIFACT_LIST = 'RANDOM_ARTIFACT_LIST'
+
+// --------------------------------------------------------------------------------
+// -------------------CORE---------------------------------------------------------
+// --------------------------------------------------------------------------------
+
+export const SET_CORE_TO_STORE = 'SET_CORE_TO_STORE'
+
+// --------------------------------------------------------------------------------
+// -------------------CURRENT ARTIFACT---------------------------------------------
+// --------------------------------------------------------------------------------
 
 export const REQUEST_CURRENT_ARTIFACT = 'REQUEST_CURRENT_ARTIFACT'
 export const RECIEVE_CURRENT_ARTIFACT = 'RECIEVE_CURRENT_ARTIFACT'
@@ -17,57 +29,101 @@ export const REQUEST_CURRENT_ARTIFACT_ERROR = 'REQUEST_CURRENT_ARTIFACT_ERROR'
 export const SET_COMMENTS = 'SET_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 
-export const SET_ACTIVE_FILE_IN_PLAYLIST = 'SET_ACTIVE_FILE_IN_PLAYLIST'
-export const SET_FILE_PLAYLIST = 'SET_FILE_PLAYLIST'
+// --------------------------------------------------------------------------------
+// -------------------FILE PLAYLIST------------------------------------------------
+// --------------------------------------------------------------------------------
+
 export const BUY_FILE = 'BUY_FILE'
-export const PAY_FOR_FILE = 'PAY_FOR_FILE'
-export const PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS'
-export const PAYMENT_ERROR = 'PAYMENT_ERROR'
-export const BUY_IN_PROGRESS = 'BUY_IN_PROGRESS'
-export const BUY_ERROR = 'BUY_ERROR'
-export const CLEAR_PAY_PROGRESS_ERROR = 'CLEAR_PAY_PROGRESS_ERROR'
-export const ADD_FILE_TO_PLAYLIST = 'ADD_FILE_TO_PLAYLIST'
-export const PLAYLIST_SKIP_BACK = 'PLAYLIST_SKIP_BACK'
-export const PLAYLIST_NEXT = 'PLAYLIST_NEXT'
-export const PLAYLIST_PAUSE = 'PLAYLIST_PAUSE'
-export const PLAYLIST_PLAY = 'PLAYLIST_PLAY'
 export const UPDATE_CURRENT_TIME = 'UPDATE_CURRENT_TIME'
 export const UPDATE_IS_PLAYING = 'UPDATE_IS_PLAYING'
 export const UPDATE_IS_PLAYABLE = 'UPDATE_IS_PLAYABLE'
 export const UPDATE_IS_SEEKABLE = 'UPDATE_IS_SEEKABLE'
 export const UPDATE_DURATION = 'UPDATE_DURATION'
+export const PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS'
+export const PAYMENT_ERROR = 'PAYMENT_ERROR'
+export const CLEAR_PAY_PROGRESS_ERROR = 'CLEAR_PAY_PROGRESS_ERROR'
+export const SET_ACTIVE_FILE_IN_PLAYLIST = 'SET_ACTIVE_FILE_IN_PLAYLIST'
+export const BUY_ERROR = 'BUY_ERROR'
+export const BUY_IN_PROGRESS = 'BUY_IN_PROGRESS'
+export const ADD_FILE_TO_PLAYLIST = 'ADD_FILE_TO_PLAYLIST'
+export const PAY_FOR_FILE = 'PAY_FOR_FILE'
+export const PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS'
+export const SET_FILE_PLAYLIST = 'SET_FILE_PLAYLIST'
 
-export const UPDATE_WALLET = 'UPDATE_WALLET'
-export const UPDATE_USD = 'UPDATE_USD'
-export const UPDATE_BALANCE = 'UPDATE_BALANCE'
-export const UPDATE_ADDRESSES = 'UPDATE_ADDRESSES'
-export const UPDATE_COIN = 'UPDATE_COIN'
+// --------------------------------------------------------------------------------
+// -----------------NOTIFICATION SYSTEM--------------------------------------------
+// --------------------------------------------------------------------------------
+
+export const SET_NOTIFICATION_SYS = "SET_NOTIFICATION_SYS"
+
+// --------------------------------------------------------------------------------
+// -------------------PIWIK--------------------------------------------------------
+// --------------------------------------------------------------------------------
+
+export const SET_PIWIK = "SET_PIWKIK"
+
+// --------------------------------------------------------------------------------
+// ------------------PUBLISHER PAGE------------------------------------------------
+// --------------------------------------------------------------------------------
+
+export const SET_PUBLISHER_PAGE_PUBLISHER = "SET_PUBLISHER_PAGE_PUBLISHER"
+
+// --------------------------------------------------------------------------------
+// ------------------USER----------------------------------------------------------
+// --------------------------------------------------------------------------------
+
+export const LOGIN_FETCHING = 'LOGIN_FETCHING'
+export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGOUT = 'LOGOUT'
+export const PROMPT_LOGIN = 'PROMPT_LOGIN'
+export const REGISTER_START = 'REGISTER_START'
+export const REGISTER_ERROR = 'REGISTER_ERROR'
+
+// --------------------------------------------------------------------------------
+// -------------VOLUME CONTROLS----------------------------------------------------
+// --------------------------------------------------------------------------------
 
 export const CHANGE_VOLUME = 'CHANGE_VOLUME'
 export const CHANGE_MUTE = 'CHANGE_MUTE'
 
-export const LATEST_CONTENT_LIST = 'LATEST_CONTENT_LIST'
-export const SEARCH_PAGE_LIST = 'SEARCH_PAGE_LIST'
+// --------------------------------------------------------------------------------
+// ---------------WALLET-----------------------------------------------------------
+// --------------------------------------------------------------------------------
 
-export const LOGIN_FETCHING = 'LOGIN_FETCHING'
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const LOGIN_FAILURE = 'LOGIN_FAILURE'
-export const LOGOUT = 'LOGOUT'
-export const PROMPT_LOGIN = 'PROMPT_LOGIN'
+export const UPDATE_BALANCE = 'UPDATE_BALANCE'
+export const UPDATE_ADDRESSES = 'UPDATE_ADDRESSES'
+export const UPDATE_USD = 'UPDATE_USD'
 export const PROMPT_SWAP = 'PROMPT_SWAP'
 export const PROMPT_BUY = 'PROMPT_BUY'
 export const PROMPT_DAILY_FAUCET = 'PROMPT_DAILY_FAUCET'
 export const SET_TRY_FAUCET = 'SET_TRY_FAUCET'
-export const REGISTER_START = 'REGISTER_START'
-export const REGISTER_ERROR = 'REGISTER_ERROR'
+export const UPDATE_WALLET = 'UPDATE_WALLET'
 
+// --------------------------------------------------------------------------------
+// --------------MISC--------------------------------------------------------------
+// --------------------------------------------------------------------------------
+
+export const PLAYLIST_SKIP_BACK = 'PLAYLIST_SKIP_BACK'
+export const PLAYLIST_NEXT = 'PLAYLIST_NEXT'
+export const PLAYLIST_PAUSE = 'PLAYLIST_PAUSE'
+export const PLAYLIST_PLAY = 'PLAYLIST_PLAY'
 export const PAUSED = 'PAUSED'
 
-export const SET_CORE_TO_STORE = 'SET_CORE_TO_STORE'
-export const SET_NOTIFICATION_SYS = "SET_NOTIFICATION_SYS"
-export const SET_PUBLISHER_PAGE_PUBLISHER = "SET_PUBLISHER_PAGE_PUBLISHER"
-export const PUBLISHER_PAGE_LIST = "PUBLISHER_PAGE_LIST"
-export const SET_PIWIK = "SET_PIWKIK"
+export const SET_PAGE_TYPE = 'SET_PAGE_TYPE'
+export const SEARCH_FOR_ARTIFACTS = "SEARCH_FOR_ARTIFACTS";
+export const UPDATE_COIN = 'UPDATE_COIN'
+
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+
+
+
+
+
+
+
 
 export const setPiwik = (piwik) => ({
 	type: SET_PIWIK,
