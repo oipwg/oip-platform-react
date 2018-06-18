@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import ContentPage from './ContentPage'
 
 import {
-    selectCurrentArtifact,
     RANDOM_ARTIFACT_LIST,
     tipFunc,
     addComment,
@@ -22,6 +21,7 @@ import {
 } from '../actions'
 
 import {fetchArtifactList} from "../actions/ArtifactLists/thunks";
+import {selectCurrentArtifact} from "../actions/CurrentArtifact/thunks";
 
 class ContentPageWrapper extends Component {
     constructor(props) {
