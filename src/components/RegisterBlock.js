@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { register } from '../actions';
+import { register } from '../actions/User/thunks';
 
 import validator from 'validator';
 

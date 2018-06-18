@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Modal, ModalBody } from 'reactstrap';
 
-import {setTryFaucet, faucetPrompt} from '../actions';
+import {setTryFaucet, faucetPrompt} from '../actions/Wallet/thunks';
 
 import DailyFaucetBlock from './DailyFaucetBlock.js';
 import {connect} from "react-redux";

@@ -825,65 +825,65 @@ export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem
 // 	})
 // }
 
-export const login = (Core, identifier, password) => dispatch => {
-	dispatch(loginFetching());
+// export const login = (Core, identifier, password) => dispatch => {
+// 	dispatch(loginFetching());
+//
+// 	Core.User.Login(identifier, password, (publisher) => {
+// 		// On Success
+// 		dispatch(loginSuccess(publisher));
+// 	}, (error) => {
+// 		// On Error
+// 		dispatch(loginFailure());
+// 	})
+// }
 
-	Core.User.Login(identifier, password, (publisher) => {
-		// On Success
-		dispatch(loginSuccess(publisher));
-	}, (error) => {
-		// On Error
-		dispatch(loginFailure());
-	})
-}
-
-export const register = (Core, username, email, password, recaptcha, onSuccess, onError) => (dispatch, getState) => {
-	dispatch(registerStarting());
-
-	Core.User.Register(email, password, function(wallet){
-		var state = getState();
-
-		let floAddress = "";
-		try {
-			floAddress = state.Wallet.florincoin.mainAddress;
-		} catch (e) {
-			console.error(e);
-		}
-
-		if (floAddress === ""){
-			onError("Error, cannot get FLo Address")
-			return;
-		}
-
-		Core.Wallet.tryOneTimeFaucet(floAddress, recaptcha, function(res, txinfo){
-			Core.Publisher.Register(username, floAddress, email, function(pub){
-				console.log(pub);
-				dispatch(loginSuccess(pub));
-				onSuccess();
-			}, function(error){
-				onError(error);
-			})
-		}, function(error){
-			onError(error);
-		})
-	}, function(error){
-		onError(error);
-	})
-}
+// export const register = (Core, username, email, password, recaptcha, onSuccess, onError) => (dispatch, getState) => {
+// 	dispatch(registerStarting());
+//
+// 	Core.User.Register(email, password, function(wallet){
+// 		var state = getState();
+//
+// 		let floAddress = "";
+// 		try {
+// 			floAddress = state.Wallet.florincoin.mainAddress;
+// 		} catch (e) {
+// 			console.error(e);
+// 		}
+//
+// 		if (floAddress === ""){
+// 			onError("Error, cannot get FLo Address")
+// 			return;
+// 		}
+//
+// 		Core.Wallet.tryOneTimeFaucet(floAddress, recaptcha, function(res, txinfo){
+// 			Core.Publisher.Register(username, floAddress, email, function(pub){
+// 				console.log(pub);
+// 				dispatch(loginSuccess(pub));
+// 				onSuccess();
+// 			}, function(error){
+// 				onError(error);
+// 			})
+// 		}, function(error){
+// 			onError(error);
+// 		})
+// 	}, function(error){
+// 		onError(error);
+// 	})
+// }
 
 export const setTryFaucet = (newValue) => ({
 	type: SET_TRY_FAUCET,
 	tryFaucet: newValue
 })
 
-export const tryDailyFaucet = (Core, recaptcha, onSuccess, onError) => dispatch => {
-	Core.Wallet.tryDailyFaucet(Core.Wallet.getMainAddress('florincoin'), recaptcha, function(success){
-		console.log(success);
-		dispatch(setTryFaucet(false));
-		onSuccess();
-	}, function(error){
-		console.error(error);
-		dispatch(setTryFaucet(false));
-		onError(error);
-	})
-}
+// export const tryDailyFaucet = (Core, recaptcha, onSuccess, onError) => dispatch => {
+// 	Core.Wallet.tryDailyFaucet(Core.Wallet.getMainAddress('florincoin'), recaptcha, function(success){
+// 		console.log(success);
+// 		dispatch(setTryFaucet(false));
+// 		onSuccess();
+// 	}, function(error){
+// 		console.error(error);
+// 		dispatch(setTryFaucet(false));
+// 		onError(error);
+// 	})
+// }

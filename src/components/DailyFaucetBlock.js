@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { tryDailyFaucet } from '../actions';
+import { tryDailyFaucet } from '../actions/Wallet/thunks';
 import {connect} from "react-redux";
 
 class DailyFaucetBlock extends Component {

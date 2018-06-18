@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import validator from 'validator';
 
 import ButtonCheckbox from './ButtonCheckbox.js';
-import { login } from '../actions';
+
+// @TODO remove login and pass it down through Props. This component should not be hooked up to Redux
+import {login} from "../actions/User/thunks";
 
 const STATUS = { 
 	NO_INPUT: "NO_INPUT",
