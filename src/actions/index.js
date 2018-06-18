@@ -114,25 +114,19 @@ export const UPDATE_COIN = 'UPDATE_COIN'
 // --------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-export const setPiwik = (piwik) => ({
-	type: SET_PIWIK,
-	piwik
-})
-
-export const fetchPublisherPage = (list_id, pubId) => (dispatch, getState) => {
-	let state = getState();
-	state.Core.Core.Index.getPublisher(pubId, (success) => {
-		console.log("getPublisher Success", success)
-		dispatch(fetchArtifactList(list_id, { "search-for": success.address}))
-		dispatch(setPublisherPagePublisher(success))
-	}, (error) => {console.error("getPublisher error:", error)})
-}
+// export const setPiwik = (piwik) => ({
+// 	type: SET_PIWIK,
+// 	piwik
+// })
+//
+// export const fetchPublisherPage = (list_id, pubId) => (dispatch, getState) => {
+// 	let state = getState();
+// 	state.Core.Core.Index.getPublisher(pubId, (success) => {
+// 		console.log("getPublisher Success", success)
+// 		dispatch(fetchArtifactList(list_id, { "search-for": success.address}))
+// 		dispatch(setPublisherPagePublisher(success))
+// 	}, (error) => {console.error("getPublisher error:", error)})
+// }
 
 export const setPublisherPagePublisher = (publisher) => ({
 	type: SET_PUBLISHER_PAGE_PUBLISHER,

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { fetchPublisherPage, PUBLISHER_PAGE_LIST } from '../actions'
+import { fetchPublisherPage} from "../actions/PublisherPage/thunks";
+import { PUBLISHER_PAGE_LIST} from "../actions/ArtifactLists/actions";
 
 import ContentCardsContainer from './ContentCardsContainer.js'
 import PublisherIcon from './PublisherIcon.js';
