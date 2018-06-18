@@ -6,7 +6,6 @@ import ContentPage from './ContentPage'
 import {
     RANDOM_ARTIFACT_LIST,
     tipFunc,
-    buyFileFunc,
     updateFileCurrentTime,
     isPlayableFile,
     isSeekableFile,
@@ -18,7 +17,7 @@ import {
 
 import {fetchArtifactList} from "../actions/ArtifactLists/thunks";
 import {selectCurrentArtifact, addComment} from "../actions/CurrentArtifact/thunks";
-import {playlistNext, setCurrentFile, payForFileFunc} from "../actions/FilePlaylist/thunks";
+import {playlistNext, setCurrentFile, payForFileFunc, buyFileFunc} from "../actions/FilePlaylist/thunks";
 
 class ContentPageWrapper extends Component {
     constructor(props) {

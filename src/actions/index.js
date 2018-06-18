@@ -760,49 +760,49 @@ export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem
 // 	}
 // }
 
-export const buyFileFunc = (artifact, file, onSuccess, onError) => (dispatch, getState) => {
-	let state = getState();
-
-	let txid = artifact.getTXID();
-	let publisher = artifact.getMainAddress();
-	let publisherName = artifact.getPublisherName();
-	let files = artifact.getFiles();
-
-	let paymentAmount = file.getSuggestedBuyCost() / artifact.getPaymentScale();
-
-	let paymentAddresses = artifact.getPaymentAddresses();
-
-	let filei = 0;
-
-	for (var i = 0; i < files.length; i++) {
-		if (files[i].getFilename() === file.getFilename() && files[i].getDisplayName() === file.getDisplayName()){
-			filei = i;
-			if (file.getSuggestedBuyCost() && paymentAmount > 0){
-				// If file has cost
-				dispatch(buyInProgress(txid));
-				dispatch(tryPaymentSend(state.Core.Core, state.NotificationSystem.NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
-					dispatch(setActiveFileInPlaylist(txid + "|" + filei));
-					dispatch(buyFile(txid + "|" + filei));
-
-					onSuccess(success);
-				}, (error) => {
-					dispatch(buyError(txid));
-					onError(error);
-				}));
-			} else {
-				// If it is free
-				dispatch(setActiveFileInPlaylist(txid + "|" + filei));
-				dispatch(buyFile(txid + "|" + filei));
-			}
-
-			try {
-				state.Piwik.piwik.push(["trackContentInteraction", "buyFile", publisher, txid, filei]);
-			} catch (e) {
-				//console.log(e)
-			}
-		}
-	}
-}
+// export const buyFileFunc = (artifact, file, onSuccess, onError) => (dispatch, getState) => {
+// 	let state = getState();
+//
+// 	let txid = artifact.getTXID();
+// 	let publisher = artifact.getMainAddress();
+// 	let publisherName = artifact.getPublisherName();
+// 	let files = artifact.getFiles();
+//
+// 	let paymentAmount = file.getSuggestedBuyCost() / artifact.getPaymentScale();
+//
+// 	let paymentAddresses = artifact.getPaymentAddresses();
+//
+// 	let filei = 0;
+//
+// 	for (var i = 0; i < files.length; i++) {
+// 		if (files[i].getFilename() === file.getFilename() && files[i].getDisplayName() === file.getDisplayName()){
+// 			filei = i;
+// 			if (file.getSuggestedBuyCost() && paymentAmount > 0){
+// 				// If file has cost
+// 				dispatch(buyInProgress(txid));
+// 				dispatch(tryPaymentSend(state.Core.Core, state.NotificationSystem.NotificationSystem, paymentAddresses, "usd", paymentAmount, "pay", publisherName, (success) => {
+// 					dispatch(setActiveFileInPlaylist(txid + "|" + filei));
+// 					dispatch(buyFile(txid + "|" + filei));
+//
+// 					onSuccess(success);
+// 				}, (error) => {
+// 					dispatch(buyError(txid));
+// 					onError(error);
+// 				}));
+// 			} else {
+// 				// If it is free
+// 				dispatch(setActiveFileInPlaylist(txid + "|" + filei));
+// 				dispatch(buyFile(txid + "|" + filei));
+// 			}
+//
+// 			try {
+// 				state.Piwik.piwik.push(["trackContentInteraction", "buyFile", publisher, txid, filei]);
+// 			} catch (e) {
+// 				//console.log(e)
+// 			}
+// 		}
+// 	}
+// }
 
 export const setupWalletEvents = (Core) => dispatch => {
 	Core.Wallet.on("bal-update", function(newState){
