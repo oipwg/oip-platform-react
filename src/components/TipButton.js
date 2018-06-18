@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
-
-import { tipFunc } from '../actions'
 
 class TipButton extends Component {
 	constructor(props){
@@ -32,8 +29,8 @@ class TipButton extends Component {
 			else if (this.props.amount)
 				amount = this.props.amount
 
-			//WHAT TO DO WITH THIS DISPATCH??? PASS IN PROPS?
 
+            //@TODO Pass in tipFunc from redux
 			// this.props.store.dispatch(tipFunc(this.props.Core, this.props.artifact, amount, this.props.piwik, this.props.NotificationSystem, function(success){
 			// 	_this.setState({tipping: false, tipSuccess: true, tipError: false});
 			// }, function(error){
@@ -43,7 +40,7 @@ class TipButton extends Component {
 		}
 	}
 	render() {
-		//WHAT TO DO WITH THIS??? PASS IN PROPS?
+
 		// let text = this.props.amount ? "$" + this.props.Core.util.createPriceString(this.props.amount) : "Other";
 		//temporary
 		let text = "Other";

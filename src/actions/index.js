@@ -696,25 +696,25 @@ export const sendPayment = (Core, NotificationSystem, paymentAddresses, fiat, fi
 	// })
 }
 
-export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
-	let txid = artifact.getTXID();
-	let publisher = artifact.getMainAddress();
-	let publisherName = artifact.getPublisherName();
-
-	let paymentAddresses = artifact.getPaymentAddresses();
-
-	let id = txid;
-
-	if (paymentAmount > 0){
-		dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, "usd", paymentAmount, "tip", publisherName, onSuccess, onError));
-	}
-
-	try {
-		piwik.push(["trackContentInteraction", "viewFile", publisher, txid]);
-	} catch (e) {
-		//console.log(e);
-	}
-}
+// export const tipFunc = (Core, artifact, paymentAmount, piwik, NotificationSystem, onSuccess, onError) => dispatch => {
+// 	let txid = artifact.getTXID();
+// 	let publisher = artifact.getMainAddress();
+// 	let publisherName = artifact.getPublisherName();
+//
+// 	let paymentAddresses = artifact.getPaymentAddresses();
+//
+// 	let id = txid;
+//
+// 	if (paymentAmount > 0){
+// 		dispatch(tryPaymentSend(Core, NotificationSystem, paymentAddresses, "usd", paymentAmount, "tip", publisherName, onSuccess, onError));
+// 	}
+//
+// 	try {
+// 		piwik.push(["trackContentInteraction", "viewFile", publisher, txid]);
+// 	} catch (e) {
+// 		//console.log(e);
+// 	}
+// }
 
 // export const payForFileFunc = (artifact, file, onSuccess, onError) => (dispatch, getState) => {
 // 	let state = getState();

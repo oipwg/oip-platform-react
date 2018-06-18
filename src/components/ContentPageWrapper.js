@@ -3,15 +3,12 @@ import { connect } from 'react-redux';
 
 import ContentPage from './ContentPage'
 
-import {
-    tipFunc,
-} from '../actions'
-
+import {tipFunc, payForFileFunc, buyFileFunc} from '../actions/Payment/thunks'
 import {setVolume, setMute} from "../actions/VolumeControls/actions";
 import {RANDOM_ARTIFACT_LIST} from "../actions/ArtifactLists/actions";
 import {fetchArtifactList} from "../actions/ArtifactLists/thunks";
 import {selectCurrentArtifact, addComment} from "../actions/CurrentArtifact/thunks";
-import {playlistNext, setCurrentFile, payForFileFunc, buyFileFunc} from "../actions/FilePlaylist/thunks";
+import {playlistNext, setCurrentFile} from "../actions/FilePlaylist/thunks";
 import {updateFileCurrentTime, isPlayingFile, isPlayableFile, isSeekableFile, updateFileDuration} from "../actions/FilePlaylist/actions";
 
 class ContentPageWrapper extends Component {
