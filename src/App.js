@@ -8,7 +8,9 @@ import {
 } from 'react-router-dom'
 
 import { connect } from 'react-redux';
-import { setupWalletEvents, login, setNotificationSys } from './actions';
+import { setupWalletEvents, login } from './actions';
+
+import {setNotificationSystem} from "./actions/NotificationSystem/actions";
 
 import { CSSTransitionGroup } from 'react-transition-group'
 
@@ -59,7 +61,7 @@ class App extends Component {
 
 	componentDidMount(){
 		this.props.setupWalletEvents(this.props.Core);
-        this.props.setNotificationSys(this.refs.NotificationSystem);
+        this.props.setNotificationSystem(this.refs.NotificationSystem);
 
 		try {
 			if (localStorage.username && localStorage.pw){
@@ -137,7 +139,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     login,
 	setupWalletEvents,
-    setNotificationSys
+    setNotificationSystem
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

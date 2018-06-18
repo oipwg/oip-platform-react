@@ -128,21 +128,22 @@ export const UPDATE_COIN = 'UPDATE_COIN'
 // 	}, (error) => {console.error("getPublisher error:", error)})
 // }
 
-export const setPublisherPagePublisher = (publisher) => ({
-	type: SET_PUBLISHER_PAGE_PUBLISHER,
-	publisher
-})
+// export const setPublisherPagePublisher = (publisher) => ({
+// 	type: SET_PUBLISHER_PAGE_PUBLISHER,
+// 	publisher
+// })
+//
+// export const setNotificationSys = (notificationSystem) => ({
+// 	type: SET_NOTIFICATION_SYS,
+// 	notificationSystem
+// })
 
-export const setNotificationSys = (notificationSystem) => ({
-	type: SET_NOTIFICATION_SYS,
-	notificationSystem
-})
+// export const setCoreToStore = Core => ({
+// 	type: SET_CORE_TO_STORE,
+// 	Core
+// })
 
-export const setCoreToStore = Core => ({
-	type: SET_CORE_TO_STORE,
-	Core
-})
-
+//NOT USED / MISC
 export const setPageType = pg_type => ({
 	type: SET_PAGE_TYPE,
 	pg_type

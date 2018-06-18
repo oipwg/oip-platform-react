@@ -1,4 +1,4 @@
-import * as actions from '../actions/index.js'
+import * as actions from '../actions/PublisherPage/actions'
 
 export const PublisherPage = (state = {publisher: {}}, action) => {
     switch (action.type) {
