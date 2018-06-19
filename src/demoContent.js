@@ -14,7 +14,7 @@ var demoContent = [
                     "genre":"Country & Folk",
                     "tags":[  
                         "knoxville",
-                        " tennessee",
+                        "tennessee",
                         "UTK",
                         "folk",
                         "BrockHouse"

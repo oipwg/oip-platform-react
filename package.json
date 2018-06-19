@@ -86,7 +86,9 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "preins": "mv node_modules/oip-js/ oip-js/",
-    "postins": "mv oip-js/ node_modules/oip-js/"
+    "postins": "mv oip-js/ node_modules/oip-js/",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "build-storybook": "build-storybook"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -129,6 +131,10 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.7",
+    "@storybook/addon-links": "^3.4.7",
+    "@storybook/addons": "^3.4.7",
+    "@storybook/react": "^3.4.7",
     "babel-preset-stage-2": "^6.24.1"
   }
 }
