@@ -1,12 +1,21 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+// import Navbar from '../src/components/Navbar';
+// import { Provider } from 'react-redux';
+// import { store } from '../src/index.js';
+import LoginButton from '../src/components/LoginButton';
+import { MemoryRouter } from 'react-router-dom';
 
 storiesOf('Button', module)
-    .add('with text', () => (
-        <button onClick={action('clicked')}>Hello Button</button>
+    .addDecorator(story => (
+        <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
     ))
-    .add('with some emoji', () => (
-        <button onClick={action('clicked')}><span role="img" aria-label="so cool">😀 😎 👍 💯</span></button>
-    ));
+    .add('Login', () => (
+        <LoginButton onClick={action('clicked')} />
+    ))
+
+// storiesOf("Navbar", module)
+//     .addDecorator(story => <Provider store={store}>{story()}</Provider>)
+//     .add("test", () => <Navbar />)
 

@@ -36,3 +36,5 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
+
+module.exports = { store };

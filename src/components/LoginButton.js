@@ -7,7 +7,6 @@ const LoginButton = () => {
             <button type="button" className="login-button btn btn-outline-dark">Login</button>
         </Link>
         )
-
 }
 
 export default LoginButton
