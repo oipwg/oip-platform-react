@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom'
+import PropTypes from 'prop-types';
 
 import NavbarSearchBar from './NavbarSearchBar'
 import LoginButton from './LoginButton'
@@ -93,6 +94,12 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = {
     logout
+}
+
+Navbar.propTypes = {
+    User: PropTypes.object,
+    Wallet: PropTypes.object,
+    logout: PropTypes.func
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
