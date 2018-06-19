@@ -132,10 +132,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.4.7",
-    "@storybook/addon-links": "^3.4.7",
-    "@storybook/addons": "^3.4.7",
-    "@storybook/react": "^3.4.7",
+    "@storybook/react": "4.0.0-alpha.1",
     "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "html-webpack-plugin": "^3.2.0",
