@@ -5,12 +5,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './app.js',
+    entry: './src/index.js',
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title: 'OIP Tools',
-            template: "src/index.html"
+            title: 'oip-platform-react',
+            template: "public/index.html"
         })
     ],
     output: {
