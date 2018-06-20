@@ -47,10 +47,10 @@ class ContentInfo extends Component {
 					</div>
 				</div>
 				<ContentExtraInfo
-					Artifact={this.props.artifact}
-					ArtifactState={this.props.artifactState}
-					ActiveFile={this.props.activeFile}
-                    FilePlaylist={this.props.filePlaylist}
+					artifact={this.props.artifact}
+					artifactState={this.props.artifactState}
+					activeFile={this.props.activeFile}
+                    filePlaylist={this.props.filePlaylist}
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
                     isPlayingFile={this.props.isPlayingFile}

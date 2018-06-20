@@ -98,7 +98,6 @@ const mapDispatchToProps = {
     playlistNext,
     isPlayingFile,
     setCurrentFile
-
 }
 
 ContentPageWrapper.propTypes = {

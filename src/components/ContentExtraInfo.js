@@ -23,7 +23,7 @@ class ContentExtraInfo extends Component {
 		let niceTime, description, artifact;
 
 		if (this.props.Artifact) {
-			artifact = this.props.Artifact;
+			artifact = this.props.artifact;
 			niceTime = moment(artifact.getTimestamp() * 1000).calendar(null, {sameElse: "MMMM Do YYYY"});
 			description = artifact.getDescription();
 		}
@@ -31,19 +31,19 @@ class ContentExtraInfo extends Component {
 
 		return (
 			<div>
-				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.props.ArtifactState.isFetching ? "loading..." : niceTime}</strong></p>
+				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.props.artifactState.isFetching ? "loading..." : niceTime}</strong></p>
 				<p style={this.state.extendedView ?
 					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"}
 					:
 					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap", maxHeight:"150px", textOverflow: "ellipsis", overflow: "hidden"}}
 				>
-					<Linkify>{this.props.ArtifactState.isFetching ? "loading..." : description}</Linkify>
+					<Linkify>{this.props.artifactState.isFetching ? "loading..." : description}</Linkify>
 				</p>
 				<FilesTable
-					Artifact={this.props.Artifact}
-					ActiveFile={this.props.ActiveFile}
+					artifact={this.props.artifact}
+					activeFile={this.props.activeFile}
 					extendedView={this.state.extendedView}
-					FilePlaylist={this.props.FilePlaylist}
+					FilePlaylist={this.props.filePlaylist}
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
                     isPlayingFile={this.props.isPlayingFile}
