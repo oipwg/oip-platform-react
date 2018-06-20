@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import ContentPage from './ContentPage'
 
@@ -31,21 +32,21 @@ class ContentPageWrapper extends Component {
 
     render() {
         let artifactTXID = "";
-        if (this.props.Artifact) {
-            artifactTXID = this.props.Artifact.txid;
+        if (this.props.artifact) {
+            artifactTXID = this.props.artifact.txid;
         }
         return (
             <div>
                 <ContentPage
-                    Artifact={this.props.Artifact}
-                    ArtifactState={this.props.ArtifactState}
-                    ArtifactList={this.props.ArtifactList}
-                    ActiveFile={this.props.ActiveFile}
+                    artifact={this.props.artifact}
+                    artifactState={this.props.artifactState}
+                    artifactList={this.props.artifactList}
+                    activeFile={this.props.activeFile}
                     artifactTXID={artifactTXID}
                     addComment={this.props.addComment}
                     // For AudioContainer
-                    VolumeControls={this.props.VolumeControls}
-                    FilePlaylist={this.props.FilePlaylist}
+                    volumeControls={this.props.volumeControls}
+                    filePlaylist={this.props.filePlaylist}
                     active={this.props.active}
                     // Dispatch function for AudioContainer
                     updateFileCurrentTime={this.props.updateFileCurrentTime}
@@ -71,12 +72,12 @@ class ContentPageWrapper extends Component {
 
 function mapStateToProps(state) {
     return {
-        Artifact: state.CurrentArtifact.artifact,
-        ArtifactState: state.CurrentArtifact,
-        ArtifactList: state.ArtifactLists[RANDOM_ARTIFACT_LIST],
-        ActiveFile: state.FilePlaylist[state.FilePlaylist.active],
-        VolumeControls: state.VolumeControls,
-        FilePlaylist: state.FilePlaylist,
+        artifact: state.CurrentArtifact.artifact,
+        artifactState: state.CurrentArtifact,
+        artifactList: state.ArtifactLists[RANDOM_ARTIFACT_LIST],
+        activeFile: state.FilePlaylist[state.FilePlaylist.active],
+        volumeControls: state.VolumeControls,
+        filePlaylist: state.FilePlaylist,
         active: state.FilePlaylist.active
     }
 }
@@ -99,6 +100,31 @@ const mapDispatchToProps = {
     isPlayingFile,
     setCurrentFile
 
+}
+
+ContentPageWrapper.propTypes = {
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    artifactList: PropTypes.object,
+    activeFile: PropTypes.object,
+    volumeControls: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    active: PropTypes.object,
+    selectCurrentArtifact: PropTypes.func,
+    fetchArtifactList: PropTypes.func,
+    tipFunc: PropTypes.func,
+    addComment: PropTypes.func,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func,
+    updateFileCurrentTime: PropTypes.func,
+    isPlayableFile: PropTypes.func,
+    isSeekableFile: PropTypes.func,
+    updateFileDuration: PropTypes.func,
+    setVolume: PropTypes.func,
+    setMute: PropTypes.func,
+    playlistNext: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    setCurrentFile: PropTypes.func,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentPageWrapper)
