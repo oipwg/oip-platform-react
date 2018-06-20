@@ -4,7 +4,8 @@ import ContentCard from './ContentCard.js'
 
 const ContentCardsContainer = (props) => {
     let contentLoaded = (props.content !== undefined)
-    return <div className="content-cards-container container mt-4">
+    return <div className="content-cards-container container-fluid mt-4">
+        <div className="margin-container mx-5">
             <div className="content-cards-container-header mb-4 ">
                 <span className="content-cards-container-title">
                     {props.title}
@@ -25,6 +26,7 @@ const ContentCardsContainer = (props) => {
                     />
                 })) : (null) }
             </div>
+        </div>
     </div>
 };
 
