@@ -34,7 +34,7 @@ class ContentPage extends Component {
                     buyFileFunc={this.props.buyFileFunc}
                 />
                 <div className="container-fluid content-page">
-                    <div className="margin-container" style={{marginLeft: "7%", marginRight: "7%"}}>
+                    <div className="margin-container" style={{marginLeft: "5%", marginRight: "5%"}}>
                         <div className="row" style={{marginTop: "30px"}}>
                             <div id="media-info" className="content-info col-12 col-md-9" >
                                 <ContentInfo
