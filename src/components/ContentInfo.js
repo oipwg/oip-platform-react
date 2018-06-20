@@ -62,10 +62,10 @@ class ContentInfo extends Component {
 }
 
 ContentInfo.propTypes = {
-    artifact: PropTypes.object.isRequired,
-    artifactState: PropTypes.object.isRequired,
-    activeFile: PropTypes.object.isRequired,
-    filePlaylist: PropTypes.object.isRequired,
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    activeFile: PropTypes.object,
+    filePlaylist: PropTypes.object,
     payForFileFunc: PropTypes.func,
     buyFileFunc: PropTypes.func,
     isPlayingFile: PropTypes.func,
