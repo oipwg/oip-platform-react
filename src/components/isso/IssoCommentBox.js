@@ -37,7 +37,7 @@ class IssoCommentBox extends Component {
 
 IssoCommentBox.propTypes = {
     addComment: PropTypes.func,
-    txid: PropTypes.number
+    txid: PropTypes.string
 }
 
 

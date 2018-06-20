@@ -46,7 +46,7 @@ class IssoComments extends Component {
 IssoComment.propTypes = {
     artifact: PropTypes.object,
     artifactState: PropTypes.object,
-    comments: PropTypes.string
+    comments: PropTypes.array
 }
 
 export default IssoComments;
