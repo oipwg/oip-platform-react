@@ -89,10 +89,6 @@ class FilesTable extends Component {
         return icon;
     }
 
-    handleListClick(artifact, file) {
-        (file.key !== this.props.activeFile.key) ? (this.props.setCurrentFile(artifact, file)) : (null)
-    }
-
 	render() {
 		let _this = this;
 		let files = this.getCurrentArtifactFiles();
@@ -128,7 +124,7 @@ class FilesTable extends Component {
 											/>
 										</td>
 									</tr>
-						})}
+                        })}
 					</tbody>
 				</table>
 			</div>
