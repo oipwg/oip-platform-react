@@ -53,7 +53,7 @@ class ContentPage extends Component {
                                         <IssoCommentBox  addComment={this.props.addComment} url={this.props.artifact.txid} />
                                         <IssoComments
                                             artifact={this.props.artifact}
-                                            ArtifactState={this.props.artifactState}
+                                            artifactState={this.props.artifactState}
                                             comments={this.props.artifactState.comments}
                                         />
                                     </div>

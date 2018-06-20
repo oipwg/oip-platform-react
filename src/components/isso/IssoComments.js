@@ -27,7 +27,7 @@ class IssoComments extends Component {
 		})
         return {
         	comments: comments,
-            txid: nextProps.Artifact.txid
+            txid: nextProps.artifact.txid
         }
     }
 

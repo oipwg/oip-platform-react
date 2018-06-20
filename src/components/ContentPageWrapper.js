@@ -108,7 +108,7 @@ ContentPageWrapper.propTypes = {
     activeFile: PropTypes.object,
     volumeControls: PropTypes.object,
     filePlaylist: PropTypes.object,
-    active: PropTypes.object,
+    active: PropTypes.string,
     selectCurrentArtifact: PropTypes.func,
     fetchArtifactList: PropTypes.func,
     tipFunc: PropTypes.func,
