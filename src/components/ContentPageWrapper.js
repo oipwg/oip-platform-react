@@ -61,7 +61,6 @@ class ContentPageWrapper extends Component {
                     // For Payment Buttons
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
-
                 />
             </div>
 
