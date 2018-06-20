@@ -32,9 +32,9 @@ class ContentPage extends Component {
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
                 />
-                <div className="container">
+                <div className="container content-page">
                     <div className="row" style={{marginTop: "30px"}}>
-                        <div id="media-info" className="col-12 col-md-9" >
+                        <div id="media-info" className="content-info col-12 col-md-9" >
                             <ContentInfo
                                 Artifact={this.props.Artifact}
                                 ArtifactState={this.props.ArtifactState}
@@ -63,6 +63,7 @@ class ContentPage extends Component {
                                 return <ContentCard
                                     key={i}
                                     artifact={content}
+                                    styleContentCard={"small"}
                                 />
                             })) : (null)}
                         </div>

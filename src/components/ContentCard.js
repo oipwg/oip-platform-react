@@ -20,9 +20,23 @@ const ContentCard = (props) => {
     let publisher = artifact.getMainAddress() || "";
     let txid = artifact.getTXID() || "";
     let duration = artifact.getDuration() || "";
+    let styleContentCard;
+
+    switch (props.styleContentCard) {
+        case "small":
+            styleContentCard = "card col"
+            break;
+        case "medium":
+            styleContentCard = "card col-"
+        case "large":
+            styleContentCard = "card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1"
+            break;
+        default:
+            styleContentCard = "card"
+    }
 
     return (
-                <div key={txid} className="card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1">
+                <div className={styleContentCard}>
                     <Link to={"/" + txid.substring(0,6) } onClick={scrollToTop} className="" title={title} >
                         <div className="card-img-top content-card-img">
                             <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
@@ -46,7 +60,8 @@ const ContentCard = (props) => {
 
 ContentCard.propTypes = {
     artifact: PropTypes.object.isRequired,
-    key: PropTypes.number
+    key: PropTypes.number,
+    styleContentCard: PropTypes.string
 }
 
 export default ContentCard;
