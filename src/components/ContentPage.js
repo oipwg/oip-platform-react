@@ -50,7 +50,7 @@ class ContentPage extends Component {
                                 <br />
                                 {(this.props.artifact && this.props.artifact.txid !== "") ?
                                     <div>
-                                        <IssoCommentBox  addComment={this.props.addComment} url={this.props.artifact.txid} />
+                                        <IssoCommentBox  addComment={this.props.addComment} txid={this.props.artifact.txid} />
                                         <IssoComments
                                             artifact={this.props.artifact}
                                             artifactState={this.props.artifactState}

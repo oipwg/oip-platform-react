@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class IssoCommentBox extends Component {
 	constructor(props){
@@ -17,7 +18,7 @@ class IssoCommentBox extends Component {
 	}
 	submitPost(){
 		if (this.state.comment !== ""){
-			this.props.addComment(this.props.url, this.state.comment);
+			this.props.addComment(this.props.txid, this.state.comment);
 			this.textarea.value = "";
 		}
 	}
@@ -33,5 +34,11 @@ class IssoCommentBox extends Component {
 		);
 	}
 }
+
+IssoCommentBox.propTypes = {
+    addComment: PropTypes.func,
+    txid: PropTypes.number
+}
+
 
 export default IssoCommentBox;
