@@ -16,13 +16,13 @@ const ContentCard = (props) => {
 		window.scrollTo(0, 0);
 	};
 
-    let title = artifact.getTitle();
-    let publisher = artifact.getMainAddress();
-    let txid = artifact.getTXID();
-    let duration = artifact.getDuration();
+    let title = artifact.getTitle() || "";
+    let publisher = artifact.getMainAddress() || "";
+    let txid = artifact.getTXID() || "";
+    let duration = artifact.getDuration() || "";
 
     return (
-                <div className="card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1">
+                <div key={txid} className="card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1">
                     <Link to={"/" + txid.substring(0,6) } onClick={scrollToTop} className="" title={title} >
                         <div className="card-img-top content-card-img">
                             <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
