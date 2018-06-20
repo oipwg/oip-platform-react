@@ -30,6 +30,7 @@ class PaymentButtons extends Component {
             payForFile(this.props.artifact, this.props.file.info);
 		} else {
             if (this.props.file.isPlaying) {
+                //@TODO refactor these functions for different use cases
                 // PAUSE
 				console.log("This File is playing, so lets pause it")
 				this.props.isPlayingFile(this.props.file.key, !this.props.file.isPlaying)

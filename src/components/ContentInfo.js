@@ -23,29 +23,27 @@ class ContentInfo extends Component {
 	}
 
 		return (
-			<div>
+			<div className="content-info-container">
 				<div className="row">
-					<div className="col-10">
-						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}>{this.props.artifactState.isFetching ? "" : <ArtifactIcon artifact={this.props.artifact} />}{this.props.artifactState.isFetching ? "loading..." : title}</h3>
-					</div>
-					<div className="col-2">
-						<div style={{float: "right", marginTop: "2px"}}></div>
+					<div className="col">
+						<h3 style={{wordWrap: "break-word"}}>{this.props.artifactState.isFetching ? "" : <ArtifactIcon artifact={this.props.artifact} />}{this.props.artifactState.isFetching ? "loading..." : title}</h3>
 					</div>
 				</div>
-				<div className="media">
-					<Link to={"/pub/" + publisher}>
-						{this.props.artifactState.isFetching ? "" : <PublisherIcon id={publisher} style={{width: "50px", height: "50px"}} className="d-flex" /> }
-					</Link>
-					<div className="media-body">
-						<h5 className="mt-0" style={{paddingTop: "13px", marginLeft: "10px"}}>{this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
-							<div style={{float: "right"}}>
-								<ShareButton />
-								<TipButtons artifact={this.props.artifact}  />
-								<ReportButton />
-							</div>
-						</h5>
-					</div>
-				</div>
+
+                <div className="publisher-body row">
+                    <div className="publisher-title col-1">
+                        <Link to={"/pub/" + publisher}>
+                            {this.props.artifactState.isFetching ? "" : <PublisherIcon maxHeight={"30px"} id={publisher} /> }
+                        </Link>
+                    </div>
+                    <h5 className="publisher-name col-5 mt-0">{this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}</h5>
+                    <div className="publisher-buttons col-6" style={{float: "right"}}>
+                        <ShareButton />
+                        <TipButtons artifact={this.props.artifact}  />
+                        <ReportButton />
+                    </div>
+                </div>
+
 				<ContentExtraInfo
 					artifact={this.props.artifact}
 					artifactState={this.props.artifactState}
