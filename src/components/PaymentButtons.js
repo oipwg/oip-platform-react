@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types";
 
 class PaymentButtons extends Component {
 	constructor(props){
@@ -19,31 +20,31 @@ class PaymentButtons extends Component {
 		}
 		let _this = this;
 
-		this.props.setCurrentFile(this.props.artifact, this.props.File);
+		this.props.setCurrentFile(this.props.artifact, this.props.file);
 
 		let payForFile = function(artifact, file){
 			_this.props.payForFileFunc(artifact, file, onSuccess, onError);
 		};
 
-		if (this.props.File.isPaid && !this.props.File.hasPaid) {
-            payForFile(this.props.artifact, this.props.File.info);
+		if (this.props.file.isPaid && !this.props.file.hasPaid) {
+            payForFile(this.props.artifact, this.props.file.info);
 		} else {
-            if (this.props.File.isPlaying) {
+            if (this.props.file.isPlaying) {
                 // PAUSE
 				console.log("This File is playing, so lets pause it")
-				this.props.isPlayingFile(this.props.File.key, !this.props.File.isPlaying)
+				this.props.isPlayingFile(this.props.file.key, !this.props.file.isPlaying)
             } else {
             	// Play
                 console.log("This File is not playing, so lets play it")
-                this.props.isPlayingFile(this.props.File.key, !this.props.File.isPlaying)
+                this.props.isPlayingFile(this.props.file.key, !this.props.file.isPlaying)
             }
         }
 	}
 	buyFile(){
-		if (this.props.File.owned){
+		if (this.props.file.owned){
 			this.dlStarted = true;
 		} else {
-			this.props.buyFileFunc(this.props.artifact, this.props.File.info, function(success){
+			this.props.buyFileFunc(this.props.artifact, this.props.file.info, function(success){
 				//scrollToTop();
 			}, function(error){
 				console.log(error);
@@ -90,32 +91,32 @@ class PaymentButtons extends Component {
 		let viewString = "";
 		let buyString = "";
 
-		if (this.props.File){
-			if (this.props.File.owned){
+		if (this.props.file){
+			if (this.props.file.owned){
 				owned = true;
 			}
-			if (this.props.File.hasPaid){
+			if (this.props.file.hasPaid){
 				hasPaid = true;
 			}
-			if (this.props.File.paymentInProgress){
+			if (this.props.file.paymentInProgress){
 				paymentInProgress = true;
 			}
-			if (this.props.File.paymentError){
+			if (this.props.file.paymentError){
 				paymentError = true;
 			}
 
-			if (this.props.File.info) {
-				if (this.props.File.info.getSuggestedPlayCost()){
-					sugPlay = this.props.File.info.getSuggestedPlayCost();
+			if (this.props.file.info) {
+				if (this.props.file.info.getSuggestedPlayCost()){
+					sugPlay = this.props.file.info.getSuggestedPlayCost();
 				}
-				if (this.props.File.info.getSuggestedBuyCost()){
-					sugBuy = this.props.File.info.getSuggestedBuyCost();
+				if (this.props.file.info.getSuggestedBuyCost()){
+					sugBuy = this.props.file.info.getSuggestedBuyCost();
 				}
-				if (this.props.File.info.getDisallowPlay()){
-					disallowPlay = this.props.File.info.getDisallowPlay();
+				if (this.props.file.info.getDisallowPlay()){
+					disallowPlay = this.props.file.info.getDisallowPlay();
 				}
-				if (this.props.File.info.disBuy){
-					disallowBuy = this.props.File.info.getDisallowBuy();
+				if (this.props.file.info.disBuy){
+					disallowBuy = this.props.file.info.getDisallowBuy();
 				}
 			}
 
@@ -179,6 +180,16 @@ class PaymentButtons extends Component {
 			</div>
 		)
 	}
+}
+
+PaymentButtons.propTypes = {
+    artifact: PropTypes.object,
+    file: PropTypes.object,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    setCurrentFile: PropTypes.func,
+    btnStyle: PropTypes.string
 }
 
 export default PaymentButtons;
