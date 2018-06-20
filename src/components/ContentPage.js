@@ -77,4 +77,26 @@ class ContentPage extends Component {
     }
 }
 
+ContentPage.propTypes = {
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    artifactList: PropTypes.object,
+    activeFile: PropTypes.object,
+    volumeControls: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    active: PropTypes.string,
+    addComment: PropTypes.func,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func,
+    updateFileCurrentTime: PropTypes.func,
+    isPlayableFile: PropTypes.func,
+    isSeekableFile: PropTypes.func,
+    updateFileDuration: PropTypes.func,
+    setVolume: PropTypes.func,
+    setMute: PropTypes.func,
+    playlistNext: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    setCurrentFile: PropTypes.func,
+}
+
 export default ContentPage;

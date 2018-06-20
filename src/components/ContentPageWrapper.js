@@ -111,7 +111,6 @@ ContentPageWrapper.propTypes = {
     active: PropTypes.string,
     selectCurrentArtifact: PropTypes.func,
     fetchArtifactList: PropTypes.func,
-    tipFunc: PropTypes.func,
     addComment: PropTypes.func,
     payForFileFunc: PropTypes.func,
     buyFileFunc: PropTypes.func,
