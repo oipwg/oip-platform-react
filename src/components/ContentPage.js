@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import ContentContainer from './ContentContainer.js'
 import ContentInfo from './ContentInfo.js'
@@ -11,12 +12,12 @@ class ContentPage extends Component {
         return (
             <div className="content-page-container">
                 <ContentContainer
-                    Artifact={this.props.Artifact}
-                    ArtifactState={this.props.ArtifactState}
-                    ActiveFile={this.props.ActiveFile}
+                    artifact={this.props.artifact}
+                    artifactState={this.props.artifactState}
+                    activeFile={this.props.activeFile}
                     // For AudioContainer
-                    VolumeControls={this.props.VolumeControls}
-                    FilePlaylist={this.props.FilePlaylist}
+                    volumeControls={this.props.volumeControls}
+                    filePlaylist={this.props.filePlaylist}
                     active={this.props.active}
                     // Dispatch function for AudioContainer
                     updateFileCurrentTime={this.props.updateFileCurrentTime}
@@ -37,33 +38,33 @@ class ContentPage extends Component {
                         <div className="row" style={{marginTop: "30px"}}>
                             <div id="media-info" className="content-info col-12 col-md-9" >
                                 <ContentInfo
-                                    artifact={this.props.Artifact}
-                                    artifactState={this.props.ArtifactState}
-                                    activeFile={this.props.ActiveFile}
-                                    filePlaylist={this.props.FilePlaylist}
+                                    artifact={this.props.artifact}
+                                    artifactState={this.props.artifactState}
+                                    activeFile={this.props.activeFile}
+                                    filePlaylist={this.props.filePlaylist}
                                     payForFileFunc={this.props.payForFileFunc}
                                     buyFileFunc={this.props.buyFileFunc}
                                     isPlayingFile={this.props.isPlayingFile}
                                     setCurrentFile={this.props.setCurrentFile}
                                 />
                                 <br />
-                                {(this.props.Artifact && this.props.Artifact.txid !== "") ?
+                                {(this.props.artifact && this.props.artifact.txid !== "") ?
                                     <div>
-                                        <IssoCommentBox  addComment={this.props.addComment} url={this.props.Artifact.txid} />
+                                        <IssoCommentBox  addComment={this.props.addComment} url={this.props.artifact.txid} />
                                         <IssoComments
-                                            Artifact={this.props.Artifact}
-                                            ArtifactState={this.props.ArtifactState}
-                                            comments={this.props.ArtifactState.comments}
+                                            artifact={this.props.artifact}
+                                            ArtifactState={this.props.artifactState}
+                                            comments={this.props.artifactState.comments}
                                         />
                                     </div>
                                     : ""}
                             </div>
                             <div id='suggested' className="suggested-content col-12 col-md-3 mt-4">
                                 <h5>Suggested Content</h5>
-                                {this.props.ArtifactList ? (this.props.ArtifactList.items.map(function(content, i){
+                                {this.props.artifactList ? (this.props.artifactList.items.map(function(artifact, i){
                                     return <ContentCard
                                         key={i}
-                                        artifact={content}
+                                        artifact={artifact}
                                         styleContentCard={"small"}
                                     />
                                 })) : (null)}

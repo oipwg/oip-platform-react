@@ -26,7 +26,7 @@ class ContentInfo extends Component {
 			<div>
 				<div className="row">
 					<div className="col-10">
-						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}>{this.props.ArtifactState.isFetching ? "" : <ArtifactIcon artifact={this.props.artifact} />}{this.props.artifactState.isFetching ? "loading..." : title}</h3>
+						<h3 style={{paddingLeft: "20px", wordWrap: "break-word"}}>{this.props.artifactState.isFetching ? "" : <ArtifactIcon artifact={this.props.artifact} />}{this.props.artifactState.isFetching ? "loading..." : title}</h3>
 					</div>
 					<div className="col-2">
 						<div style={{float: "right", marginTop: "2px"}}></div>
