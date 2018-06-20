@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import PaymentButtons from './PaymentButtons.js';
+import PropTypes from "prop-types";
 
 class FilesTable extends Component {
 	constructor(props){
@@ -17,12 +18,12 @@ class FilesTable extends Component {
 	getAllFiles(){
 		let files = [];
 
-		if (this.props.FilePlaylist){
-			let FilePlaylist = this.props.FilePlaylist;
-			for (var key in FilePlaylist) {
+		if (this.props.filePlaylist){
+			let filePlaylist = this.props.filePlaylist;
+			for (var key in filePlaylist) {
 				// This just makes sure we are not getting the "active" key from the FilePlaylist obj
 				if (key.split("|").length === 2){
-					let newObj = FilePlaylist[key];
+					let newObj = filePlaylist[key];
 					newObj.key = key.toString();
 					files.push(newObj);
 				}
@@ -35,7 +36,7 @@ class FilesTable extends Component {
 		let myArtifactFiles = [];
 
 		for (var file in files) {
-			if (files[file].key.split("|")[0] === this.props.Artifact.getTXID()){
+			if (files[file].key.split("|")[0] === this.props.artifact.getTXID()){
 				myArtifactFiles.push(files[file]);
 			}
 		}
@@ -48,7 +49,7 @@ class FilesTable extends Component {
 		if (files && files.length <= 6){
 			for (var i = 0; i < files.length; i++) {
 				if (files[i].info.subtype !== "cover"){
-					if (!files[i] || !this.props.ActiveFile || !this.props.ActiveFile.info || files[i].info.getFilename() !== this.props.ActiveFile.info.getFilename()){
+					if (!files[i] || !this.props.activeFile || !this.props.activeFile.info || files[i].info.getFilename() !== this.props.activeFile.info.getFilename()){
 						newFiles.push(files[i]);
 					}
 				}
@@ -89,7 +90,7 @@ class FilesTable extends Component {
     }
 
     handleListClick(artifact, file) {
-        (file.key !== this.props.ActiveFile.key) ? (this.props.setCurrentFile(artifact, file)) : (null)
+        (file.key !== this.props.activeFile.key) ? (this.props.setCurrentFile(artifact, file)) : (null)
     }
 
 	render() {
@@ -118,8 +119,8 @@ class FilesTable extends Component {
 										<td style={{verticalAlign: "middle"}}>{file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</td>
 										<td style={{verticalAlign: "middle", width: "230px"}}>
 											<PaymentButtons
-												artifact={_this.props.Artifact}
-												File={file}
+												artifact={_this.props.artifact}
+												file={file}
                                                 payForFileFunc={_this.props.payForFileFunc}
                                                 buyFileFunc={_this.props.buyFileFunc}
                                                 isPlayingFile={_this.props.isPlayingFile}
@@ -133,6 +134,17 @@ class FilesTable extends Component {
 			</div>
 		);
 	}
+}
+
+FilesTable.propTypes = {
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    activeFile: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    setCurrentFile: PropTypes.func,
 }
 
 export default FilesTable;

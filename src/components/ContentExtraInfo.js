@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-
-import FilesTable from './FilesTable.js';
 import moment from 'moment';
 import Linkify from 'react-linkify';
+import PropTypes from "prop-types";
+
+import FilesTable from './FilesTable.js';
+
 
 class ContentExtraInfo extends Component {
 	constructor(props){
@@ -56,6 +58,17 @@ class ContentExtraInfo extends Component {
 			</div>
 		);
 	}
+}
+
+ContentExtraInfo.propTypes = {
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    activeFile: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    setCurrentFile: PropTypes.func,
 }
 
 export default ContentExtraInfo;
