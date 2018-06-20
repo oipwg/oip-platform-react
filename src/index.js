@@ -27,7 +27,7 @@ const enhancer = composeEnhancers(
     applyMiddleware(...middleware),
     // other store enhancers if any
 );
-const store = createStore(combineReducers(reducers), enhancer);
+export const store = createStore(combineReducers(reducers), enhancer);
 
 
 ReactDOM.render(
@@ -37,4 +37,3 @@ ReactDOM.render(
 
 registerServiceWorker();
 
-module.exports = { store };

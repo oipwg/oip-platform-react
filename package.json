@@ -9,6 +9,7 @@
     "@dicebear/avatars-male-sprites": "^1.0.3",
     "autoprefixer": "7.1.1",
     "axios": "^0.16.2",
+    "babel-cli": "^6.26.0",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -89,7 +90,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "preins": "mv node_modules/oip-js/ oip-js/",
     "postins": "mv oip-js/ node_modules/oip-js/",
-    "storybook": "start-storybook -p 9001 -c .storybook",
+    "storybook": "start-storybook -p 9000 -c .storybook",
     "build-storybook": "build-storybook"
   },
   "jest": {

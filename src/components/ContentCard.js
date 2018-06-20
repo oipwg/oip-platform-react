@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom'
+import { Artifact } from 'oip-js'
 
 import PublisherIcon from './PublisherIcon.js';
 import ArtifactIcon from './ArtifactIcon.js';
@@ -8,27 +10,23 @@ import ArtifactIcon from './ArtifactIcon.js';
 import { FormattedTime } from 'react-player-controls'
 
 const ContentCard = (props) => {
+    const artifact = props.artifact || new Artifact()
 
 	const scrollToTop = () => {
 		window.scrollTo(0, 0);
 	};
 
-    let title = props.artifact.getTitle();
-    let publisher = props.artifact.getMainAddress();
-    let txid = props.artifact.getTXID();
-    let duration = props.artifact.getDuration();
-    let contentCardClass = "";
-
-    if (props.parent === 'ContentPage') {
-        contentCardClass = "card col border-0 mb-4 p-1"
-    } else { contentCardClass = "card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1"}
+    let title = artifact.getTitle();
+    let publisher = artifact.getMainAddress();
+    let txid = artifact.getTXID();
+    let duration = artifact.getDuration();
 
     return (
-                <div className={contentCardClass}>
+                <div className="card col-xs-12 col-sm-6 col-md-4 col-lg-3 border-0 mb-4 p-1">
                     <Link to={"/" + txid.substring(0,6) } onClick={scrollToTop} className="" title={title} >
                         <div className="card-img-top content-card-img">
                             <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
-                            <button className="btn btn-outline-light card-media-type m-1"><ArtifactIcon artifact={props.artifact} /></button>
+                            <button className="btn btn-outline-light card-media-type m-1"><ArtifactIcon artifact={artifact} /></button>
                             {duration ? <span className="content-card-xinfo m-1 "><FormattedTime numSeconds={duration} /></span> : null}
                         </div>
                     </Link>
@@ -37,12 +35,18 @@ const ContentCard = (props) => {
                         <span style={{fontSize: 14}} className="card-title">{title}</span>
                         <Link to={"/pub/" + publisher } onClick={scrollToTop}>
                             <div className="pubIcon">
-                                <PublisherIcon maxWidth={20} id={publisher} small={true} pubName={props.artifact.publisherName} />
+                                <PublisherIcon maxWidth={20} id={publisher} small={true} pubName={artifact.publisherName} />
                             </div>
                         </Link>
                     </div>
                 </div>
     );
 };
+
+
+ContentCard.propTypes = {
+    artifact: PropTypes.object.isRequired,
+    key: PropTypes.number
+}
 
 export default ContentCard;
