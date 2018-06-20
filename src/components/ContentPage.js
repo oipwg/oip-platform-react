@@ -37,10 +37,10 @@ class ContentPage extends Component {
                         <div className="row" style={{marginTop: "30px"}}>
                             <div id="media-info" className="content-info col-12 col-md-9" >
                                 <ContentInfo
-                                    Artifact={this.props.Artifact}
-                                    ArtifactState={this.props.ArtifactState}
-                                    ActiveFile={this.props.ActiveFile}
-                                    FilePlaylist={this.props.FilePlaylist}
+                                    artifact={this.props.Artifact}
+                                    artifactState={this.props.ArtifactState}
+                                    activeFile={this.props.ActiveFile}
+                                    filePlaylist={this.props.FilePlaylist}
                                     payForFileFunc={this.props.payForFileFunc}
                                     buyFileFunc={this.props.buyFileFunc}
                                     isPlayingFile={this.props.isPlayingFile}
