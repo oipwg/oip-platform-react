@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import IssoComment from './IssoComment.js'
 
@@ -40,6 +41,12 @@ class IssoComments extends Component {
 			</div>
 		);
 	}
+}
+
+IssoComment.propTypes = {
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    comments: PropTypes.string
 }
 
 export default IssoComments;
