@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Spinner from 'react-spinkit';
 
@@ -63,6 +64,26 @@ class ContentContainer extends Component {
 			</div>
 		);
 	}
+}
+
+ContentContainer.propTypes = {
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    activeFile: PropTypes.object,
+    volumeControls: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    active: PropTypes.string,
+    updateFileCurrentTime: PropTypes.func,
+    isPlayableFile: PropTypes.func,
+    isSeekableFile: PropTypes.func,
+    updateFileDuration: PropTypes.func,
+    setVolume: PropTypes.func,
+    setMute: PropTypes.func,
+    playlistNext: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    setCurrentFile: PropTypes.func,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func
 }
 
 export default ContentContainer;

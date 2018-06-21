@@ -184,8 +184,8 @@ class PaymentButtons extends Component {
 }
 
 PaymentButtons.propTypes = {
-    artifact: PropTypes.object,
-    file: PropTypes.object,
+    artifact: PropTypes.object.isRequired,
+    file: PropTypes.object.isRequired,
     payForFileFunc: PropTypes.func,
     buyFileFunc: PropTypes.func,
     isPlayingFile: PropTypes.func,
