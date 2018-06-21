@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Playlist from './Playlist.js';
 
@@ -30,9 +31,9 @@ class PlaylistScroller extends Component {
 						bgColor={this.props.bgColor}
 						currentArtifactOnly={this.props.currentArtifactOnly}
 						filter={this.props.filter}
-                        Artifact={this.props.Artifact}
-                        ActiveFile={this.props.ActiveFile}
-                        FilePlaylist={this.props.FilePlaylist}
+                        artifact={this.props.artifact}
+                        activeFile={this.props.activeFile}
+                        filePlaylist={this.props.filePlaylist}
                         setCurrentFile={this.props.setCurrentFile}
 						// For Payment Buttons
                         payForFileFunc={this.props.payForFileFunc}
@@ -43,6 +44,20 @@ class PlaylistScroller extends Component {
 			</div>
 		);
 	}
+}
+
+PlaylistScroller.propTypes = {
+    artifact: PropTypes.object,
+    activeFile: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    mainColor: PropTypes.string,
+    bgColor: PropTypes.string,
+    currentArtifactOnly: PropTypes.bool,
+    filter: PropTypes.object,
+    setCurrentFile: PropTypes.func,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func,
+    isPlayingFile: PropTypes.func
 }
 
 export default PlaylistScroller;
