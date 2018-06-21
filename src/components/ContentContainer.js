@@ -30,12 +30,12 @@ class ContentContainer extends Component {
 				>
 					{ (!haveLoadedState || loading) ? <div style={{height: "100%", width: "100vw", maxWidth: "100vw"}} className="spinner-container"><Spinner name="wave" color="aqua" /></div> : ''}
 					<FileViewer
-						Artifact={this.props.artifact}
-						ArtifactState={this.props.artifactState}
-						ActiveFile={this.props.activeFile}
+						artifact={this.props.artifact}
+						artifactState={this.props.artifactState}
+						activeFile={this.props.activeFile}
 						// For AudioContainer
-                        VolumeControls={this.props.volumeControls}
-                        FilePlaylist={this.props.filePlaylist}
+                        volumeControls={this.props.volumeControls}
+                        filePlaylist={this.props.filePlaylist}
                         active={this.props.active}
 						// Dispatch function for AudioContainer
                         updateFileCurrentTime={this.props.updateFileCurrentTime}

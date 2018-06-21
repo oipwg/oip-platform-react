@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import AudioContainer from './AudioContainer.js';
 import VideoPlayer from './VideoPlayer.js';
@@ -55,8 +56,8 @@ class FileViewer extends Component {
 	render() {
 		let extension, fileViewerComponent;
 
-		if (this.props.ActiveFile && this.props.ActiveFile.info && this.props.ActiveFile.info.getFilename()){
-            let splitFilename = this.props.ActiveFile.info.getFilename().split(".");
+		if (this.props.activeFile && this.props.activeFile.info && this.props.activeFile.info.getFilename()){
+            let splitFilename = this.props.activeFile.info.getFilename().split(".");
             let indexToGrab = splitFilename.length - 1;
 
             extension = splitFilename[indexToGrab].toLowerCase();
@@ -69,13 +70,13 @@ class FileViewer extends Component {
 						if (extension === SupportedFileType){
 							fileViewerComponent = React.createElement(Player,
 								{
-								    Artifact: this.props.Artifact,
-									ActiveFile: this.props.ActiveFile,
+								    artifact: this.props.artifact,
+									activeFile: this.props.activeFile,
                                     buildIPFSShortURL: this.buildIPFSShortURL,
                                     buildIPFSURL: this.buildIPFSURL,
                                     // For AudioContainer
-                                    VolumeControls: this.props.VolumeControls,
-									FilePlaylist: this.props.FilePlaylist,
+                                    volumeControls: this.props.volumeControls,
+									filePlaylist: this.props.filePlaylist,
 									active: this.props.active,
 									// Dispatch function for AudioContainer
 									updateFileCurrentTime: this.props.updateFileCurrentTime,
@@ -103,6 +104,26 @@ class FileViewer extends Component {
 
 		return fileViewerComponent;
 	}
+}
+
+FileViewer.propTypes = {
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    activeFile: PropTypes.object,
+    volumeControls: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    active: PropTypes.string,
+    updateFileCurrentTime: PropTypes.func,
+    isPlayableFile: PropTypes.func,
+    isSeekableFile: PropTypes.func,
+    updateFileDuration: PropTypes.func,
+    setVolume: PropTypes.func,
+    setMute: PropTypes.func,
+    playlistNext: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    setCurrentFile: PropTypes.func,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func
 }
 
 export default FileViewer;
