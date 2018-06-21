@@ -68,7 +68,8 @@ class FileViewer extends Component {
 					for (var SupportedFileType of Player.SUPPORTED_FILE_TYPES){
 						if (extension === SupportedFileType){
 							fileViewerComponent = React.createElement(Player,
-								{Artifact: this.props.Artifact,
+								{
+								    Artifact: this.props.Artifact,
 									ActiveFile: this.props.ActiveFile,
                                     buildIPFSShortURL: this.buildIPFSShortURL,
                                     buildIPFSURL: this.buildIPFSURL,

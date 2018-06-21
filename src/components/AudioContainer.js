@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import ColorThief from 'color-thief-standalone';
+import PropTypes from 'prop-types';
+import { PlaybackControls, ProgressBar, TimeMarker, MuteToggleButton, VolumeSlider } from 'react-player-controls'
 
 import AudioVisualizer from './AudioVisualizer.js';
 import PlaylistScroller from './PlaylistScroller.js';
-import IPFSImage from './IPFSImage.js';
 
-import { PlaybackControls, ProgressBar, TimeMarker, MuteToggleButton, VolumeSlider } from 'react-player-controls'
 
 import '../assets/css/audio-player.css';
-
 import '../assets/css/alexandria-audio-player.css';
 
 class AudioContainer extends Component {
