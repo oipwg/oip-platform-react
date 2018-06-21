@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 import PaymentButtons from './PaymentButtons.js';
 
 class Paywall extends Component {
-	constructor(props){
-		super(props);
-	}
-
 	render() {
 		let type, subtype, textAccess = "Access";
 
