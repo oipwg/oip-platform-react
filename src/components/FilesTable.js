@@ -116,7 +116,7 @@ class FilesTable extends Component {
 										<td style={{verticalAlign: "middle", width: "230px"}}>
 											<PaymentButtons
 												artifact={_this.props.artifact}
-												file={file}
+												activeFile={file}
                                                 payForFileFunc={_this.props.payForFileFunc}
                                                 buyFileFunc={_this.props.buyFileFunc}
                                                 isPlayingFile={_this.props.isPlayingFile}
