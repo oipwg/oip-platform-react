@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import PaymentButtons from './PaymentButtons.js';
 
@@ -33,8 +34,8 @@ class Paywall extends Component {
 						<span>please...</span>
 						<br/>
 						<PaymentButtons
-							artifact={this.props.Artifact}
-							File={this.props.ActiveFile}
+							artifact={this.props.artifact}
+							activeFile={this.props.activeFile}
 							payForFileFunc={this.props.payForFileFunc}
 							buyFileFunc={this.props.buyFileFunc}
                             setCurrentFile={this.props.setCurrentFile}
@@ -47,5 +48,13 @@ class Paywall extends Component {
 	}
 }
 
+Paywall.propTypes = {
+    activeFile: PropTypes.object,
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func,
+    setCurrentFile: PropTypes.func,
+}
 
 export default Paywall;
