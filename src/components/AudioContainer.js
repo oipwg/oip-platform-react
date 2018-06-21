@@ -14,8 +14,8 @@ class AudioContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			ActiveFile: {},
-			VolumeControls: {},
+			activeFile: {},
+			volumeControls: {},
 			showPrevious: false,
 			hasPrevious: false,
 			showNext: false,
@@ -53,19 +53,19 @@ class AudioContainer extends Component {
 
 		this.audio.crossOrigin = "anonymous";
 
-        if (this.props.VolumeControls && this.props.VolumeControls.volume && this.audio)
-            this.audio.volume = this.props.VolumeControls.volume;
+        if (this.props.volumeControls && this.props.volumeControls.volume && this.audio)
+            this.audio.volume = this.props.volumeControls.volume;
 	}
 
 	static getDerivedStateFromProps(nextProps, prevState) {
-	    if (nextProps.ActiveFile.hasPaid != prevState.hasPaid) {
+	    if (nextProps.activeFile.hasPaid != prevState.hasPaid) {
 	        return {
-	            hasPaid: nextProps.ActiveFile.hasPaid
+	            hasPaid: nextProps.activeFile.hasPaid
             }
         }
-        if (nextProps.ActiveFile.isPlaying != prevState.isPlaying) {
+        if (nextProps.activeFile.isPlaying != prevState.isPlaying) {
 	    	return {
-	    		isPlaying: nextProps.ActiveFile.isPlaying
+	    		isPlaying: nextProps.activeFile.isPlaying
 			}
 		}
 
@@ -95,7 +95,7 @@ class AudioContainer extends Component {
 			console.error(e)
 		}
 	}
-	onCanPlay(canPlay){
+	onCanPlay() {
 		this.props.isPlayableFile(this.props.active, true);
 		this.props.isSeekableFile(this.props.active, true);
 	}
@@ -108,7 +108,7 @@ class AudioContainer extends Component {
                 this.props.updateFileCurrentTime(this.props.active, event.srcElement.currentTime);
                 this.setState({prevTimestamp: currentTimestamp})
 
-                if (this.props.ActiveFile.info.getDuration() !== event.srcElement.duration && event.srcElement.duration)
+                if (this.props.activeFile.info.getDuration() !== event.srcElement.duration && event.srcElement.duration)
                     this.props.updateFileDuration(this.props.active, event.srcElement.duration);
             }
 		}
@@ -134,7 +134,7 @@ class AudioContainer extends Component {
 		}
 	}
 	onMuteChange(mute){
-		let newVolume = mute ? 0 : this.props.VolumeControls.lastVolume;
+		let newVolume = mute ? 0 : this.props.volumeControls.lastVolume;
 
 		this.props.setMute(mute, newVolume);
 
@@ -159,22 +159,22 @@ class AudioContainer extends Component {
 	render() {
 		let name, artist, playlistLen = 0, paywall = false, ipfsHash = "", songURL = "";
 
-		if (this.props.ActiveFile && this.props.ActiveFile.info){
-			name = this.props.ActiveFile.info.getDisplayName() ? this.props.ActiveFile.info.getDisplayName() : this.props.ActiveFile.info.getFilename();
+		if (this.props.activeFile && this.props.activeFile.info){
+			name = this.props.activeFile.info.getDisplayName() ? this.props.activeFile.info.getDisplayName() : this.props.activeFile.info.getFilename();
 			//Ryan Chacon: added && !this.props.ActiveFile.hasPaid so that the paywall will be false after they paid for a play even though they don't own the artifact
-			paywall = ((this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid) || (!this.props.ActiveFile.owned && this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid));
+			paywall = ((this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) || (!this.props.activeFile.owned && this.props.activeFile.isPaid && !this.props.activeFile.hasPaid));
 
-			if (this.props.ActiveFile.currentTime === this.props.ActiveFile.duration && this.props.ActiveFile.currentTime !== 0 && this.props.ActiveFile.isPlaying)
+			if (this.props.activeFile.currentTime === this.props.activeFile.duration && this.props.activeFile.currentTime !== 0 && this.props.activeFile.isPlaying)
 				this.nextSong();
 
-			if (this.props.Artifact){
-				ipfsHash = this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.Artifact.getThumbnail());
-				songURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.ActiveFile.info.getFilename()));
-				artist = this.props.Artifact.getDetail("artist");
+			if (this.props.artifact){
+				ipfsHash = this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail());
+				songURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.activeFile.info.getFilename()));
+				artist = this.props.artifact.getDetail("artist");
 			}
 		}
-		if (this.props.FilePlaylist){
-			playlistLen = Object.keys(this.props.FilePlaylist).length - 1; //14
+		if (this.props.filePlaylist){
+			playlistLen = Object.keys(this.props.filePlaylist).length - 1; //14
 		}
 
 		return (
@@ -185,7 +185,7 @@ class AudioContainer extends Component {
 					controls={true}
 					src={songURL}
 					style={{display: "none"}}
-					>
+                >
 				</audio>
 				<div className="container" style={{height: "90%"}}>
 					<div className="row" style={{height: "90%"}}>
@@ -200,9 +200,9 @@ class AudioContainer extends Component {
 						{playlistLen > 1 ?
 						<div className="col-md-6 col-sm-12" style={{margin: "20px auto"}}>
 							<PlaylistScroller
-								Artifact={this.props.Artifact}
-								ActiveFile={this.props.ActiveFile}
-								FilePlaylist={this.props.FilePlaylist}
+								artifact={this.props.artifact}
+								activeFile={this.props.activeFile}
+								filePlaylist={this.props.filePlaylist}
 								mainColor={this.state.mainColor}
 								bgColor={this.state.bgColor}
                                 currentArtifactOnly={true}
@@ -225,8 +225,8 @@ class AudioContainer extends Component {
 				<div className="" style={{width:"100%", height: "40px", position: "absolute", bottom: "0px", borderTop: "1px solid " + this.state.mainColor, display: "flex", backgroundColor: this.state.bgColor}}>
 					<div style={{width: "auto", height: "auto", margin: "auto", borderRight: "1px solid " + this.state.mainColor, display: "flex"}} onClick={this.toggleAudio}>
 						<PlaybackControls
-							isPlayable={this.props.ActiveFile.isPlayable}
-							isPlaying={this.props.ActiveFile.isPlaying}
+							isPlayable={this.props.activeFile.isPlayable}
+							isPlaying={this.props.activeFile.isPlaying}
 							showPrevious={this.state.showPrevious}
 							hasPrevious={this.state.hasPrevious}
 							showNext={this.state.showNext}
@@ -261,31 +261,31 @@ class AudioContainer extends Component {
 						}} />
 						<ProgressBar
 							style={{width: "100%"}}
-							totalTime={this.props.ActiveFile.duration}
-							currentTime={this.props.ActiveFile.currentTime}
-							isSeekable={this.props.ActiveFile.isSeekable}
+							totalTime={this.props.activeFile.duration}
+							currentTime={this.props.activeFile.currentTime}
+							isSeekable={this.props.activeFile.isSeekable}
 							onSeek={this.onSeek}
 						/>
 						<span style={{mixBlendMode: "difference", color: "#fff", verticalAlign: "middle", lineHeight: "35px", marginLeft: "10px", marginTop: "-76px", display: "inline-block"}}>
 							<TimeMarker
-								totalTime={this.props.ActiveFile.duration}
-								currentTime={this.props.ActiveFile.currentTime}
+								totalTime={this.props.activeFile.duration}
+								currentTime={this.props.activeFile.currentTime}
 								markerSeparator=" / "
 							/>
 						</span>
 					</div>
 					<div style={{width: "45px", height: "auto", margin: "auto", borderLeft: "1px solid " + this.state.mainColor, display: "flex"}}>
 						<MuteToggleButton
-							isMuted={this.props.VolumeControls.isMuted}
+							isMuted={this.props.volumeControls.isMuted}
 							onMuteChange={this.onMuteChange}
-							isEnabled={this.props.ActiveFile.isPlayable}
+							isEnabled={this.props.activeFile.isPlayable}
 							onHover
 						/>
 						<VolumeSlider
-							volume={this.props.VolumeControls.volume}
+							volume={this.props.volumeControls.volume}
 							onVolumeChange={this.onVolumeChange}
-							isEnabled={this.props.ActiveFile.isPlayable}
-							style={this.props.VolumeControls.isMuted ? {display: "none"} : null}
+							isEnabled={this.props.activeFile.isPlayable}
+							style={this.props.volumeControls.isMuted ? {display: "none"} : null}
 						/>
 					</div>
 				</div>
@@ -295,5 +295,25 @@ class AudioContainer extends Component {
 }
 
 AudioContainer.SUPPORTED_FILE_TYPES = ["mp3", "ogg", "wav"];
+AudioContainer.propTypes = {
+    artifact: PropTypes.object,
+    activeFile: PropTypes.object,
+    volumeControls: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    active: PropTypes.string,
+    updateFileCurrentTime: PropTypes.func,
+    isPlayableFile: PropTypes.func,
+    isSeekableFile: PropTypes.func,
+    updateFileDuration: PropTypes.func,
+    setVolume: PropTypes.func,
+    setMute: PropTypes.func,
+    playlistNext: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    setCurrentFile: PropTypes.func,
+    payForFileFunc: PropTypes.func,
+    buyFileFunc: PropTypes.func,
+    buildIPFSShortURL: PropTypes.func,
+    buildIPFSURL: PropTypes.func,
+};
 
 export default AudioContainer;
