@@ -45,7 +45,7 @@ class ContentExtraInfo extends Component {
 					artifact={this.props.artifact}
 					activeFile={this.props.activeFile}
 					extendedView={this.state.extendedView}
-					FilePlaylist={this.props.filePlaylist}
+					filePlaylist={this.props.filePlaylist}
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
                     isPlayingFile={this.props.isPlayingFile}
