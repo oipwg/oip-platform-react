@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 
 class ImageContainer extends Component {
-	constructor(props) {
-		super(props);
-	}
-        //@ToDo: remove constructor if not needed
 	render() {
 		let hash = "";
 		let preview = false;
