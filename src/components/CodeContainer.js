@@ -17,5 +17,6 @@ class CodeContainer extends Component {
 }
 
 CodeContainer.SUPPORTED_FILE_TYPES = ["a", "asm", "asp", "awk", "bat", "c", "class", "cmd", "cpp", "h", "inc", "inf", "ini", "inl", "ins", "java", "js", "jsp", "log", "sh", "txt", "xml", "json"];
+//@ToDo add prop-types
 
 export default CodeContainer;
