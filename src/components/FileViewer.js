@@ -108,7 +108,6 @@ class FileViewer extends Component {
 
 FileViewer.propTypes = {
     artifact: PropTypes.object,
-    artifactState: PropTypes.object,
     activeFile: PropTypes.object,
     volumeControls: PropTypes.object,
     filePlaylist: PropTypes.object,
@@ -124,6 +123,6 @@ FileViewer.propTypes = {
     setCurrentFile: PropTypes.func,
     payForFileFunc: PropTypes.func,
     buyFileFunc: PropTypes.func
-}
+};
 
 export default FileViewer;
