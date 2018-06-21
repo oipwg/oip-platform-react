@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import videojs from 'video.js';
+import PropTypes from 'prop-types';
 
 import '../assets/css/video-js.css';
 import '../assets/css/alexandria.videojs.css';
@@ -22,22 +23,22 @@ class VideoPlayer extends Component {
     static getDerivedStateFromProps(nextProps, prevState) {
         let options = prevState.options;
 
-        if (nextProps.Artifact && nextProps.ActiveFile && nextProps.ActiveFile.info) {
-            options.sources.src = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), nextProps.ActiveFile.info.getFilename()))
+        if (nextProps.artifact && nextProps.activeFile && nextProps.activeFile.info) {
+            options.sources.src = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.artifact.getLocation(), nextProps.activeFile.info.getFilename()))
 
             let thumbnail
-            if (nextProps.Artifact.getThumbnail()) {
-                thumbnail = nextProps.Artifact.getThumbnail()
-                options.poster = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.Artifact.getLocation(), thumbnail.getFilename()));
+            if (nextProps.artifact.getThumbnail()) {
+                thumbnail = nextProps.artifact.getThumbnail()
+                options.poster = nextProps.buildIPFSURL(nextProps.buildIPFSShortURL(nextProps.artifact.getLocation(), thumbnail.getFilename()));
             }
 
-            if (nextProps.ActiveFile.isPaid && (nextProps.ActiveFile.hasPaid && !nextProps.ActiveFile.owned)){
+            if (nextProps.activeFile.isPaid && (nextProps.activeFile.hasPaid && !nextProps.activeFile.owned)){
                 options.autoplay = false;
             }
 
         }
         return {
-            ActiveFile: nextProps.ActiveFile,
+            activeFile: nextProps.activeFile,
             options: options
         }
     }
@@ -60,9 +61,10 @@ class VideoPlayer extends Component {
                 this.player.src(this.state.options.sources)
             }
 
-            if (!this.props.DisplayPaywall){
-                this.player.play();
-            }
+            //@ToDo: figure out if this is needed
+            // if (!this.props.DisplayPaywall){
+            //     this.player.play();
+            // }
         }
     }
 
@@ -88,5 +90,11 @@ class VideoPlayer extends Component {
 }
 
 VideoPlayer.SUPPORTED_FILE_TYPES = ["mp4"];
+VideoPlayer.propTypes = {
+    artifact: PropTypes.object.isRequired,
+    activeFile: PropTypes.object.isRequired,
+    buildIPFSShortURL: PropTypes.func.isRequired,
+    buildIPFSURL: PropTypes.func.isRequired,
+}
 
 export default VideoPlayer;
