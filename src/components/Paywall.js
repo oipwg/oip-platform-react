@@ -7,9 +7,9 @@ class Paywall extends Component {
 	render() {
 		let type, subtype, textAccess = "Access";
 
-		if (this.props.ActiveFile){
-			type = this.props.ActiveFile.info.type;
-			subtype = this.props.ActiveFile.info.subtype;
+		if (this.props.activeFile){
+			type = this.props.activeFile.info.type;
+			subtype = this.props.activeFile.info.subtype;
 
 			if (type === "Video"){
 				textAccess = "Watch"
@@ -23,7 +23,7 @@ class Paywall extends Component {
 				subtype = "Movie"
 		}
 		return (
-			<div className='paywall' style={(this.props.ActiveFile && this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid && !this.props.ActiveFile.owned && !this.props.ArtifactState.isFetching) ? {} : {display: "none"}}>
+			<div className='paywall' style={(this.props.activeFile && this.props.activeFile.isPaid && !this.props.activeFile.hasPaid && !this.props.activeFile.owned && !this.props.artifactState.isFetching) ? {} : {display: "none"}}>
 				<div className="d-flex align-items-center justify-content-center text-center paywall-container">
 					<div style={{width: "80%"}}>
 						<h4 style={{marginBottom: "0px"}}>To {textAccess} this {(!subtype || subtype === "" || subtype === "Basic") ? type : subtype}</h4>
