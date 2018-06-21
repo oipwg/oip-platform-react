@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 
 class STLContainer extends Component {
-	constructor(props) {
-        super(props);
-    }
 	render() {
 		let stlURL;
 
-		if (this.props.ActiveFile && this.props.Artifact && this.props.ActiveFile.info){
-			// stlURL = this.props.buildIPFSURL(this.props.Artifact.getLocation(), this.state.ActiveFile.info.getFilename());
+		if (this.props.activeFile && this.props.artifact && this.props.activeFile.info){
+			// stlURL = this.props.buildIPFSURL(this.props.artifact.getLocation(), this.state.activeFile.info.getFilename());
 		}
 
 		return (
@@ -20,5 +17,6 @@ class STLContainer extends Component {
 }
 
 STLContainer.SUPPORTED_FILE_TYPES = ["stl"];
+//@ToDo: build STLContainer and add prop-types
 
 export default STLContainer;
