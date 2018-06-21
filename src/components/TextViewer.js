@@ -10,6 +10,20 @@ class TextViewer extends Component {
             textURL: "",
             textData: ""
         }
+
+    }
+    componentDidMount() {
+        let _this = this;
+        this.serverRequest = axios
+            .get(this.state.textURL)
+            .then(function(result) {
+                _this.setState({
+                    textData: result.data
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -21,7 +35,7 @@ class TextViewer extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.textData == "" || prevState.textURL != this.state.textURL) {
+        if (prevState.textData === "" || this.state.textData === "" || prevState.textURL !== this.state.textURL) {
             let _this = this;
             this.serverRequest = axios
                 .get(this.state.textURL)
