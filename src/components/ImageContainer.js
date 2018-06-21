@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types";
 
 class ImageContainer extends Component {
 	constructor(props) {
 		super(props);
 	}
-
+        //@ToDo: remove constructor if not needed
 	render() {
 		let hash = "";
 		let preview = false;
-		if (this.props.ActiveFile && ((this.props.ActiveFile.isPaid && !this.props.ActiveFile.hasPaid) && !this.props.ActiveFile.owned)){
+		if (this.props.activeFile && ((this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) && !this.props.activeFile.owned)){
 			preview = true;
-			hash = this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.Artifact.getThumbnail().getFilename());
+			hash = this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail().getFilename());
 		} else {
-			if (this.props.Artifact && this.props.ActiveFile){
-				hash = this.props.buildIPFSShortURL(this.props.Artifact.getLocation(), this.props.ActiveFile.info.getFilename());
+			if (this.props.artifact && this.props.activeFile){
+				hash = this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.activeFile.info.getFilename());
 			}
 		}
 
@@ -28,6 +29,12 @@ class ImageContainer extends Component {
 }
 
 ImageContainer.SUPPORTED_FILE_TYPES = ["jpeg", "jpg", "gif", "png", "svg", "bmp", "ico"]
+ImageContainer.propTypes = {
+    artifact: PropTypes.object.isRequired,
+    activeFile: PropTypes.object.isRequired,
+    buildIPFSShortURL: PropTypes.func.isRequired,
+    buildIPFSURL: PropTypes.func.isRequired,
+};
 
 export default ImageContainer;
 

@@ -95,6 +95,6 @@ VideoPlayer.propTypes = {
     activeFile: PropTypes.object.isRequired,
     buildIPFSShortURL: PropTypes.func.isRequired,
     buildIPFSURL: PropTypes.func.isRequired,
-}
+};
 
 export default VideoPlayer;
