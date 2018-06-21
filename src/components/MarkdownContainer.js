@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PropTypes from "prop-types";
 
 var ReactMarkdown = require('react-markdown');
 
@@ -14,9 +15,9 @@ class MarkdownContainer extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.Artifact != prevState.Artifact || nextProps.ActiveFile != prevState.ActiveFile) {
+        if (nextProps.artifact != prevState.artifact || nextProps.activeFile != prevState.activeFile) {
             return {
-                markdownURL: nextProps.buildIPFSURL(nextProps.Artifact.getLocation() + "/" + nextProps.ActiveFile.info.getFilename())
+                markdownURL: nextProps.buildIPFSURL(nextProps.artifact.getLocation() + "/" + nextProps.activeFile.info.getFilename())
             }
         } else {return null}
     }
@@ -55,5 +56,10 @@ class MarkdownContainer extends Component {
 }
 
 MarkdownContainer.SUPPORTED_FILE_TYPES = ["md"]
+MarkdownContainer.propTypes = {
+    artifact: PropTypes.object.isRequired,
+    activeFile: PropTypes.object.isRequired,
+    buildIPFSURL: PropTypes.func.isRequired,
+};
 
 export default MarkdownContainer;
