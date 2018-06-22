@@ -35,6 +35,7 @@ class Paywall extends Component {
 							payForFileFunc={this.props.payForFileFunc}
 							buyFileFunc={this.props.buyFileFunc}
                             setCurrentFile={this.props.setCurrentFile}
+                            isPlayingFile={this.props.isPlayingFile}
                         />
 						<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 					</div>
@@ -51,6 +52,7 @@ Paywall.propTypes = {
     payForFileFunc: PropTypes.func,
     buyFileFunc: PropTypes.func,
     setCurrentFile: PropTypes.func,
+    isPlayingFile: PropTypes.func
 }
 
 export default Paywall;

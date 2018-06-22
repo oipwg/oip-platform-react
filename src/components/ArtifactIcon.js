@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const ArtifactIcon = (props) => {
 		var paid = false, type, icon;
@@ -39,7 +39,7 @@ const ArtifactIcon = (props) => {
 		}
 
 		return (
-			<div style={{display: "inline"}}>
+			<div classname="artifact-icon" >
 				{ paid ? <span className="icon icon-credit" style={{color: "rgb(63, 255, 63)"}}></span> : ''}
 				<span className={"icon icon-" + icon}></span>
 			</div>

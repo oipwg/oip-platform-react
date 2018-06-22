@@ -24,10 +24,14 @@ class ContentInfo extends Component {
 
 		return (
 			<div className="content-info-container">
-				<div className="row">
-					<div className="col">
-						<h3 style={{wordWrap: "break-word"}}>{this.props.artifactState.isFetching ? "" : <ArtifactIcon artifact={this.props.artifact} />}{this.props.artifactState.isFetching ? "loading..." : title}</h3>
-					</div>
+				<div className="row" style={{wordWrap: "break-word"}}>
+                    <div className="artifact-icon-title col d-flex">
+                        <h3 className="d-flex">
+                            {this.props.artifactState.isFetching ? "" : <ArtifactIcon artifact={this.props.artifact} />}
+                            <span className="mx-2"/>
+                            {this.props.artifactState.isFetching ? "loading..." : title}
+                         </h3>
+                    </div>
 				</div>
 
                 <div className="publisher-body row">

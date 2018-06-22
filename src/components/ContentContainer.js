@@ -59,6 +59,7 @@ class ContentContainer extends Component {
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
                     setCurrentFile={this.props.setCurrentFile}
+                    isPlayingFile={this.props.isPlayingFile}
 				/>
 			</div>
 		);
