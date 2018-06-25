@@ -105,7 +105,7 @@ class FilesTable extends Component {
 			filesCopy = this.stripUnimportantFiles(filesCopy);
 
 		return (
-				<table className="table table-hover table-responsive table-dark"
+				<table className="table table-hover table-responsive table-dark table-sm table-striped"
                        style={{display: "table"}}>
 					<tbody>
 						{filesCopy.map(function(file, i){
