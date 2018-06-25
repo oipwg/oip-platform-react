@@ -40,7 +40,7 @@ class ContentInfo extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="row no-gutters mt-3">
+                <div className="row no-gutters mt-4">
                     <div className="d-flex" style={{width: "40px"}}>
                         <Link className="w-100" to={"/pub/" + publisher}>
                             {this.props.artifactState.isFetching ? "" : <PublisherIcon maxHeight={"40px"} maxWidth={"100%"} id={publisher} /> }

@@ -105,15 +105,15 @@ class FilesTable extends Component {
 			filesCopy = this.stripUnimportantFiles(filesCopy);
 
 		return (
-			<div>
-				<table className="table table-sm table-striped table-bordered text-center table-hover table-responsive table-inverse" style={{width: "100%", verticalAlign: "middle"}}>
+				<table className="table table-hover table-responsive table-dark"
+                       style={{display: "table"}}>
 					<tbody>
 						{filesCopy.map(function(file, i){
 							return <tr key={i} >
 										<th scope="row"><span className={"icon icon-" + file.info.icon} style={{margin: "auto", display: "table", marginTop: "4px"}}></span></th>
 										<td style={{verticalAlign: "middle"}}>{file.info.subtype ? file.info.subtype : file.info.type}</td>
 										<td style={{verticalAlign: "middle"}}>{file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</td>
-										<td style={{verticalAlign: "middle", width: "230px"}}>
+										<td align="right" style={{verticalAlign: "middle", width: "230px"}}>
 											<PaymentButtons
 												artifact={_this.props.artifact}
 												activeFile={file}
@@ -127,7 +127,6 @@ class FilesTable extends Component {
                         })}
 					</tbody>
 				</table>
-			</div>
 		);
 	}
 }

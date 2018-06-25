@@ -22,21 +22,21 @@ class ContentExtraInfo extends Component {
 	}
 	render() {
 		return (
-			<div>
+			<div className="row no-gutters w-100">
+                <div className="mb-3" style={{width: "100%", marginTop: "-5px"}}>
+                    <hr style={{marginTop: "25px", marginBottom: "-15px"}} />
+                    <button className="btn btn-sm btn-dark mx-auto" style={{display:"block"}} onClick={this.toggleSeeMore}>{this.state.extendedView ? "See Less" : "See More"}</button>
+                </div>
 				<FilesTable
 					artifact={this.props.artifact}
 					activeFile={this.props.activeFile}
 					extendedView={this.state.extendedView}
-					filePlaylist={this.props.filePlaylist}
+                    filePlaylist={this.props.filePlaylist}
                     payForFileFunc={this.props.payForFileFunc}
                     buyFileFunc={this.props.buyFileFunc}
                     isPlayingFile={this.props.isPlayingFile}
                     setCurrentFile={this.props.setCurrentFile}
 				/>
-				<div className="" style={{width: "100%", marginTop: "-5px"}}>
-					<hr style={{marginTop: "25px", marginBottom: "-15px"}} />
-					<button className="btn btn-sm btn-outline-secondary" style={{borderColor: "#333", color: "#333", margin: "0px auto", display:"block", backgroundColor:"#fff"}} onClick={this.toggleSeeMore}>{this.state.extendedView ? "See Less" : "See More"}</button>
-				</div>
 			</div>
 		);
 	}
