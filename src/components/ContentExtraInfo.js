@@ -14,7 +14,6 @@ class ContentExtraInfo extends Component {
 			extendedView: false
 		}
 
-		// this.setDescriptionAndFiles = this.setDescriptionAndFiles.bind(this);
 		this.toggleSeeMore = this.toggleSeeMore.bind(this);
 	}
 
@@ -22,25 +21,8 @@ class ContentExtraInfo extends Component {
 		this.setState({ extendedView: !this.state.extendedView })
 	}
 	render() {
-		let niceTime, description, artifact;
-
-		if (this.props.Artifact) {
-			artifact = this.props.artifact;
-			niceTime = moment(artifact.getTimestamp() * 1000).calendar(null, {sameElse: "MMMM Do YYYY"});
-			description = artifact.getDescription();
-		}
-
-
 		return (
 			<div>
-				{/*<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.props.artifactState.isFetching ? "loading..." : niceTime}</strong></p>*/}
-				{/*<p style={this.state.extendedView ?*/}
-					{/*{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"}*/}
-					{/*:*/}
-					{/*{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap", maxHeight:"150px", textOverflow: "ellipsis", overflow: "hidden"}}*/}
-				{/*>*/}
-					{/*<Linkify>{this.props.artifactState.isFetching ? "loading..." : description}</Linkify>*/}
-				{/*</p>*/}
 				<FilesTable
 					artifact={this.props.artifact}
 					activeFile={this.props.activeFile}

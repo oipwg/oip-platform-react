@@ -52,17 +52,18 @@ class ContentInfo extends Component {
 
                 </div>
 
-
-				<ContentExtraInfo
-					artifact={this.props.artifact}
-					artifactState={this.props.artifactState}
-					activeFile={this.props.activeFile}
-                    filePlaylist={this.props.filePlaylist}
-                    payForFileFunc={this.props.payForFileFunc}
-                    buyFileFunc={this.props.buyFileFunc}
-                    isPlayingFile={this.props.isPlayingFile}
-                    setCurrentFile={this.props.setCurrentFile}
-				/>
+                <div className="row no-gutters">
+                    <ContentExtraInfo
+                        artifact={this.props.artifact}
+                        artifactState={this.props.artifactState}
+                        activeFile={this.props.activeFile}
+                        filePlaylist={this.props.filePlaylist}
+                        payForFileFunc={this.props.payForFileFunc}
+                        buyFileFunc={this.props.buyFileFunc}
+                        isPlayingFile={this.props.isPlayingFile}
+                        setCurrentFile={this.props.setCurrentFile}
+                    />
+                </div>
 			</div>
 		);
 	}
