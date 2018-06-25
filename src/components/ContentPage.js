@@ -59,7 +59,7 @@ class ContentPage extends Component {
                                     </div>
                                     : ""}
                             </div>
-                            <div id='suggested' className="suggested-content col-12 col-md-3 mt-4">
+                            <div id='suggested' className="suggested-content col-12 col-md-3  mt-4 mt-md-1">
                                 <h5>Suggested Content</h5>
                                 {this.props.artifactList ? (this.props.artifactList.items.map(function(artifact, i){
                                     return <ContentCard

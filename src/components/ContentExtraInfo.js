@@ -33,14 +33,14 @@ class ContentExtraInfo extends Component {
 
 		return (
 			<div>
-				<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.props.artifactState.isFetching ? "loading..." : niceTime}</strong></p>
-				<p style={this.state.extendedView ?
-					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"}
-					:
-					{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap", maxHeight:"150px", textOverflow: "ellipsis", overflow: "hidden"}}
-				>
-					<Linkify>{this.props.artifactState.isFetching ? "loading..." : description}</Linkify>
-				</p>
+				{/*<p style={{marginLeft: "0px", fontSize: "14px"}}>Published: <strong>{this.props.artifactState.isFetching ? "loading..." : niceTime}</strong></p>*/}
+				{/*<p style={this.state.extendedView ?*/}
+					{/*{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap"}*/}
+					{/*:*/}
+					{/*{textIndent: "40px", marginTop: "10px", whiteSpace: "pre-wrap", maxHeight:"150px", textOverflow: "ellipsis", overflow: "hidden"}}*/}
+				{/*>*/}
+					{/*<Linkify>{this.props.artifactState.isFetching ? "loading..." : description}</Linkify>*/}
+				{/*</p>*/}
 				<FilesTable
 					artifact={this.props.artifact}
 					activeFile={this.props.activeFile}

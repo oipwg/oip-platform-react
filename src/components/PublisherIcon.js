@@ -45,9 +45,9 @@ class PublisherIcon extends Component {
 	}
 	render() {
 		return (
-			<div className="userImage" >
+			<div className="publisher-image-container" >
 				<img style={{width: this.props.width, maxWidth: this.props.maxWidth, height: this.props.height, maxHeight: this.props.maxHeight}}
-					 className="border-0" ref={image => this.image = image} src={this.state.avatarSrc} alt="Pub Icon" />
+					 className="border-0 publisher-image" ref={image => this.image = image} src={this.state.avatarSrc} alt="Pub Icon" />
                 <span style={{fontSize: 13}} className="card-subtitle ml-2 text-muted">{this.props.pubName}</span>
 			</div>
 		);
