@@ -35,7 +35,7 @@ class ContentPage extends Component {
                 />
                 <div className="content-page container-fluid">
                     <div className="margin-container" style={{marginLeft: "5%", marginRight: "5%"}}>
-                        <div className="row" style={{marginTop: "30px"}}>
+                        <div className="row no-gutters" style={{marginTop: "30px"}}>
                             <div id="content-info" className="content-info col-12 col-md-9" >
                                 <ContentInfo
                                     artifact={this.props.artifact}
@@ -59,8 +59,8 @@ class ContentPage extends Component {
                                     </div>
                                     : ""}
                             </div>
-                            <div id='suggested' className="suggested-content col-12 col-md-3  mt-4 mt-md-1">
-                                <h5>Suggested Content</h5>
+                            <div id='suggested' className="suggested-content col-12 col-md-3  mt-4 mt-md-0 pl-md-3">
+                                <h6>Suggested Content</h6>
                                 {this.props.artifactList ? (this.props.artifactList.items.map(function(artifact, i){
                                     return <ContentCard
                                         key={i}

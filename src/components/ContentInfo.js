@@ -26,28 +26,32 @@ class ContentInfo extends Component {
 
 		return (
 			<div className="content-info-container">
-				<div className="row" style={{wordWrap: "break-word"}}>
-                    <div className="pub-icon col-1 d-flex justify-content-center">
-                        <Link to={"/pub/" + publisher}>
-                            {this.props.artifactState.isFetching ? "" : <PublisherIcon id={publisher} /> }
-                        </Link>
-                    </div>
-                    <div className="content-title order last col d-flex justify-content-start align-items-center">
-                        <h5 className="m-0">{this.props.artifactState.isFetching ? "loading..." : title}</h5>
-                    </div>
-                    <div className="publisher-buttons col-12 d-flex justify-content-end align-items-center">
+                <div className="row no-gutters">
+
+                    <div className="col-sm-6 col-12 order-2 mt-2 mt-sm-0"><h4 className="m-0">{this.props.artifactState.isFetching ? "loading..." : title}</h4></div>
+                    <div className="publisher-social-buttons col-sm-6 col-12 d-flex justify-content-end order-1 order-sm-2">
                         <ShareButton />
                         <TipButtons artifact={this.props.artifact}  />
                         <ReportButton />
                     </div>
-				</div>
-
-                <div className="publisher-body row">
-                    <div className="col-1 d-flex"/>
-                    <div className="pub-name d-flex col justify-content-start align-items-center">
-                        {this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
+                    <div className="row no-gutters w-100 order-3">
+                        <div className="pub-content-info">
+                            <span className="font-weight-light text-muted" style={{fontSize: "13px"}}>Published on {niceTime}</span>
+                        </div>
                     </div>
                 </div>
+                <div className="row no-gutters mt-3">
+                    <div className="d-flex" style={{width: "116px"}}>
+                        <Link className="w-100" to={"/pub/" + publisher}>
+                            {this.props.artifactState.isFetching ? "" : <PublisherIcon maxHeight={"40px"} maxWidth={"100%"} id={publisher} /> }
+                        </Link>
+                        <div className="ml-2 font-weight-light">
+                            {this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
+                        </div>
+                    </div>
+
+                </div>
+
 
 				<ContentExtraInfo
 					artifact={this.props.artifact}
