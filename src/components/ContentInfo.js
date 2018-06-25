@@ -41,13 +41,13 @@ class ContentInfo extends Component {
                     </div>
                 </div>
                 <div className="row no-gutters mt-3">
-                    <div className="d-flex" style={{width: "116px"}}>
+                    <div className="d-flex" style={{width: "40px"}}>
                         <Link className="w-100" to={"/pub/" + publisher}>
                             {this.props.artifactState.isFetching ? "" : <PublisherIcon maxHeight={"40px"} maxWidth={"100%"} id={publisher} /> }
                         </Link>
-                        <div className="ml-2 font-weight-light">
-                            {this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
-                        </div>
+                    </div>
+                    <div className="ml-2 font-weight-light">
+                        {this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
                     </div>
 
                 </div>
