@@ -168,7 +168,7 @@ class AudioContainer extends Component {
 				this.nextSong();
 
 			if (this.props.artifact){
-				ipfsHash = this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail());
+				ipfsHash = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail().getFilename()));
 				songURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.activeFile.info.getFilename()));
 				artist = this.props.artifact.getDetail("artist");
 			}
@@ -194,7 +194,7 @@ class AudioContainer extends Component {
                                 {artist ? artist : "Unknown"} - {name ? name : "Unknown"}
 							</h3>
 							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
-								{/*<IPFSImage hash={ipfsHash} onImageLoad={this.onImageLoad} />*/}
+								<img src={ipfsHash} alt="IPFS image"/>
 							</div>
 						</div>
 						{playlistLen > 1 ?
