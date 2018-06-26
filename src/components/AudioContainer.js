@@ -35,7 +35,6 @@ class AudioContainer extends Component {
 		this.onAudioPlay = this.onAudioPlay.bind(this);
 		this.onAudioPause = this.onAudioPause.bind(this);
 		this.nextSong = this.nextSong.bind(this);
-
 	}
 
 	componentWillUnmount(){
@@ -83,7 +82,8 @@ class AudioContainer extends Component {
         }
     }
 
-	onImageLoad(img){
+	onImageLoad(e){
+        const img = e.target;
 		try {
 			let colorThief = new ColorThief();
 			let palette = colorThief.getPalette(img, 2);
@@ -161,7 +161,6 @@ class AudioContainer extends Component {
 
 		if (this.props.activeFile && this.props.activeFile.info){
 			name = this.props.activeFile.info.getDisplayName() ? this.props.activeFile.info.getDisplayName() : this.props.activeFile.info.getFilename();
-			//Ryan Chacon: added && !this.props.ActiveFile.hasPaid so that the paywall will be false after they paid for a play even though they don't own the artifact
 			paywall = ((this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) || (!this.props.activeFile.owned && this.props.activeFile.isPaid && !this.props.activeFile.hasPaid));
 
 			if (this.props.activeFile.currentTime === this.props.activeFile.duration && this.props.activeFile.currentTime !== 0 && this.props.activeFile.isPlaying)
@@ -174,7 +173,7 @@ class AudioContainer extends Component {
 			}
 		}
 		if (this.props.filePlaylist){
-			playlistLen = Object.keys(this.props.filePlaylist).length - 1; //14
+			playlistLen = Object.keys(this.props.filePlaylist).length - 1;
 		}
 
 		return (
@@ -194,7 +193,7 @@ class AudioContainer extends Component {
                                 {artist ? artist : "Unknown"} - {name ? name : "Unknown"}
 							</h3>
 							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
-								<img src={ipfsHash} alt="IPFS image"/>
+								<img src={ipfsHash} alt="IPFS image" crossorigin="Anonymous" onLoad={this.onImageLoad}/>
 							</div>
 						</div>
 						{playlistLen > 1 ?
