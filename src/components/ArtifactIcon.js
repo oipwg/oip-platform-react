@@ -39,7 +39,7 @@ const ArtifactIcon = (props) => {
 		}
 
 		return (
-			<div classname="artifact-icon" >
+			<div className="artifact-icon" >
 				{ paid ? <span className="icon icon-credit" style={{color: "rgb(63, 255, 63)"}}></span> : ''}
 				<span className={"icon icon-" + icon}></span>
 			</div>
