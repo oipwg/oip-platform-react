@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-import Linkify from 'react-linkify';
 import PropTypes from "prop-types";
 
 import FilesTable from './FilesTable.js';

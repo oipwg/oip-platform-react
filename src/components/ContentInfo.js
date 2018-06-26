@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 import moment from "moment/moment";
+import Linkify from 'react-linkify';
 
 import ContentExtraInfo from './ContentExtraInfo.js';
 import ShareButton from './ShareButton.js';
@@ -49,8 +50,11 @@ class ContentInfo extends Component {
                     <div className="ml-2 font-weight-light">
                         {this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
                     </div>
-
                 </div>
+                {/*<div className="row no-gutters ">*/}
+                    {/*<div className="d-flex" style={{width: "40px"}}/>*/}
+                    {/*<Linkify>{description}</Linkify>*/}
+                {/*</div>*/}
 
                 <div className="row no-gutters">
                     <ContentExtraInfo
