@@ -21,7 +21,7 @@ class ContentExtraInfo extends Component {
 	render() {
 		return (
 			<div className="row no-gutters w-100">
-                <div className="mb-3" style={{width: "100%", marginTop: "-5px"}}>
+                <div className="my-3" style={{width: "100%", marginTop: "-5px"}}>
                     <hr style={{marginTop: "25px", marginBottom: "-15px"}} />
                     <button className="btn btn-sm btn-dark mx-auto" style={{display:"block"}} onClick={this.toggleSeeMore}>{this.state.extendedView ? "See Less" : "See More"}</button>
                 </div>

@@ -11,6 +11,20 @@ import ReportButton from './ReportButton.js';
 import PublisherIcon from './PublisherIcon.js';
 
 class ContentInfo extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            expandDescription: false,
+        }
+
+        this.expandDescription = this.expandDescription.bind(this)
+    }
+
+    expandDescription() {
+        this.setState({expandDescription: !this.state.expandDescription})
+    }
+
 	render() {
     let publisher, pubName, title, artifact, niceTime, description;
 
@@ -24,6 +38,10 @@ class ContentInfo extends Component {
         // paid = artifact ? artifact.isPaid() : false; declare above ^ let...
         //                            {this.props.artifactState.isFetching ? "" : <ArtifactIcon artifact={this.props.artifact} />}
 	}
+
+	const descriptionToggle = this.state.expandDescription ? "SHOW LESS" : "SHOW MORE";
+    const descriptionExpandStyle = this.state.expandDescription ? {wordBreak: "break-word"} : {whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"};
+    const descriptionStyle = {...descriptionExpandStyle, fontSize: "14px"}
 
 		return (
 			<div className="content-info-container">
@@ -42,19 +60,22 @@ class ContentInfo extends Component {
                     </div>
                 </div>
                 <div className="row no-gutters mt-4">
-                    <div className="d-flex" style={{width: "40px"}}>
+                    <div className="d-flex col-1">
                         <Link className="w-100" to={"/pub/" + publisher}>
-                            {this.props.artifactState.isFetching ? "" : <PublisherIcon maxHeight={"40px"} maxWidth={"100%"} id={publisher} /> }
+                            {this.props.artifactState.isFetching ? "" : <PublisherIcon className={""} maxHeight={"40px"} maxWidth={"100%"} id={publisher} /> }
                         </Link>
                     </div>
-                    <div className="ml-2 font-weight-light">
-                        {this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
+                    <div className="col-10 ml-3">
+                        <div className="mb-1">
+                            {this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
+                        </div>
+                        <div className="row no-gutters">
+                            <div className="col-12" style={descriptionStyle}><Linkify>{description}</Linkify></div>
+                            <div className="row"><p onClick={this.expandDescription} className="col text-muted mt-2" style={{fontSize: "12px", cursor: "pointer"}}>{descriptionToggle}</p></div>
+                        </div>
                     </div>
                 </div>
-                {/*<div className="row no-gutters ">*/}
-                    {/*<div className="d-flex" style={{width: "40px"}}/>*/}
-                    {/*<Linkify>{description}</Linkify>*/}
-                {/*</div>*/}
+
 
                 <div className="row no-gutters">
                     <ContentExtraInfo
