@@ -11,7 +11,7 @@ import WalletWrapper from './WalletWrapper.js';
 
 const UserPage = (props) => {
 		return (
-			<div className="user-page-wrapper h-100 w-100 position-fixed">
+			<div className="user-page-wrapper h-100 w-100">
 			{(() => {
 				switch(props.match.params.page){
 					case "artifacts":

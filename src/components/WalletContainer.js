@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import SendButton from './SendButton.js';
+
 
 import CoinCard from './CoinCard.js';
 import TransactionTable from './TransactionTable.js'
 
 class WalletContainer extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            advancedWalletToggle: false
+        }
+        this.advancedWalletToggle = this.advancedWalletToggle.bind(this);
+    }
+
+    advancedWalletToggle() {
+        this.setState({advancedWalletToggle: !this.state.advancedWalletToggle})
+    }
+
 	render() {
         console.log("Wallet Container: ", this.props)
         return (
 			<div className="container">
-                <div className="row no-gutters mt-3 bg-white shadow-sm">
+                {/*Basic*/}
+                <div className="row no-gutters bg-white shadow-sm position-relative" style={{top: "39px"}}>
                     <div className="col-12">
                         <div className="pb-2 pt-3 pl-3 text-primary" style={{fontWeight: "600"}}>Wallet</div>
                     </div>
@@ -22,13 +38,26 @@ class WalletContainer extends Component {
                     <hr className="w-100 m-1"/>
                     <div className="row no-gutters mt-2 w-100">
                         <div className="col-12 p-3 d-flex justify-content-end">
-                            <button className="btn btn-outline-success"> Send</button>
+                            <button className="btn btn-outline-warning"> Backup</button>
                             <div className="mx-1"/>
-                            <button className="btn btn-outline-danger"> Send</button>
+                            <button className="btn btn-outline-danger"> Receive</button>
                             <div className="mx-1"/>
-                            <button className="btn btn-outline-warning"> Send</button>
+                            <button className="btn btn-outline-primary"> Send </button>
                         </div>
                     </div>
+                    <hr className="w-100 m-1"/>
+                    <div className="row no-gutters mt-2 w-100">
+                        <div className="col-12 p-1 d-flex justify-content-end">
+                            <p className="pr-2 mb-2 font-weight-light"
+                                style={{fontSize: "13px", cursor: "pointer"}}
+                                onClick={this.advancedWalletToggle}
+                            >Configure Advanced Settings</p>
+                        </div>
+                    </div>
+                </div>
+                {/*Advanced*/}
+                <div className="row no-gutters mt-3 bg-white shadow-sm" style={this.state.advancedWalletToggle ? null : {display: "none"}}>
+                    <div className="col-12"><span className="p-2">Advanced Config</span></div>
                 </div>
 			</div>
 		);
