@@ -7,10 +7,11 @@ import WalletContainer from './WalletContainer.js';
 import SettingsContainer from './SettingsContainer.js';
 import ViewArtifactContainer from './ViewArtifactContainer.js';
 import EditArtifactContainer from './EditArtifactContainer.js';
+import WalletWrapper from './WalletWrapper.js';
 
 const UserPage = (props) => {
 		return (
-			<div>
+			<div className="user-page-wrapper h-100 w-100 position-fixed">
 			{(() => {
 				switch(props.match.params.page){
 					case "artifacts":
@@ -27,7 +28,7 @@ const UserPage = (props) => {
 					case "upload":
 						return <PublishContainer />
 					case "wallet":
-						return <WalletContainer />
+						return <WalletWrapper wallet={props.wallet}/>
 					case "settings":
 						return <SettingsContainer />
 					default:

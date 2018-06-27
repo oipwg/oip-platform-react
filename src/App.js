@@ -102,7 +102,7 @@ class App extends Component {
                                 <Route path="/register" component={RegisterPage} />
                                 <Route path="/search/:id" render={props => <SearchPage  {...props} />} />
                                 <Route path="/pub/:id" render={props => <PublisherPage {...props} />} />
-                                <Route path="/user/:page" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
+                                <Route path="/user/:page" render={props => ( this.props.User.isLoggedIn ? ( <UserPage wallet={this.props.Wallet} {...props} /> ) : ( <Redirect to="/"/> ))} />
 								<Route path="/user/:page/:type" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
 								<Route path="/user/:page/:type/:id" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
                                 <Route path="/:id" render={props => <ContentPageWrapper {...props} />}/>
@@ -133,7 +133,8 @@ function mapStateToProps(state) {
         User: state.User,
         Core: state.Core.Core,
         NotificationSystem: state.NotificationSystem.NotificationSystem,
-		piwik: state.Piwik.piwik
+		piwik: state.Piwik.piwik,
+        Wallet: state.Wallet
     }
 }
 

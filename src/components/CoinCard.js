@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import fileDownload from 'js-file-download';
+import PropTypes from 'prop-types';
 
 import BuyButton from './BuyButton.js';
 import QRButton from './QRButton.js';
 import SendButton from './SendButton.js';
 import SwapButton from './SwapButton.js';
 import FaucetButton from './SwapButton.js';
-
-import PaperWallet from './PaperWallet.js';
 
 import btc_logo from '../assets/img/btcflat.svg';
 import flo_logo from '../assets/img/flo.svg';
@@ -139,25 +138,29 @@ class CoinCard extends Component {
 			currency = 'btc';
 
 		return (
-			<div className={"col-12 col-sm-6 col-md-4 order-" + order}>
-				<div className="card">
-					<div className="card-body text-center">
-						<h3 className="card-title"><img src={logo} style={{height: "50px"}} alt={name} /> {name}</h3>
-						<h6 className="card-subtitle mb-2 text-muted" style={{marginBottom: "12px !important"}}>{balance} {presymbol} ({symbol})</h6>
-						<h4 className="card-subtitle mb-2 text-muted"><span style={{color: "#28a745"}}>${this.props.info.usd ? parseFloat(this.props.info.usd).toFixed(2) : "0.00"}</span></h4>
+			<div className={"col-12 col-sm-6 col-md-4 m-2"}>
+				<div className="card border-0 shadow rounded">
+					<div className="card-body">
+						<div className="card-title"><img src={logo} style={{height: "40px"}} alt={name} /> {name}</div>
+						<div className="card-subtitle mb-2 text-muted" style={{marginBottom: "12px !important"}}>{balance} {presymbol} ({symbol})</div>
+						<div className="card-subtitle mb-2 text-muted"><span style={{color: "#28a745"}}>${this.props.info.usd ? parseFloat(this.props.info.usd).toFixed(2) : "0.00"}</span></div>
 						<div style={{height: "10px"}}></div>
-						{/*<button className="btn btn-sm btn-outline-secondary" style={{padding: "2px 5px"}}><span className="icon icon-cog"></span> Manage</button>*/}
 						{faucet ? <FaucetButton coinName={name} address={mainAddress} currency={currency} /> : ""}
 						{buy === "coinbase" ? <BuyButton coinName={name} address={mainAddress} currency={currency} /> : ""}
 						{trade ? <SwapButton coinName={name} address={mainAddress} /> : ""}
 						<QRButton coinName={name} address={mainAddress} />
 						<SendButton coinName={name} coin={this.props.coin} coinCode={currencyCode} maxSend={this.props.info.balance}  />
 					</div>
-					{this.state.printPaperWallet ? <PaperWallet print={true} logo={logo} bg={paperWalletBG} public={mainAddress} private={privKey} onPrint={this.paperWalletPrinted} /> : ""}
 				</div>
 			</div>
 		);
 	}
+}
+
+CoinCard.propTypes = {
+    key: PropTypes.object,
+    coin: PropTypes.object.isRequired,
+    info: PropTypes.object.isRequired
 }
 
 export default CoinCard;

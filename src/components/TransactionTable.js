@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // Import React Table
 import ReactTable from "react-table";
@@ -112,7 +113,7 @@ class TransactionTable extends Component {
 		}
 
 		return (
-			<div>
+			<div className="col-12">
 				<ReactTable
 					data={transactions}
 					columns={[
@@ -158,6 +159,10 @@ class TransactionTable extends Component {
 			</div>
 		);
 	}
+}
+
+TransactionTable.propTypes = {
+    transactions: PropTypes.object.isRequired
 }
 
 export default TransactionTable;

@@ -1,71 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { COIN_CONFIGS } from './CoinCard.js';
+import PropTypes from 'prop-types';
+
 import CoinCard from './CoinCard.js';
 import TransactionTable from './TransactionTable.js'
 
 class WalletContainer extends Component {
-	toggleSendModal(){
-		this.setState({ sendModal: !this.state.sendModal });
-	}
-	getRandomInt(min, max) {
-		min = Math.ceil(min);
-		max = Math.floor(max);
-		return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-	}
 	render() {
-		var coins = this.props.Wallet;
-		var transactions = {
-			queued: [],
-			unconfirmed: [],
-			confirmed: { txs: [] }
-		};
-
-		for (var key in coins){
-			if (typeof coins[key] !== "object"){
-				delete coins[key];
-			} else {
-				if (coins[key].transactions){
-					var coinInfo = {}
-					try {
-						coinInfo = {
-							name: COIN_CONFIGS[key.toLowerCase()].name,
-							logo: COIN_CONFIGS[key.toLowerCase()].logo
-						}
-					} catch(e) {}
-					for (var i = 0; i < coins[key].transactions.queued.length; i++) {
-						transactions.queued.push({...coins[key].transactions.queued[i], coin: coinInfo});
-					}
-					// for (var i = 0; i < coins[key].transactions.unconfirmed.length; i++) {
-					// 	transactions.unconfirmed.push({...coins[key].transactions.unconfirmed[i], coin: coinInfo});
-					// }
-					for (var i = 0; i < coins[key].transactions.confirmed.txs.length; i++) {
-						transactions.confirmed.txs.push({...coins[key].transactions.confirmed.txs[i], coin: coinInfo});
-					}
-				}
-			}
-		}
-
 		return (
 			<div className="container">
-				<div className="col-12">
-					<h2 className="text-center">Wallet</h2>
-				</div>
-				<div className="col-12">
-					<div className="row">
-						{Object.keys(coins).map(coin => {
-							if (coin === "bitcoin_testnet")
-								return <div key={coin} />
-
-							return <CoinCard key={coin} coin={coin} info={this.props.Wallet[coin]} />
-						})}
-					</div>
-				</div>
-				<br />
-				<div className="col-12">
-					<h5 className="text-center">Transactions</h5>
-					<TransactionTable transactions={transactions} />
-				</div>
+                <div className="row no-gutters mt-3 bg-white shadow-sm">
+                    <div className="col-12">
+                        <div className="pb-2 pt-3 pl-3 text-primary" style={{fontWeight: "600"}}>Wallet</div>
+                    </div>
+                    <hr className="w-100 m-1"/>
+                    <div className="row no-gutters mt-2 w-100">
+                        <div className="col py-2 pl-3 d-flex justify-content-start font-weight-light mt-2">Total Balance</div>
+                        <div className="col py-2 pr-3 d-flex justify-content-end"><h4 className="text-success my-2">$432.44</h4></div>
+                    </div>
+                    <hr className="w-100 m-1"/>
+                    <div className="row no-gutters mt-2 w-100">
+                        <div className="col-12 p-3 d-flex justify-content-end">
+                            <button className="btn btn-outline-success"> Send</button>
+                            <div className="mx-1"/>
+                            <button className="btn btn-outline-danger"> Send</button>
+                            <div className="mx-1"/>
+                            <button className="btn btn-outline-warning"> Send</button>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		);
 	}
@@ -77,4 +40,26 @@ function mapStateToProps(state) {
 	}
 }
 
+WalletContainer.propTypes = {
+    wallet: PropTypes.object,
+    coins: PropTypes.object.isRequired,
+    transactions: PropTypes.object.isRequired
+
+}
+
 export default connect(mapStateToProps)(WalletContainer);
+
+// {/*<div className="">*/}
+// {/*<h2 className="">Wallet</h2>*/}
+// {/*</div>*/}
+// {/*<div className="">*/}
+// {/*{Object.keys(this.props.coins).map(coin => {*/}
+// {/*if (coin === "bitcoin_testnet")*/}
+// {/*return <div key={coin} />*/}
+//
+// {/*return <CoinCard key={coin} coin={coin} info={this.props.wallet[coin]} />*/}
+// {/*})}*/}
+// {/*</div>*/}
+//
+// {/*<h5 className="col-12 text-center mb-3">Transactions</h5>*/}
+// {/*<TransactionTable transactions={this.props.transactions} />*/}

@@ -5,10 +5,9 @@ const UserNav = (props) => {
     return (
         <div>
             <div className="dropdown">
-                <button className="login-button btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                <button className="login-button btn btn-outline-dark border-0 dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {props.pubName}
-                    <span style={{color: 'green'}} className="ml-1">{"$" + parseFloat(props.balance).toFixed(2)}</span>
                 </button>
                 <div style={{left: -26}} className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <Link className="dropdown-item d-flex align-items-center justify-content-start" to="/user/upload" ><i style={{color: 'red', width: 20}} className="fas fa-cloud-upload-alt mr-2"/>Upload</Link>
