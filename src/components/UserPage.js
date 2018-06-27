@@ -3,7 +3,6 @@ import React from 'react';
 import PublishContainer from './PublishContainer.js';
 import MyArtifactsContainer from './MyArtifactsContainer.js';
 import AnalyticsContainer from './AnalyticsContainer.js';
-import WalletContainer from './WalletContainer.js';
 import SettingsContainer from './SettingsContainer.js';
 import ViewArtifactContainer from './ViewArtifactContainer.js';
 import EditArtifactContainer from './EditArtifactContainer.js';
