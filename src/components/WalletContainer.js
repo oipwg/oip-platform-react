@@ -24,9 +24,9 @@ class WalletContainer extends Component {
 	render() {
         console.log("Wallet Container: ", this.props)
         return (
-			<div className="container">
+			<div className="container position-relative" style={{top: "39px"}}>
                 {/*Basic*/}
-                <div className="row no-gutters bg-white shadow-sm position-relative" style={{top: "39px"}}>
+                <div className="row no-gutters bg-white shadow-sm" >
                     <div className="col-12">
                         <div className="pb-2 pt-3 pl-3 text-primary" style={{fontWeight: "600"}}>Wallet</div>
                     </div>
@@ -48,7 +48,7 @@ class WalletContainer extends Component {
                     <hr className="w-100 m-1"/>
                     <div className="row no-gutters mt-2 w-100">
                         <div className="col-12 p-1 d-flex justify-content-end">
-                            <p className="pr-2 mb-2 font-weight-light"
+                            <p className="pr-2 py-2 mb-2 font-weight-light"
                                 style={{fontSize: "13px", cursor: "pointer"}}
                                 onClick={this.advancedWalletToggle}
                             >Configure Advanced Settings</p>
@@ -57,8 +57,15 @@ class WalletContainer extends Component {
                 </div>
                 {/*Advanced*/}
                 <div className="row no-gutters mt-3 bg-white shadow-sm" style={this.state.advancedWalletToggle ? null : {display: "none"}}>
-                    <div className="col-12"><span className="p-2">Advanced Config</span></div>
+                    <div className="col-12"><span className="p-2">wtf magic</span></div>
                 </div>
+                {/*Transcations*/}
+                <div className="row no-gutters mt-3 bg-white shadow-sm" style={this.state.advancedWalletToggle ? {display: "none"} : null }>
+                    <div className="col-12">
+                        <TransactionTable transactions={this.props.transactions}/>
+                    </div>
+                </div>
+
 			</div>
 		);
 	}
