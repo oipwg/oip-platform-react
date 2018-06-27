@@ -37,12 +37,22 @@ class WalletWrapper extends React.Component {
                 }
             }
         }
+
+        let totalUSDBalance = 0;
+
+        for (let coin in coins) {
+            if (coin !== "bitcoin_testnet") {
+                totalUSDBalance += coins[coin].usd
+            }
+        }
+
         return (
             <div className="wallet-wrapper h-100 w-100 position-fixed" style={{backgroundColor: "#F2F6F9"}}>
                 <WalletContainer
                     wallet={this.props.wallet}
                     coins={coins}
                     transactions={transactions}
+                    totalUSDBalance={totalUSDBalance}
                 />
             </div>
         )

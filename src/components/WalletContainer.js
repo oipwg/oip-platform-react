@@ -7,7 +7,8 @@ import TransactionTable from './TransactionTable.js'
 
 class WalletContainer extends Component {
 	render() {
-		return (
+        console.log("Wallet Container: ", this.props)
+        return (
 			<div className="container">
                 <div className="row no-gutters mt-3 bg-white shadow-sm">
                     <div className="col-12">
@@ -16,7 +17,7 @@ class WalletContainer extends Component {
                     <hr className="w-100 m-1"/>
                     <div className="row no-gutters mt-2 w-100">
                         <div className="col py-2 pl-3 d-flex justify-content-start font-weight-light mt-2">Total Balance</div>
-                        <div className="col py-2 pr-3 d-flex justify-content-end"><h4 className="text-success my-2">$432.44</h4></div>
+                        <div className="col py-2 pr-3 d-flex justify-content-end"><h4 className="text-success my-2">${parseFloat(this.props.totalUSDBalance).toFixed(2)}</h4></div>
                     </div>
                     <hr className="w-100 m-1"/>
                     <div className="row no-gutters mt-2 w-100">
@@ -43,7 +44,8 @@ function mapStateToProps(state) {
 WalletContainer.propTypes = {
     wallet: PropTypes.object,
     coins: PropTypes.object.isRequired,
-    transactions: PropTypes.object.isRequired
+    transactions: PropTypes.object.isRequired,
+    totalUSDBalance: PropTypes.number
 
 }
 
