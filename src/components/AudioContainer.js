@@ -193,7 +193,7 @@ class AudioContainer extends Component {
                                 {artist ? artist : "Unknown"} - {name ? name : "Unknown"}
 							</h3>
 							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
-                                <img src={ipfsHash} alt="IPFS" crossorigin="Anonymous" onLoad={this.onImageLoad}/>
+                                <img src={ipfsHash} alt="IPFS" crossOrigin="Anonymous" onLoad={this.onImageLoad}/>
 							</div>
 						</div>
 						{playlistLen > 1 ?
