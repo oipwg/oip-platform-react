@@ -53,11 +53,11 @@ class WalletContainer extends Component {
 				</div>
 				<div className="col-12">
 					<div className="row">
-						{Object.keys(coins).map(key => {
-							if (key === "bitcoin_testnet")
-								return <div key={key} />
+						{Object.keys(coins).map(coin => {
+							if (coin === "bitcoin_testnet")
+								return <div key={coin} />
 
-							return <CoinCard key={key} coin={key} info={this.props.Wallet[key]} />
+							return <CoinCard key={coin} coin={coin} info={this.props.Wallet[coin]} />
 						})}
 					</div>
 				</div>

@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-
 import fileDownload from 'js-file-download';
 
 import BuyButton from './BuyButton.js';
@@ -144,18 +141,6 @@ class CoinCard extends Component {
 		return (
 			<div className={"col-12 col-sm-6 col-md-4 order-" + order}>
 				<div className="card">
-					<ButtonDropdown isOpen={this.state.settingsDropdown} toggle={this.toggleSettingsMenu}>
-						<DropdownToggle className="btn btn-sm btn-none-grey" style={{width: "34px", right: "0px", position: "absolute"}}>
-							<span className="fa fa-cog"></span>
-						</DropdownToggle>
-						<DropdownMenu>
-							<DropdownItem header>Settings</DropdownItem>
-							<DropdownItem onClick={this.printPaperWallet}>Print Paper Wallet</DropdownItem>
-							<DropdownItem onClick={this.downloadBackup}>Download Backup</DropdownItem>
-							<DropdownItem divider />
-							<DropdownItem disabled>Advanced</DropdownItem>
-						</DropdownMenu>
-					</ButtonDropdown>
 					<div className="card-body text-center">
 						<h3 className="card-title"><img src={logo} style={{height: "50px"}} alt={name} /> {name}</h3>
 						<h6 className="card-subtitle mb-2 text-muted" style={{marginBottom: "12px !important"}}>{balance} {presymbol} ({symbol})</h6>
