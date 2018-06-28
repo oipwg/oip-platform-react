@@ -47,7 +47,7 @@ class WalletWrapper extends React.Component {
         }
 
         return (
-            <div className="wallet-wrapper h-100 w-100" style={{backgroundColor: "#F2F6F9"}}>
+            <div className="wallet-wrapper" style={{backgroundColor: "#F2F6F9"}}>
                 <WalletContainer
                     wallet={this.props.wallet}
                     coins={coins}

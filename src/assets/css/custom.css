@@ -1,8 +1,8 @@
-#root, .App, .Main, .user-page-wrapper, .wallet-wrapper {
-    height: 100%;
+html, body, #root, #root>div {
+    height: 100%
 }
 .navbar-header {
-  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.07);
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.07);
 }
 .navbar-brand-img {
     height: 32px;
@@ -10,11 +10,5 @@
 }
 .ProgressBar-elapsed {
     transition: width 0.5s linear;
-}
-html, body {
-    height: 100%;
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
 }
 

@@ -24,7 +24,7 @@ class WalletContainer extends Component {
 	render() {
         console.log("Wallet Container: ", this.props)
         return (
-			<div className="container position-relative" style={{top: "39px"}}>
+			<div className="">
                 {/*Basic*/}
                 <div className="row no-gutters bg-white shadow-sm" >
                     <div className="col-12">
