@@ -94,7 +94,7 @@ class App extends Component {
 						<NotificationSystem ref="NotificationSystem" />
 
 						{/* Include all components that need to be rendered in the main container content */}
-						<div className="Main" style={{overflow: "hidden"}}>
+						<div className="Main">
                             <Switch>
                                 <Route exact path="/" component={Homepage} />
                                 <Route exact path="/login" component={LoginPage} />

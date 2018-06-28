@@ -1,4 +1,4 @@
-html, body, #root, #root>div {
+html, body, #root, #root>div, #root>div>.Main {
     height: 100%
 }
 .navbar-header {

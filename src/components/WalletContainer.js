@@ -24,8 +24,9 @@ class WalletContainer extends Component {
 	render() {
         console.log("Wallet Container: ", this.props)
         return (
-			<div className="">
+			<div className="wallet-container h-100 container pt-4">
                 {/*Basic*/}
+                <div className="custom-margin row no-gutters w-100"/>
                 <div className="row no-gutters bg-white shadow-sm" >
                     <div className="col-12">
                         <div className="pb-2 pt-3 pl-3 text-primary" style={{fontWeight: "600"}}>Wallet</div>
@@ -62,7 +63,37 @@ class WalletContainer extends Component {
                 {/*Transcations*/}
                 <div className="row no-gutters mt-3 bg-white shadow-sm" style={this.state.advancedWalletToggle ? {display: "none"} : null }>
                     <div className="col-12">
-                        <TransactionTable transactions={this.props.transactions}/>
+                        {/*<TransactionTable transactions={this.props.transactions}/>*/}
+                        <table className="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">From</th>
+                                <th scope="col">To</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
