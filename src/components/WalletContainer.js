@@ -23,6 +23,7 @@ class WalletContainer extends Component {
 
 	render() {
         console.log("Wallet Container: ", this.props)
+        const txs = this.props.transactions;
         return (
 			<div className="wallet-container h-100 container pt-4">
                 {/*Basic*/}
@@ -64,7 +65,7 @@ class WalletContainer extends Component {
                 <div className="row no-gutters mt-3 bg-white shadow-sm" style={this.state.advancedWalletToggle ? {display: "none"} : null }>
                     <div className="col-12">
                         {/*<TransactionTable transactions={this.props.transactions}/>*/}
-                        <table className="table table-striped">
+                        <table className="table table-striped table-responsive">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -74,24 +75,56 @@ class WalletContainer extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                            {txs.confirmed.txs.map((tx, index) => {
+                                let fromAddresses = [];
+                                let toAddresses = [];
+                                var amount = 0;
+
+                                for (var i in tx.vin){
+                                    var matched = false;
+                                    for (var j in fromAddresses){
+                                        if (fromAddresses[j] === tx.vin[i].addr){
+                                            matched = true;
+                                        }
+                                    }
+                                    if (!matched){
+                                        fromAddresses.push(tx.vin[i].addr);
+                                    }
+                                }
+
+                                for (var i in tx.vout){
+                                    var addedThisTime = false;
+                                    for (var address in tx.vout[i].scriptPubKey.addresses){
+                                        var matched = false;
+                                        for (var j in toAddresses){
+                                            if (toAddresses[j] === tx.vout[i].scriptPubKey.addresses[address]){
+                                                matched = true;
+                                            }
+                                        }
+                                        for (var j in fromAddresses){
+                                            if (fromAddresses[j] === tx.vout[i].scriptPubKey.addresses[address]){
+                                                matched = true;
+                                            }
+                                        }
+                                        if (!matched){
+                                            toAddresses.push(tx.vout[i].scriptPubKey.addresses[address]);
+                                            if (!addedThisTime){
+                                                addedThisTime = true;
+                                                amount += parseFloat(tx.vout[i].value)
+                                            }
+                                        }
+                                    }
+                                }
+                                console.log("FROM: ", fromAddresses, "TO: ", toAddresses)
+                                return (
+                                    <tr>
+                                        <th scope="row">{index}</th>
+                                        <td>{fromAddresses}</td>
+                                        <td>{toAddresses}</td>
+                                        <td>{amount}</td>
+                                    </tr>
+                                )
+                            })}
                             </tbody>
                         </table>
                     </div>
