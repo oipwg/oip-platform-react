@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SendButton from './SendButton.js';
-
-
 import CoinCard from './CoinCard.js';
-import TransactionTable from './TransactionTable.js'
 
 class WalletContainer extends Component {
     constructor(props) {

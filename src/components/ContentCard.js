@@ -24,12 +24,12 @@ const ContentCard = (props) => {
 
     switch (props.styleContentCard) {
         case "small":
-            styleContentCard = "card col border-0 mb-4 p-1"
+            styleContentCard = "card col border-0 mb-4 p-1";
             break;
         case "medium":
-            styleContentCard = "card col border-0 mb-4 p-1"
+            styleContentCard = "card col border-0 mb-4 p-1";
         case "large":
-            styleContentCard = "card col-6 col-md-4 col-lg-3 col-xl-2 border-0 mb-4 p-1"
+            styleContentCard = "card col-6 col-md-4 col-lg-3 col-xl-2 border-0 mb-4 p-1";
             break;
         default:
             styleContentCard = "card border-0 mb-4 p-1"

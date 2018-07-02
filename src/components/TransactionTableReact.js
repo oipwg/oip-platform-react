@@ -13,7 +13,7 @@ import ltc_logo from '../assets/img/ltcflat.svg';
 
 import demoTxData from './tx-table-data.json';
 
-class TransactionTable extends Component {
+class TransactionTableReact extends Component {
 	constructor(props){
 		super(props);
 
@@ -161,8 +161,8 @@ class TransactionTable extends Component {
 	}
 }
 
-TransactionTable.propTypes = {
+TransactionTableReact.propTypes = {
     transactions: PropTypes.object.isRequired
 }
 
-export default TransactionTable;
+export default TransactionTableReact;
