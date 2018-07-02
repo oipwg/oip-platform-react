@@ -112,7 +112,6 @@ class WalletContainer extends Component {
                                         }
                                     }
                                 }
-                                console.log("FROM: ", fromAddresses, "TO: ", toAddresses)
                                 return (
                                     <tr>
                                         <th scope="row">{index}</th>

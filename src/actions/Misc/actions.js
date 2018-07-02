@@ -5,4 +5,4 @@ export const UPDATE_COIN = 'UPDATE_COIN'
 export const setPageType = pg_type => ({
     type: SET_PAGE_TYPE,
     pg_type
-})
+});

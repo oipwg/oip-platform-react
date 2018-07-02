@@ -54,26 +54,7 @@ class SettingsContainer extends Component {
 							<label htmlFor="exampleInputPassword1">Password</label>
 							<input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
 						</div>
-						<div className="form-group">
-							<label htmlFor="exampleSelect1">Example select</label>
-							<select className="form-control" id="exampleSelect1">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-							</select>
-						</div>
-						<div className="form-group">
-							<label htmlFor="exampleSelect2">Example multiple select</label>
-							<select multiple="" className="form-control" id="exampleSelect2">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-							</select>
-						</div>
+
 						<div className="form-group">
 							<label htmlFor="exampleTextarea">Example textarea</label>
 							<textarea className="form-control" id="exampleTextarea" rows="3"></textarea>
