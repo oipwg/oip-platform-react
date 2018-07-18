@@ -106,10 +106,14 @@ class Playlist extends Component {
 								artifact={_this.props.artifact}
 								btnStyle={file.info.getFilename() === _this.props.activeFile.info.getFilename() ? {backgroundColor: _this.props.bgColor} : {}}
 								// For Payment Buttons
-                                payForFileFunc={_this.props.payForFileFunc}
-                                buyFileFunc={_this.props.buyFileFunc}
                                 isPlayingFile={_this.props.isPlayingFile}
                                 setCurrentFile={_this.props.setCurrentFile}
+                                buyInProgress={_this.props.buyInProgress}
+                                buyError={_this.props.buyError}
+                                paymentError={_this.props.paymentError}
+                                paymentInProgress={_this.props.paymentInProgress}
+                                payForFile={_this.props.payForFile}
+                                buyFile={_this.props.buyFile}
 							/>
 
 						</div>
@@ -129,9 +133,13 @@ Playlist.propTypes = {
     activeFile: PropTypes.object,
     filePlaylist: PropTypes.object,
     setCurrentFile: PropTypes.func,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func,
-    isPlayingFile: PropTypes.func
+    isPlayingFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 }
 
 export default Playlist;

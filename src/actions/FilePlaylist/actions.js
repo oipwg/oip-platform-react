@@ -1,4 +1,3 @@
-
 export const ADD_FILE_TO_PLAYLIST = 'ADD_FILE_TO_PLAYLIST'
 export const PAY_FOR_FILE = 'PAY_FOR_FILE'
 export const BUY_FILE = 'BUY_FILE'

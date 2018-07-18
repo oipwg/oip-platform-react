@@ -14,40 +14,40 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
     dispatch(requestCurrentArtifact());
 
     let state = getState();
-    state.Core.Core.Index.getArtifactFromID(txid, function(artifact){
-        dispatch(recieveCurrentArtifact(artifact));
-
-        let files = artifact.getFiles();
-
-        let publisher = artifact.getMainAddress();
-        let txid = artifact.getTXID();
-
-        for (var i = 0; i < files.length; i++) {
-            dispatch(addFileToPlaylist(files[i], txid + "|" + i, state.Core.Core));
-        }
-
-        if (artifact.getSubtype() === 'Tomogram') {
-            for (var i = 0; i < files.length; i++) {
-                let splitFilename = files[i].getFilename().split(".");
-                let indexToGrab = splitFilename.length - 1;
-                const extension = splitFilename[indexToGrab].toLowerCase();
-                if (extension === 'mp4') {
-                    dispatch(setActiveFileInPlaylist(txid + "|" + i));
-                }
+    state.OIPIndex.Index.getArtifact(txid)
+        .then(art => {
+            dispatch(recieveCurrentArtifact(art));
+            console.log("Fetched current artifact: ", art)
+            let files = art.getFiles();
+            let publisher = art.getMainAddress();
+            let txid = art.getTXID();
+            console.log("TXID: ", txid)
+            for (let i = 0; i < files.length; i++) {
+                dispatch(addFileToPlaylist(files[i], txid + "|" + i));
             }
-        } else {
-            dispatch(setActiveFileInPlaylist(txid + "|" + 0));
-        }
+            if (art.getSubtype() === 'Tomogram') {
+                for (var i = 0; i < files.length; i++) {
+                    let splitFilename = files[i].getFilename().split(".");
+                    let indexToGrab = splitFilename.length - 1;
+                    const extension = splitFilename[indexToGrab].toLowerCase();
+                    if (extension === 'mp4') {
+                        dispatch(setActiveFileInPlaylist(txid + "|" + i));
+                    }
+                }
+            } else {
+                dispatch(setActiveFileInPlaylist(txid + "|" + 0));
+            }
+            //
+            // dispatch(getComments(state.Core.Core, txid));
+            //
+            // state.Piwik.piwik.push(['trackContentImpression', publisher, txid, ""])
 
-
-        dispatch(getComments(state.Core.Core, txid));
-
-        state.Piwik.piwik.push(['trackContentImpression', publisher, txid, ""])
-    }, function(err){
-        console.error("selectCurrentArtifact error: ", err)
-        dispatch(requestCurrentArtifactError(err));
-    });
-}
+        })
+        .catch(err => {
+            console.log("Could not get current artifact: ", err)
+            dispatch(requestCurrentArtifactError(err));
+        })
+};
 
 // -------------------------------------------------------------------------------------------------
 // GET COMMENTS

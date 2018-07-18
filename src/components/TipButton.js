@@ -29,14 +29,7 @@ class TipButton extends Component {
 			else if (this.props.amount)
 				amount = this.props.amount
 
-
-            //@TODO Pass in tipFunc from redux
-			// this.props.store.dispatch(tipFunc(this.props.Core, this.props.artifact, amount, this.props.piwik, this.props.NotificationSystem, function(success){
-			// 	_this.setState({tipping: false, tipSuccess: true, tipError: false});
-			// }, function(error){
-			// 	_this.setState({tipping: false, tipSuccess: false, tipError: true});
-			// 	console.error(error);
-			// }));
+            //@TODO Tip
 		}
 	}
 	render() {

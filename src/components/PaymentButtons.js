@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
+import {connect} from 'react-redux'
 
 class PaymentButtons extends Component {
 	constructor(props){
@@ -22,12 +23,17 @@ class PaymentButtons extends Component {
 
 		this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
 
-		let payForFile = function(artifact, activeFile){
-			_this.props.payForFileFunc(artifact, activeFile, onSuccess, onError);
-		};
-
 		if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
-            payForFile(this.props.artifact, this.props.activeFile.info);
+            this.props.paymentInProgress(this.props.activeFile.key)
+            this.props.account.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "view", "usd")
+                .then(data => {
+                    this.props.payForFile(this.props.activeFile.key)
+                    console.log('Succesfully paid for artifact file: ', data)
+                })
+                .catch(err => {
+                    this.props.paymentError(this.props.activeFile.key)
+                    console.log("Err while trying to pay for artifact file: ", err)
+                })
 		}
 
 		if (this.props.activeFile.info.getType() === 'Audio') {
@@ -37,13 +43,18 @@ class PaymentButtons extends Component {
 
 	buyFile(){
 		if (this.props.activeFile.owned){
-			this.dlStarted = true;
+			this.downloadStarted = true;
 		} else {
-			this.props.buyFileFunc(this.props.artifact, this.props.activeFile.info, function(success){
-				//scrollToTop();
-			}, function(error){
-				console.log(error);
-			});
+            this.props.buyInProgress(this.props.activeFile.key)
+            this.props.account.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "buy", "usd")
+                .then(data => {
+                    this.props.buyFile(this.props.activeFile.key)
+                    console.log('Buying yeah, ', data)
+                })
+                .catch(err => {
+                    this.props.buyError(this.props.activeFile.key)
+                    console.log("Err hard: ", err)
+                })
 		}
 	}
 
@@ -68,7 +79,6 @@ class PaymentButtons extends Component {
 		window.scrollTo(0, 0);
 	}
 	render() {
-
 		let hasPaid = false;
 		let owned = false;
 		let paymentInProgress = false;
@@ -110,7 +120,7 @@ class PaymentButtons extends Component {
 				if (this.props.activeFile.info.getDisallowPlay()){
 					disallowPlay = this.props.activeFile.info.getDisallowPlay();
 				}
-				if (this.props.activeFile.info.disBuy){
+				if (this.props.activeFile.info.getDisallowBuy){
 					disallowBuy = this.props.activeFile.info.getDisallowBuy();
 				}
 			}
@@ -155,7 +165,6 @@ class PaymentButtons extends Component {
 			viewBtnType = "outline-danger";
 			viewString = "Error!";
 		}
-
 		return (
 			<div>
 				<div style={{width: disallowBuy ? "100%" : "50%", textAlign: disallowBuy ? "center" : "right", display: disallowPlay ? "" : "inline-block", paddingRight: "3px"}}>
@@ -178,13 +187,23 @@ class PaymentButtons extends Component {
 }
 
 PaymentButtons.propTypes = {
-    artifact: PropTypes.object.isRequired,
-    activeFile: PropTypes.object.isRequired,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func,
+    artifact: PropTypes.object,
+    activeFile: PropTypes.object,
     isPlayingFile: PropTypes.func,
     setCurrentFile: PropTypes.func,
-    btnStyle: PropTypes.string
+    btnStyle: PropTypes.string,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 }
 
-export default PaymentButtons;
+function mapStateToProps(state) {
+    return {
+        account: state.Account
+    }
+}
+
+export default connect(mapStateToProps)(PaymentButtons)

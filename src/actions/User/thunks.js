@@ -16,17 +16,6 @@ export const login = (Core, identifier, password) => dispatch => {
 }
 
 // -------------------------------------------------------------------------------------------------
-// LOGOUT
-
-export const logout = () => (dispatch) => {
-    try {
-        localStorage.username = "";
-        localStorage.pw = "";
-    } catch(e){ console.error(e) }
-    dispatch(logoutAction())
-}
-
-// -------------------------------------------------------------------------------------------------
 // PROMPT LOGIN
 
 export const promptLogin = (onSuccess, onError) => (dispatch, getState) => {

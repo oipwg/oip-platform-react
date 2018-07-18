@@ -35,10 +35,14 @@ class PlaylistScroller extends Component {
                         activeFile={this.props.activeFile}
                         filePlaylist={this.props.filePlaylist}
                         setCurrentFile={this.props.setCurrentFile}
-						// For Payment Buttons
-                        payForFileFunc={this.props.payForFileFunc}
-                        buyFileFunc={this.props.buyFileFunc}
                         isPlayingFile={this.props.isPlayingFile}
+                        buyInProgress={this.props.buyInProgress}
+                        buyError={this.props.buyError}
+                        paymentError={this.props.paymentError}
+                        paymentInProgress={this.props.paymentInProgress}
+                        payForFile={this.props.payForFile}
+                        buyFile={this.props.buyFile}
+
 					/>
 				</div>
 			</div>
@@ -55,9 +59,13 @@ PlaylistScroller.propTypes = {
     currentArtifactOnly: PropTypes.bool,
     filter: PropTypes.object,
     setCurrentFile: PropTypes.func,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func,
-    isPlayingFile: PropTypes.func
+    isPlayingFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 }
 
 export default PlaylistScroller;

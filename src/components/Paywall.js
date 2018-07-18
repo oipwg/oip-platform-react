@@ -32,10 +32,14 @@ class Paywall extends Component {
 						<PaymentButtons
 							artifact={this.props.artifact}
 							activeFile={this.props.activeFile}
-							payForFileFunc={this.props.payForFileFunc}
-							buyFileFunc={this.props.buyFileFunc}
                             setCurrentFile={this.props.setCurrentFile}
                             isPlayingFile={this.props.isPlayingFile}
+                            buyInProgress={this.props.buyInProgress}
+                            buyError={this.props.buyError}
+                            paymentError={this.props.paymentError}
+                            paymentInProgress={this.props.paymentInProgress}
+                            payForFile={this.props.payForFile}
+                            buyFile={this.props.buyFile}
                         />
 						<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 					</div>
@@ -49,10 +53,14 @@ Paywall.propTypes = {
     activeFile: PropTypes.object,
     artifact: PropTypes.object,
     artifactState: PropTypes.object,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func,
     setCurrentFile: PropTypes.func,
-    isPlayingFile: PropTypes.func
+    isPlayingFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 }
 
 export default Paywall;

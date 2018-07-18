@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 class ImageContainer extends Component {
 	render() {
 		let hash = "";
-		let preview = false;
+
 		if (this.props.activeFile && ((this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) && !this.props.activeFile.owned)){
-			preview = true;
-			hash = this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail().getFilename());
+		    //get filename of thumbnail
+			hash = this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.activeFile.info.getFilename());
 		} else {
 			if (this.props.artifact && this.props.activeFile){
 				hash = this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.activeFile.info.getFilename());

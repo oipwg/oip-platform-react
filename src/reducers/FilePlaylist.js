@@ -96,7 +96,7 @@ const file = (state = {
 	}
 }
 
-export const FilePlaylist = (state = { }, action) => {
+export const FilePlaylist = (state = {}, action) => {
 	switch (action.type) {
 		case actions.ADD_FILE_TO_PLAYLIST:
 		case actions.PAY_FOR_FILE:

@@ -9,9 +9,10 @@ import {
 
 import { connect } from 'react-redux';
 
-import {login} from "./actions/User/thunks";
+import {loginSuccess} from "./actions/User/actions";
 import {setupWalletEvents} from "./actions/Wallet/thunks";
 import {setNotificationSystem} from "./actions/NotificationSystem/actions";
+import {setAccount} from './actions/Account/actions'
 
 import { CSSTransitionGroup } from 'react-transition-group'
 
@@ -55,6 +56,7 @@ import LoginPrompt from './components/LoginPrompt.js'
 import SwapPrompt from './components/SwapPrompt.js'
 import BuyPrompt from './components/BuyPrompt.js'
 import DailyFaucetPrompt from './components/DailyFaucetPrompt.js';
+import Account from "oip-account";
 
 const history = createBrowserHistory()
 
@@ -65,8 +67,17 @@ class App extends Component {
         this.props.setNotificationSystem(this.refs.NotificationSystem);
 
 		try {
-			if (localStorage.username && localStorage.pw){
-				this.props.login(this.props.Core, localStorage.username, localStorage.pw);
+			if (localStorage.oip_account){
+                let account = new Account(localStorage.username, localStorage.pw, {discover: false})
+                account.login()
+                    .then(login_success => {
+                        console.log(`Login Success`, login_success)
+                        this.props.loginSuccess(localStorage.username);
+                        this.props.setAccount(account)
+                    })
+                    .catch(err => {
+                        console.log(`Error logging in: ${err}`);
+                    })
 			}
 		} catch (e) {}
 
@@ -139,9 +150,10 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    login,
+    loginSuccess,
 	setupWalletEvents,
-    setNotificationSystem
+    setNotificationSystem,
+    setAccount
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

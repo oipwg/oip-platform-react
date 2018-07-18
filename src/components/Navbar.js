@@ -8,7 +8,7 @@ import LoginButton from './LoginButton'
 import UploadButton from './UploadButton'
 import UserNav from './UserNav'
 
-import { logout } from '../actions/User/thunks'
+import { logoutAction } from '../actions/User/actions'
 
 import LogoImg from '../assets/img/oip-basic.svg';
 
@@ -49,21 +49,6 @@ class Navbar extends Component {
     }
 
     render() {
-        let totalbalance = 0;
-
-        if (this.props && this.props.Wallet){
-            let flobalance = 0, btcbalance = 0, ltcbalance = 0;
-
-            if (this.props.Wallet.florincoin && this.props.Wallet.florincoin.usd)
-                flobalance = parseFloat(this.props.Wallet.florincoin.usd);
-            if (this.props.Wallet.bitcoin && this.props.Wallet.bitcoin.usd)
-                btcbalance = parseFloat(this.props.Wallet.bitcoin.usd);
-            if (this.props.Wallet.litecoin && this.props.Wallet.litecoin.usd)
-                ltcbalance = parseFloat(this.props.Wallet.litecoin.usd);
-
-            totalbalance = flobalance + btcbalance + ltcbalance;
-        }
-
         return <nav className="navbar-header navbar navbar-expand-sm">
             {this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm}/> : null}
                 <Link className="navbar-logo navbar-brand ml-5" to="/">
@@ -79,7 +64,7 @@ class Navbar extends Component {
                     <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
                     <div className="user-container d-flex justify-content-end">
                         <UploadButton isLoggedIn={this.props.User.isLoggedIn}/>
-                        {this.props.User.isLoggedIn ? <UserNav logout={this.props.logout} pubName={this.props.User.publisher.name}/> : <LoginButton/>}
+                        {this.props.User.isLoggedIn ? <UserNav logout={this.props.logoutAction} pubName={this.props.User.publisher}/> : <LoginButton/>}
                     </div>
                 </div>
             </nav>
@@ -93,13 +78,13 @@ const mapStateToProps = state => {
     }
 }
 const mapDispatchToProps = {
-    logout
+    logoutAction
 }
 
 Navbar.propTypes = {
     User: PropTypes.object,
     Wallet: PropTypes.object,
-    logout: PropTypes.func
+    logoutAction: PropTypes.func
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

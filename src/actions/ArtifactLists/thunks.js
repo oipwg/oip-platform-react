@@ -15,11 +15,15 @@ export const fetchArtifactList = (list_id, options) => (dispatch, getState) => {
     let state = getState();
 
     if (list_id === LATEST_CONTENT_LIST){
-        state.Core.Core.Index.getSupportedArtifacts(function(artifacts){
-            dispatch(recieveArtifactList(list_id, artifacts.slice(0,100)));
-        }, function(err){
-            dispatch(requestArtifactListError(list_id));
-        })
+        state.OIPIndex.Index.getLatestArtifacts(100)
+            .then(arts => {
+                dispatch(recieveArtifactList(list_id, arts));
+                console.log(`Successfully retrieved the latest artifacts`)
+            })
+            .catch(err => {
+                dispatch(requestArtifactListError(list_id, err));
+                console.log(err)
+            })
     } else if (list_id === SEARCH_PAGE_LIST) {
         state.Core.Core.Index.search(options, function(results){
             dispatch(recieveArtifactList(list_id, results));
@@ -33,8 +37,14 @@ export const fetchArtifactList = (list_id, options) => (dispatch, getState) => {
             dispatch(requestArtifactListError(list_id, err));
         });
     } else {
-        state.Core.Core.Index.getRandomSuggested(function(results){
-            dispatch(recieveArtifactList(list_id, results))
-        })
+        state.OIPIndex.Index.getLatestArtifacts(33)
+            .then(arts => {
+                dispatch(recieveArtifactList(list_id, arts));
+                console.log(`Successfully retrieved the latest artifacts`)
+            })
+            .catch(err => {
+                dispatch(requestArtifactListError(list_id, err));
+                console.log(err)
+            })
     }
 }

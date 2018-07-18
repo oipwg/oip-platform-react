@@ -117,10 +117,14 @@ class FilesTable extends Component {
 											<PaymentButtons
 												artifact={_this.props.artifact}
 												activeFile={file}
-                                                payForFileFunc={_this.props.payForFileFunc}
-                                                buyFileFunc={_this.props.buyFileFunc}
                                                 isPlayingFile={_this.props.isPlayingFile}
                                                 setCurrentFile={_this.props.setCurrentFile}
+                                                buyInProgress={_this.props.buyInProgress}
+                                                buyError={_this.props.buyError}
+                                                paymentError={_this.props.paymentError}
+                                                paymentInProgress={_this.props.paymentInProgress}
+                                                payForFile={_this.props.payForFile}
+                                                buyFile={_this.props.buyFile}
 											/>
 										</td>
 									</tr>
@@ -136,10 +140,14 @@ FilesTable.propTypes = {
     artifactState: PropTypes.object,
     activeFile: PropTypes.object,
     filePlaylist: PropTypes.object,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func,
     isPlayingFile: PropTypes.func,
     setCurrentFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func,
 }
 
 export default FilesTable;

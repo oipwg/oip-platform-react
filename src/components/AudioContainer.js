@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ColorThief from 'color-thief-standalone';
 import PropTypes from 'prop-types';
 import { PlaybackControls, ProgressBar, TimeMarker, MuteToggleButton, VolumeSlider } from 'react-player-controls'
@@ -57,12 +57,12 @@ class AudioContainer extends Component {
 	}
 
 	static getDerivedStateFromProps(nextProps, prevState) {
-	    if (nextProps.activeFile.hasPaid != prevState.hasPaid) {
+	    if (nextProps.activeFile.hasPaid !== prevState.hasPaid) {
 	        return {
 	            hasPaid: nextProps.activeFile.hasPaid
             }
         }
-        if (nextProps.activeFile.isPlaying != prevState.isPlaying) {
+        if (nextProps.activeFile.isPlaying !== prevState.isPlaying) {
 	    	return {
 	    		isPlaying: nextProps.activeFile.isPlaying
 			}
@@ -167,7 +167,6 @@ class AudioContainer extends Component {
 				this.nextSong();
 
 			if (this.props.artifact){
-				ipfsHash = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail().getFilename()));
 				songURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.activeFile.info.getFilename()));
 				artist = this.props.artifact.getDetail("artist");
 			}
@@ -193,7 +192,7 @@ class AudioContainer extends Component {
                                 {artist ? artist : "Unknown"} - {name ? name : "Unknown"}
 							</h3>
 							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
-                                <img src={ipfsHash} alt="IPFS" crossOrigin="Anonymous" onLoad={this.onImageLoad}/>
+                                <img src={songURL} alt="IPFS" crossOrigin="Anonymous" onLoad={this.onImageLoad}/>
 							</div>
 						</div>
 						{playlistLen > 1 ?
@@ -208,9 +207,13 @@ class AudioContainer extends Component {
 								filter={{type: "Audio"}}
                                 setCurrentFile={this.props.setCurrentFile}
                                 // For Payment Buttons
-                                payForFileFunc={this.props.payForFileFunc}
-                                buyFileFunc={this.props.buyFileFunc}
 								isPlayingFile={this.props.isPlayingFile}
+                                buyInProgress={this.props.buyInProgress}
+                                buyError={this.props.buyError}
+                                paymentError={this.props.paymentError}
+                                paymentInProgress={this.props.paymentInProgress}
+                                payForFile={this.props.payForFile}
+                                buyFile={this.props.buyFile}
                             />
 
 						</div> : ""}
@@ -309,10 +312,14 @@ AudioContainer.propTypes = {
     playlistNext: PropTypes.func,
     isPlayingFile: PropTypes.func,
     setCurrentFile: PropTypes.func,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func,
     buildIPFSShortURL: PropTypes.func,
     buildIPFSURL: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 };
 
 export default AudioContainer;

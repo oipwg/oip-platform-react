@@ -8,7 +8,8 @@ module.exports = {
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             title: 'oip-platform-react',
-            template: "public/index.html"
+            template: "public/index.html",
+            filename: 'index.html'
         })
     ],
     output: {

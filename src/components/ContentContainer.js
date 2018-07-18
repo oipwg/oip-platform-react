@@ -47,8 +47,12 @@ class ContentContainer extends Component {
 						isPlayingFile={this.props.isPlayingFile}
                         setCurrentFile={this.props.setCurrentFile}
 						// For Payment Buttons
-                        payForFileFunc={this.props.payForFileFunc}
-                        buyFileFunc={this.props.buyFileFunc}
+                        buyInProgress={this.props.buyInProgress}
+                        buyError={this.props.buyError}
+                        paymentError={this.props.paymentError}
+                        paymentInProgress={this.props.paymentInProgress}
+                        payForFile={this.props.payForFile}
+                        buyFile={this.props.buyFile}
 					/>
 				</div>
 
@@ -56,10 +60,14 @@ class ContentContainer extends Component {
 					activeFile={this.props.activeFile}
                     artifact={this.props.artifact}
 					artifactState={this.props.artifactState}
-                    payForFileFunc={this.props.payForFileFunc}
-                    buyFileFunc={this.props.buyFileFunc}
                     setCurrentFile={this.props.setCurrentFile}
                     isPlayingFile={this.props.isPlayingFile}
+                    buyInProgress={this.props.buyInProgress}
+                    buyError={this.props.buyError}
+                    paymentError={this.props.paymentError}
+                    paymentInProgress={this.props.paymentInProgress}
+                    payForFile={this.props.payForFile}
+                    buyFile={this.props.buyFile}
 				/>
 			</div>
 		);
@@ -82,8 +90,12 @@ ContentContainer.propTypes = {
     playlistNext: PropTypes.func,
     isPlayingFile: PropTypes.func,
     setCurrentFile: PropTypes.func,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 }
 
 export default ContentContainer;

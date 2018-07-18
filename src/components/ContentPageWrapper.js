@@ -4,13 +4,24 @@ import PropTypes from 'prop-types';
 
 import ContentPage from './ContentPage'
 
-import {tipFunc, payForFileFunc, buyFileFunc} from '../actions/Payment/thunks'
 import {setVolume, setMute} from "../actions/VolumeControls/actions";
 import {RANDOM_ARTIFACT_LIST} from "../actions/ArtifactLists/actions";
 import {fetchArtifactList} from "../actions/ArtifactLists/thunks";
 import {selectCurrentArtifact, addComment} from "../actions/CurrentArtifact/thunks";
 import {playlistNext, setCurrentFile} from "../actions/FilePlaylist/thunks";
-import {updateFileCurrentTime, isPlayingFile, isPlayableFile, isSeekableFile, updateFileDuration} from "../actions/FilePlaylist/actions";
+import {
+    updateFileCurrentTime,
+    isPlayingFile,
+    isPlayableFile,
+    isSeekableFile,
+    updateFileDuration,
+    buyInProgress,
+    buyError,
+    paymentError,
+    paymentInProgress,
+    payForFile,
+    buyFile
+} from "../actions/FilePlaylist/actions";
 
 class ContentPageWrapper extends Component {
     constructor(props) {
@@ -59,8 +70,12 @@ class ContentPageWrapper extends Component {
                     isPlayingFile={this.props.isPlayingFile}
                     setCurrentFile={this.props.setCurrentFile}
                     // For Payment Buttons
-                    payForFileFunc={this.props.payForFileFunc}
-                    buyFileFunc={this.props.buyFileFunc}
+                    buyInProgress={this.props.buyInProgress}
+                    buyError={this.props.buyError}
+                    paymentError={this.props.paymentError}
+                    paymentInProgress={this.props.paymentInProgress}
+                    payForFile={this.props.payForFile}
+                    buyFile={this.props.buyFile}
                 />
             </div>
 
@@ -71,6 +86,7 @@ class ContentPageWrapper extends Component {
 
 function mapStateToProps(state) {
     return {
+        state: state,
         artifact: state.CurrentArtifact.artifact,
         artifactState: state.CurrentArtifact,
         artifactList: state.ArtifactLists[RANDOM_ARTIFACT_LIST],
@@ -84,11 +100,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     selectCurrentArtifact,
     fetchArtifactList,
-    tipFunc,
     addComment,
-    payForFileFunc,
-    buyFileFunc,
-    // For AudioContainer
     updateFileCurrentTime,
     isPlayableFile,
     isSeekableFile,
@@ -97,7 +109,13 @@ const mapDispatchToProps = {
     setMute,
     playlistNext,
     isPlayingFile,
-    setCurrentFile
+    setCurrentFile,
+    buyInProgress,
+    buyError,
+    paymentError,
+    paymentInProgress,
+    payForFile,
+    buyFile
 }
 
 ContentPageWrapper.propTypes = {
@@ -111,8 +129,6 @@ ContentPageWrapper.propTypes = {
     selectCurrentArtifact: PropTypes.func,
     fetchArtifactList: PropTypes.func,
     addComment: PropTypes.func,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func,
     updateFileCurrentTime: PropTypes.func,
     isPlayableFile: PropTypes.func,
     isSeekableFile: PropTypes.func,
@@ -122,6 +138,12 @@ ContentPageWrapper.propTypes = {
     playlistNext: PropTypes.func,
     isPlayingFile: PropTypes.func,
     setCurrentFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentPageWrapper)

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import { register } from '../actions/User/thunks';
-
 import validator from 'validator';
+
+import Account from 'oip-account';
 
 import ButtonCheckbox from './ButtonCheckbox.js';
 import ReCAPTCHA from 'react-google-recaptcha';
+import {loginSuccess, loginFailure} from "../actions/User/actions";
+import {setAccount} from '../actions/Account/actions'
 
 const STATUS = { 
 	NO_INPUT: "NO_INPUT",
@@ -48,7 +49,8 @@ class RegisterBlock extends Component {
 			passwordConfirm: "",
 			recaptcha: "",
 			registrationStatus: STATUS.WAITING,
-			redirectToLogin: false
+			redirectToLogin: false,
+            redirectToHome: false
 		}
 
 		this.register = this.register.bind(this);
@@ -108,19 +110,28 @@ class RegisterBlock extends Component {
 		}
 
 		// If we are ready, go ahead and start the registration process.
+        let account = new Account(this.state.email, this.state.password, {discover: false});
+        account.create()
+            .then(data => {
+                console.log("Successful account creation: ", data);
+                this.account = account;
+                this.props.setAccount(account)
+                account.login(this.state.email, this.state.password)
+                    .then(login_success => {
+                        console.log("Login success: ", login_success)
+                        this.setState({
+                            redirectToLogin: true
+                        })
+                    })
+                    .catch(err => {console.log(err)})
+            })
+            .catch(err => {
+                this.setState({
+                    registrationStatus: STATUS.ERROR
+                });
+                alert(`Error registering account: ${err}`);
 
-		this.props.register(this.props.Core, this.state.username, this.state.email, this.state.password, this.state.recaptcha, (success) => {
-			console.log(success);
-			this.setState({registrationStatus: STATUS.SUCCESS});
-		}, (error) => {
-			this.setState({registrationStatus: STATUS.ERROR});
-			console.log(error)
-		});
-
-		try {
-			localStorage.setItem("username", this.state.email);
-			localStorage.setItem("pw", this.state.password);
-		} catch (e) {}
+            })
 
 	}
 	updateUsername(){
@@ -208,11 +219,7 @@ class RegisterBlock extends Component {
 			this.setState({recaptcha: response, recaptchaState: STATUS.INVALID})
 	}
 	loginClick(){
-		if (this.props.onLoginClick){
-			this.props.onLoginClick();
-		} else {
-			this.setState({redirectToLogin: true});
-		}
+       this.setState({redirectToLogin: false})
 	}
 	render() {
 		var RegisterBtnTxt = "Register";
@@ -226,8 +233,9 @@ class RegisterBlock extends Component {
 		}
 		return (
 	    	<div>
-				<h2>Please Register</h2>
-				<hr className="colorgraph" />
+                {this.state.redirectToHome ? <Redirect to="/" push /> : ""}
+                <h2>Please Register</h2>
+				<hr className="" />
 				<div className="form-group">
 					<input ref={username => this.username = username} onInput={this.updateUsername} type="text" className={"form-control input-lg" + (this.state.usernameState === STATUS.INVALID ? " is-invalid" : "") + (this.state.usernameState === STATUS.VALID ? " is-valid" : "")} placeholder="Username*" tabIndex="1" />
 					{this.state.usernameState === STATUS.INVALID ? <div className="invalid-feedback" id="feedback_username">
@@ -329,7 +337,7 @@ class RegisterBlock extends Component {
 						By <strong>Registering</strong>, you agree to the <a href="/terms_and_conditions" data-toggle="modal" data-target="#t_and_c_m" data-ytta-id="-">Terms and Conditions</a>, including our Cookie Use.<p></p>
 					</div>
 				</div>
-				<hr className="colorgraph" />
+				<hr className="" />
 				<div className="row">
 					{this.state.redirectToLogin ? <Redirect to="/login" push /> : ""}
 					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-secondary btn-block btn-lg" onClick={this.loginClick}>Login</button></div>
@@ -340,14 +348,16 @@ class RegisterBlock extends Component {
 	}
 }
 
+const mapDispatchToProps = {
+    loginSuccess,
+    loginFailure,
+    setAccount
+};
+
 function mapStateToProps(state) {
 	return {
         User: state.User,
-        Core: state.Core.Core
 	}
 }
-
-const mapDispatchToProps = { register };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterBlock);

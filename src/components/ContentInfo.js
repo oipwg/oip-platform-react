@@ -83,10 +83,14 @@ class ContentInfo extends Component {
                         artifactState={this.props.artifactState}
                         activeFile={this.props.activeFile}
                         filePlaylist={this.props.filePlaylist}
-                        payForFileFunc={this.props.payForFileFunc}
-                        buyFileFunc={this.props.buyFileFunc}
                         isPlayingFile={this.props.isPlayingFile}
                         setCurrentFile={this.props.setCurrentFile}
+                        buyInProgress={this.props.buyInProgress}
+                        buyError={this.props.buyError}
+                        paymentError={this.props.paymentError}
+                        paymentInProgress={this.props.paymentInProgress}
+                        payForFile={this.props.payForFile}
+                        buyFile={this.props.buyFile}
                     />
                 </div>
 			</div>
@@ -99,10 +103,14 @@ ContentInfo.propTypes = {
     artifactState: PropTypes.object,
     activeFile: PropTypes.object,
     filePlaylist: PropTypes.object,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func,
     isPlayingFile: PropTypes.func,
     setCurrentFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 }
 
 export default ContentInfo;

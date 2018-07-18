@@ -30,8 +30,12 @@ class ContentPage extends Component {
                     isPlayingFile={this.props.isPlayingFile}
                     setCurrentFile={this.props.setCurrentFile}
                     // For Payment Buttons
-                    payForFileFunc={this.props.payForFileFunc}
-                    buyFileFunc={this.props.buyFileFunc}
+                    buyInProgress={this.props.buyInProgress}
+                    buyError={this.props.buyError}
+                    paymentError={this.props.paymentError}
+                    paymentInProgress={this.props.paymentInProgress}
+                    payForFile={this.props.payForFile}
+                    buyFile={this.props.buyFile}
                 />
                 <div className="content-page container-fluid">
                     <div className="margin-container" style={{marginLeft: "5%", marginRight: "5%"}}>
@@ -42,10 +46,14 @@ class ContentPage extends Component {
                                     artifactState={this.props.artifactState}
                                     activeFile={this.props.activeFile}
                                     filePlaylist={this.props.filePlaylist}
-                                    payForFileFunc={this.props.payForFileFunc}
-                                    buyFileFunc={this.props.buyFileFunc}
                                     isPlayingFile={this.props.isPlayingFile}
                                     setCurrentFile={this.props.setCurrentFile}
+                                    buyInProgress={this.props.buyInProgress}
+                                    buyError={this.props.buyError}
+                                    paymentError={this.props.paymentError}
+                                    paymentInProgress={this.props.paymentInProgress}
+                                    payForFile={this.props.payForFile}
+                                    buyFile={this.props.buyFile}
                                 />
                                 <br />
                                 {(this.props.artifact && this.props.artifact.txid !== "") ?
@@ -86,8 +94,6 @@ ContentPage.propTypes = {
     filePlaylist: PropTypes.object,
     active: PropTypes.string,
     addComment: PropTypes.func,
-    payForFileFunc: PropTypes.func,
-    buyFileFunc: PropTypes.func,
     updateFileCurrentTime: PropTypes.func,
     isPlayableFile: PropTypes.func,
     isSeekableFile: PropTypes.func,
@@ -97,6 +103,12 @@ ContentPage.propTypes = {
     playlistNext: PropTypes.func,
     isPlayingFile: PropTypes.func,
     setCurrentFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 }
 
 export default ContentPage;

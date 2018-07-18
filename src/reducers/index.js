@@ -8,6 +8,8 @@ import { Core } from './Core.js'
 import { NotificationSystem } from "./NotificationSystem";
 import { PublisherPage } from './PublisherPage';
 import { Piwik } from './Piwik';
+import { Account } from './Account'
+import { OIPIndex } from "./OIPIndex";
 
 const pageType = (state = 'ARTIFACT_LIST', action) => {
     switch (action.type) {
@@ -29,7 +31,9 @@ const rootReducer = {
 	Core,
 	NotificationSystem,
 	PublisherPage,
-	Piwik
+	Piwik,
+    Account,
+    OIPIndex
 }
 
 export default rootReducer
