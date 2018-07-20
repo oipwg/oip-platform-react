@@ -12,14 +12,13 @@ class ViewFileButton extends Component {
     viewFile(){
         this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
 
-        if (this.props.activeFile.info.getSuggestedPlayCost() && this.props.activeFile.info.getSuggestedPlayCost() == 0) {
+        if (this.props.activeFile.info && this.props.activeFile.info.getSuggestedPlayCost() == 0) {
             this.props.payForFile(this.props.activeFile.key)
             return
         }
 
         if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
             this.props.paymentInProgress(this.props.activeFile.key)
-
             this.props.account.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "view", "usd")
                 .then(data => {
                     this.props.payForFile(this.props.activeFile.key)

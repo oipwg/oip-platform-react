@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import PaymentButtons from './PaymentButtons.js';
 import ViewFileButton from './ViewFileButton';
 import BuyFileButton from './BuyFileButton'
 

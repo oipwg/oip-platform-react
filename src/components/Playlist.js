@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedTime } from 'react-player-controls';
-import PaymentButtons from './PaymentButtons.js';
+import ViewFileButton from './ViewFileButton'
+import BuyFileButton from './BuyFileButton'
 
 class Playlist extends Component {
 	constructor(props){
@@ -101,20 +102,22 @@ class Playlist extends Component {
 									</div>
 								</div>
 							</div>
-							<PaymentButtons
-								activeFile={file}
-								artifact={_this.props.artifact}
-								btnStyle={file.info.getFilename() === _this.props.activeFile.info.getFilename() ? {backgroundColor: _this.props.bgColor} : {}}
-								// For Payment Buttons
-                                isPlayingFile={_this.props.isPlayingFile}
-                                setCurrentFile={_this.props.setCurrentFile}
-                                buyInProgress={_this.props.buyInProgress}
-                                buyError={_this.props.buyError}
-                                paymentError={_this.props.paymentError}
-                                paymentInProgress={_this.props.paymentInProgress}
-                                payForFile={_this.props.payForFile}
-                                buyFile={_this.props.buyFile}
-							/>
+                            <ViewFileButton
+                                artifact={this.props.artifact}
+                                activeFile={this.props.activeFile}
+                                setCurrentFile={this.props.setCurrentFile}
+                                paymentError={this.props.paymentError}
+                                paymentInProgress={this.props.paymentInProgress}
+                                payForFile={this.props.payForFile}
+                            />
+                            <BuyFileButton
+                                artifact={this.props.artifact}
+                                activeFile={this.props.activeFile}
+                                setCurrentFile={this.props.setCurrentFile}
+                                buyInProgress={this.props.buyInProgress}
+                                buyError={this.props.buyError}
+                                buyFile={this.props.buyFile}
+                            />
 
 						</div>
 					</li>
