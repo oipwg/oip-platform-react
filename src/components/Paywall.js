@@ -35,6 +35,7 @@ class Paywall extends Component {
                                 activeFile={this.props.activeFile}
                                 setCurrentFile={this.props.setCurrentFile}
                                 paymentError={this.props.paymentError}
+                                isPlayingFile={this.props.isPlayingFile}
                                 paymentInProgress={this.props.paymentInProgress}
                                 payForFile={this.props.payForFile}
                             />
