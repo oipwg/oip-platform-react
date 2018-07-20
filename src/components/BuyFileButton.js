@@ -113,14 +113,12 @@ class BuyFileButton extends Component {
             buyString = "Error!";
         }
         return (
-            <div>
-                <div style={{display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
-                    { disallowBuy ? "" :
-                        <button className={"pad-5 btn btn-" + buyBtnType} onClick={this.buyFile} style={this.props.btnStyle}>
-                            <span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
-                        </button>
-                    }
-                </div>
+            <div style={{display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
+                { disallowBuy ? "" :
+                    <button className={"pad-5 btn btn-" + buyBtnType} onClick={this.buyFile} style={this.props.btnStyle}>
+                        <span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
+                    </button>
+                }
             </div>
         )
     }
@@ -129,7 +127,6 @@ class BuyFileButton extends Component {
 BuyFileButton.propTypes = {
     artifact: PropTypes.object,
     activeFile: PropTypes.object,
-    isPlayingFile: PropTypes.func,
     setCurrentFile: PropTypes.func,
     btnStyle: PropTypes.string,
     buyInProgress: PropTypes.func,

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import PaymentButtons from './PaymentButtons.js';
+import ViewFileButton from './ViewFileButton';
+import BuyFileButton from './BuyFileButton'
 
 class Paywall extends Component {
 	render() {
@@ -29,18 +31,23 @@ class Paywall extends Component {
 						<h4 style={{marginBottom: "0px"}}>To {textAccess} this {(!subtype || subtype === "" || subtype === "Basic") ? type : subtype}</h4>
 						<span>please...</span>
 						<br/>
-						<PaymentButtons
-							artifact={this.props.artifact}
-							activeFile={this.props.activeFile}
-                            setCurrentFile={this.props.setCurrentFile}
-                            isPlayingFile={this.props.isPlayingFile}
-                            buyInProgress={this.props.buyInProgress}
-                            buyError={this.props.buyError}
-                            paymentError={this.props.paymentError}
-                            paymentInProgress={this.props.paymentInProgress}
-                            payForFile={this.props.payForFile}
-                            buyFile={this.props.buyFile}
-                        />
+                            <ViewFileButton
+                                artifact={this.props.artifact}
+                                activeFile={this.props.activeFile}
+                                setCurrentFile={this.props.setCurrentFile}
+                                paymentError={this.props.paymentError}
+                                paymentInProgress={this.props.paymentInProgress}
+                                payForFile={this.props.payForFile}
+                            />
+                            <BuyFileButton
+                                artifact={this.props.artifact}
+                                activeFile={this.props.activeFile}
+                                setCurrentFile={this.props.setCurrentFile}
+                                buyInProgress={this.props.buyInProgress}
+                                buyError={this.props.buyError}
+                                buyFile={this.props.buyFile}
+                            />
+
 						<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 					</div>
 				</div>

@@ -117,14 +117,12 @@ class ViewFileButton extends Component {
             viewString = "Error!";
         }
         return (
-            <div>
-                <div style={{display: disallowPlay ? "" : "inline-block", paddingRight: "3px"}}>
-                    { disallowPlay ? "" :
-                        <button  className={"pad-5 btn btn-" + viewBtnType} onClick={this.viewFile} style={this.props.btnStyle} >
-                            <span className="icon icon-controller-play" style={{marginRight: "5px"}}/>{viewString}
-                        </button>
-                    }
-                </div>
+            <div style={{display: disallowPlay ? "" : "inline-block", paddingRight: "3px"}}>
+                { disallowPlay ? "" :
+                    <button  className={"pad-5 btn btn-" + viewBtnType} onClick={this.viewFile} style={this.props.btnStyle} >
+                        <span className="icon icon-controller-play" style={{marginRight: "5px"}}/>{viewString}
+                    </button>
+                }
             </div>
         )
     }
@@ -133,7 +131,6 @@ class ViewFileButton extends Component {
 ViewFileButton.propTypes = {
     artifact: PropTypes.object,
     activeFile: PropTypes.object,
-    isPlayingFile: PropTypes.func,
     setCurrentFile: PropTypes.func,
     btnStyle: PropTypes.string,
     paymentError: PropTypes.func,
