@@ -56,10 +56,11 @@ class ContentContainer extends Component {
 					/>
 				</div>
 
+                {/*Paywall is causing react-warning-key error*/}
 				<Paywall
-					activeFile={this.props.activeFile}
+                    activeFile={this.props.activeFile}
                     artifact={this.props.artifact}
-					artifactState={this.props.artifactState}
+                    artifactState={this.props.artifactState}
                     setCurrentFile={this.props.setCurrentFile}
                     isPlayingFile={this.props.isPlayingFile}
                     buyInProgress={this.props.buyInProgress}

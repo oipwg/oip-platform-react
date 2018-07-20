@@ -25,7 +25,8 @@ class IssoCommentBox extends Component {
 	render() {
 		return (
 			<div>
-				<textarea ref={textarea => this.textarea = textarea} onInput={this.triggerTextInput} rows="4" name="" className="form-control"></textarea>
+				<textarea ref={textarea => this.textarea = textarea} onInput={this.triggerTextInput} rows="4" name="" className="form-control"/>
+                {/*this div is causing react-warning-keys*/}
 				<div className="btn-group" style={{float: "right", marginTop: "-30px"}}>
 					{/*<button className="btn btn-sm btn-outline-success">Tip & Post</button>*/}
 					<button onClick={this.submitPost} className="btn btn-sm btn-outline-info">Post</button>

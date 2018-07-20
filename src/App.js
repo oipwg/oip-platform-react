@@ -100,6 +100,7 @@ class App extends Component {
 						{/*<DailyFaucetPrompt />*/}
 						<SwapPrompt />
 						<BuyPrompt />
+                        {/*NotificationSysten is causing react-warning-keys*/}
 						{/*<NotificationSystem ref="NotificationSystem" />*/}
 
 						{/* Include all components that need to be rendered in the main container content */}

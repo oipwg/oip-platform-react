@@ -52,7 +52,7 @@ class Paywall extends Component {
 					</div>
 				</div>
 			</div>
-		);
+		)
 	}
 }
 
