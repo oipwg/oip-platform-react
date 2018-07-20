@@ -63,7 +63,7 @@ const history = createBrowserHistory()
 class App extends Component {
 
 	componentDidMount(){
-        this.props.setNotificationSystem(this.refs.NotificationSystem);
+        // this.props.setNotificationSystem(this.refs.NotificationSystem);
 
 		try {
 			if (localStorage && localStorage.oip_account){
