@@ -16,6 +16,7 @@ const ContentCardsContainer = (props) => {
             {contentLoaded ? (props.content.error ? <p>Oops! Looks like something went wrong... Try refreshing!</p> : "") : null}
             {contentLoaded ? (!props.content.isFetching && props.content.items.length === 0 && !props.content.error ? <h6>No results found</h6> : (null) ) : (null)}
 
+            {/*@ToDo::Consider removing justify-content-between for publisher page and like*/}
             <div className="content-cards row no-gutters d-flex justify-content-between">
                 { contentLoaded && !props.content.error && !props.content.isFetching ? (
                     props.content.items.map((artifact, i) => {
