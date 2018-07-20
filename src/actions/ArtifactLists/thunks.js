@@ -23,17 +23,16 @@ export const fetchArtifactList = (list_id, options) => (dispatch, getState) => {
                 console.log(err)
             })
     } else if (list_id === SEARCH_PAGE_LIST) {
-        state.Core.Core.Index.search(options, function(results){
-            dispatch(recieveArtifactList(list_id, results));
-        }, function(err){
-            dispatch(requestArtifactListError(list_id, err));
-        });
+        //@ToDo::ElasticSearch
     } else if (list_id === PUBLISHER_PAGE_LIST) {
-        state.Core.Core.Index.search(options, function(results){
-            dispatch(recieveArtifactList(list_id, results));
-        }, function(err){
-            dispatch(requestArtifactListError(list_id, err));
-        });
+        state.OIPIndex.Index.getArtifacts(undefined, undefined, undefined, undefined, options)
+            .then(arts => {
+                dispatch(recieveArtifactList(list_id, arts));
+            })
+            .catch(err => {
+                dispatch(requestArtifactListError(list_id, err));
+                console.log(err)
+            })
     } else {
         state.OIPIndex.Index.getLatestArtifacts(33)
             .then(arts => {

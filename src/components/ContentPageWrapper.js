@@ -78,7 +78,6 @@ class ContentPageWrapper extends Component {
                     buyFile={this.props.buyFile}
                 />
             </div>
-
         )
     }
 }
