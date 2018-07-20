@@ -103,20 +103,20 @@ class Playlist extends Component {
 								</div>
 							</div>
                             <ViewFileButton
-                                artifact={this.props.artifact}
-                                activeFile={this.props.activeFile}
-                                setCurrentFile={this.props.setCurrentFile}
-                                paymentError={this.props.paymentError}
-                                paymentInProgress={this.props.paymentInProgress}
-                                payForFile={this.props.payForFile}
+                                artifact={_this.props.artifact}
+                                activeFile={_this.props.activeFile}
+                                setCurrentFile={_this.props.setCurrentFile}
+                                paymentError={_this.props.paymentError}
+                                paymentInProgress={_this.props.paymentInProgress}
+                                payForFile={_this.props.payForFile}
                             />
                             <BuyFileButton
-                                artifact={this.props.artifact}
-                                activeFile={this.props.activeFile}
-                                setCurrentFile={this.props.setCurrentFile}
-                                buyInProgress={this.props.buyInProgress}
-                                buyError={this.props.buyError}
-                                buyFile={this.props.buyFile}
+                                artifact={_this.props.artifact}
+                                activeFile={_this.props.activeFile}
+                                setCurrentFile={_this.props.setCurrentFile}
+                                buyInProgress={_this.props.buyInProgress}
+                                buyError={_this.props.buyError}
+                                buyFile={_this.props.buyFile}
                             />
 
 						</div>
