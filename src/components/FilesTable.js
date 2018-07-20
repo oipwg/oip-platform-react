@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types"
 
-import PaymentButtons from './PaymentButtons.js';
-import PropTypes from "prop-types";
+import ViewFileButton from './ViewFileButton'
+import BuyFileButton from './BuyFileButton'
 
 class FilesTable extends Component {
 	constructor(props){
@@ -114,18 +115,22 @@ class FilesTable extends Component {
 										<td style={{verticalAlign: "middle"}}>{file.info.subtype ? file.info.subtype : file.info.type}</td>
 										<td style={{verticalAlign: "middle"}}>{file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</td>
 										<td align="right" style={{verticalAlign: "middle", width: "230px"}}>
-											<PaymentButtons
-												artifact={_this.props.artifact}
-												activeFile={file}
-                                                isPlayingFile={_this.props.isPlayingFile}
+                                            <ViewFileButton
+                                                artifact={_this.props.artifact}
+                                                activeFile={_this.props.activeFile}
                                                 setCurrentFile={_this.props.setCurrentFile}
-                                                buyInProgress={_this.props.buyInProgress}
-                                                buyError={_this.props.buyError}
                                                 paymentError={_this.props.paymentError}
                                                 paymentInProgress={_this.props.paymentInProgress}
                                                 payForFile={_this.props.payForFile}
+                                            />
+                                            <BuyFileButton
+                                                artifact={_this.props.artifact}
+                                                activeFile={_this.props.activeFile}
+                                                setCurrentFile={_this.props.setCurrentFile}
+                                                buyInProgress={_this.props.buyInProgress}
+                                                buyError={_this.props.buyError}
                                                 buyFile={_this.props.buyFile}
-											/>
+                                            />
 										</td>
 									</tr>
                         })}
