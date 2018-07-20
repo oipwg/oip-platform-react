@@ -93,14 +93,14 @@ class App extends Component {
 							transitionLeaveTimeout={300}
 						/>
 
-						{/* Include all components that need to be rendered above the main container content */}
+						{/*/!* Include all components that need to be rendered above the main container content *!/*/}
 						<Navbar />
 
 						<LoginPrompt />
 						{/*<DailyFaucetPrompt />*/}
 						<SwapPrompt />
 						<BuyPrompt />
-						<NotificationSystem ref="NotificationSystem" />
+						{/*<NotificationSystem ref="NotificationSystem" />*/}
 
 						{/* Include all components that need to be rendered in the main container content */}
 						<div className="Main">
