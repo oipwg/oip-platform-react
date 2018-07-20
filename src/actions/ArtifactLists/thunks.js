@@ -7,8 +7,7 @@ import {
     requestArtifactListError,
 } from "./actions";
 
-// -------------------------------------------------------------------------------------------------
-// FETCH ARTIFACT LIST
+// FETCH ARTIFACT LIST------------------------------------------------------------------------------
 
 export const fetchArtifactList = (list_id, options) => (dispatch, getState) => {
     dispatch(requestArtifactList(list_id));
@@ -18,7 +17,6 @@ export const fetchArtifactList = (list_id, options) => (dispatch, getState) => {
         state.OIPIndex.Index.getLatestArtifacts(100)
             .then(arts => {
                 dispatch(recieveArtifactList(list_id, arts));
-                console.log(`Successfully retrieved the latest artifacts`)
             })
             .catch(err => {
                 dispatch(requestArtifactListError(list_id, err));
@@ -40,11 +38,10 @@ export const fetchArtifactList = (list_id, options) => (dispatch, getState) => {
         state.OIPIndex.Index.getLatestArtifacts(33)
             .then(arts => {
                 dispatch(recieveArtifactList(list_id, arts));
-                console.log(`Successfully retrieved the latest artifacts`)
             })
             .catch(err => {
                 dispatch(requestArtifactListError(list_id, err));
                 console.log(err)
             })
     }
-}
+};

@@ -1,8 +1,7 @@
 import {setPublisherPagePublisher} from "./actions";
 import {fetchArtifactList} from '../ArtifactLists/thunks';
 
-// -------------------------------------------------------------------------------------------------
-// FETCH PUBLISHER PAGE
+// FETCH PUBLISHER PAGE-----------------------------------------------------------------------------
 
 export const fetchPublisherPage = (list_id, pubId) => (dispatch, getState) => {
     let state = getState();

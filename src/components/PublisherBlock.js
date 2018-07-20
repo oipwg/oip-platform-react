@@ -9,19 +9,15 @@ class PublisherBlock extends Component {
 		let thumbnail = this.props.artifact.getThumbnail();
 
 		if (thumbnail){
-			if (this.props.Core){
-				this.updateSrc = true;
-				let ipfsShortURL = this.props.Core.util.buildIPFSShortURL(this.props.artifact.getLocation(), thumbnail);
-				this.props.Core.Network.getThumbnailFromIPFS(ipfsShortURL, this.updateSrcCallback)
-			}
+            this.updateSrc = true;
+            // let ipfsShortURL = @ToDO.buildIPFSShortURL(this.props.artifact.getLocation(), thumbnail);
+            // @ToDO.Network.getThumbnailFromIPFS(ipfsShortURL, this.updateSrcCallback)
 		}
 	}
 	componentWillUnmount() {
 		this.updateSrc = false;
 	}
-	constructor(props) {
 
-	}
 	updateSrcCallback(srcData){
 		if (this.updateSrc){
 			this.setState({ src: srcData });
@@ -34,7 +30,7 @@ class PublisherBlock extends Component {
 		let title = this.props.artifact.getTitle();
 		let txid = this.props.artifact.getTXID();
 		let paid = this.props.artifact.isPaid();
-		let icon = this.props.Core.util.getEntypoIconForType(this.props.artifact.getType());
+		// let icon = @ToDo.util.getEntypoIconForType(this.props.artifact.getType());
 
 		let duration = this.props.artifact.getDuration();
 

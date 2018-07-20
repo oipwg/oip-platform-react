@@ -12,7 +12,7 @@ const LoginPage = (props) => {
 				<div className="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-6">
 					<div style={{height: "75px"}}></div>
 					<fieldset>
-						<LoginBlock Core={props.Core} User={props.User} />
+						<LoginBlock User={props.User} />
 					</fieldset>
 				</div>
 			</div>
@@ -23,7 +23,6 @@ const LoginPage = (props) => {
 function mapStateToProps(state) {
     return {
         User: state.User,
-		Core: state.Core.Core
     }
 }
 

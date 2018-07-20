@@ -22,7 +22,7 @@ class DailyFaucetPrompt extends Component {
 	}
 
 	componentDidMount(){
-        let showPrompt = this.props.Wallet.dailyFaucetPrompt;
+        // let showPrompt = @ToDo.dailyFaucetPrompt;
         this.setState({showPrompt: showPrompt});
 	}
 
@@ -56,16 +56,9 @@ class DailyFaucetPrompt extends Component {
 	}
 }
 
-function mapStateToProps(state) {
-    return {
-        Wallet: state.Wallet,
-		Core: state.Core.Core
-    }
-}
-
 const mapDispatchToProps = {
     setTryFaucet,
 	faucetPrompt
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DailyFaucetPrompt);
+export default connect(null, mapDispatchToProps)(DailyFaucetPrompt);

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-
+import {connect} from "react-redux";
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { tryDailyFaucet } from '../actions/Wallet/thunks';
-import {connect} from "react-redux";
+// import { tryDailyFaucet } from '../actions/Wallet/thunks';
 
 class DailyFaucetBlock extends Component {
 	constructor(props){
@@ -25,19 +24,15 @@ class DailyFaucetBlock extends Component {
 		else 
 			this.setState({recaptchaState: "NEEDS_INPUT"})
 	}
-	tryDailyFaucet(){
-		if (this.state.recaptcha === ""){
-			this.setState({recaptchaState: "NEEDS_INPUT"})
-			return;
-		}
+	tryDailyFaucet() {
+        if (this.state.recaptcha === "") {
+            this.setState({recaptchaState: "NEEDS_INPUT"})
+            // return;
+        }
 
-		let onSuccess = this.props.onFaucetReceive;
-		this.props.tryDailyFaucet(this.props.Core, this.state.recaptcha, function(success){
-			onSuccess();
-		}, function(error){
-			// Needs error response...
-		})
-	}
+        //@ToDo::this.props.tryDailyFaucet()
+    }
+
 	render() {
 		return (
 			<div style={{width: "100%"}}>
@@ -56,12 +51,8 @@ class DailyFaucetBlock extends Component {
 	}
 }
 
-function mapStateToProps(state) {
-    return {
-        Core: state.Core.Core
-    }
-}
+const mapDispatchToProps = {
+    //tryDailyFaucet
+};
 
-const mapDispatchToProps = { tryDailyFaucet };
-
-export default connect(mapStateToProps, mapDispatchToProps)(DailyFaucetBlock);
+export default connect(null, mapDispatchToProps)(DailyFaucetBlock);

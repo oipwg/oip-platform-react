@@ -51,7 +51,7 @@ class IPFSImage extends Component {
 		this.setState({isFetching: true, imageLoaded: false, active: this.props.hash}, () => {
 			this.refs.canvas.getContext("2d").clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
 
-			this.IPFSRequests.push(this.props.Core.Network.getThumbnailFromIPFS(this.props.hash, this.receiveDataFromIPFS));
+			//this.IPFSRequests.push(@ToDo.Network.getThumbnailFromIPFS(this.props.hash, this.receiveDataFromIPFS));
 		});
 	}
 	receiveDataFromIPFS(urlORbase64, hash){

@@ -4,7 +4,6 @@ import { FilePlaylist } from './FilePlaylist.js';
 import { VolumeControls } from './VolumeControls.js';
 import { Wallet } from './Wallet.js';
 import { User } from './User.js';
-import { Core } from './Core.js'
 import { NotificationSystem } from "./NotificationSystem";
 import { PublisherPage } from './PublisherPage';
 import { Piwik } from './Piwik';
@@ -28,7 +27,6 @@ const rootReducer = {
 	CurrentArtifact,
 	FilePlaylist,
 	VolumeControls,
-	Core,
 	NotificationSystem,
 	PublisherPage,
 	Piwik,

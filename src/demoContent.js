@@ -1,4 +1,4 @@
-import { Artifact } from 'oip-js'
+import { Artifact } from 'oip-index'
 
 var demoContent = [
 	{  

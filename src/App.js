@@ -63,15 +63,13 @@ const history = createBrowserHistory()
 class App extends Component {
 
 	componentDidMount(){
-		this.props.setupWalletEvents(this.props.Core);
         this.props.setNotificationSystem(this.refs.NotificationSystem);
 
 		try {
-			if (localStorage.oip_account){
+			if (localStorage && localStorage.oip_account){
                 let account = new Account(localStorage.username, localStorage.pw, {discover: false})
                 account.login()
-                    .then(login_success => {
-                        console.log(`Login Success`, login_success)
+                    .then( () => {
                         this.props.loginSuccess(localStorage.username);
                         this.props.setAccount(account)
                     })
@@ -99,7 +97,7 @@ class App extends Component {
 						<Navbar />
 
 						<LoginPrompt />
-						<DailyFaucetPrompt />
+						{/*<DailyFaucetPrompt />*/}
 						<SwapPrompt />
 						<BuyPrompt />
 						<NotificationSystem ref="NotificationSystem" />
@@ -142,7 +140,6 @@ const NoMatch = ({ match }) => (
 function mapStateToProps(state) {
     return {
         User: state.User,
-        Core: state.Core.Core,
         NotificationSystem: state.NotificationSystem.NotificationSystem,
 		piwik: state.Piwik.piwik,
         Wallet: state.Wallet

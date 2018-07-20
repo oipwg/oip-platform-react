@@ -1,8 +1,7 @@
 import {
-    recieveCurrentArtifact,
+    receiveCurrentArtifact,
     requestCurrentArtifact,
-    requestCurrentArtifactError,
-    setComments
+    requestCurrentArtifactError
 } from "./actions";
 
 import { addFileToPlaylist, setActiveFileInPlaylist } from "../FilePlaylist/actions";
@@ -16,7 +15,7 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
     let state = getState();
     state.OIPIndex.Index.getArtifact(txid)
         .then(art => {
-            dispatch(recieveCurrentArtifact(art));
+            dispatch(receiveCurrentArtifact(art));
             console.log("Fetched current artifact: ", art)
             let files = art.getFiles();
             let publisher = art.getMainAddress();
@@ -37,10 +36,9 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
             } else {
                 dispatch(setActiveFileInPlaylist(txid + "|" + 0));
             }
-            //
-            // dispatch(getComments(state.Core.Core, txid));
-            //
-            // state.Piwik.piwik.push(['trackContentImpression', publisher, txid, ""])
+
+            // dispatch(getComments(txid));
+            state.Piwik.piwik.push(['trackContentImpression', publisher, txid, ""])
 
         })
         .catch(err => {
@@ -50,23 +48,7 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
 };
 
 // -------------------------------------------------------------------------------------------------
-// GET COMMENTS
-
-export const getComments = (Core, url) => dispatch => {
-    Core.Comments.get(url, function(res){
-        if (res && res.data && res.data.replies){
-            dispatch(setComments(res.data.replies))
-        }
-    })
-}
+// @ToDo::GET AND SET COMMENTS
 
 // -------------------------------------------------------------------------------------------------
-// ADD COMMENT
-
-export const addComment = (url, comment) => (dispatch, getState) => {
-    let state = getState();
-
-    state.Core.Core.Comments.add(url, comment, function(res){
-        dispatch(getComments(state.Core, url));
-    })
-}
+// @ToDo::ADD COMMENT

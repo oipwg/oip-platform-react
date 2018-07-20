@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom'
-import { Artifact } from 'oip-js'
+import { Artifact } from 'oip-index'
 
 import PublisherIcon from './PublisherIcon.js';
 import ArtifactIcon from './ArtifactIcon.js';

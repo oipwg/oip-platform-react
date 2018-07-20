@@ -34,7 +34,7 @@ class LoginPrompt extends Component {
 				<Modal isOpen={this.props.User.loginModalPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
 						{this.state.type === "login" ? <LoginBlock User={this.props.User} onRegisterClick={this.toggleLoginRegister} /> : "" }
-						{this.state.type === "register" ? <RegisterBlock Core={this.props.Core} store={this.props.store} onLoginClick={this.toggleLoginRegister} /> : "" }
+						{this.state.type === "register" ? <RegisterBlock onLoginClick={this.toggleLoginRegister} /> : "" }
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.togglePrompt}>Cancel</Button>
@@ -49,9 +49,7 @@ class LoginPrompt extends Component {
 
 function mapStateToProps(state) {
     return {
-    	store: state,
-        User: state.User,
-        Core: state.Core.Core
+        User: state.User
     }
 }
 

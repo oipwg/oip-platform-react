@@ -34,7 +34,7 @@ class TipButton extends Component {
 	}
 	render() {
 
-		// let text = this.props.amount ? "$" + this.props.Core.util.createPriceString(this.props.amount) : "Other";
+		// let text = this.props.amount ? "$" + @ToDo.util.createPriceString(this.props.amount) : "Other";
 		//temporary
 		let text = "Other";
 

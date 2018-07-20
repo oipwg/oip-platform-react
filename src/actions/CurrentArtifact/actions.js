@@ -11,7 +11,7 @@ export const requestCurrentArtifact = () => ({
     type: REQUEST_CURRENT_ARTIFACT
 })
 
-export const recieveCurrentArtifact = artifact => ({
+export const receiveCurrentArtifact = artifact => ({
     type: RECIEVE_CURRENT_ARTIFACT,
     artifact: artifact,
     receivedAt: Date.now()

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import { tryPaymentSend } from '../actions/Payment/thunks'
 
 class SendButton extends Component {
 	constructor(props) {
@@ -34,7 +33,7 @@ class SendButton extends Component {
 	updateAddress(){
 		let newValue = this.address.value;
 
-		let validAddress = this.props.Core.Wallet.validateAddress(newValue, this.props.coin)
+		// let validAddress = @Todo.Wallet.validateAddress(newValue, this.props.coin)
 
 		if (newValue !== ""){
 			this.setState({
@@ -75,25 +74,15 @@ class SendButton extends Component {
 			})
 		}
 	}
-	sendFunds(){
-		this.setState({sendState: "IN_PROGRESS"})
-		if (this.state.addressStatus === "VALID" && this.state.amountStatus === "VALID"){
-			let supportedAddresses = {};
-			supportedAddresses[this.props.coin] = this.state.address;
+	sendFunds() {
+        this.setState({sendState: "IN_PROGRESS"})
+        if (this.state.addressStatus === "VALID" && this.state.amountStatus === "VALID") {
+            let supportedAddresses = {};
+            supportedAddresses[this.props.coin] = this.state.address;
 
-			this.props.store.dispatch(tryPaymentSend(this.props.Core, this.props.NotificationSystem, supportedAddresses, this.props.coin, this.state.amount, "pay", this.state.address, (success) => {
-				console.log("Success!", success);
-				this.setState({sendState: "SUCCESS"})
-			}, (error) => {
-				console.log("Error!", error)
-				this.setState({sendState: "ERROR"})
-			}))
-		} else {
-			setTimeout(() => {
-				this.setState({sendState: "ERROR"})
-			}, 200)
-		}
-	}
+            //@ToDo::tryPaymentSend()
+        }
+    }
 	render() {
 		let addressClass = "";
 		let amountClass = "";

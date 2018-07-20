@@ -48,7 +48,6 @@ class PublisherPage extends Component {
                 </div>
 
                 <ContentCardsContainer
-                    Core={this.props.Core}
                     title={"Latest Artifacts"}
                     content={this.props.content}
                 />
@@ -59,7 +58,6 @@ class PublisherPage extends Component {
 
 function mapStateToProps(state) {
 	return {
-		Core: state.Core.Core,
         publisher: state.PublisherPage.publisher,
         content: state.ArtifactLists[PUBLISHER_PAGE_LIST]
 	}

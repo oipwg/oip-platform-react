@@ -9,24 +9,6 @@ export const UPDATE_WALLET = 'UPDATE_WALLET'
 
 // -------------------------------------------------------------------------------------------------
 
-export const updateBalance = (coin, balance) => ({
-    type: UPDATE_BALANCE,
-    coin,
-    balance
-})
-
-export const updateAddresses = (coin, balance) => ({
-    type: UPDATE_ADDRESSES,
-    coin,
-    balance
-})
-
-export const updateUSD = (coin, usd) => ({
-    type: UPDATE_USD,
-    coin,
-    usd
-})
-
 export const swapPrompt = (prompt) => ({
     type: PROMPT_SWAP,
     prompt
