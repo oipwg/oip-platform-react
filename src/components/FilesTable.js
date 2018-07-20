@@ -120,6 +120,7 @@ class FilesTable extends Component {
                                                 activeFile={_this.props.activeFile}
                                                 setCurrentFile={_this.props.setCurrentFile}
                                                 paymentError={_this.props.paymentError}
+                                                isPlayingFile={_this.props.isPlayingFile}
                                                 paymentInProgress={_this.props.paymentInProgress}
                                                 payForFile={_this.props.payForFile}
                                             />
