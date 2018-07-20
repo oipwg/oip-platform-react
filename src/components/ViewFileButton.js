@@ -14,6 +14,10 @@ class ViewFileButton extends Component {
 
         if (this.props.activeFile.info && this.props.activeFile.info.getSuggestedPlayCost() == 0) {
             this.props.payForFile(this.props.activeFile.key)
+            //Do I need this?
+            if (this.props.activeFile.info.getType() === 'Audio') {
+                this.props.isPlayingFile(this.props.activeFile.key, !this.props.activeFile.isPlaying)
+            }
             return
         }
 
@@ -29,10 +33,7 @@ class ViewFileButton extends Component {
                     console.log("Error while trying to pay for artifact file: ", err)
                 })
         }
-        //Do I need this?
-        if (this.props.activeFile.info.getType() === 'Audio') {
-            this.props.isPlayingFile(this.props.activeFile.key, !this.props.activeFile.isPlaying)
-        }
+
     }
 
     createPriceString(price){
