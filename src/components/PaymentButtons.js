@@ -194,10 +194,10 @@ PaymentButtons.propTypes = {
     btnStyle: PropTypes.string,
     buyInProgress: PropTypes.func,
     buyError: PropTypes.func,
+    buyFile: PropTypes.func,
     paymentError: PropTypes.func,
     paymentInProgress: PropTypes.func,
-    payForFile: PropTypes.func,
-    buyFile: PropTypes.func
+    payForFile: PropTypes.func
 }
 
 function mapStateToProps(state) {
