@@ -62,9 +62,7 @@ class LoginBlock extends Component {
 	    let account = new Account(this.state.email, this.state.password)
         account.login()
             .then(login_success => {
-                this.setState({
-                    redirectToHome: true
-                });
+                this.setState({redirectToHome: true});
                 if (this.state.rememberMe) {
                     localStorage.username = this.state.email;
                     localStorage.pw = this.state.password;
@@ -73,9 +71,26 @@ class LoginBlock extends Component {
                 this.props.loginSuccess(this.state.email);
                 this.props.setAccount(account)
             })
-            .catch(err => {
-                this.props.loginFailure();
-                alert(`Error logging in: ${err}`)
+            .catch( () => {
+                //@ToDO::keystore_url reset
+                let account = new Account(this.state.email, this.state.password, {store_in_keystore: true, keystore_url: "http://localhost:9196"})
+                account.login()
+                    .then( (login_success) => {
+                        this.setState({redirectToHome: true});
+                        if (this.state.rememberMe) {
+                            localStorage.username = this.state.email;
+                            localStorage.pw = this.state.password;
+                        }
+                        console.log(`Login_success: ${JSON.stringify(login_success, null, 4)}`)
+                        this.props.loginSuccess(this.state.email);
+                        this.props.setAccount(account)
+                    })
+                    .catch(err => {
+                        this.props.loginFailure();
+                        alert(`Error logging in: ${err}`)
+                    })
+
+
             })
 	}
 
