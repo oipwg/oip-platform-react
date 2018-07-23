@@ -13,6 +13,11 @@ class UserNav extends React.Component {
         let account = new Account();
         account.logout()
         this.props.logout()
+        try {
+            if (localStorage)
+                localStorage.removeItem("pw")
+                localStorage.removeItem("username")
+        } catch (e){}
     }
 
     render() {

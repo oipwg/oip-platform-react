@@ -65,19 +65,27 @@ class App extends Component {
 	componentDidMount(){
         // this.props.setNotificationSystem(this.refs.NotificationSystem);
 
-		// try {
-		// 	if (localStorage && localStorage.oip_account){
-         //        let account = new Account(localStorage.username, localStorage.pw, {discover: false})
-         //        account.login()
-         //            .then( () => {
-         //                this.props.loginSuccess(localStorage.username);
-         //                this.props.setAccount(account)
-         //            })
-         //            .catch(err => {
-         //                console.log(`Error logging in: ${err}`);
-         //            })
-		// 	}
-		// } catch (e) {}
+		try {
+			if (localStorage){
+                let account = new Account(localStorage.username, localStorage.pw, {discover: false})
+                account.login()
+                    .then( () => {
+                        this.props.loginSuccess(localStorage.username);
+                        this.props.setAccount(account)
+                    })
+                    .catch(err => {
+                        let account = new Account(localStorage.username, localStorage.pw, {discover: false, store_in_keystore: true, keystore_url: "http://localhost:9196"})
+                        account.login()
+                            .then( () => {
+                                this.props.loginSuccess(localStorage.username);
+                                this.props.setAccount(account)
+                            })
+                            .catch( err => {
+                                console.log(`Error logging in: ${err}`);
+                            })
+                    })
+			}
+		} catch (e) {}
 
 	}
 
