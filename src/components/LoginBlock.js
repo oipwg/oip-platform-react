@@ -40,22 +40,22 @@ class LoginBlock extends Component {
 		this.registerClick = this.registerClick.bind(this);
 	}
 
-    componentDidMount(){
-        try {
-            if (localStorage.oip_account){
-                let account = new Account(localStorage.username, localStorage.pw)
-                account.login()
-                    .then(login_success => {
-                        console.log(`Login Success`, login_success)
-                        this.props.loginSuccess(localStorage.username);
-                        this.props.setAccount(account)
-                    })
-                    .catch(err => {
-                        console.log(`Error logging in: ${err}`);
-                    })
-            }
-        } catch (e) {}
-    }
+    // componentDidMount(){
+    //     try {
+    //         if (localStorage.oip_account){
+    //             let account = new Account(localStorage.username, localStorage.pw)
+    //             account.login()
+    //                 .then(login_success => {
+    //                     console.log(`Login Success`, login_success)
+    //                     this.props.loginSuccess(localStorage.username);
+    //                     this.props.setAccount(account)
+    //                 })
+    //                 .catch(err => {
+    //                     console.log(`Error logging in: ${err}`);
+    //                 })
+    //         }
+    //     } catch (e) {}
+    // }
 
 	login(){
 	    this.setState({loginFetching: true})

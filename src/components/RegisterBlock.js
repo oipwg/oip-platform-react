@@ -50,7 +50,8 @@ class RegisterBlock extends Component {
 			recaptcha: "",
 			registrationStatus: STATUS.WAITING,
 			redirectToLogin: false,
-            redirectToHome: false
+            redirectToHome: false,
+            store_in_keystore: false
 		}
 
 		this.register = this.register.bind(this);
@@ -61,6 +62,7 @@ class RegisterBlock extends Component {
 		this.updateVerify = this.updateVerify.bind(this);
 		this.recaptcha = this.recaptcha.bind(this);
 		this.loginClick = this.loginClick.bind(this);
+		this.handleStorageClick = this.handleStorageClick.bind(this)
 
 	}
 
@@ -72,6 +74,10 @@ class RegisterBlock extends Component {
         this.setState({ User });
 		this.showRecaptcha = true;
 	}
+
+	handleStorageClick(e) {
+            this.setState({store_in_keystore: ((e.target.name === "keystore"))})
+    }
 	register(){
 		this.setState({registrationStatus: STATUS.PENDING});
 
@@ -109,16 +115,18 @@ class RegisterBlock extends Component {
 			return;
 		}
 
-		// If we are ready, go ahead and start the registration process.
-        let account = new Account(this.state.email, this.state.password, {discover: false});
+		//@ToDo::Delete this or put it to empty string for production
+        let keystore_url = "http://localhost:9196"
+        let account = new Account(this.state.email, this.state.password, {discover: false, store_in_keystore: this.state.store_in_keystore, keystore_url: keystore_url});
+        console.log("Account: ", account)
         account.create()
-            .then(data => {
-                console.log("Successful account creation: ", data);
+            .then( (succ) => {
+                console.log("Successful reg: ", succ)
                 this.account = account;
                 this.props.setAccount(account)
                 account.login(this.state.email, this.state.password)
-                    .then(login_success => {
-                        console.log("Login success: ", login_success)
+                    .then( (succ) => {
+                        console.log("Successful login: ", succ)
                         this.setState({
                             redirectToLogin: true
                         })
@@ -219,7 +227,7 @@ class RegisterBlock extends Component {
 			this.setState({recaptcha: response, recaptchaState: STATUS.INVALID})
 	}
 	loginClick(){
-       this.setState({redirectToLogin: false})
+       this.setState({redirectToLogin: true})
 	}
 	render() {
 		var RegisterBtnTxt = "Register";
@@ -304,6 +312,10 @@ class RegisterBlock extends Component {
 						</div> : ""}
 					</div>
 				</div>
+                <div className="row d-flex justify-content-center">
+                    <button name="local" type="button" onClick={this.handleStorageClick} className={"btn btn" + (this.state.store_in_keystore ? "-outline-success" : "-success") + " btn-sm m-2"}>Store locally</button>
+                    <button name="keystore" type="button" onClick={this.handleStorageClick} className={"btn btn" + (this.state.store_in_keystore ? "-info" : "-outline-info") + " btn-sm m-2"}>Store in keystore</button>
+                </div>
 				<div className="row">
 					<div className="col-12 text-center" style={{fontSize: "13.5px", padding: "0px"}}>
 						<p>
@@ -311,7 +323,7 @@ class RegisterBlock extends Component {
 							<br />
 							<strong>Password recovery is NOT possible</strong>
 							<br />
-							(passwords never touch our servers)
+							(We never see your password!)
 						</p>
 					</div>
 					<div className="col-12" style={{margin: "0px 0px"}}>
