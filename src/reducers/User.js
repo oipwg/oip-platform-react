@@ -44,7 +44,7 @@ export const User = (state = {
 		case actions.PROMPT_LOGIN:
 			return {
 				...state,
-				loginModalPrompt: true
+				loginModalPrompt: action.prompt
 			}
 		case actions.REGISTER_START:
 			return {

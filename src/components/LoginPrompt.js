@@ -5,6 +5,7 @@ import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
 import LoginBlock from './LoginBlock.js';
 import RegisterBlock from './RegisterBlock.js';
+import {loginPrompt} from '../actions/User/actions';
 
 class LoginPrompt extends Component {
 	constructor(props){
@@ -19,7 +20,7 @@ class LoginPrompt extends Component {
 	}
 
 	togglePrompt(){
-		this.setState({showPrompt: !this.state.showPrompt})
+		this.props.loginPrompt(false)
 	}
 
 	toggleLoginRegister(){
@@ -53,4 +54,8 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(LoginPrompt);
+const mapDispatchToProps = {
+    loginPrompt
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPrompt);

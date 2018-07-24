@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux'
+import {loginPrompt} from '../actions/User/actions'
+
 
 class BuyFileButton extends Component {
     constructor(props){
@@ -8,11 +10,12 @@ class BuyFileButton extends Component {
 
         this.buyFile = this.buyFile.bind(this);
         this.createPriceString = this.createPriceString.bind(this);
+        this.checkLogin = this.checkLogin.bind(this)
+        this.checkBalance = this.checkBalance.bind(this)
+        this.pay = this.pay.bind(this)
+        this.coinbaseModal = this.coinbaseModal.bind(this)
     }
-
-    buyFile(){
-        this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
-
+    pay() {
         if (this.props.activeFile.owned){
             this.downloadStarted = true;
         } else {
@@ -21,13 +24,57 @@ class BuyFileButton extends Component {
             this.props.account.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "buy", "usd")
                 .then(data => {
                     this.props.buyFile(this.props.activeFile.key)
-                    console.log('Succesfully paid for artifact file: ', data)
+                    console.log('Successfully bought file: ', data)
+                    this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
                 })
                 .catch(err => {
                     this.props.buyError(this.props.activeFile.key)
                     console.log("Error while trying to pay for artifact file: ", err)
                 })
         }
+    }
+    checkLogin() {
+        return new Promise( (res, rej) => {
+            if (this.props.User.isLoggedIn) {
+                console.log('User logged in?: ', this.props.User.isLoggedIn)
+                res()
+            }
+            rej()
+        })
+    }
+    checkBalance(filePrice) {
+        return new Promise( (res, rej) => {
+            this.props.account.Account.wallet.getFiatBalances("bitcoin")
+                .then( balance => {
+                    if (balance >= filePrice)
+                        res()
+                })
+                .catch(rej)
+        })
+    }
+    coinbaseModal() {
+        return new Promise( (res, rej) => {
+            if (true)
+                res()
+            rej()
+        })
+    }
+    buyFile(filePrice){
+        console.log("this.buyFile filePrice: ", filePrice)
+        this.checkLogin()
+            .then( () => {
+                this.checkBalance(filePrice)
+                    .then(this.pay)
+                    .catch( () => {
+                        //error check if couldn't get balance
+                        this.coinbaseModal()
+                            .then(this.pay)
+                            .catch( () => {console.log("Rejected coinbaseModal")})
+                    })
+            })
+            .catch( () => {
+                this.props.loginPrompt(true)
+            })
     }
 
     createPriceString(price){
@@ -115,7 +162,7 @@ class BuyFileButton extends Component {
         return (
             <div style={{display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
                 { disallowBuy ? "" :
-                    <button className={"pad-5 btn btn-" + buyBtnType} onClick={this.buyFile} style={this.props.btnStyle}>
+                    <button className={"pad-5 btn btn-" + buyBtnType} onClick={() => this.buyFile(sugBuy)} style={this.props.btnStyle}>
                         <span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
                     </button>
                 }
@@ -136,8 +183,12 @@ BuyFileButton.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        account: state.Account
+        account: state.Account,
+        User: state.User
     }
 }
+const mapDispatchToProps = {
+    loginPrompt
+}
 
-export default connect(mapStateToProps)(BuyFileButton)
+export default connect(mapStateToProps, mapDispatchToProps)(BuyFileButton)

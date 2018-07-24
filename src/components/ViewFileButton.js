@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux'
+import {loginPrompt} from '../actions/User/actions'
 
 class ViewFileButton extends Component {
     constructor(props){
@@ -8,9 +9,14 @@ class ViewFileButton extends Component {
 
         this.viewFile = this.viewFile.bind(this);
         this.createPriceString = this.createPriceString.bind(this);
+        this.checkLoginStatus = this.checkLoginStatus.bind(this);
+    }
+
+    checkLoginStatus() {
+        if (!this.props.User.isLoggedIn)
+            this.props.loginPrompt()
     }
     viewFile(){
-        this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
 
         if (this.props.activeFile.info && this.props.activeFile.info.getSuggestedPlayCost() == 0) {
             this.props.payForFile(this.props.activeFile.key)
@@ -20,6 +26,8 @@ class ViewFileButton extends Component {
             }
             return
         }
+
+        this.checkLoginStatus()
 
         if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
             this.props.paymentInProgress(this.props.activeFile.key)
@@ -33,7 +41,7 @@ class ViewFileButton extends Component {
                     console.log("Error while trying to pay for artifact file: ", err)
                 })
         }
-
+        this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
     }
 
     createPriceString(price){
@@ -143,8 +151,12 @@ ViewFileButton.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        account: state.Account
+        account: state.Account,
+        User: state.User
     }
 }
 
-export default connect(mapStateToProps)(ViewFileButton)
+const mapDispatchToProps = {
+    loginPrompt
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ViewFileButton)
