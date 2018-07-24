@@ -104,7 +104,8 @@ class App extends Component {
 						{/*/!* Include all components that need to be rendered above the main container content *!/*/}
 						<Navbar />
 
-						<LoginPrompt />
+                        {/*LoginPrompt is causing react-warning-keys*/}
+                        <LoginPrompt />
 						{/*<DailyFaucetPrompt />*/}
 						<SwapPrompt />
 						<BuyPrompt />

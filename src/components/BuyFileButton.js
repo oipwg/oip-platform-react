@@ -43,18 +43,22 @@ class BuyFileButton extends Component {
         })
     }
     checkBalance(filePrice) {
+        console.log("File Price: ", filePrice)
         return new Promise( (res, rej) => {
             this.props.account.Account.wallet.getFiatBalances("bitcoin")
                 .then( balance => {
-                    if (balance >= filePrice)
+                    console.log("Fiat Balances: ", balance)
+                    if (balance >= filePrice) {
+                        console.log("Balance is greater than file price")
                         res()
+                    }
                 })
                 .catch(rej)
         })
     }
     coinbaseModal() {
         return new Promise( (res, rej) => {
-            if (true)
+            if (false)
                 res()
             rej()
         })

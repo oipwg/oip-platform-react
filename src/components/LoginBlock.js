@@ -76,7 +76,7 @@ class LoginBlock extends Component {
                 let account = new Account(this.state.email, this.state.password, {store_in_keystore: true, keystore_url: "http://localhost:9196"})
                 account.login()
                     .then( (login_success) => {
-                        this.setState({redirectToHome: true});
+                        this.props.modal ? this.props.loginPrompt(false) : this.setState({redirectToHome: true});
                         if (this.state.rememberMe) {
                             localStorage.username = this.state.email;
                             localStorage.pw = this.state.password;

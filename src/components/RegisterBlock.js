@@ -127,9 +127,7 @@ class RegisterBlock extends Component {
                 account.login(this.state.email, this.state.password)
                     .then( (succ) => {
                         console.log("Successful login: ", succ)
-                        this.setState({
-                            redirectToHome: true
-                        })
+                        this.props.modal ? this.props.loginPrompt(false) : this.setState({redirectToHome: true})
                         this.props.loginSuccess(this.state.email);
                     })
                     .catch(err => {console.log(err)})
