@@ -164,11 +164,11 @@ class LoginBlock extends Component {
 					<div className="col-12 col-sm-5 col-md-5 order-2 order-sm-1">
 						{this.state.redirectToRegister ? <Redirect to="/register" push /> : ""}
 						<button className="btn btn-lg btn-outline-secondary btn-block" 
-                                onClick={this.registerClick}>Register
+                                onClick={this.props.modal ? this.props.onRegisterClick : this.registerClick}>Register
                         </button>
 					</div>
 					<div className="col-12 col-sm-7 col-md-7 order-1 order-sm-2">
-						<button id="signin" className="btn btn-lg btn-success btn-block" 
+						<button id="signinl" className="btn btn-lg btn-success btn-block"
                                 onClick={this.login}>{this.state.loginFetching ? "Loading..." : "Login"}</button>
 					</div>
 				</div>

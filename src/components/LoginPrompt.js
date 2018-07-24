@@ -28,14 +28,13 @@ class LoginPrompt extends Component {
 	}
 
 	render() {
-
 		return (
 			<div>
 				{this.props.User.loginModalPrompt ?
 				<Modal isOpen={this.props.User.loginModalPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
-						{this.state.type === "login" ? <LoginBlock User={this.props.User} onRegisterClick={this.toggleLoginRegister} /> : "" }
-						{this.state.type === "register" ? <RegisterBlock onLoginClick={this.toggleLoginRegister} /> : "" }
+						{this.state.type === "login" ? <LoginBlock User={this.props.User} modal={true} onRegisterClick={this.toggleLoginRegister} /> : "" }
+						{this.state.type === "register" ? <RegisterBlock modal={true} onLoginClick={this.toggleLoginRegister} /> : "" }
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.togglePrompt}>Cancel</Button>

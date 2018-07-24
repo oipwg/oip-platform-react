@@ -353,7 +353,7 @@ class RegisterBlock extends Component {
 				<hr className="" />
 				<div className="row">
 					{this.state.redirectToLogin ? <Redirect to="/login" push /> : ""}
-					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-secondary btn-block btn-lg" onClick={this.loginClick}>Login</button></div>
+					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-secondary btn-block btn-lg" onClick={this.props.modal ? this.props.onLoginClick : this.loginClick}>Login</button></div>
 					<div className="col-xs-12 col-md-9 order-1 order-sm-2"><button id="register" className="btn btn-success btn-block btn-lg" onClick={this.register} tabIndex="5">{RegisterBtnTxt}</button></div>
 				</div>
 			</div>
