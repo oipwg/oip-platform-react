@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux'
+
+import CoinModal from './CoinModal'
 import {loginPrompt} from '../actions/User/actions'
 
 
@@ -8,12 +10,22 @@ class BuyFileButton extends Component {
     constructor(props){
         super(props);
 
+        this.state = {
+            coinToPayWith: false
+        }
+
         this.buyFile = this.buyFile.bind(this);
         this.createPriceString = this.createPriceString.bind(this);
         this.checkLogin = this.checkLogin.bind(this)
-        this.checkBalance = this.checkBalance.bind(this)
+        this.chooseCoin = this.chooseCoin.bind(this)
         this.pay = this.pay.bind(this)
         this.coinbaseModal = this.coinbaseModal.bind(this)
+        this.toggleCoinModal = this.toggleCoinModal.bind(this)
+        this.onCoinClick = this.onCoinClick.bind(this)
+
+    }
+    toggleCoinModal() {
+        this.setState({coinModal: !this.state.coinModal})
     }
     pay() {
         if (this.props.activeFile.owned){
@@ -42,18 +54,18 @@ class BuyFileButton extends Component {
             rej()
         })
     }
-    checkBalance(filePrice) {
-        console.log("File Price: ", filePrice)
+    onCoinClick(e) {
+        console.log(e.target.alt)
+        this.state.modalres(e.target.alt)
+    }
+    chooseCoin() {
         return new Promise( (res, rej) => {
-            this.props.account.Account.wallet.getFiatBalances("bitcoin")
-                .then( balance => {
-                    console.log("Fiat Balances: ", balance)
-                    if (balance >= filePrice) {
-                        console.log("Balance is greater than file price")
-                        res()
-                    }
-                })
-                .catch(rej)
+            console.log("Choosing coin")
+            this.setState({
+                coinModal: true,
+                modalres: res
+            })
+
         })
     }
     coinbaseModal() {
@@ -63,17 +75,20 @@ class BuyFileButton extends Component {
             rej()
         })
     }
-    buyFile(filePrice){
-        console.log("this.buyFile filePrice: ", filePrice)
+    buyFile(){
         this.checkLogin()
             .then( () => {
-                this.checkBalance(filePrice)
-                    .then(this.pay)
+                //choose only coins that the artifact accepts
+                this.chooseCoin()
+                    .then( (coin) => {
+                        //coin should be string
+                        console.log("then coin: ", coin)
+                    })
                     .catch( () => {
-                        //error check if couldn't get balance
                         this.coinbaseModal()
+                            //resolve with a coin to pay with
                             .then(this.pay)
-                            .catch( () => {console.log("Rejected coinbaseModal")})
+                            .catch(() => {console.log("Decided not to pay")})
                     })
             })
             .catch( () => {
@@ -165,9 +180,10 @@ class BuyFileButton extends Component {
         }
         return (
             <div style={{display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
+                {this.state.coinModal ? <CoinModal toggleCoinModal={this.toggleCoinModal} onCoinClick={this.onCoinClick} className="coin-modal"/> : null}
                 { disallowBuy ? "" :
                     <button className={"pad-5 btn btn-" + buyBtnType} onClick={() => this.buyFile(sugBuy)} style={this.props.btnStyle}>
-                        <span className="icon icon-download" style={{marginRight: "5px"}}></span>{buyString}
+                        <span className="icon icon-download" style={{marginRight: "5px"}}/> {buyString}
                     </button>
                 }
             </div>
