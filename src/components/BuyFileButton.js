@@ -11,7 +11,7 @@ class BuyFileButton extends Component {
         super(props);
 
         this.state = {
-            coinToPayWith: false
+            coinModal: false
         }
 
         this.buyFile = this.buyFile.bind(this);
@@ -22,10 +22,16 @@ class BuyFileButton extends Component {
         this.coinbaseModal = this.coinbaseModal.bind(this)
         this.toggleCoinModal = this.toggleCoinModal.bind(this)
         this.onCoinClick = this.onCoinClick.bind(this)
+        this.checkModal = this.checkModal.bind(this)
 
     }
     toggleCoinModal() {
-        this.setState({coinModal: !this.state.coinModal})
+        this.setState({coinModal: !this.state.coinModal}, this.checkModal)
+        console.log(this.state.coinModal)
+    }
+    checkModal() {
+        if (!this.state.coinModal && this.state.coinPromise.rej)
+            this.state.coinPromise.rej()
     }
     pay() {
         if (this.props.activeFile.owned){
@@ -56,16 +62,21 @@ class BuyFileButton extends Component {
     }
     onCoinClick(e) {
         console.log(e.target.alt)
-        this.state.modalres(e.target.alt)
+        let coin = e.target.alt
+        let p = this.state.coinPromise
+        //check coin balance against fileCost
+        if (coin === "bitcoin" || coin === "flo" || coin === "litecoin") {
+            this.setState({coinModal: false})
+            p.res(e.target.alt)
+        }
+        p.rej()
     }
     chooseCoin() {
         return new Promise( (res, rej) => {
-            console.log("Choosing coin")
             this.setState({
                 coinModal: true,
-                modalres: res
+                coinPromise: {res: res, rej: rej}
             })
-
         })
     }
     coinbaseModal() {
@@ -81,14 +92,10 @@ class BuyFileButton extends Component {
                 //choose only coins that the artifact accepts
                 this.chooseCoin()
                     .then( (coin) => {
-                        //coin should be string
-                        console.log("then coin: ", coin)
+                       console.log("chose: ", coin)
                     })
                     .catch( () => {
-                        this.coinbaseModal()
-                            //resolve with a coin to pay with
-                            .then(this.pay)
-                            .catch(() => {console.log("Decided not to pay")})
+                        console.log("Caught out of choose coin")
                     })
             })
             .catch( () => {
@@ -180,7 +187,7 @@ class BuyFileButton extends Component {
         }
         return (
             <div style={{display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
-                {this.state.coinModal ? <CoinModal toggleCoinModal={this.toggleCoinModal} onCoinClick={this.onCoinClick} className="coin-modal"/> : null}
+                {this.state.coinModal ? <CoinModal isOpen={this.state.coinModal} toggleCoinModal={this.toggleCoinModal} onCoinClick={this.onCoinClick} className="coin-modal"/> : null}
                 { disallowBuy ? "" :
                     <button className={"pad-5 btn btn-" + buyBtnType} onClick={() => this.buyFile(sugBuy)} style={this.props.btnStyle}>
                         <span className="icon icon-download" style={{marginRight: "5px"}}/> {buyString}
