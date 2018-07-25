@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 
 import { connect } from 'react-redux';
+import "babel-polyfill";
 
 import {loginSuccess} from "./actions/User/actions";
 import {setupWalletEvents} from "./actions/Wallet/thunks";

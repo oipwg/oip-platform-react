@@ -1,11 +1,13 @@
 import React from 'react';
 import { Modal, ModalBody, ModalFooter } from 'reactstrap';
+import ModalCoin from './ModalCoin';
+
 import ltc from '../assets/img/ltcflat.svg'
 import btc from '../assets/img/btcflat.svg'
 import flo from '../assets/img/flo.svg'
 
 
-class CoinModal extends React.Component {
+class CoinsModal extends React.Component {
     render() {
         return (
             <Modal style={{top: "22%"}} isOpen={this.props.isOpen} toggle={this.props.toggleCoinModal} className={this.props.className}>
@@ -15,15 +17,10 @@ class CoinModal extends React.Component {
                     </div>
                     <hr className="" />
                     <div className="row no-gutters d-flex">
-                        <div className="col">
-                            <img onClick={this.props.onCoinClick} style={{height: "60px"}} src={btc} alt="bitcoin"/>
-                        </div>
-                        <div className="col">
-                            <img onClick={this.props.onCoinClick} style={{height: "60px"}} src={flo} alt="flo"/>
-                        </div>
-                        <div className="col">
-                            <img onClick={this.props.onCoinClick} style={{height: "60px"}} src={ltc} alt="litecoin"/>
-                        </div>
+                        <ModalCoin onClick={this.props.onCoinClick} acc={this.props.acc} height={coinHeight} imgUrl={btc} coinName="bitcoin"/>
+                        <ModalCoin onClick={this.props.onCoinClick} acc={this.props.acc} height={coinHeight} imgUrl={flo} coinName="flo"/>
+                        <ModalCoin onClick={this.props.onCoinClick} acc={this.props.acc} height={coinHeight} imgUrl={ltc} coinName="litecoin"/>
+
                     </div>
                 </ModalBody>
                 <ModalFooter>
@@ -34,4 +31,8 @@ class CoinModal extends React.Component {
     }
 }
 
-export default CoinModal
+export default CoinsModal
+
+const coinHeight = {
+    height: "60px"
+}
