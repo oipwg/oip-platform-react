@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 
+/**
+ * Use this component like this: 
+ * 
+ * <CoinbaseModal currency="btc" address="1FjQxmrue5jdgVhmVMN3Y4XjXdtiDC257K" amount={1} isOpen={true} />
+ */
+
 class CoinbaseModal extends Component {
 	constructor(props) {
 		super(props);
@@ -77,7 +83,7 @@ class CoinbaseModal extends Component {
 					width: "100%", 
 					height: "100%", 
 					zIndex: "9999"
-				}} scrolling='no' allowTransparency='true' frameBorder='0'></iframe>
+				}} scrolling='no' allowtransparency='true' frameBorder='0'></iframe>
 			</div>
 		);
 	}
