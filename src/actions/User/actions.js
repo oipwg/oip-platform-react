@@ -8,6 +8,7 @@ export const REGISTER_ERROR = 'REGISTER_ERROR'
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS"
 export const SET_ACCOUNT = 'SET_ACCOUNT';
 export const RESET_REGISTER_STATE = 'RESET_REGISTER_STATE'
+export const RESET_LOGIN_STATE = 'RESET_LOGIN_STATE'
 
 // --------------------------------------------------------------------------------
 
@@ -17,7 +18,7 @@ export const loginFetching = () => ({
 
 export const loginFailure = (err) => ({
     type: LOGIN_FAILURE,
-    error: err
+    err: err
 })
 
 export const loginSuccess = (publisher) => ({
@@ -54,4 +55,8 @@ export const setAccount = account => ({
 
 export const resetRegisterState = () => ({
     type: RESET_REGISTER_STATE
+})
+
+export const resetLoginState = () => ({
+    type: RESET_LOGIN_STATE
 })

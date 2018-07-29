@@ -21,7 +21,7 @@ export const User = (state = {
 				loginFailure: true,
 				isFetching: false,
 				isLoggedIn: false,
-                logginErrorMessage: action.error
+                loginErrorMessage: action.err.message
 			}
 		case actions.LOGIN_SUCCESS:
 			return {
@@ -47,6 +47,15 @@ export const User = (state = {
 				...state,
 				loginModalPrompt: action.prompt
 			}
+        case actions.RESET_LOGIN_STATE:
+            return {
+                ...state,
+                isFetching: false,
+                loginFailure: false,
+                isLoggedIn: false,
+                loginModalPrompt: false,
+                publisher: {}
+            }
 		case actions.REGISTER_START:
 			return {
 				...state,

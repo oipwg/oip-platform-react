@@ -3,8 +3,11 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import validator from 'validator';
 
-import {accountLogin} from "../actions/User/thunks";
+import RegisterErrorModal from './RegisterErrorModal';
 import ButtonCheckbox from './ButtonCheckbox.js';
+
+import {accountLogin} from "../actions/User/thunks";
+import {resetLoginState} from "../actions/User/actions";
 
 const STATUS = {
 	NO_INPUT: "NO_INPUT",
@@ -32,10 +35,15 @@ class LoginBlock extends Component {
 		this.updatePassword = this.updatePassword.bind(this);
 		this.updateRememberMe = this.updateRememberMe.bind(this);
 		this.registerClick = this.registerClick.bind(this);
+		this.toggleErrorModal = this.toggleErrorModal.bind(this);
 	}
+    toggleErrorModal() {
+        this.props.resetLoginState()
+        this.username.value= ""
+        this.email.value = ""
+    }
 
 	login(){
-	    console.log("LOGIN OPS: ", this.state.rememberMe)
 	    this.props.accountLogin(this.state.email, this.state.password, {discover: false, rememberMe: this.state.rememberMe})
         // this.props.modal ? this.props.loginPrompt(false) : this.setState({redirectToHome: true});
     }
@@ -114,7 +122,8 @@ class LoginBlock extends Component {
                         </button>
 					</div>
 					<div className="col-12 col-sm-7 col-md-7 order-1 order-sm-2">
-						<button id="signinl" className={"btn btn-lg btn" + (this.props.User.loginFailure ? "-danger" : "-success") + " btn-block"}
+                        <RegisterErrorModal isOpen={this.props.User.loginFailure} errMessage={this.props.User.loginErrorMessage} toggle={this.toggleErrorModal} />
+                        <button id="signinl" className={"btn btn-lg btn" + (this.props.User.loginFailure ? "-danger" : "-success") + " btn-block"}
                                 onClick={this.login}>{this.props.User.isFetching ? "Loading..." : this.props.User.loginFailure ? "Login Error" : "Login"}</button>
 					</div>
 				</div>
@@ -123,7 +132,8 @@ class LoginBlock extends Component {
 	}
 }
 const mapDispatchToProps = {
-    accountLogin
+    accountLogin,
+    resetLoginState
 };
 
 function mapStateToProps(state) {
