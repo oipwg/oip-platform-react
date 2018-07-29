@@ -7,6 +7,26 @@ export const Wallet = (state = {
 	tryFaucet: true
 }, action) => {
 	switch (action.type) {
+        case actions.SET_CRYPTO_BALANCES:
+            return {
+                ...state,
+                cryptoBalances: action.balances
+            }
+        case actions.ERROR_FETCHING_BALANCE:
+            return {
+                ...state,
+                errorFetchingBalance: action.err
+            }
+        case actions.SET_MNEMONIC:
+            return {
+                ...state,
+                mnemonic: action.mem
+            }
+        case actions.SET_WALLET:
+            return {
+                ...state,
+                wallet: action.wallet
+            }
 		case actions.PROMPT_SWAP:
 			return {
 				...state,

@@ -63,7 +63,6 @@ class App extends Component {
 
 	componentDidMount(){
         // this.props.setNotificationSystem(this.refs.NotificationSystem);
-
 		try {
 			if (localStorage && localStorage.username && localStorage.pw){
 			    this.props.accountLogin(localStorage.username, localStorage.pw, {discover: false})
@@ -132,6 +131,7 @@ const NoMatch = ({ match }) => (
 
 function mapStateToProps(state) {
     return {
+        state: state,
         User: state.User,
         NotificationSystem: state.NotificationSystem.NotificationSystem,
 		piwik: state.Piwik.piwik,

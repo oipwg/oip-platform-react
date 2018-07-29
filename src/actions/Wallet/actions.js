@@ -7,7 +7,32 @@ export const PROMPT_DAILY_FAUCET = 'PROMPT_DAILY_FAUCET'
 export const SET_TRY_FAUCET = 'SET_TRY_FAUCET'
 export const UPDATE_WALLET = 'UPDATE_WALLET'
 
+export const SET_CRYPTO_BALANCES = "SET_CRYPTO_BALANCES"
+export const ERROR_FETCHING_BALANCE = "ERROR_FETCHING_BALANCE"
+export const SET_WALLET = "SET_WALLET"
+export const SET_MNEMONIC = "SET_MNEMONIC"
+
 // -------------------------------------------------------------------------------------------------
+
+export const setCryptoBalances = (balances) => ({
+    type: SET_CRYPTO_BALANCES,
+    balances
+})
+
+export const errorFetchingBalance = (err) => ({
+    type: ERROR_FETCHING_BALANCE,
+    err
+})
+
+export const setMnemonic = (mem) => ({
+    type: SET_MNEMONIC,
+    mem
+})
+
+export const setWallet = (wallet) => ({
+    type: SET_WALLET,
+    wallet
+})
 
 export const swapPrompt = (prompt) => ({
     type: PROMPT_SWAP,
