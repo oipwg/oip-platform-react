@@ -15,8 +15,9 @@ export const loginFetching = () => ({
     type: LOGIN_FETCHING
 })
 
-export const loginFailure = () => ({
-    type: LOGIN_FAILURE
+export const loginFailure = (err) => ({
+    type: LOGIN_FAILURE,
+    error: err
 })
 
 export const loginSuccess = (publisher) => ({

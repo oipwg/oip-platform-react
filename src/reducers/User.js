@@ -20,7 +20,8 @@ export const User = (state = {
 				...state,
 				loginFailure: true,
 				isFetching: false,
-				isLoggedIn: false
+				isLoggedIn: false,
+                logginErrorMessage: action.error
 			}
 		case actions.LOGIN_SUCCESS:
 			return {

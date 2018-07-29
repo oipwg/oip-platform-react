@@ -17,13 +17,11 @@ export const createAccount = (username, pw, options) => dispatch => {
     console.log(acc)
     acc.create()
         .then( succ => {
-            console.log("reg succ", succ)
             dispatch(registerSuccess())
             dispatch(setAccount(succ))
             dispatch(accountLogin(username, pw, options))
         })
         .catch( err => {
-            console.log("reg err", err)
             dispatch(registerError(err))
         })
 }
@@ -33,16 +31,21 @@ export const accountLogin = (username, pw, options, acc) => dispatch => {
     let account = acc ? acc : options ? new Account(username, pw, options) : new Account(username, pw);
     account.login()
         .then( succ => {
-            console.log("login succ", succ)
             dispatch(loginSuccess(username))
             if (options.rememberMe) {
+                console.log(localStorage, localStorage.username)
                 localStorage.username = username;
                 localStorage.pw = pw;
             }
         })
         .catch( err => {
-            console.log("login err", err)
-            dispatch(loginFailure())
+            if (!options.store_in_keystore) {
+                //@ToDo::change hardcoded keystore_url when server is up
+                dispatch(accountLogin(username, pw, {discover: false, store_in_keystore: true,
+                    keystore_url: "http://localhost:9196", rememberMe: options.rememberMe}))
+            } else {
+                dispatch(loginFailure(err))
+            }
         })
 
 }

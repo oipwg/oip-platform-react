@@ -10,10 +10,8 @@ import {
 import { connect } from 'react-redux';
 import "babel-polyfill";
 
-import {loginSuccess} from "./actions/User/actions";
-import {setupWalletEvents} from "./actions/Wallet/thunks";
+import {accountLogin} from "./actions/User/thunks";
 import {setNotificationSystem} from "./actions/NotificationSystem/actions";
-import {setAccount} from './actions/Account/actions'
 
 import { CSSTransitionGroup } from 'react-transition-group'
 
@@ -21,7 +19,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 import { ConnectedRouter } from 'react-router-redux'
 import { Provider } from 'react-redux'
 
-import NotificationSystem from 'react-notification-system';
+// import NotificationSystem from 'react-notification-system';
 
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
@@ -67,24 +65,8 @@ class App extends Component {
         // this.props.setNotificationSystem(this.refs.NotificationSystem);
 
 		try {
-			if (localStorage){
-                let account = new Account(localStorage.username, localStorage.pw, {discover: false})
-                account.login()
-                    .then( () => {
-                        this.props.loginSuccess(localStorage.username);
-                        this.props.setAccount(account)
-                    })
-                    .catch(err => {
-                        let account = new Account(localStorage.username, localStorage.pw, {discover: false, store_in_keystore: true, keystore_url: "http://localhost:9196"})
-                        account.login()
-                            .then( () => {
-                                this.props.loginSuccess(localStorage.username);
-                                this.props.setAccount(account)
-                            })
-                            .catch( err => {
-                                console.log(`Error logging in: ${err}`);
-                            })
-                    })
+			if (localStorage && localStorage.username && localStorage.pw){
+			    this.props.accountLogin(localStorage.username, localStorage.pw, {discover: false})
 			}
 		} catch (e) {}
 
@@ -158,10 +140,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    loginSuccess,
-	setupWalletEvents,
     setNotificationSystem,
-    setAccount
+    accountLogin
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

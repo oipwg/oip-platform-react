@@ -3,14 +3,10 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import validator from 'validator';
 
-import Account from 'oip-account'
-
+import {accountLogin} from "../actions/User/thunks";
 import ButtonCheckbox from './ButtonCheckbox.js';
 
-import {loginSuccess, loginFailure} from "../actions/User/actions";
-import {setAccount} from "../actions/User/actions"
-
-const STATUS = { 
+const STATUS = {
 	NO_INPUT: "NO_INPUT",
 	VALID: "VALID",
 	INVALID: "INVALID"
@@ -29,8 +25,6 @@ class LoginBlock extends Component {
 			email: "",
 			password: "",
 			redirectToRegister: false,
-            loginFetching: false,
-            redirectToHome: false
 		}
 
 		this.login = this.login.bind(this);
@@ -40,61 +34,14 @@ class LoginBlock extends Component {
 		this.registerClick = this.registerClick.bind(this);
 	}
 
-    // componentDidMount(){
-    //     try {
-    //         if (localStorage.oip_account){
-    //             let account = new Account(localStorage.username, localStorage.pw)
-    //             account.login()
-    //                 .then(login_success => {
-    //                     console.log(`Login Success`, login_success)
-    //                     this.props.loginSuccess(localStorage.username);
-    //                     this.props.setAccount(account)
-    //                 })
-    //                 .catch(err => {
-    //                     console.log(`Error logging in: ${err}`);
-    //                 })
-    //         }
-    //     } catch (e) {}
-    // }
-
 	login(){
-	    this.setState({loginFetching: true})
-	    let account = new Account(this.state.email, this.state.password)
-        account.login()
-            .then(login_success => {
-                this.setState({redirectToHome: true});
-                if (this.state.rememberMe) {
-                    localStorage.username = this.state.email;
-                    localStorage.pw = this.state.password;
-                }
-                console.log(`Login_success: ${JSON.stringify(login_success, null, 4)}`)
-                this.props.loginSuccess(this.state.email);
-                this.props.setAccount(account)
-            })
-            .catch( () => {
-                //@ToDO::keystore_url reset
-                let account = new Account(this.state.email, this.state.password, {store_in_keystore: true, keystore_url: "http://localhost:9196"})
-                account.login()
-                    .then( (login_success) => {
-                        this.props.modal ? this.props.loginPrompt(false) : this.setState({redirectToHome: true});
-                        if (this.state.rememberMe) {
-                            localStorage.username = this.state.email;
-                            localStorage.pw = this.state.password;
-                        }
-                        this.props.loginSuccess(this.state.email);
-                        this.props.setAccount(account)
-                    })
-                    .catch(err => {
-                        this.props.loginFailure();
-                        alert(`Error logging in: ${err}`)
-                    })
-
-
-            })
-	}
+	    console.log("LOGIN OPS: ", this.state.rememberMe)
+	    this.props.accountLogin(this.state.email, this.state.password, {discover: false, rememberMe: this.state.rememberMe})
+        // this.props.modal ? this.props.loginPrompt(false) : this.setState({redirectToHome: true});
+    }
 
 	updateEmail(){
-		let newState = this.state.emailState;
+		let newState;
 
 		let isEmail = validator.isEmail(this.email.value);
 		newState = isEmail ? STATUS.VALID : STATUS.INVALID;
@@ -125,7 +72,7 @@ class LoginBlock extends Component {
 	render() {
 		return (
 			<div style={{width: "100%"}}>
-                {this.state.redirectToHome ? <Redirect to="/" push /> : ""}
+                {this.props.User.isLoggedIn ? <Redirect to="/" push /> : ""}
                 <h2>Please Login</h2>
 				<hr className="" />
 				<div className="form-group">
@@ -167,8 +114,8 @@ class LoginBlock extends Component {
                         </button>
 					</div>
 					<div className="col-12 col-sm-7 col-md-7 order-1 order-sm-2">
-						<button id="signinl" className="btn btn-lg btn-success btn-block"
-                                onClick={this.login}>{this.state.loginFetching ? "Loading..." : "Login"}</button>
+						<button id="signinl" className={"btn btn-lg btn" + (this.props.User.loginFailure ? "-danger" : "-success") + " btn-block"}
+                                onClick={this.login}>{this.props.User.isFetching ? "Loading..." : this.props.User.loginFailure ? "Login Error" : "Login"}</button>
 					</div>
 				</div>
 			</div>
@@ -176,9 +123,13 @@ class LoginBlock extends Component {
 	}
 }
 const mapDispatchToProps = {
-    loginSuccess,
-    loginFailure,
-    setAccount
+    accountLogin
 };
 
-export default connect(null, mapDispatchToProps)(LoginBlock);
+function mapStateToProps(state) {
+    return {
+        User: state.User,
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginBlock);
