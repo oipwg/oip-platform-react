@@ -62,7 +62,7 @@ class RegisterBlock extends Component {
 		this.updatePassword = this.updatePassword.bind(this);
 		this.updatePasswordConfirm = this.updatePasswordConfirm.bind(this);
 		this.updateVerify = this.updateVerify.bind(this);
-		// this.recaptcha = this.recaptcha.bind(this);
+		this.recaptcha = this.recaptcha.bind(this);
 		this.loginClick = this.loginClick.bind(this);
 		this.handleStorageClick = this.handleStorageClick.bind(this)
         this.toggleErrorModal = this.toggleErrorModal.bind(this)
@@ -112,10 +112,10 @@ class RegisterBlock extends Component {
 		} else {
 
 		}
-		// if (this.state.recaptcha === ""){
-		// 	abort = true;
-		// 	this.setState({verifyState: STATUS.INVALID});
-		// }
+		if (this.state.recaptcha === ""){
+			abort = true;
+			this.setState({verifyState: STATUS.INVALID});
+		}
 
 		// If we are not ready, abort.
 		if (abort){
@@ -125,7 +125,6 @@ class RegisterBlock extends Component {
         this.props.createAccount(this.state.email, this.state.password,
             {store_in_keystore: this.state.store_in_keystore, keystore_url: this.state.keystore_url, discover: false})
 
-        // registrationStatus: STATUS.ERROR
 	}
 	updateUsername(){
 		let newState = STATUS.VALID;
@@ -205,12 +204,12 @@ class RegisterBlock extends Component {
 	updateVerify(){
 		this.setState({verify: !this.state.verify });
 	}
-	// recaptcha(response){
-	// 	if (response)
-	// 		this.setState({recaptcha: response, recaptchaState: STATUS.VALID})
-	// 	else
-	// 		this.setState({recaptcha: response, recaptchaState: STATUS.INVALID})
-	// }
+	recaptcha(response){
+		if (response)
+			this.setState({recaptcha: response, recaptchaState: STATUS.VALID})
+		else
+			this.setState({recaptcha: response, recaptchaState: STATUS.INVALID})
+	}
 	loginClick(){
        this.setState({redirectToLogin: true})
 	}
@@ -321,14 +320,14 @@ class RegisterBlock extends Component {
 						</center>
 					</div>
 				</div>
-				{/*<div className="row">*/}
-					{/*<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}>*/}
-						{/*{this.showRecaptcha ? <ReCAPTCHA sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" onChange={this.recaptcha} /> : ""}*/}
-						{/*{this.state.recaptchaState === STATUS.INVALID ? */}
-							{/*<p style={{color: "#dc3545", fontSize: "13.5px", marginTop: "5px", marginBottom: "0px"}}>Your recaptcha is invalid!</p>*/}
-							{/*: ""}*/}
-					{/*</div>*/}
-				{/*</div>*/}
+				<div className="row">
+					<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}>
+						{this.showRecaptcha ? <ReCAPTCHA sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" onChange={this.recaptcha} /> : ""}
+						{this.state.recaptchaState === STATUS.INVALID ?
+							<p style={{color: "#dc3545", fontSize: "13.5px", marginTop: "5px", marginBottom: "0px"}}>Your recaptcha is invalid!</p>
+							: ""}
+					</div>
+				</div>
 				<br />
 				<div className="row">
 					<div className="col-12" style={{fontSize: "13.5px", margin: "0px 0px", marginBottom: "-10px"}}>
