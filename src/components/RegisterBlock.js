@@ -3,12 +3,13 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import validator from 'validator';
 
-import Account from 'oip-account';
 
 import ButtonCheckbox from './ButtonCheckbox.js';
 import ReCAPTCHA from 'react-google-recaptcha';
-import {loginSuccess, loginFailure} from "../actions/User/actions";
-import {setAccount} from '../actions/Account/actions'
+import {createAccount} from "../actions/User/thunks";
+import {resetRegisterState} from "../actions/User/actions";
+
+import RegisterErrorModal from "./RegisterErrorModal";
 
 const STATUS = { 
 	NO_INPUT: "NO_INPUT",
@@ -51,7 +52,8 @@ class RegisterBlock extends Component {
 			registrationStatus: STATUS.WAITING,
 			redirectToLogin: false,
             redirectToHome: false,
-            store_in_keystore: false
+            store_in_keystore: false,
+            keystore_url: "http://localhost:9196"
 		}
 
 		this.register = this.register.bind(this);
@@ -60,20 +62,26 @@ class RegisterBlock extends Component {
 		this.updatePassword = this.updatePassword.bind(this);
 		this.updatePasswordConfirm = this.updatePasswordConfirm.bind(this);
 		this.updateVerify = this.updateVerify.bind(this);
-		this.recaptcha = this.recaptcha.bind(this);
+		// this.recaptcha = this.recaptcha.bind(this);
 		this.loginClick = this.loginClick.bind(this);
 		this.handleStorageClick = this.handleStorageClick.bind(this)
-
+        this.toggleErrorModal = this.toggleErrorModal.bind(this)
 	}
 
 	componentWillUnmount(){
 		this.showRecaptcha = false;
 	}
 	componentDidMount(){
-        let User = this.props.User;
-        this.setState({ User });
+        this.setState({ User: this.props.User });
 		this.showRecaptcha = true;
 	}
+
+	toggleErrorModal() {
+	    this.props.resetRegisterState()
+        this.username.value= ""
+        this.email.value = ""
+        this.setState({recaptcha: ""})
+    }
 
 	handleStorageClick(e) {
             this.setState({store_in_keystore: ((e.target.name === "keystore"))})
@@ -104,42 +112,20 @@ class RegisterBlock extends Component {
 		} else {
 
 		}
-		if (this.state.recaptcha === ""){
-			abort = true;
-			this.setState({verifyState: STATUS.INVALID});
-		}
+		// if (this.state.recaptcha === ""){
+		// 	abort = true;
+		// 	this.setState({verifyState: STATUS.INVALID});
+		// }
 
 		// If we are not ready, abort.
 		if (abort){
 			this.setState({registrationStatus: STATUS.WAITING});
-			return;
 		}
 
-		//@ToDo::Delete this or put it to empty string for production
-        let keystore_url = "http://localhost:9196"
-        let account = new Account(this.state.email, this.state.password, {discover: false, store_in_keystore: this.state.store_in_keystore, keystore_url: keystore_url});
-        console.log("Account: ", account)
-        account.create()
-            .then( (succ) => {
-                console.log("Successful reg: ", succ)
-                this.account = account;
-                this.props.setAccount(account)
-                account.login(this.state.email, this.state.password)
-                    .then( (succ) => {
-                        console.log("Successful login: ", succ)
-                        this.props.modal ? this.props.loginPrompt(false) : this.setState({redirectToHome: true})
-                        this.props.loginSuccess(this.state.email);
-                    })
-                    .catch(err => {console.log(err)})
-            })
-            .catch(err => {
-                this.setState({
-                    registrationStatus: STATUS.ERROR
-                });
-                alert(`Error registering account: ${err}`);
+        this.props.createAccount(this.state.email, this.state.password,
+            {store_in_keystore: this.state.store_in_keystore, keystore_url: this.state.keystore_url, discover: false})
 
-            })
-
+        // registrationStatus: STATUS.ERROR
 	}
 	updateUsername(){
 		let newState = STATUS.VALID;
@@ -219,28 +205,29 @@ class RegisterBlock extends Component {
 	updateVerify(){
 		this.setState({verify: !this.state.verify });
 	}
-	recaptcha(response){
-		if (response)
-			this.setState({recaptcha: response, recaptchaState: STATUS.VALID})
-		else
-			this.setState({recaptcha: response, recaptchaState: STATUS.INVALID})
-	}
+	// recaptcha(response){
+	// 	if (response)
+	// 		this.setState({recaptcha: response, recaptchaState: STATUS.VALID})
+	// 	else
+	// 		this.setState({recaptcha: response, recaptchaState: STATUS.INVALID})
+	// }
 	loginClick(){
        this.setState({redirectToLogin: true})
 	}
 	render() {
 		var RegisterBtnTxt = "Register";
 
-		if (this.state.registrationStatus === STATUS.PENDING){
+		if (this.props.User.registerStart){
 			RegisterBtnTxt = "Registering..."
-		} else if (this.state.registrationStatus === STATUS.SUCCESS){
+		} else if (this.props.User.registerSuccess){
 			RegisterBtnTxt = "Register Success!"
-		} else if (this.state.registrationStatus === STATUS.ERROR){
+		} else if (this.props.User.registerError){
 			RegisterBtnTxt = "Register Error!"
 		}
 		return (
 	    	<div>
-                {this.state.redirectToHome ? <Redirect to="/" push /> : ""}
+                {this.props.User.isLoggedIn ? <Redirect to="/" push /> : ""}
+                {this.state.redirectToLogin ? <Redirect to="/login" push /> : ""}
                 <h2>Please Register</h2>
 				<hr className="" />
 				<div className="form-group">
@@ -334,14 +321,14 @@ class RegisterBlock extends Component {
 						</center>
 					</div>
 				</div>
-				<div className="row">
-					<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}>
-						{this.showRecaptcha ? <ReCAPTCHA sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" onChange={this.recaptcha} /> : ""}
-						{this.state.recaptchaState === STATUS.INVALID ? 
-							<p style={{color: "#dc3545", fontSize: "13.5px", marginTop: "5px", marginBottom: "0px"}}>Your recaptcha is invalid!</p>
-							: ""}
-					</div>
-				</div>
+				{/*<div className="row">*/}
+					{/*<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}>*/}
+						{/*{this.showRecaptcha ? <ReCAPTCHA sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" onChange={this.recaptcha} /> : ""}*/}
+						{/*{this.state.recaptchaState === STATUS.INVALID ? */}
+							{/*<p style={{color: "#dc3545", fontSize: "13.5px", marginTop: "5px", marginBottom: "0px"}}>Your recaptcha is invalid!</p>*/}
+							{/*: ""}*/}
+					{/*</div>*/}
+				{/*</div>*/}
 				<br />
 				<div className="row">
 					<div className="col-12" style={{fontSize: "13.5px", margin: "0px 0px", marginBottom: "-10px"}}>
@@ -349,10 +336,10 @@ class RegisterBlock extends Component {
 					</div>
 				</div>
 				<hr className="" />
+                <RegisterErrorModal isOpen={this.props.User.registerError} errMessage={this.props.User.registerErrorMessage} toggle={this.toggleErrorModal} />
 				<div className="row">
-					{this.state.redirectToLogin ? <Redirect to="/login" push /> : ""}
-					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-secondary btn-block btn-lg" onClick={this.props.modal ? this.props.onLoginClick : this.loginClick}>Login</button></div>
-					<div className="col-xs-12 col-md-9 order-1 order-sm-2"><button id="register" className="btn btn-success btn-block btn-lg" onClick={this.register} tabIndex="5">{RegisterBtnTxt}</button></div>
+					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-primary btn-block btn-lg" onClick={this.props.modal ? this.props.onLoginClick : this.loginClick}>Login</button></div>
+					<div className="col-xs-12 col-md-9 order-1 order-sm-2"><button id="register" className={"btn btn" + (this.props.User.registerError ? "-danger" : "-success") + " btn-block btn-lg"} onClick={this.register} tabIndex="5">{RegisterBtnTxt}</button></div>
 				</div>
 			</div>
 		);
@@ -360,9 +347,8 @@ class RegisterBlock extends Component {
 }
 
 const mapDispatchToProps = {
-    loginSuccess,
-    loginFailure,
-    setAccount
+    createAccount,
+    resetRegisterState
 };
 
 function mapStateToProps(state) {

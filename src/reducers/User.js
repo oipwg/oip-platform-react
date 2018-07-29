@@ -56,8 +56,29 @@ export const User = (state = {
 			return {
 				...state,
 				registerStart: false,
-				registerError: true
+				registerError: true,
+                registerErrorMessage: action.err.message
 			}
+        case actions.REGISTER_SUCCESS:
+            return {
+                ...state,
+                registerError: false,
+                registerSuccess: true,
+                registerStart: false
+            }
+        case actions.RESET_REGISTER_STATE:
+            return {
+                ...state,
+                registerError: false,
+                registerSuccess: false,
+                registerStart: false,
+                registerErrorMessage: null
+            }
+        case actions.SET_ACCOUNT:
+            return {
+                ...state,
+                Account: action.account
+            }
 		default:
 			return state
 	}
