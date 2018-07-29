@@ -8,7 +8,7 @@ import Account from 'oip-account'
 import ButtonCheckbox from './ButtonCheckbox.js';
 
 import {loginSuccess, loginFailure} from "../actions/User/actions";
-import {setAccount} from "../actions/Account/actions"
+import {setAccount} from "../actions/User/actions"
 
 const STATUS = { 
 	NO_INPUT: "NO_INPUT",
@@ -81,7 +81,6 @@ class LoginBlock extends Component {
                             localStorage.username = this.state.email;
                             localStorage.pw = this.state.password;
                         }
-                        console.log(`Login_success: ${JSON.stringify(login_success, null, 4)}`)
                         this.props.loginSuccess(this.state.email);
                         this.props.setAccount(account)
                     })
