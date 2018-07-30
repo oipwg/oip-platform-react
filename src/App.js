@@ -65,7 +65,7 @@ class App extends Component {
         // this.props.setNotificationSystem(this.refs.NotificationSystem);
 		try {
 			if (localStorage && localStorage.username && localStorage.pw){
-			    this.props.accountLogin(localStorage.username, localStorage.pw, {discover: false})
+			    this.props.accountLogin(localStorage.username, localStorage.pw, {discover: false, autoLogin: true})
 			}
 		} catch (e) {}
 
