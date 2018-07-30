@@ -27,7 +27,7 @@ class LoginBlock extends Component {
 			rememberMe: false,
 			email: "",
 			password: "",
-			redirectToRegister: false,
+			redirectToRegister: false
 		}
 
 		this.login = this.login.bind(this);
@@ -37,9 +37,10 @@ class LoginBlock extends Component {
 		this.registerClick = this.registerClick.bind(this);
 		this.toggleErrorModal = this.toggleErrorModal.bind(this);
 	}
+
     toggleErrorModal() {
         this.props.resetLoginState()
-        this.username.value= ""
+        this.password.value = ""
         this.email.value = ""
     }
 
