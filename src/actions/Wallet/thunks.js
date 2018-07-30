@@ -1,7 +1,7 @@
 import {setCryptoBalances, errorFetchingBalance} from "./actions";
 
-export const fetchCryptoBalances = (account) => (dispatch) => {
-    account.wallet.getCoinBalances()
+export const fetchCryptoBalances = (wallet) => (dispatch) => {
+    wallet.getCoinBalances()
         .then(balances => {
             dispatch(setCryptoBalances(balances))
         })

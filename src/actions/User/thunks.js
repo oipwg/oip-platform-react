@@ -40,7 +40,7 @@ export const accountLogin = (username, pw, options, acc) => dispatch => {
             dispatch(setAccount(account))
             dispatch(setWallet(account.wallet))
             dispatch(setMnemonic(account.wallet.getMnemonic()))
-            dispatch(fetchCryptoBalances(account))
+            dispatch(fetchCryptoBalances(account.wallet))
         })
         .catch( err => {
             if (!options.store_in_keystore) {
