@@ -27,7 +27,7 @@ export const createAccount = (username, pw, options) => dispatch => {
 }
 
 export const accountLogin = (username, pw, options, acc) => dispatch => {
-    dispatch(loginFetching())
+    if (!options.autoLogin) {dispatch(loginFetching())}
     let account = acc ? acc : options ? new Account(username, pw, options) : new Account(username, pw);
     account.login()
         .then( () => {
