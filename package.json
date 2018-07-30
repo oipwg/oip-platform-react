@@ -88,8 +88,8 @@
   "scripts": {
     "start": "npm run start:dev",
     "start:dev": "webpack-dev-server --config ./config/webpack.dev.js",
-    "start:prod": "npm run build && node production_server.js",
-    "build": "webpack --config webpack.prod.js",
+    "start:prod": "npm run build && node config/production_server.js",
+    "build": "webpack --config config/webpack.prod.js",
     "test": "node scripts/test.js --env=jsdom",
     "preins": "mv node_modules/oip-index/ oip-index/",
     "postins": "mv oip-index/ node_modules/oip-index/",
