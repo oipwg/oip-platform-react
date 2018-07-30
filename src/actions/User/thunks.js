@@ -44,11 +44,11 @@ export const accountLogin = (username, pw, options, acc) => dispatch => {
         })
         .catch( err => {
             if (!options.store_in_keystore) {
-                //@ToDo::change hardcoded keystore_url when server is up
-                dispatch(accountLogin(username, pw, {discover: false, store_in_keystore: true,
-                    keystore_url: "http://localhost:9196", rememberMe: options.rememberMe}))
+                options = {...options, store_in_keystore: true,
+                    keystore_url: "http://localhost:9196"}
+                dispatch(accountLogin(username, pw, options))
             } else {
-                dispatch(loginFailure(err))
+                if (!options.autoLogin){dispatch(loginFailure(err))}
             }
         })
 
