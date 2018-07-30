@@ -54,6 +54,7 @@ export const User = (state = {
                 loginFailure: false,
                 isLoggedIn: false,
                 loginModalPrompt: false,
+                loginErrorMessage: null,
                 publisher: {}
             }
 		case actions.REGISTER_START:
