@@ -31,7 +31,7 @@ class ViewFileButton extends Component {
 
         if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
             this.props.paymentInProgress(this.props.activeFile.key)
-            this.props.account.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "view")
+            this.props.User.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "view")
                 .then(data => {
                     this.props.payForFile(this.props.activeFile.key)
                     console.log('Succesfully paid for artifact file: ', data)

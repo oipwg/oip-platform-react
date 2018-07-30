@@ -43,7 +43,7 @@ class BuyFileButton extends Component {
         } else {
             this.props.buyInProgress(this.props.activeFile.key)
 
-            this.props.account.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "buy", coin, "usd")
+            this.props.User.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "buy", coin, "usd")
                 .then(data => {
                     this.props.buyFile(this.props.activeFile.key)
                     this.setState({coinModal:false})
@@ -65,14 +65,7 @@ class BuyFileButton extends Component {
             rej()
         })
     }
-    // async checkBalance() {
-    //     let bObj = await this.props.account.Account.wallet.getFiatBalances([this.state.selectedCoin])
-    //     let b = bObj[this.state.selectedCoin]
-    //     // if (b > this.state.filePrice)
-    //     console.log("Balance: ", b)
-    //     // this.state.coinPromise.res()
-    //     // this.state.coinPromise.rej()
-    // }
+
     onCoinClick(e) {
         console.log(e.target.alt)
         let coin = e.target.alt
@@ -99,7 +92,6 @@ class BuyFileButton extends Component {
     checkLogin() {
         return new Promise( (res, rej) => {
             if (this.props.User.isLoggedIn) {
-                console.log('User logged in?: ', this.props.User.isLoggedIn)
                 res()
             }
             rej()
