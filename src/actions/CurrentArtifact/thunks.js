@@ -16,11 +16,9 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
     state.OIPIndex.Index.getArtifact(txid)
         .then(art => {
             dispatch(receiveCurrentArtifact(art));
-            console.log("Fetched current artifact: ", art)
             let files = art.getFiles();
             let publisher = art.getMainAddress();
             let txid = art.getTXID();
-            console.log("TXID: ", txid)
             for (let i = 0; i < files.length; i++) {
                 dispatch(addFileToPlaylist(files[i], txid + "|" + i));
             }
@@ -42,7 +40,6 @@ export const selectCurrentArtifact = (txid) => (dispatch, getState) => {
 
         })
         .catch(err => {
-            console.log("Could not get current artifact: ", err)
             dispatch(requestCurrentArtifactError(err));
         })
 };
