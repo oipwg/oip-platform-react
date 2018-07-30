@@ -53,7 +53,7 @@ class RegisterBlock extends Component {
 			redirectToLogin: false,
             redirectToHome: false,
             store_in_keystore: false,
-            keystore_url: "http://localhost:9196"
+            keystore_url: "https://mk1.alexandria.io/keystore/"
 		}
 
 		this.register = this.register.bind(this);

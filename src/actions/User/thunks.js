@@ -45,7 +45,7 @@ export const accountLogin = (username, pw, options, acc) => dispatch => {
         .catch( err => {
             if (!options.store_in_keystore) {
                 options = {...options, store_in_keystore: true,
-                    keystore_url: "http://localhost:9196"}
+                    keystore_url: "https://mk1.alexandria.io/keystore/"}
                 dispatch(accountLogin(username, pw, options))
             } else {
                 if (!options.autoLogin){dispatch(loginFailure(err))}
