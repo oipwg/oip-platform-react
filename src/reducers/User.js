@@ -53,7 +53,6 @@ export const User = (state = {
                 isFetching: false,
                 loginFailure: false,
                 isLoggedIn: false,
-                loginModalPrompt: false,
                 loginErrorMessage: null,
                 publisher: {}
             }
