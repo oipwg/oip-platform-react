@@ -200,7 +200,7 @@ class BuyFileButton extends Component {
             <div style={{display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
                 {this.state.coinModal ?
                     <CoinsModal
-                        acc={this.props.account.Account}
+                        acc={this.props.User.Account}
                         isOpen={this.state.coinModal}
                         toggleCoinModal={this.toggleCoinModal}
                         onCoinClick={this.onCoinClick}
