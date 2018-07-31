@@ -45,7 +45,7 @@
     "moment": "^2.18.1",
     "object-assign": "4.1.1",
     "oip-account": "git+https://github.com/oipwg/oip-account.git",
-    "oip-index": "^1.0.7",
+    "oip-index": "git+https://github.com/oipwg/oip-index.git",
     "piwik-react-router": "^0.12.1",
     "popper.js": "^1.14.3",
     "postcss-flexbugs-fixes": "3.0.0",
