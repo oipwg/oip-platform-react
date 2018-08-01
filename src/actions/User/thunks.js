@@ -1,5 +1,5 @@
 import Account from 'oip-account'
-import {fetchCryptoBalances} from "../Wallet/thunks";
+import {fetchCryptoBalances, fetchWalletAddresses} from "../Wallet/thunks";
 
 import {
     setAccount,
@@ -41,6 +41,7 @@ export const accountLogin = (username, pw, options, acc) => dispatch => {
             dispatch(setWallet(account.wallet))
             dispatch(setMnemonic(account.wallet.getMnemonic()))
             dispatch(fetchCryptoBalances(account.wallet))
+            dispatch(fetchWalletAddresses(account.wallet))
         })
         .catch( err => {
             if (!options.store_in_keystore) {

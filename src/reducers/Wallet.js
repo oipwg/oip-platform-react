@@ -49,6 +49,11 @@ export const Wallet = (state = {
 			}
 		case actions.UPDATE_WALLET:
 			return action.walletState
+		case actions.SET_WALLET_ADDRESSES:
+			return {
+				...state,
+				addresses: action.addresses
+			}
 		default:
 			return state
 	}

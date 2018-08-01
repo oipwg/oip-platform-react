@@ -11,8 +11,12 @@ export const SET_CRYPTO_BALANCES = "SET_CRYPTO_BALANCES"
 export const ERROR_FETCHING_BALANCE = "ERROR_FETCHING_BALANCE"
 export const SET_WALLET = "SET_WALLET"
 export const SET_MNEMONIC = "SET_MNEMONIC"
-
+export const SET_WALLET_ADDRESSES = "SET_WALLET_ADDRESSES"
 // -------------------------------------------------------------------------------------------------
+export const setWalletAddresses = (addresses) => ({
+    type: SET_WALLET_ADDRESSES,
+    addresses
+})
 
 export const setCryptoBalances = (balances) => ({
     type: SET_CRYPTO_BALANCES,

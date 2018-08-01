@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux'
-import CoinsModal from './CoinsModal'
+import RefillModal from './RefillModal'
+
 import {loginPrompt} from '../actions/User/actions'
 
 
@@ -10,31 +11,19 @@ class BuyFileButton extends Component {
         super(props);
 
         this.state = {
-            coinModal: false,
-            coinPromise: {},
-            checkingBalance: false,
-            selectedCoin: undefined,
-            filePrice: undefined
+            refillModal: false
         }
 
         this.buyFile = this.buyFile.bind(this);
         this.createPriceString = this.createPriceString.bind(this);
         this.checkLogin = this.checkLogin.bind(this)
-        this.chooseCoin = this.chooseCoin.bind(this)
         this.pay = this.pay.bind(this)
-        this.coinbaseModal = this.coinbaseModal.bind(this)
-        this.toggleCoinModal = this.toggleCoinModal.bind(this)
-        this.onCoinClick = this.onCoinClick.bind(this)
-        this.checkModal = this.checkModal.bind(this)
-        // this.checkBalance = this.checkBalance.bind(this)
+        this.attemptPayment = this.attemptPayment.bind(this)
+        this.toggleRefillModal = this.toggleRefillModal.bind(this)
     }
-    toggleCoinModal() {
-        this.setState({coinModal: !this.state.coinModal}, this.checkModal)
-        console.log(this.state.coinModal)
-    }
-    checkModal() {
-        if (!this.state.coinModal && this.state.coinModalPromise.rej)
-            this.state.coinModalPromise.rej()
+
+    toggleRefillModal() {
+        this.setState({refillModal: !this.state.refillModal})
     }
 
     pay(coin) {
@@ -43,73 +32,61 @@ class BuyFileButton extends Component {
         } else {
             this.props.buyInProgress(this.props.activeFile.key)
 
-            this.props.User.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "buy", coin, "usd")
+            this.props.User.Account.pay(undefined, undefined, undefined)
                 .then(data => {
                     this.props.buyFile(this.props.activeFile.key)
-                    this.setState({coinModal:false})
-                    console.log('Successfully bought file: ', data)
-                    this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
+
                 })
                 .catch(err => {
                     this.props.buyError(this.props.activeFile.key)
-                    this.state.coinModalPromise.rej(err)
-                    this.setState({coinModal:false})
-                    console.log("Error while trying to pay for artifact file: ", err)
+
                 })
         }
     }
     coinbaseModal() {
         return new Promise( (res, rej) => {
-            if (false)
-                res()
-            rej()
+          this.setState({coinbaseModal: true})
         })
     }
 
-    onCoinClick(e) {
-        console.log(e.target.alt)
-        let coin = e.target.alt
-        if (coin === "bitcoin" || coin === "flo" || coin === "litecoin") {
-            this.setState({
-                    checkingBalance: true,
-                    selectedCoin: e.target.alt
-            }
-            // , this.checkBalance
-            )
-            this.state.coinModalPromise.res(coin)
-        }
-        this.state.coinModalPromise.rej()
-    }
-    chooseCoin(price) {
+    attemptPayment() {
         return new Promise( (res, rej) => {
+            let acc = this.props.account;
+            let ap = acc.getPaymentBuilder(this.props.account.wallet, this.props.artifact, this.props.activeFile.info, "buy")
+
             this.setState({
-                coinModal: true,
-                coinModalPromise: {res: res, rej: rej},
-                filePrice: price
-            })
+                ap: ap,
+                addresses: this.props.wallet.addresses,
+                supportedCoins: ap.getSupportedCoins()
+            });
+            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances, undefined, undefined, {all: true})
+                .then(ret => {
+                    (Object.keys(ret).length === 0 && ret.constructor === Object) ? rej({error: "Insufficient balances"}) : res(ret)
+                })
+                .catch(err => rej(err))
         })
     }
     checkLogin() {
         return new Promise( (res, rej) => {
-            if (this.props.User.isLoggedIn) {
-                res()
-            }
-            rej()
+            (this.props.User.isLoggedIn ? res() : rej() )
         })
     }
-    buyFile(filePrice){
+    buyFile(){
         this.checkLogin()
             .then( () => {
                 //choose only coins that the artifact accepts
-                this.chooseCoin(filePrice)
-                    .then( (coin) => {
-                       this.pay(coin)
+                this.attemptPayment()
+                    .then(ret => {
+                        console.log(ret)
+                        //pay
                     })
-                    .catch( () => {
-                        console.log("Payment process canceled")
+                    .catch(err => {
+                        if (err.error) {
+                            this.toggleRefillModal()
+                        } else {alert(err)}
                     })
             })
-            .catch( () => {
+            .catch( (e) => {
                 this.props.loginPrompt(true)
             })
     }
@@ -198,17 +175,11 @@ class BuyFileButton extends Component {
         }
         return (
             <div style={{display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
-                {this.state.coinModal ?
-                    <CoinsModal
-                        acc={this.props.User.Account}
-                        isOpen={this.state.coinModal}
-                        toggleCoinModal={this.toggleCoinModal}
-                        onCoinClick={this.onCoinClick}
-                        className="coin-modal"
-                        checkingBalance={this.state.checkingBalance}
-                    /> : null}
+                {this.state.refillModal ? <RefillModal addresses={this.state.addresses} supportedCoins={this.state.supportedCoins}
+                                                       account={this.props.account} wallet={this.props.wallet} ap={this.state.ap}
+                                                       isOpen={this.state.refillModal} toggleModal={this.toggleRefillModal}/> : ""}
                 { disallowBuy ? "" :
-                    <button className={"pad-5 btn btn-" + buyBtnType} onClick={() => this.buyFile(sugBuy)} style={this.props.btnStyle}>
+                    <button className={"pad-5 btn btn-" + buyBtnType} onClick={() => this.buyFile()} style={this.props.btnStyle}>
                         <span className="icon icon-download" style={{marginRight: "5px"}}/> {buyString}
                     </button>
                 }
@@ -229,8 +200,9 @@ BuyFileButton.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        account: state.Account,
-        User: state.User
+        account: state.User.Account,
+        User: state.User,
+        wallet: state.Wallet
     }
 }
 const mapDispatchToProps = {

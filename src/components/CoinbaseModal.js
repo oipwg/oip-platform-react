@@ -68,7 +68,7 @@ class CoinbaseModal extends Component {
 
 		return (
 			<div style={{display: "inline"}}>
-				<iframe ref="cb" src={srcString} 
+				<iframe title="coinbaseModal" ref="cb" src={srcString}
 				style={{
 					transition: "all 0.3s ease-out", 
 					backgroundColor: "transparent", 
@@ -83,7 +83,7 @@ class CoinbaseModal extends Component {
 					width: "100%", 
 					height: "100%", 
 					zIndex: "9999"
-				}} scrolling='no' allowtransparency='true' frameBorder='0'></iframe>
+				}} scrolling='no' allowtransparency='true' frameBorder='0'/>
 			</div>
 		);
 	}
