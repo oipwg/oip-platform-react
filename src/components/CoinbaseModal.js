@@ -3,7 +3,21 @@ import React, { Component } from 'react';
 /**
  * Use this component like this: 
  * 
- * <CoinbaseModal currency="btc" address="1FjQxmrue5jdgVhmVMN3Y4XjXdtiDC257K" amount={1} isOpen={true} />
+ * <CoinbaseModal 
+ * 		currency="btc" 
+ * 		address="1FjQxmrue5jdgVhmVMN3Y4XjXdtiDC257K" 
+ * 		amount={1} isOpen={true} 
+ * 		
+ * 		onClose={(data) => {
+ * 			console.log("CoinbaseModal onClose!! ", data)
+ * 		}} 
+ * 		onCancel={(data) => {
+ * 			console.log("CoinbaseModal onCancel!! ", data)
+ * 		}} 
+ * 		onSuccess={(data) => {
+ * 			console.log("CoinbaseModal onSuccess!! ", data)
+ * 		}} 
+ * />
  */
 
 class CoinbaseModal extends Component {
@@ -26,7 +40,7 @@ class CoinbaseModal extends Component {
 
 		let _this = this;
 
-		window.addEventListener("message", function(e) {
+		window.addEventListener("message", (e) => {
 			// If we are not listening to messages from the host coinbase application, then ignore!
 			if (e.origin !== "https://buy.coinbase.com")
 			    return;
@@ -36,18 +50,24 @@ class CoinbaseModal extends Component {
             switch (e.data.event) {
                 case "modal_closed":
                     _this.setState({isOpen: false});
-                    if (_this.refs && _this.refs.cb)
+                    if (_this.refs && _this.refs.cb){
 						_this.refs.cb = null;
+                    }
+                    _this.props.onClose(e.data)
                     break;
                 case "buy_completed":
 	                _this.setState({isOpen: false});
-                    if (_this.refs && _this.refs.cb)
+                    if (_this.refs && _this.refs.cb){
 						_this.refs.cb = null;
+                    }
+                    _this.props.onSuccess(e.data)
                     break;
                 case "buy_canceled":
 	                _this.setState({isOpen: false});
-                    if (_this.refs && _this.refs.cb)
+                    if (_this.refs && _this.refs.cb){
 						_this.refs.cb = null;
+                    }
+					_this.props.onCancel(e.data)
                     break;
             }
         }, !1)
