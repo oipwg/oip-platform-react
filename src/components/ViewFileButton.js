@@ -18,25 +18,28 @@ class ViewFileButton extends Component {
         this.pay = this.pay.bind(this)
         this.attemptPayment = this.attemptPayment.bind(this)
         this.toggleRefillModal = this.toggleRefillModal.bind(this)
+
     }
+
     toggleRefillModal() {
         this.setState({refillModal: !this.state.refillModal})
     }
-    pay() {
-        if (this.props.activeFile.info && this.props.activeFile.info.getSuggestedPlayCost() == 0) {
-            this.props.payForFile(this.props.activeFile.key)
-            //Do I need this?
-            if (this.props.activeFile.info.getType() === 'Audio') {
-                this.props.isPlayingFile(this.props.activeFile.key, !this.props.activeFile.isPlaying)
-            }
-            return
-        }
 
-        this.checkLoginStatus()
+    pay(ret) {
+        console.log("attempting to send payment: ", ret)
+        let coins = []
+        for (let coinTicker of Object.keys(ret)) {
+            coins.push(coinTicker)
+        }
+        console.log(coins, Object.keys(ret))
+        let paymentAddress = this.state.paymentAddresses[coins[0]];
+        let paymentAmount = ret[coins[0]].cryptoFileCost
+        console.log(paymentAddress, paymentAmount, this.state.paymentAddresses)
+
 
         if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
             this.props.paymentInProgress(this.props.activeFile.key)
-            this.props.User.Account.payForArtifactFile(this.props.artifact, this.props.activeFile.info, "view")
+            this.state.ap.sendPayment(this.state.paymentAddresses[coins[0]], ret[coins[0]].cryptoFileCost, coins[0])
                 .then(data => {
                     this.props.payForFile(this.props.activeFile.key)
                     console.log('Succesfully paid for artifact file: ', data)
@@ -51,20 +54,31 @@ class ViewFileButton extends Component {
     attemptPayment() {
         return new Promise( (res, rej) => {
             let acc = this.props.account;
+            let w = this.props.wallet;
             let ap = acc.getPaymentBuilder(this.props.account.wallet, this.props.artifact, this.props.activeFile.info, "view")
-
             this.setState({
                 ap: ap,
                 addresses: this.props.wallet.addresses,
-                supportedCoins: ap.getSupportedCoins()
+                supportedCoins: ap.getSupportedCoins(),
+                paymentAddresses: ap.getPaymentAddresses()
             });
 
             console.log("Pay vars", ap.getSupportedCoins(), ap.getPaymentAmount(), this.props.wallet.cryptoBalances)
 
-            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances, undefined, undefined, {all: true})
+            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances ? this.props.wallet.cryptoBalances : {btc: 0}, ap.getSupportedCoins(), ap.getPaymentAmount(), {all: true})
                 .then(ret => {
-                    (Object.keys(ret).length === 0) ? rej({error: "Insufficient balances", ret}) : res(ret)
-
+                    console.log("My return obj", ret);
+                    if (Array.isArray(ret)) {
+                        if (ret.length === 0 ) {
+                            rej({error: "Insufficient Balance", ret})
+                        }
+                    } else {
+                        if (Object.keys(ret).length > 0) {
+                            res({error: "Insufficient Balance", ret})
+                        } else {
+                            rej(ret)
+                        }
+                    }
                 })
                 .catch(err => rej(err))
         })
@@ -75,19 +89,23 @@ class ViewFileButton extends Component {
         })
     }
     viewFile(){
+        if (this.props.activeFile.info && this.props.activeFile.info.getSuggestedPlayCost() == 0) {
+            this.props.payForFile(this.props.activeFile.key)
+            //Do I need this?
+            if (this.props.activeFile.info.getType() === 'Audio') {
+                this.props.isPlayingFile(this.props.activeFile.key, !this.props.activeFile.isPlaying)
+            }
+            return
+        }
         this.checkLogin()
             .then( () => {
-                //choose only coins that the artifact accepts
                 this.attemptPayment()
-                    console.log("attempt pay")
                     .then(ret => {
-                        console.log("return for pay", ret)
-                        //pay
+                        this.pay(ret)
                     })
                     .catch(err => {
-                        console.log("caught out on error: ", err)
                         if (err.error) {
-                            // console.log(err)
+                            console.log(err)
                             this.toggleRefillModal()
                         } else {alert(err)}
                     })

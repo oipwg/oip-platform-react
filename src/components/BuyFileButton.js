@@ -26,28 +26,21 @@ class BuyFileButton extends Component {
         this.setState({refillModal: !this.state.refillModal})
     }
 
-    pay(coin) {
-        if (this.props.activeFile.owned){
-            this.downloadStarted = true;
-        } else {
-            this.props.buyInProgress(this.props.activeFile.key)
-
-            this.props.User.Account.pay(undefined, undefined, undefined)
-                .then(data => {
-                    this.props.buyFile(this.props.activeFile.key)
-
-                })
-                .catch(err => {
-                    this.props.buyError(this.props.activeFile.key)
-
-                })
-        }
+    pay(ret) {
+        console.log("attempting to send tx: ", ret)
+        // this.props.buyInProgress(this.props.activeFile.key)
+        // let addr = this.state.paymentAddresses[]
+        // this.state.ap.sendPayment(undefined, undefined, undefined)
+        //     .then(data => {
+        //         this.props.buyFile(this.props.activeFile.key)
+        //
+        //     })
+        //     .catch(err => {
+        //         this.props.buyError(this.props.activeFile.key)
+        //
+        //     })
     }
-    coinbaseModal() {
-        return new Promise( (res, rej) => {
-          this.setState({coinbaseModal: true})
-        })
-    }
+
 
     attemptPayment() {
         return new Promise( (res, rej) => {
@@ -57,11 +50,26 @@ class BuyFileButton extends Component {
             this.setState({
                 ap: ap,
                 addresses: this.props.wallet.addresses,
-                supportedCoins: ap.getSupportedCoins()
+                supportedCoins: ap.getSupportedCoins(),
+                paymentAddresses: ap.getPaymentAddresses()
             });
-            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances, undefined, undefined, {all: true})
-                .then(ret => {
-                    (Object.keys(ret).length === 0 && ret.constructor === Object) ? rej({error: "Insufficient balances"}) : res(ret)
+
+            console.log("Pay vars", ap.getSupportedCoins(), ap.getPaymentAmount(), this.props.wallet.cryptoBalances)
+            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances, undefined, {all: true})
+                .then((ret) => {
+                    if (Array.isArray(ret)) {
+                        if (ret.length === 0) {
+                            rej({error: "Coins have insufficient balance"})
+                        }
+                        else {
+                            let keys = Object.keys(ret);
+                            if (keys.length === 0) {
+                                rej({error: "Coins have insufficient balance"})
+                            } else {
+                                res(ret)
+                            }
+                        }
+                    }
                 })
                 .catch(err => rej(err))
         })
@@ -77,8 +85,8 @@ class BuyFileButton extends Component {
                 //choose only coins that the artifact accepts
                 this.attemptPayment()
                     .then(ret => {
-                        console.log(ret)
-                        //pay
+                        console.log("ret: ", ret)
+                        this.pay(ret)
                     })
                     .catch(err => {
                         if (err.error) {
