@@ -96,8 +96,8 @@ export default class RefillModal extends React.Component {
                             <div className="row no-gutters">
                                 <div className="col-12">
                                     <div className="col-12"><h4>{this.state.coin}</h4></div>
-                                    <div className="col">Balance: {this.props.wallet.cryptoBalances[this.props.ap.tickerToName(this.state.coin)]}</div>
-                                    <div className="col">Address: {this.props.wallet.addresses[this.props.ap.tickerToName(this.state.coin)]}</div>
+                                    <div className="col">Balance: {this.props.cryptoBalances ? this.props.cryptoBalances[this.props.ap.tickerToName(this.state.coin)] : "Loading..."}</div>
+                                    <div className="col">Address: {this.props.addresses ? this.props.addresses[this.props.ap.tickerToName(this.state.coin)] : "Loading..."} </div>
                                 </div>
                             </div>
 

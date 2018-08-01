@@ -177,6 +177,7 @@ class BuyFileButton extends Component {
             <div style={{display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
                 {this.state.refillModal ? <RefillModal addresses={this.state.addresses} supportedCoins={this.state.supportedCoins}
                                                        account={this.props.account} wallet={this.props.wallet} ap={this.state.ap}
+                                                       cryptoBalances={this.props.wallet.cryptoBalances}
                                                        isOpen={this.state.refillModal} toggleModal={this.toggleRefillModal}/> : ""}
                 { disallowBuy ? "" :
                     <button className={"pad-5 btn btn-" + buyBtnType} onClick={() => this.buyFile()} style={this.props.btnStyle}>

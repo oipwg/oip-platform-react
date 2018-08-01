@@ -2,22 +2,27 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux'
 import {loginPrompt} from '../actions/User/actions'
+import RefillModal from "./RefillModal";
 
 class ViewFileButton extends Component {
     constructor(props){
         super(props);
 
+        this.state = {
+            refillModal: false
+        }
+
         this.viewFile = this.viewFile.bind(this);
         this.createPriceString = this.createPriceString.bind(this);
-        this.checkLoginStatus = this.checkLoginStatus.bind(this);
+        this.checkLogin = this.checkLogin.bind(this)
+        this.pay = this.pay.bind(this)
+        this.attemptPayment = this.attemptPayment.bind(this)
+        this.toggleRefillModal = this.toggleRefillModal.bind(this)
     }
-
-    checkLoginStatus() {
-        if (!this.props.User.isLoggedIn)
-            this.props.loginPrompt()
+    toggleRefillModal() {
+        this.setState({refillModal: !this.state.refillModal})
     }
-    viewFile(){
-
+    pay() {
         if (this.props.activeFile.info && this.props.activeFile.info.getSuggestedPlayCost() == 0) {
             this.props.payForFile(this.props.activeFile.key)
             //Do I need this?
@@ -42,6 +47,55 @@ class ViewFileButton extends Component {
                 })
         }
         this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
+    }
+    attemptPayment() {
+        return new Promise( (res, rej) => {
+            let acc = this.props.account;
+            let ap = acc.getPaymentBuilder(this.props.account.wallet, this.props.artifact, this.props.activeFile.info, "view")
+
+            this.setState({
+                ap: ap,
+                addresses: this.props.wallet.addresses,
+                supportedCoins: ap.getSupportedCoins()
+            });
+
+            console.log("Pay vars", ap.getSupportedCoins(), ap.getPaymentAmount(), this.props.wallet.cryptoBalances)
+
+            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances, undefined, undefined, {all: true})
+                .then(ret => {
+                    (Object.keys(ret).length === 0) ? rej({error: "Insufficient balances", ret}) : res(ret)
+
+                })
+                .catch(err => rej(err))
+        })
+    }
+    checkLogin() {
+        return new Promise( (res, rej) => {
+            (this.props.User.isLoggedIn ? res() : rej() )
+        })
+    }
+    viewFile(){
+        this.checkLogin()
+            .then( () => {
+                //choose only coins that the artifact accepts
+                this.attemptPayment()
+                    console.log("attempt pay")
+                    .then(ret => {
+                        console.log("return for pay", ret)
+                        //pay
+                    })
+                    .catch(err => {
+                        console.log("caught out on error: ", err)
+                        if (err.error) {
+                            // console.log(err)
+                            this.toggleRefillModal()
+                        } else {alert(err)}
+                    })
+            })
+            .catch( (e) => {
+                this.props.loginPrompt(true)
+            })
+
     }
 
     createPriceString(price){
@@ -129,6 +183,11 @@ class ViewFileButton extends Component {
         }
         return (
             <div style={{display: disallowPlay ? "" : "inline-block", paddingRight: "3px"}}>
+
+                {this.state.refillModal ? <RefillModal addresses={this.state.addresses} supportedCoins={this.state.supportedCoins}
+                                                       account={this.props.account} wallet={this.props.wallet} ap={this.state.ap}
+                                                       cryptoBalances={this.props.wallet.cryptoBalances}
+                                                       isOpen={this.state.refillModal} toggleModal={this.toggleRefillModal}/> : ""}
                 { disallowPlay ? "" :
                     <button  className={"pad-5 btn btn-" + viewBtnType} onClick={this.viewFile} style={this.props.btnStyle} >
                         <span className="icon icon-controller-play" style={{marginRight: "5px"}}/>{viewString}
@@ -151,8 +210,9 @@ ViewFileButton.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        account: state.Account,
-        User: state.User
+        account: state.User.Account,
+        User: state.User,
+        wallet: state.Wallet
     }
 }
 
