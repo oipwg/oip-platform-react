@@ -39,10 +39,12 @@ class ViewFileButton extends Component {
 
         if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
             this.props.paymentInProgress(this.props.activeFile.key)
-            this.state.ap.sendPayment(this.state.paymentAddresses[coins[0]], ret[coins[0]].cryptoFileCost, this.state.ap.tickerToName(coins[0]))
+            this.state.ap.sendPayment(this.state.paymentAddresses[coins[0]], 0.0001357, this.state.ap.tickerToName(coins[0]))
                 .then(data => {
                     this.props.payForFile(this.props.activeFile.key)
-                    console.log('Succesfully paid for artifact file: ', data)
+                   if( data ) {
+                       console.log("Payment successful: ", data)
+                   }
                 })
                 .catch(err => {
                     this.props.paymentError(this.props.activeFile.key)
@@ -54,8 +56,8 @@ class ViewFileButton extends Component {
     attemptPayment() {
         return new Promise( (res, rej) => {
             let acc = this.props.account;
-            let w = this.props.wallet;
             let ap = acc.getPaymentBuilder(this.props.account.wallet, this.props.artifact, this.props.activeFile.info, "view")
+            console.log("Payment amount: ", ap.getPaymentAmount())
             this.setState({
                 ap: ap,
                 addresses: this.props.wallet.addresses,
@@ -64,10 +66,9 @@ class ViewFileButton extends Component {
             });
 
             console.log("Pay vars", ap.getSupportedCoins(), ap.getPaymentAmount(), this.props.wallet.cryptoBalances)
-
             ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances ? this.props.wallet.cryptoBalances : {btc: 0}, ap.getSupportedCoins(), ap.getPaymentAmount(), {all: true})
                 .then(ret => {
-                    console.log("My return obj", ret);
+                    console.log("return val", ret)
                     if (Array.isArray(ret)) {
                         if (ret.length === 0 ) {
                             rej({error: "Insufficient Balance", ret})
@@ -76,7 +77,7 @@ class ViewFileButton extends Component {
                         if (Object.keys(ret).length > 0) {
                             res(ret)
                         } else {
-                            rej({error: "Insufficient Balance "})
+                            rej({error: "Insufficient Balance ", ret})
                         }
                     }
                 })
@@ -107,7 +108,7 @@ class ViewFileButton extends Component {
                         if (err.error) {
                             console.log(err)
                             this.toggleRefillModal()
-                        } else {alert(err)}
+                        } else {alert("Still need to load wallet balances!")}
                     })
             })
             .catch( (e) => {
@@ -201,14 +202,13 @@ class ViewFileButton extends Component {
         }
         return (
             <div style={{display: disallowPlay ? "" : "inline-block", paddingRight: "3px"}}>
-
                 {this.state.refillModal ? <RefillModal addresses={this.state.addresses} supportedCoins={this.state.supportedCoins}
                                                        account={this.props.account} wallet={this.props.wallet} ap={this.state.ap}
                                                        cryptoBalances={this.props.wallet.cryptoBalances}
                                                        isOpen={this.state.refillModal} toggleModal={this.toggleRefillModal}/> : ""}
                 { disallowPlay ? "" :
                     <button  className={"pad-5 btn btn-" + viewBtnType} onClick={this.viewFile} style={this.props.btnStyle} >
-                        <span className="icon icon-controller-play" style={{marginRight: "5px"}}/>{viewString}
+                        <span className="icon icon-controller-play" style={{marginRight: "5px"}}/>{"$1"}
                     </button>
                 }
             </div>

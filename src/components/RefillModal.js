@@ -19,6 +19,9 @@ export default class RefillModal extends React.Component {
         this.handleButtonEvent = this.handleButtonEvent.bind(this)
         this.toggleCoinbaseModal = this.toggleCoinbaseModal.bind(this)
         this.handleCoinSelector = this.handleCoinSelector.bind(this)
+        this.onCoinbaseClose = this.onCoinbaseClose.bind(this)
+        this.onCoinbaseCancel = this.onCoinbaseCancel.bind(this)
+        this.onCoinbaseSuccess = this.onCoinbaseSuccess.bind(this)
     }
     componentDidMount() {
         let addrs = this.props.addresses;
@@ -35,7 +38,15 @@ export default class RefillModal extends React.Component {
             coin: sp[0]
         })
     }
-
+    onCoinbaseClose(data) {
+        console.log("Close: ", data)
+    }
+    onCoinbaseCancel(data) {
+        console.log("Cancel: ", data)
+    }
+    onCoinbaseSuccess(data) {
+        console.log("Success: ", data)
+    }
     handleButtonEvent(e) {
         this.setState({
             amount: e.target.name
@@ -53,7 +64,15 @@ export default class RefillModal extends React.Component {
     render() {
         return (
             <div>
-                {this.state.coinbaseModal ? <CoinbaseModal currency={this.state.coin} isOpen={this.state.coinbaseModal} address={this.props.wallet.addresses[this.props.ap.tickerToName(this.state.coin)]} amount={this.state.amount} /> : (<Modal style={{top: "22%"}} isOpen={this.props.isOpen} toggle={this.props.toggleModal} className={this.props.className}>
+                {this.state.coinbaseModal ?
+                    <CoinbaseModal currency={this.state.coin}
+                                   isOpen={this.state.coinbaseModal}
+                                   address={this.props.wallet.addresses[this.props.ap.tickerToName(this.state.coin)]}
+                                   amount={this.state.amount}
+                                   onClose={this.onCoinbaseClose}
+                                   onCancel={this.onCoinbaseCancel}
+                                   onSuccess={this.onCoinbaseSuccess}
+                    /> : (<Modal style={{top: "22%"}} isOpen={this.props.isOpen} toggle={this.props.toggleModal} className={this.props.className}>
                         <ModalBody style={{margin: "auto", width: "100%"}} className="text-center">
                             <div className="row">
                                 <div className="col-9">
@@ -61,7 +80,7 @@ export default class RefillModal extends React.Component {
                                         <h2 className="font-weight-bold">Buy coins from <span style={{color: "blue"}}>Coinbase</span></h2>
                                     </div>
                                     <div className="row my-4  mb-5 no-gutters d-flex justify-content-center">
-                                        {(this.state.sp && this.state.sp.length === 1 && this.state.sp.includes("flo") && this.state.coin === "flo") ? <div class="alert alert-primary" role="alert">
+                                        {(this.state.sp && this.state.sp.length === 1 && this.state.sp.includes("flo") && this.state.coin === "flo") ? <div className="alert alert-primary" role="alert">
                                                 This file only supports FLO payments. Coinbase does not yet support FLO:(
                                         </div> :
                                             <div className="btn-group" role="group" aria-label="Basic example">

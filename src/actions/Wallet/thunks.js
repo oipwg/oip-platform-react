@@ -3,6 +3,7 @@ import {setCryptoBalances, errorFetchingBalance, setWalletAddresses} from "./act
 export const fetchCryptoBalances = (wallet) => (dispatch) => {
     wallet.getCoinBalances()
         .then(balances => {
+            console.log("Balances: ",balances)
             dispatch(setCryptoBalances(balances))
         })
         .catch(err => {
@@ -16,6 +17,7 @@ export const fetchWalletAddresses = (wallet) => (dispatch) => {
     for (let coin in coins) {
         addr[coin] = coins[coin].getAddress(0, 0, 0).getPublicAddress()
     }
+    console.log("addresses", addr)
     dispatch(setWalletAddresses(addr))
 }
 

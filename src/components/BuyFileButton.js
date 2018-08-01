@@ -33,15 +33,14 @@ class BuyFileButton extends Component {
         for (let coinTicker of Object.keys(ret)) {
             coins.push(coinTicker)
         }
-        console.log(coins, Object.keys(ret))
         let paymentAddress = this.state.paymentAddresses[coins[0]];
         let paymentAmount = ret[coins[0]].cryptoFileCost
-        console.log(`Payment address: ${paymentAddress}, Payment Amount: ${paymentAmount}`)
 
+        console.log(`Payment address: ${paymentAddress}, Payment Amount: ${paymentAmount}, Payment Coin: ${this.state.ap.tickerToName(coins[0])}`)
 
         if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
             this.props.buyInProgress(this.props.activeFile.key)
-            this.state.ap.sendPayment(this.state.paymentAddresses[coins[0]], ret[coins[0]].cryptoFileCost, this.state.ap.tickerToName(coins[0]))
+            this.state.ap.sendPayment(this.state.paymentAddresses[coins[0]], 0.0001357, this.state.ap.tickerToName(coins[0]))
                 .then(data => {
                     this.props.buyFile(this.props.activeFile.key)
                     console.log('Succesfully paid for artifact file: ', data)
@@ -59,7 +58,7 @@ class BuyFileButton extends Component {
         return new Promise( (res, rej) => {
             let acc = this.props.account;
             let ap = acc.getPaymentBuilder(this.props.account.wallet, this.props.artifact, this.props.activeFile.info, "buy")
-
+            console.log("Payment amount: ", ap.getPaymentAmount())
             this.setState({
                 ap: ap,
                 addresses: this.props.wallet.addresses,
@@ -68,18 +67,18 @@ class BuyFileButton extends Component {
             });
 
             console.log("Pay vars", ap.getSupportedCoins(), ap.getPaymentAmount(), this.props.wallet.cryptoBalances)
-            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances, undefined, {all: true})
+            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances ? this.props.wallet.cryptoBalances : {btc: 0}, ap.getSupportedCoins(), ap.getPaymentAmount(), {all: true})
                 .then((ret) => {
+                    console.log("return val", ret)
                     if (Array.isArray(ret)) {
                         if (ret.length === 0) {
-                            rej({error: "Coins have insufficient balance"})
+                            rej({error: "Coins have insufficient balance", ret})
                         }
                         else {
-                            let keys = Object.keys(ret);
-                            if (keys.length === 0) {
-                                rej({error: "Coins have insufficient balance"})
-                            } else {
+                            if (Object.keys(ret).length > 0) {
                                 res(ret)
+                            } else {
+                                rej({error: "Insufficient Balance ", ret})
                             }
                         }
                     }
@@ -103,7 +102,8 @@ class BuyFileButton extends Component {
                     .catch(err => {
                         if (err.error) {
                             this.toggleRefillModal()
-                        } else {alert(err)}
+                            console.log(err)
+                        } else {alert("Need to load wallet balances first! One sec...")}
                     })
             })
             .catch( (e) => {
@@ -201,7 +201,7 @@ class BuyFileButton extends Component {
                                                        isOpen={this.state.refillModal} toggleModal={this.toggleRefillModal}/> : ""}
                 { disallowBuy ? "" :
                     <button className={"pad-5 btn btn-" + buyBtnType} onClick={() => this.buyFile()} style={this.props.btnStyle}>
-                        <span className="icon icon-download" style={{marginRight: "5px"}}/> {buyString}
+                        <span className="icon icon-download" style={{marginRight: "5px"}}/> $1
                     </button>
                 }
             </div>
