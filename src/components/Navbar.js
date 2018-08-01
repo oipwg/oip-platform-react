@@ -10,7 +10,7 @@ import UserNav from './UserNav'
 
 import { logoutAction } from '../actions/User/actions'
 
-import LogoImg from '../assets/img/oip-basic.svg';
+import LogoImg from '../assets/img/oip-wordmark-and-logo.png';
 
 class Navbar extends Component {
     constructor(props) {
@@ -52,7 +52,7 @@ class Navbar extends Component {
         return <nav className="navbar-header navbar navbar-expand-sm">
             {this.state.search ? <Redirect push to={"/search/" + this.state.searchTerm}/> : null}
                 <Link className="navbar-logo navbar-brand ml-5" to="/">
-                    <img className="navbar-brand-img d-inline-block align-middle" src={LogoImg} alt=""/>
+                    <img style={{height: "40px"}} className="navbar-brand-img d-inline-block align-middle" src={LogoImg} alt=""/>
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -63,7 +63,7 @@ class Navbar extends Component {
                 <div id="navbarSupportedContent" className="collapse navbar-collapse">
                     <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
                     <div className="user-container d-flex justify-content-end">
-                        <UploadButton isLoggedIn={this.props.User.isLoggedIn}/>
+                        {/*<UploadButton isLoggedIn={this.props.User.isLoggedIn}/>*/}
                         {this.props.User.isLoggedIn ? <UserNav logout={this.props.logoutAction} pubName={this.props.User.publisher}/> : <LoginButton/>}
                     </div>
                 </div>

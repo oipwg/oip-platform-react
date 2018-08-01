@@ -27,18 +27,31 @@ class BuyFileButton extends Component {
     }
 
     pay(ret) {
-        console.log("attempting to send tx: ", ret)
-        // this.props.buyInProgress(this.props.activeFile.key)
-        // let addr = this.state.paymentAddresses[]
-        // this.state.ap.sendPayment(undefined, undefined, undefined)
-        //     .then(data => {
-        //         this.props.buyFile(this.props.activeFile.key)
-        //
-        //     })
-        //     .catch(err => {
-        //         this.props.buyError(this.props.activeFile.key)
-        //
-        //     })
+
+        console.log("attempting to send payment: ", ret)
+        let coins = []
+        for (let coinTicker of Object.keys(ret)) {
+            coins.push(coinTicker)
+        }
+        console.log(coins, Object.keys(ret))
+        let paymentAddress = this.state.paymentAddresses[coins[0]];
+        let paymentAmount = ret[coins[0]].cryptoFileCost
+        console.log(`Payment address: ${paymentAddress}, Payment Amount: ${paymentAmount}`)
+
+
+        if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
+            this.props.buyInProgress(this.props.activeFile.key)
+            this.state.ap.sendPayment(this.state.paymentAddresses[coins[0]], ret[coins[0]].cryptoFileCost, this.state.ap.tickerToName(coins[0]))
+                .then(data => {
+                    this.props.buyFile(this.props.activeFile.key)
+                    console.log('Succesfully paid for artifact file: ', data)
+                })
+                .catch(err => {
+                    this.props.buyError(this.props.activeFile.key)
+                    console.log("Error while trying to pay for artifact file: ", err)
+                })
+        }
+        this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
     }
 
 
@@ -85,7 +98,6 @@ class BuyFileButton extends Component {
                 //choose only coins that the artifact accepts
                 this.attemptPayment()
                     .then(ret => {
-                        console.log("ret: ", ret)
                         this.pay(ret)
                     })
                     .catch(err => {

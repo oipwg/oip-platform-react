@@ -31,15 +31,15 @@ class ViewFileButton extends Component {
         for (let coinTicker of Object.keys(ret)) {
             coins.push(coinTicker)
         }
-        console.log(coins, Object.keys(ret))
         let paymentAddress = this.state.paymentAddresses[coins[0]];
-        let paymentAmount = ret[coins[0]].cryptoFileCost
-        console.log(paymentAddress, paymentAmount, this.state.paymentAddresses)
+        let paymentAmount = Number.parseFloat(ret[coins[0]].cryptoFileCost).toFixed(7);
+
+        console.log(`Payment address: ${paymentAddress}, Payment Amount: ${paymentAmount}, Payment Coin: ${this.state.ap.tickerToName(coins[0])}`)
 
 
         if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
             this.props.paymentInProgress(this.props.activeFile.key)
-            this.state.ap.sendPayment(this.state.paymentAddresses[coins[0]], ret[coins[0]].cryptoFileCost, coins[0])
+            this.state.ap.sendPayment(this.state.paymentAddresses[coins[0]], ret[coins[0]].cryptoFileCost, this.state.ap.tickerToName(coins[0]))
                 .then(data => {
                     this.props.payForFile(this.props.activeFile.key)
                     console.log('Succesfully paid for artifact file: ', data)
@@ -74,9 +74,9 @@ class ViewFileButton extends Component {
                         }
                     } else {
                         if (Object.keys(ret).length > 0) {
-                            res({error: "Insufficient Balance", ret})
+                            res(ret)
                         } else {
-                            rej(ret)
+                            rej({error: "Insufficient Balance "})
                         }
                     }
                 })
