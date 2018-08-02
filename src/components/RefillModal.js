@@ -39,7 +39,8 @@ export default class RefillModal extends React.Component {
         })
     }
     onCoinbaseClose(data) {
-        console.log("Close: ", data)
+        setTimeout(() => {this.props.pff(this.props.ak)}, 3000);
+
     }
     onCoinbaseCancel(data) {
         console.log("Cancel: ", data)

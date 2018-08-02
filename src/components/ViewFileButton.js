@@ -66,7 +66,8 @@ class ViewFileButton extends Component {
             });
 
             console.log("Pay vars", ap.getSupportedCoins(), ap.getPaymentAmount(), this.props.wallet.cryptoBalances)
-            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances ? this.props.wallet.cryptoBalances : {btc: 0}, ap.getSupportedCoins(), ap.getPaymentAmount(), {all: true})
+            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances ? this.props.wallet.cryptoBalances : {btc: 0, ltc: 0, flo: 0},
+                ap.getSupportedCoins(), ap.getPaymentAmount(), {all: true})
                 .then(ret => {
                     console.log("return val", ret)
                     if (Array.isArray(ret)) {
@@ -96,6 +97,7 @@ class ViewFileButton extends Component {
             if (this.props.activeFile.info.getType() === 'Audio') {
                 this.props.isPlayingFile(this.props.activeFile.key, !this.props.activeFile.isPlaying)
             }
+            this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
             return
         }
         this.checkLogin()
@@ -106,7 +108,7 @@ class ViewFileButton extends Component {
                     })
                     .catch(err => {
                         if (err.error) {
-                            console.log(err)
+                            console.log("attempt payment threw: ", err)
                             this.toggleRefillModal()
                         } else {alert("Still need to load wallet balances!")}
                     })
@@ -208,7 +210,7 @@ class ViewFileButton extends Component {
                                                        isOpen={this.state.refillModal} toggleModal={this.toggleRefillModal}/> : ""}
                 { disallowPlay ? "" :
                     <button  className={"pad-5 btn btn-" + viewBtnType} onClick={this.viewFile} style={this.props.btnStyle} >
-                        <span className="icon icon-controller-play" style={{marginRight: "5px"}}/>{"$1"}
+                        <span className="icon icon-controller-play" style={{marginRight: "5px"}}/>{viewString}
                     </button>
                 }
             </div>

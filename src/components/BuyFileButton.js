@@ -67,19 +67,19 @@ class BuyFileButton extends Component {
             });
 
             console.log("Pay vars", ap.getSupportedCoins(), ap.getPaymentAmount(), this.props.wallet.cryptoBalances)
-            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances ? this.props.wallet.cryptoBalances : {btc: 0}, ap.getSupportedCoins(), ap.getPaymentAmount(), {all: true})
+            ap.getCoinsWithSufficientBalance(this.props.wallet.cryptoBalances ? this.props.wallet.cryptoBalances : {btc: 0, ltc: 0, flo: 0},
+                ap.getSupportedCoins(), ap.getPaymentAmount(), {all: true})
                 .then((ret) => {
                     console.log("return val", ret)
                     if (Array.isArray(ret)) {
-                        if (ret.length === 0) {
-                            rej({error: "Coins have insufficient balance", ret})
+                        if (ret.length === 0 ) {
+                            rej({error: "Insufficient Balance", ret})
                         }
-                        else {
-                            if (Object.keys(ret).length > 0) {
-                                res(ret)
-                            } else {
-                                rej({error: "Insufficient Balance ", ret})
-                            }
+                    } else {
+                        if (Object.keys(ret).length > 0) {
+                            res(ret)
+                        } else {
+                            rej({error: "Insufficient Balance ", ret})
                         }
                     }
                 })
@@ -94,15 +94,14 @@ class BuyFileButton extends Component {
     buyFile(){
         this.checkLogin()
             .then( () => {
-                //choose only coins that the artifact accepts
                 this.attemptPayment()
                     .then(ret => {
                         this.pay(ret)
                     })
                     .catch(err => {
                         if (err.error) {
+                            console.log("attempt payment threw: ", err)
                             this.toggleRefillModal()
-                            console.log(err)
                         } else {alert("Need to load wallet balances first! One sec...")}
                     })
             })
@@ -201,7 +200,7 @@ class BuyFileButton extends Component {
                                                        isOpen={this.state.refillModal} toggleModal={this.toggleRefillModal}/> : ""}
                 { disallowBuy ? "" :
                     <button className={"pad-5 btn btn-" + buyBtnType} onClick={() => this.buyFile()} style={this.props.btnStyle}>
-                        <span className="icon icon-download" style={{marginRight: "5px"}}/> $1
+                        <span className="icon icon-download" style={{marginRight: "5px"}}/> {buyString}
                     </button>
                 }
             </div>
