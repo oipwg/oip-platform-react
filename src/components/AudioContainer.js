@@ -167,6 +167,9 @@ class AudioContainer extends Component {
 				this.nextSong();
 
 			if (this.props.artifact){
+				if (this.props.artifact.getThumbnail()) {
+                    ipfsHash = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.artifact.getThumbnail().getFilename()))
+                }
 				songURL = this.props.buildIPFSURL(this.props.buildIPFSShortURL(this.props.artifact.getLocation(), this.props.activeFile.info.getFilename()));
 				artist = this.props.artifact.getDetail("artist");
 			}
@@ -174,7 +177,7 @@ class AudioContainer extends Component {
 		if (this.props.filePlaylist){
 			playlistLen = Object.keys(this.props.filePlaylist).length - 1;
 		}
-
+		console.log("IPFS Hash: ", !!ipfsHash)
 		return (
 			<div className="audio-container" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio
@@ -192,7 +195,7 @@ class AudioContainer extends Component {
                                 {artist ? artist : "Unknown"} - {name ? name : "Unknown"}
 							</h3>
 							<div style={{width: "100%", height: "auto", maxWidth: "350px", maxHeight: "350px", margin: "0px auto", marginTop: "25px", display: "block"}}>
-                                <img src={songURL} alt="IPFS" crossOrigin="Anonymous" onLoad={this.onImageLoad}/>
+								{!!ipfsHash ? <img src={ipfsHash} alt=" " crossOrigin="Anonymous" onLoad={this.onImageLoad}/> : null}
 							</div>
 						</div>
 						{playlistLen > 1 ?

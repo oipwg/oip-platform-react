@@ -31,11 +31,11 @@ class FileViewer extends Component {
 		this.buildIPFSURL = this.buildIPFSURL.bind(this);
 	}
 
-    buildIPFSShortURL(location, file) {
-        if (!location || !file)
+    buildIPFSShortURL(location, fileName) {
+        if (!location || !fileName)
             return "";
 
-        return location + "/" + file;
+        return location + "/" + fileName;
     }
 
     buildIPFSURL(hash, fname) {
