@@ -92,6 +92,15 @@ class BuyFileButton extends Component {
         })
     }
     buyFile(){
+        if (this.props.activeFile.info && this.props.activeFile.info.getSuggestedBuyCost() == 0) {
+            this.props.buyFile(this.props.activeFile.key)
+            //Do I need this?
+            if (this.props.activeFile.info.getType() === 'Audio') {
+                this.props.isPlayingFile(this.props.activeFile.key, !this.props.activeFile.isPlaying)
+            }
+            this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
+            return
+        }
         this.checkLogin()
             .then( () => {
                 this.attemptPayment()
