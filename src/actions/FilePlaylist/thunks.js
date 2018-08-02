@@ -33,6 +33,7 @@ export const setCurrentFile = (artifact, file) => dispatch => {
 
     for (var i = 0; i < files.length; i++) {
         if (files[i].getFilename() === file.info.getFilename() && files[i].getDisplayName() === file.info.getDisplayName()){
+            console.log("current file: ", artifact.getTXID() + "|" + i, files[i].getFilename(), file.info.getFilename())
             dispatch(setActiveFileInPlaylist(artifact.getTXID() + "|" + i));
         }
     }

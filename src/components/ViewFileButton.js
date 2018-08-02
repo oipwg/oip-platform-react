@@ -37,26 +37,26 @@ class ViewFileButton extends Component {
         console.log(`Payment address: ${paymentAddress}, Payment Amount: ${paymentAmount}, Payment Coin: ${this.state.ap.tickerToName(coins[0])}`)
 
 
-        if (this.props.activeFile.isPaid && !this.props.activeFile.hasPaid) {
-            this.props.paymentInProgress(this.props.activeFile.key)
+        if (this.props.file.isPaid && !this.props.file.hasPaid) {
+            this.props.paymentInProgress(this.props.file.key)
             this.state.ap.sendPayment(this.state.paymentAddresses[coins[0]], 0.0001357, this.state.ap.tickerToName(coins[0]))
                 .then(data => {
-                    this.props.payForFile(this.props.activeFile.key)
+                    this.props.payForFile(this.props.file.key)
                    if( data ) {
                        console.log("Payment successful: ", data)
                    }
                 })
                 .catch(err => {
-                    this.props.paymentError(this.props.activeFile.key)
+                    this.props.paymentError(this.props.file.key)
                     console.log("Error while trying to pay for artifact file: ", err)
                 })
         }
-        this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
+        this.props.setCurrentFile(this.props.artifact, this.props.file);
     }
     attemptPayment() {
         return new Promise( (res, rej) => {
             let acc = this.props.account;
-            let ap = acc.getPaymentBuilder(this.props.account.wallet, this.props.artifact, this.props.activeFile.info, "view")
+            let ap = acc.getPaymentBuilder(this.props.account.wallet, this.props.artifact, this.props.file.info, "view")
             console.log("Payment amount: ", ap.getPaymentAmount())
             this.setState({
                 ap: ap,
@@ -91,13 +91,13 @@ class ViewFileButton extends Component {
         })
     }
     viewFile(){
-        if (this.props.activeFile.info && this.props.activeFile.info.getSuggestedPlayCost() == 0) {
-            this.props.payForFile(this.props.activeFile.key)
+        if (this.props.file.info && this.props.file.info.getSuggestedPlayCost() == 0) {
+            this.props.payForFile(this.props.file.key)
             //Do I need this?
-            if (this.props.activeFile.info.getType() === 'Audio') {
-                this.props.isPlayingFile(this.props.activeFile.key, !this.props.activeFile.isPlaying)
+            if (this.props.file.info.getType() === 'Audio') {
+                this.props.isPlayingFile(this.props.file.key, !this.props.file.isPlaying)
             }
-            this.props.setCurrentFile(this.props.artifact, this.props.activeFile);
+            if (this.props.file.key !== this.props.activeFile.key) {this.props.setCurrentFile(this.props.artifact, this.props.file)}
             return
         }
         this.checkLogin()
@@ -149,26 +149,26 @@ class ViewFileButton extends Component {
         let viewBtnType = "outline-info";
 
 
-        if (this.props.activeFile){
-            if (this.props.activeFile.owned){
+        if (this.props.file){
+            if (this.props.file.owned){
                 owned = true;
             }
-            if (this.props.activeFile.hasPaid){
+            if (this.props.file.hasPaid){
                 hasPaid = true;
             }
-            if (this.props.activeFile.paymentInProgress){
+            if (this.props.file.paymentInProgress){
                 paymentInProgress = true;
             }
-            if (this.props.activeFile.paymentError){
+            if (this.props.file.paymentError){
                 paymentError = true;
             }
 
-            if (this.props.activeFile.info) {
-                if (this.props.activeFile.info.getSuggestedPlayCost()){
-                    sugPlay = this.props.activeFile.info.getSuggestedPlayCost();
+            if (this.props.file.info) {
+                if (this.props.file.info.getSuggestedPlayCost()){
+                    sugPlay = this.props.file.info.getSuggestedPlayCost();
                 }
-                if (this.props.activeFile.info.getDisallowPlay()){
-                    disallowPlay = this.props.activeFile.info.getDisallowPlay();
+                if (this.props.file.info.getDisallowPlay()){
+                    disallowPlay = this.props.file.info.getDisallowPlay();
                 }
             }
 
@@ -177,6 +177,7 @@ class ViewFileButton extends Component {
         sugPlay = this.createPriceString(sugPlay);
 
         if (sugPlay === 0 || sugPlay === "0"){
+            viewBtnType = "outline-light"
             viewString = "Free";
         } else {
             viewString = "$" + sugPlay;

@@ -32,7 +32,7 @@ class Paywall extends Component {
 						<br/>
                             <ViewFileButton
                                 artifact={this.props.artifact}
-                                activeFile={this.props.activeFile}
+                                file={this.props.activeFile}
                                 setCurrentFile={this.props.setCurrentFile}
                                 paymentError={this.props.paymentError}
                                 isPlayingFile={this.props.isPlayingFile}
@@ -41,7 +41,7 @@ class Paywall extends Component {
                             />
                             <BuyFileButton
                                 artifact={this.props.artifact}
-                                activeFile={this.props.activeFile}
+                                file={this.props.activeFile}
                                 setCurrentFile={this.props.setCurrentFile}
                                 buyInProgress={this.props.buyInProgress}
                                 buyError={this.props.buyError}

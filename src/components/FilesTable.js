@@ -104,7 +104,6 @@ class FilesTable extends Component {
 
 		if (!this.props.extendedView)
 			filesCopy = this.stripUnimportantFiles(filesCopy);
-
 		return (
 				<table className="table table-hover table-responsive table-dark table-sm table-striped"
                        style={{display: "table"}}>
@@ -118,6 +117,7 @@ class FilesTable extends Component {
                                             <ViewFileButton
                                                 artifact={_this.props.artifact}
                                                 activeFile={_this.props.activeFile}
+												file={file}
                                                 setCurrentFile={_this.props.setCurrentFile}
                                                 paymentError={_this.props.paymentError}
                                                 isPlayingFile={_this.props.isPlayingFile}
@@ -126,6 +126,7 @@ class FilesTable extends Component {
                                             />
                                             <BuyFileButton
                                                 artifact={_this.props.artifact}
+                                                file={file}
                                                 activeFile={_this.props.activeFile}
                                                 setCurrentFile={_this.props.setCurrentFile}
                                                 buyInProgress={_this.props.buyInProgress}
