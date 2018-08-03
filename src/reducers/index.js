@@ -4,14 +4,18 @@ import { FilePlaylist } from './FilePlaylist.js';
 import { VolumeControls } from './VolumeControls.js';
 import { Wallet } from './Wallet.js';
 import { User } from './User.js';
+import { NotificationSystem } from "./NotificationSystem";
+import { PublisherPage } from './PublisherPage';
+import { Piwik } from './Piwik';
+import { OIPIndex } from "./OIPIndex";
 
 const pageType = (state = 'ARTIFACT_LIST', action) => {
-	switch (action.type) {
-		case action.page_type:
-			return action.page_type
-		default:
-			return state
-	}
+    switch (action.type) {
+        case action.page_type:
+            return action.page_type
+        default:
+            return state
+    }
 }
 
 const rootReducer = {
@@ -21,7 +25,11 @@ const rootReducer = {
 	ArtifactLists,
 	CurrentArtifact,
 	FilePlaylist,
-	VolumeControls
+	VolumeControls,
+	NotificationSystem,
+	PublisherPage,
+	Piwik,
+    OIPIndex
 }
 
 export default rootReducer

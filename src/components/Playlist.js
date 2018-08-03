@@ -1,59 +1,32 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { FormattedTime } from 'react-player-controls';
-
-import PaymentButtons from './PaymentButtons.js';
+import ViewFileButton from './ViewFileButton'
+import BuyFileButton from './BuyFileButton'
 
 class Playlist extends Component {
 	constructor(props){
 		super(props);
 
-		this.state = {
-
-		}
-
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.getCurrentArtifactFiles = this.getCurrentArtifactFiles.bind(this);
 		this.getAllFiles = this.getAllFiles.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
+		this.handleListClick = this.handleListClick.bind(this)
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let CurrentArtifact = newState.CurrentArtifact;
-		let FilePlaylist = newState.FilePlaylist;
-		let active = newState.FilePlaylist.active;
-		let currentFile = newState.FilePlaylist[active];
-
-		if (currentFile && this.state !== currentFile){
-			this.setState({CurrentArtifact: CurrentArtifact, ActiveFile: currentFile, FilePlaylist: FilePlaylist});
-		}
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
 	getAllFiles(){
 		let files = [];
 
-		if (this.state.CurrentArtifact && this.state.FilePlaylist){
-			for (var key in this.state.FilePlaylist) {
+		if (this.props.artifact && this.props.filePlaylist){
+			for (var key in this.props.filePlaylist) {
 				// This just makes sure we are not getting the "active" key from the FilePlaylist obj
 				if (key.split("|").length === 2){
-					let newObj = this.state.FilePlaylist[key];
+					let newObj = this.props.filePlaylist[key];
 					newObj.key = key.toString();
 					files.push(newObj);
 				}
 			}
 		}
-
 		return [...files];
 	}
 	getCurrentArtifactFiles(){
@@ -61,20 +34,18 @@ class Playlist extends Component {
 		let myArtifactFiles = [];
 
 		for (var file in files) {
-			if (files[file].key.split("|")[0] === this.state.CurrentArtifact.artifact.getTXID()){
+			if (files[file].key.split("|")[0] === this.props.artifact.getTXID()){
 				myArtifactFiles.push(files[file]);
 			}
 		}
-
 		return myArtifactFiles;
 	}
 	filterFiles(files, filter){
 		let filteredFiles = [];
-
 		if (filter){
 			if (filter.type){
 				for (var i = 0; i < files.length; i++) {
-					if (files[i].info.type === filter.type){
+					if (files[i].info.getType() === filter.type){
 						filteredFiles.push(files[i]);
 					}
 				}
@@ -85,11 +56,16 @@ class Playlist extends Component {
 			return files;
 		}
 	}
+
+	handleListClick(artifact, file) {
+		(file.key !== this.props.activeFile.key) ? (this.props.setCurrentFile(artifact, file)) : (null)
+	}
+
 	render() {
 		let _this = this;
 
 		let DisplayFiles = [];
-		let Artist = "";
+		let artist = "";
 
 		if (this.props.currentArtifactOnly){
 			DisplayFiles = this.getCurrentArtifactFiles();
@@ -98,9 +74,9 @@ class Playlist extends Component {
 		}
 
 		DisplayFiles = this.filterFiles(DisplayFiles, this.props.filter);
-
-		if (this.state.CurrentArtifact && this.state.CurrentArtifact.artifact){
-			Artist = this.state.CurrentArtifact.artifact.getDetail("artist")
+		if (this.props.artifact){
+			//in current version, some artifacts may not have 'details'
+			artist = this.props.artifact.getDetail("artist")
 		}
 
 		return (
@@ -108,30 +84,68 @@ class Playlist extends Component {
 				<li className="list-group-item" style={{padding: "5px 30px", display:"flex", backgroundColor: this.props.bgColor, border: "1px solid " + this.props.mainColor}}>
 					<div style={{margin: "auto"}}>
 						<button className="btn btn-sm btn-outline-info"><span className="icon icon-controller-play"></span>Play All: Free</button>
-						<span style={{paddingLeft: "10px"}}></span>
+						<span style={{paddingLeft: "10px"}}/>
 						<button className="btn btn-sm btn-outline-info"><span className="icon icon-download"></span> Buy All: Free</button>
 					</div>
 				</li>
+                {/*@TODO change to arrow functino*/}
 				{DisplayFiles.map(function(file, i){
-					return <li key={i} className="list-group-item" style={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
+					return <li key={i} onClick={() => {_this.handleListClick(_this.props.artifact, file) } } className="list-group-item" style={file.info.getFilename() === _this.props.activeFile.info.getFilename() ? {padding: "0px", backgroundColor: _this.props.mainColor, border: "1px solid " + _this.props.mainColor} : {padding: "0px", backgroundColor: _this.props.bgColor, border: "1px solid " + _this.props.mainColor}}>
 						<div style={{padding: "4px 5px", display:"flex"}}>
 							<img className="rounded" src={""} width="40px" height="40px" alt="" />
 							<div style={{padding: "0px 10px", width:"235px"}}>
-								<div style={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"} : {color: _this.props.mainColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{Artist}</div>
-								<div style={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {color: _this.props.bgColor, fontSize:"12px", width: "100%", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "100%", display: "flex"}}>
+								<div style={file.info.getFilename() === _this.props.activeFile.info.getFilename() ? {color: _this.props.bgColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"} : {color: _this.props.mainColor, fontWeight:"700",fontSize:"14px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{artist ? artist : "Unknown"}</div>
+								<div style={file.info.getFilename() === _this.props.activeFile.info.getFilename() ? {color: _this.props.bgColor, fontSize:"12px", width: "100%", display: "flex"} : {color: _this.props.mainColor, fontSize:"12px", width: "100%", display: "flex"}}>
 									<div style={{width: "200px", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{i + 1}: {file.info.getDisplayName() ? file.info.getDisplayName() : file.info.getFilename()}</div>
 									<div style={{width: "30px", textAlign: "right"}}>
-										{file.info.duration > 0 ? <FormattedTime numSeconds={file.info.duration} /> : ""}
+										{file.info.getDuration() > 0 ? <FormattedTime numSeconds={file.info.getDuration()} /> : ""}
 									</div>
 								</div>
 							</div>
-							<PaymentButtons Core={_this.props.Core} store={_this.props.store} File={file} artifact={_this.state.CurrentArtifact.artifact} btnStyle={file.info.getFilename() === _this.state.ActiveFile.info.getFilename() ? {backgroundColor: _this.props.bgColor} : {}} />
+                            <ViewFileButton
+                                artifact={_this.props.artifact}
+                                activeFile={_this.props.activeFile}
+								file={file}
+                                setCurrentFile={_this.props.setCurrentFile}
+                                paymentError={_this.props.paymentError}
+                                paymentInProgress={_this.props.paymentInProgress}
+                                payForFile={_this.props.payForFile}
+                                isPlayingFile={_this.props.isPlayingFile}
+                            />
+                            <BuyFileButton
+                                artifact={_this.props.artifact}
+                                activeFile={_this.props.activeFile}
+                                setCurrentFile={_this.props.setCurrentFile}
+                                file={file}
+                                buyInProgress={_this.props.buyInProgress}
+                                buyError={_this.props.buyError}
+                                buyFile={_this.props.buyFile}
+                            />
+
 						</div>
 					</li>
 				})}
 			</ul>
 		);
 	}
+}
+
+Playlist.propTypes = {
+    mainColor: PropTypes.string,
+    bgColor: PropTypes.string,
+    currentArtifactOnly: PropTypes.bool,
+    filter: PropTypes.object,
+    artifact: PropTypes.object,
+    activeFile: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    setCurrentFile: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
 }
 
 export default Playlist;

@@ -3,31 +3,6 @@ import React, { Component } from 'react';
 import { COIN_CONFIGS } from './CoinCard.js';
 
 class SwapBlock extends Component {
-	constructor(props){
-		super(props);
-
-		this.state = {};
-
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
-	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
-
-		// let showPrompt = newState.Wallet.buyPrompt;
-		// this.setState({showPrompt: showPrompt});
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
 	render() {
 		return (
 			<div style={{width: "100%"}}>

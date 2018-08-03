@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
+import {connect} from "react-redux";
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { tryDailyFaucet } from '../actions';
+// import { tryDailyFaucet } from '../actions/Wallet/thunks';
 
 class DailyFaucetBlock extends Component {
 	constructor(props){
@@ -13,47 +13,26 @@ class DailyFaucetBlock extends Component {
 			recaptcha: ""
 		};
 
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.recaptcha = this.recaptcha.bind(this);
 		this.tryDailyFaucet = this.tryDailyFaucet.bind(this);
 
-		let _this = this;
+	}
 
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
-	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
-
-		// let showPrompt = newState.Wallet.buyPrompt;
-		// this.setState({showPrompt: showPrompt});
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
 	recaptcha(response){
 		if (response)
 			this.setState({recaptchaState: "RESPONSE_RECEIVED", recaptcha: response})
 		else 
 			this.setState({recaptchaState: "NEEDS_INPUT"})
 	}
-	tryDailyFaucet(){
-		if (this.state.recaptcha === ""){
-			this.setState({recaptchaState: "NEEDS_INPUT"})
-			return;
-		}
+	tryDailyFaucet() {
+        if (this.state.recaptcha === "") {
+            this.setState({recaptchaState: "NEEDS_INPUT"})
+            // return;
+        }
 
-		let onSuccess = this.props.onFaucetReceive;
-		this.props.store.dispatch(tryDailyFaucet(this.props.Core, this.state.recaptcha, function(success){
-			onSuccess();
-		}, function(error){
-			// Needs error response...
-		}))
-	}
+        //@ToDo::this.props.tryDailyFaucet()
+    }
+
 	render() {
 		return (
 			<div style={{width: "100%"}}>
@@ -72,4 +51,8 @@ class DailyFaucetBlock extends Component {
 	}
 }
 
-export default DailyFaucetBlock;
+const mapDispatchToProps = {
+    //tryDailyFaucet
+};
+
+export default connect(null, mapDispatchToProps)(DailyFaucetBlock);

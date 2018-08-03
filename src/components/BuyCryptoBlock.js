@@ -13,27 +13,9 @@ class BuyCryptoBlock extends Component {
 			selectedCurrency: undefined
 		};
 
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.selectOption = this.selectOption.bind(this);
+	}
 
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
-	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
-
-		// let showPrompt = newState.Wallet.buyPrompt;
-		// this.setState({showPrompt: showPrompt});
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
 	selectOption(type, value, secondValue){
 		if (type === "amount"){
 			this.setState({ amount: secondValue, selectedAmount: value })

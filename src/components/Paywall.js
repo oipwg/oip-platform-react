@@ -1,61 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import PaymentButtons from './PaymentButtons.js';
+import ViewFileButton from './ViewFileButton';
+import BuyFileButton from './BuyFileButton'
 
 class Paywall extends Component {
-	constructor(props){
-		super(props);
-
-		this.state = {
-			ActiveFile: {
-				isPaid: false,
-				hasPaid: false,
-				info: false
-			},
-			CurrentArtifact: {
-
-			}
-		};
-
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	componentDidUpdate(){
-		//this.stateDidUpdate();
-	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
-
-		let CurrentArtifact = newState.CurrentArtifact;
-		let active = newState.FilePlaylist.active;
-		let ActiveFile = newState.FilePlaylist[active];
-
-		let stateObj = {
-			ActiveFile: ActiveFile,
-			CurrentArtifact: CurrentArtifact
-		}
-
-		if (stateObj && this.state !== stateObj){
-			this.setState(stateObj);
-		}
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
 	render() {
 		let type, subtype, textAccess = "Access";
 
-		if (this.state.ActiveFile){
-			type = this.state.ActiveFile.info.type;
-			subtype = this.state.ActiveFile.info.subtype;
+		if (this.props.activeFile){
+			type = this.props.activeFile.info.type;
+			subtype = this.props.activeFile.info.subtype;
 
 			if (type === "Video"){
 				textAccess = "Watch"
@@ -69,31 +24,50 @@ class Paywall extends Component {
 				subtype = "Movie"
 		}
 		return (
-			<div className='paywall' style={(this.state.ActiveFile && this.state.ActiveFile.isPaid && !this.state.ActiveFile.hasPaid && !this.state.ActiveFile.owned && !this.state.CurrentArtifact.isFetching) ? {} : {display: "none"}}>
+			<div className='paywall' style={(this.props.activeFile && this.props.activeFile.isPaid && !this.props.activeFile.hasPaid && !this.props.activeFile.owned && !this.props.artifactState.isFetching) ? {} : {display: "none"}}>
 				<div className="d-flex align-items-center justify-content-center text-center paywall-container">
 					<div style={{width: "80%"}}>
 						<h4 style={{marginBottom: "0px"}}>To {textAccess} this {(!subtype || subtype === "" || subtype === "Basic") ? type : subtype}</h4>
 						<span>please...</span>
 						<br/>
-						<PaymentButtons artifact={this.state.CurrentArtifact.artifact} File={this.state.ActiveFile} Core={this.props.Core} store={this.props.store} piwik={this.props.piwik}  NotificationSystem={this.props.NotificationSystem} />
+                            <ViewFileButton
+                                artifact={this.props.artifact}
+                                file={this.props.activeFile}
+                                setCurrentFile={this.props.setCurrentFile}
+                                paymentError={this.props.paymentError}
+                                isPlayingFile={this.props.isPlayingFile}
+                                paymentInProgress={this.props.paymentInProgress}
+                                payForFile={this.props.payForFile}
+                            />
+                            <BuyFileButton
+                                artifact={this.props.artifact}
+                                file={this.props.activeFile}
+                                setCurrentFile={this.props.setCurrentFile}
+                                buyInProgress={this.props.buyInProgress}
+                                buyError={this.props.buyError}
+                                buyFile={this.props.buyFile}
+                            />
+
 						<a href=""><p style={{margin: "75px 0px -75px 0px", color:"#fff", textDecoration: "underline"}}>How does this work? <span className="icon icon-help-with-circle"></span></p></a>
 					</div>
 				</div>
 			</div>
-		);
+		)
 	}
 }
 
-/*
-<div className="col-5">
-	<button className="btn btn-outline-success" style={{float:"right", marginLeft: "25px", marginRight: "-25px", padding: "5px"}} onclick="unlockContent()"><span className="icon icon-wallet"	style={{marginRight: "5px"}}></span>Pay 3 bits</button>
-</div>
-<div className="col-2" style={{paddingTop: "5px"}}>
-	or
-</div>
-<div className="col-5">
-	<button className="btn btn-outline-danger" style={{float:"left", marginRight: "25px", marginLeft: "-25px", padding: "5px"}}><span className="icon icon-controller-play" style={{marginRight: "0px"}}></span>Watch an Ad</button>
-</div>
-*/
+Paywall.propTypes = {
+    activeFile: PropTypes.object,
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    setCurrentFile: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
+}
 
 export default Paywall;

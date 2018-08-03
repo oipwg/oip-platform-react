@@ -8,8 +8,9 @@
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <!--@TODO add manifest and favicon-->
+    <!--<link rel="manifest" href="%PUBLIC_URL%/manifest.json">-->
+    <!--<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">-->
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -19,17 +20,18 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Alexandria.io</title>
+    <title>OIP</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app. Sorry!
     </noscript>
     <div id="root"></div>
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <svg display="none" xmlns="http://www.w3.org/2000/svg" version="1.1">
   <defs>
     <filter id="goo">
       <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
@@ -60,5 +62,5 @@
 		var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); })();
     }
 	</script>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </html>

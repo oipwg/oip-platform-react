@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import Identicons from 'identicons-react';
 import moment from 'moment'
 
 class IssoComment extends Component {
@@ -16,7 +15,7 @@ class IssoComment extends Component {
 		return (
 			<div className={this.props.comment.likes === 0 ? "isso-comment isso-no-votes" : "isso-comment"}>
 				<div className="avatar">
-					<Identicons id={this.props.comment.author ? this.props.comment.author : this.props.comment.hash} width={48} size={5} />
+					<h1>FA5 ICO</h1>
 				</div>
 				<div className="text-wrapper">
 					<div className="isso-comment-header">

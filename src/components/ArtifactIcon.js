@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ArtifactIcon extends Component {
-	render() {
+const ArtifactIcon = (props) => {
 		var paid = false, type, icon;
 
-		if (this.props.artifact){
-			paid = this.props.artifact.isPaid();
-			type = this.props.artifact.getType();
+		if (props.artifact){
+			paid = props.artifact.isPaid();
+			type = props.artifact.getType();
 		}
 
 		switch(type){
@@ -40,12 +39,12 @@ class ArtifactIcon extends Component {
 		}
 
 		return (
-			<div style={{display: "inline"}}>
+			<div className="artifact-icon" >
 				{ paid ? <span className="icon icon-credit" style={{color: "rgb(63, 255, 63)"}}></span> : ''}
 				<span className={"icon icon-" + icon}></span>
 			</div>
 		);
-	}
+
 }
 
 export default ArtifactIcon;

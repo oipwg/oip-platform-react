@@ -1,28 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import ContentCard from './contentCard.js'
+import ContentCard from './ContentCard.js'
 
-class ContentCardsContainer extends Component {
-	render() {
-		let _this = this;
+const ContentCardsContainer = (props) => {
+    let contentLoaded = (props.content !== undefined)
+    return <div className="content-cards-container container-fluid mt-4">
+        <div className="margin-container mx-5">
+            <div className="content-cards-container-header mb-4 ">
+                <span className="content-cards-container-title">
+                    {props.title}
+                </span>
+            </div>
 
-		return (
-			<div className="container" style={{marginTop: "100px", marginBottom:"200px"}}>
-				<h4 style={{marginBottom: "25px"}}>{this.props.title}</h4>
-				{this.props.opts.isFetching ? <p>Loading...</p> : ""}
-				{this.props.opts.error ? <p>Oops! Looks like something went wrong...</p> : ""}
-				<div className="row">
-					{(this.props.opts.items && this.props.opts.items.length > 0) ? this.props.opts.items.map(function(artifact, i){
-						return <ContentCard 
-								key = {i}
-								artifact = {artifact}
-								Core = {_this.props.Core}
-							/>
-					}) : ""}
-				</div>
-			</div>
-		);
-	}
-}
+            {contentLoaded ? (props.content.isFetching ? <p>Loading...</p> : "") : null}
+            {contentLoaded ? (props.content.error ? <p>Oops! Looks like something went wrong... Try refreshing!</p> : "") : null}
+            {contentLoaded ? (!props.content.isFetching && props.content.items.length === 0 && !props.content.error ? <h6>No results found</h6> : (null) ) : (null)}
+
+            {/*@ToDo::Consider removing justify-content-between for publisher page and like*/}
+            <div className="content-cards row no-gutters d-flex justify-content-between">
+                { contentLoaded && !props.content.error && !props.content.isFetching ? (
+                    props.content.items.map((artifact, i) => {
+                    return <ContentCard
+                        key={i}
+                        artifact={artifact}
+                        styleContentCard={"large"}
+                    />
+                })) : (null) }
+            </div>
+        </div>
+    </div>
+};
 
 export default ContentCardsContainer;

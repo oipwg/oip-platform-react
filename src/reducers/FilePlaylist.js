@@ -1,4 +1,4 @@
-import * as actions from '../actions'
+import * as actions from '../actions/FilePlaylist/actions'
 
 const file = (state = {
 	owned: false,
@@ -14,7 +14,7 @@ const file = (state = {
 	isSeekable: false,
 	duration: 0,
 	currentTime: 0,
-	info: {}
+	info: undefined
 }, action) => {
 	switch (action.type) {
 		case actions.ADD_FILE_TO_PLAYLIST:
@@ -96,7 +96,7 @@ const file = (state = {
 	}
 }
 
-export const FilePlaylist = (state = { }, action) => {
+export const FilePlaylist = (state = {}, action) => {
 	switch (action.type) {
 		case actions.ADD_FILE_TO_PLAYLIST:
 		case actions.PAY_FOR_FILE:

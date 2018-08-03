@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import IssoComment from './IssoComment.js'
 
@@ -11,39 +12,26 @@ class IssoComments extends Component {
 		this.state = {
 			comments: []
 		}
-
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
-
-		let comments = newState.CurrentArtifact.comments;
-
-		if (!comments)
+    static getDerivedStateFromProps(nextProps) {
+        let comments = nextProps.comments;
+		if (!comments) {
 			comments = []
+		}
 
 		comments.sort((a,b) => {
-			if (a.created > b.created){
+			if (a.created > b.created) {
 				return -1;
 			} else {
-				return 1;
+				return 1
 			}
 		})
+        return {
+        	comments: comments,
+            txid: nextProps.artifact.txid
+        }
+    }
 
-		this.setState({comments: comments});
-	}
-	componentDidMount(){
-		this.stateDidUpdate();
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
 	render() {
 		return (
 			<div id="isso-root">
@@ -53,6 +41,12 @@ class IssoComments extends Component {
 			</div>
 		);
 	}
+}
+
+IssoComment.propTypes = {
+    artifact: PropTypes.object,
+    artifactState: PropTypes.object,
+    comments: PropTypes.array
 }
 
 export default IssoComments;

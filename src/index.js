@@ -1,16 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import { createStore, applyMiddleware } from 'redux'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-
-import createHistory from 'history/createBrowserHistory'
-
-import { routerReducer, routerMiddleware } from 'react-router-redux'
 import { combineReducers } from 'redux'
-import reducers from './reducers'
 
+import reducers from './reducers'
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -19,17 +14,21 @@ const logger = createLogger({
     collapsed: true
 });
 
-const history = createHistory()
+let middleware = [ logger, thunk ];
 
-let middleware = [ logger, thunk, routerMiddleware(history) ];
+const composeEnhancers =
+    typeof window === 'object' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+            name: "Alexandria React"
+        }) : compose;
 
-reducers.router = routerReducer;
+const enhancer = composeEnhancers(
+    applyMiddleware(...middleware),
+    // other store enhancers if any
+);
+export const store = createStore(combineReducers(reducers), enhancer);
 
-let store = createStore(
-  combineReducers(reducers),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({name: "Alexandria React"}),
-  applyMiddleware(...middleware)
-)
 
 ReactDOM.render(
     	<App store={store} />,
@@ -37,3 +36,4 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
+

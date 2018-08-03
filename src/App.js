@@ -2,37 +2,45 @@
 import React, { Component } from 'react';
 
 import {
-	BrowserRouter as Router,
-	Route,
-	Switch
+    Route,
+    Switch,
+	Redirect
 } from 'react-router-dom'
+
+import { connect } from 'react-redux';
+import "babel-polyfill";
+
+import {accountLogin} from "./actions/User/thunks";
+import {setNotificationSystem} from "./actions/NotificationSystem/actions";
+
 import { CSSTransitionGroup } from 'react-transition-group'
 
 import createBrowserHistory from 'history/createBrowserHistory'
-import { ConnectedRouter, push } from 'react-router-redux'
+import { ConnectedRouter } from 'react-router-redux'
 import { Provider } from 'react-redux'
 
-import PiwikReactRouter from 'piwik-react-router';
-
-import NotificationSystem from 'react-notification-system';
-
-import { OIPJS } from 'oip-js';
-
-import { setupWalletEvents, login } from './actions';
+// import NotificationSystem from 'react-notification-system';
 
 // Import Boostrap v4.0.0-alpha.6
 import 'bootstrap/dist/css/bootstrap.css';
 // Import custom entypo css class & Alexandria css class
 import './assets/css/entypo.css';
 import './assets/css/alexandria.css';
+
 // Import Bootstrap 4 JS
+import 'jquery/dist/jquery';
+import 'popper.js/dist/umd/popper';
 import 'bootstrap/dist/js/bootstrap.js';
+// Import custom CSS to override Bootstrap
+import './assets/css/custom.css';
+// Import Font Awesome 5 SVG
+import './assets/js/fontawesome-all.min';
 
-import Navbar from './components/navbar.js';
+import Navbar from './components/Navbar.js';
 
-import Homepage from './components/homepage.js';
-import MiniMusicPlayer from './components/miniMusicPlayer.js';
-import ContentPage from './components/contentPage.js';
+import Homepage from './components/Homepage.js';
+import MiniMusicPlayer from './components/MiniMusicPlayer.js';
+import ContentPageWrapper from './components/ContentPageWrapper.js';
 import PublisherPage from './components/PublisherPage.js';
 import UserPage from './components/UserPage.js';
 
@@ -47,54 +55,27 @@ import LoginPrompt from './components/LoginPrompt.js'
 import SwapPrompt from './components/SwapPrompt.js'
 import BuyPrompt from './components/BuyPrompt.js'
 import DailyFaucetPrompt from './components/DailyFaucetPrompt.js';
-
-const piwik = PiwikReactRouter({
-	url: 'piwik.alexandria.io',
-	siteId: 1
-})
+import Account from "oip-account";
 
 const history = createBrowserHistory()
 
-const PUBLIC_URL = process.env.PUBLIC_URL;
-
-var Core = OIPJS({
-	runIPFSJS: true,
-	IPFSGatewayURL: "https://ipfs.oip.fun/ipfs/"
-})
-
 class App extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			NotificationSystem: undefined
-		};
-	}
 
 	componentDidMount(){
-		this.props.store.dispatch(setupWalletEvents(Core));
-
+        // this.props.setNotificationSystem(this.refs.NotificationSystem);
 		try {
-			if (localStorage.username && localStorage.pw){
-				this.props.store.dispatch(login(Core, localStorage.username, localStorage.pw));
+			if (localStorage && localStorage.username && localStorage.pw){
+			    this.props.accountLogin(localStorage.username, localStorage.pw, {discover: false, autoLogin: true})
 			}
 		} catch (e) {}
-
-		this.setState({NotificationSystem: this.refs.NotificationSystem})
-	}
-	componentWillUnmount() {
 
 	}
 
 	render() {
-		const supportsHistory = 'pushState' in window.history;
-
-		piwik.connectToHistory(history);
-
-		return (
+        return (
 			<Provider store={this.props.store}>
-				<ConnectedRouter history={history}>
-					<div>
+				<ConnectedRouter history={this.props.piwik.connectToHistory(history)}>
+					<div className="App">
 						{/* This is to add transitions to the app, fade, etc. */}
 						<CSSTransitionGroup
 							transitionName="fade"
@@ -102,41 +83,35 @@ class App extends Component {
 							transitionLeaveTimeout={300}
 						/>
 
-						{/* Include all components that need to be rendered above the main container content */}
-						<Navbar
-							Core={Core}
-							store={this.props.store}
-						/>
-						
-						<LoginPrompt Core={Core} store={this.props.store} />
-						<DailyFaucetPrompt Core={Core} store={this.props.store} />
-						<SwapPrompt Core={Core} store={this.props.store} />
-						<BuyPrompt Core={Core} store={this.props.store} />
-						<NotificationSystem ref="NotificationSystem" />
+						{/*/!* Include all components that need to be rendered above the main container content *!/*/}
+						<Navbar />
+
+                        {/*LoginPrompt is causing react-warning-keys*/}
+                        <LoginPrompt />
+						{/*<DailyFaucetPrompt />*/}
+						<SwapPrompt />
+						<BuyPrompt />
+                        {/*NotificationSysten is causing react-warning-keys*/}
+						{/*<NotificationSystem ref="NotificationSystem" />*/}
 
 						{/* Include all components that need to be rendered in the main container content */}
-						<Switch>
-							<Route exact path="/" render={props => <Homepage Core={Core} store={this.props.store} {...props} />} />
+						<div className="Main">
+                            <Switch>
+                                <Route exact path="/" component={Homepage} />
+                                <Route exact path="/login" component={LoginPage} />
+                                <Route path="/dmca" component={DMCAForm} />
+                                <Route path="/register" component={RegisterPage} />
+                                <Route path="/search/:id" render={props => <SearchPage  {...props} />} />
+                                <Route path="/pub/:id" render={props => <PublisherPage {...props} />} />
+                                <Route path="/user/:page" render={props => ( this.props.User.isLoggedIn ? ( <UserPage wallet={this.props.Wallet} {...props} /> ) : ( <Redirect to="/"/> ))} />
+								<Route path="/user/:page/:type" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
+								<Route path="/user/:page/:type/:id" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
+                                <Route path="/:id" render={props => <ContentPageWrapper {...props} />}/>
 
-							<Route path="/login" render={props => <LoginPage Core={Core} store={this.props.store} {...props} />} />
-							<Route path="/register" render={props => <RegisterPage Core={Core} store={this.props.store} {...props} />} />
-							<Route path="/dmca" component={DMCAForm} />
-
-							<Route path="/pub/:id" render={props => <PublisherPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-
-							<Route path="/search/:id" render={props => <SearchPage Core={Core} store={this.props.store} {...props} />} />
-
-							<Route path="/user/:page/:type/:id" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-							<Route path="/user/:page/:type" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-							<Route path="/user/:page" render={props => <UserPage Core={Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} {...props} />} />
-
-							<Route path="/:id" render={props =>
-								<ContentPage Core={Core} store={this.props.store} {...props} piwik={piwik} NotificationSystem={this.state.NotificationSystem} />}
-							/>
-
-							{/* The switch will render the last Route if no others are found (aka 404 page.) */}
-							<Route component={NoMatch} />
-						</Switch>
+                                {/* The switch will render the last Route if no others are found (aka 404 page.) */}
+                                <Route component={NoMatch} />
+                            </Switch>
+						</div>
 
 						{/* Include all components that need to be rendered after the main container content */}
 						<MiniMusicPlayer display="false" />
@@ -154,4 +129,19 @@ const NoMatch = ({ match }) => (
 	</div>
 )
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        state: state,
+        User: state.User,
+        NotificationSystem: state.NotificationSystem.NotificationSystem,
+		piwik: state.Piwik.piwik,
+        Wallet: state.Wallet
+    }
+}
+
+const mapDispatchToProps = {
+    setNotificationSystem,
+    accountLogin
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 
-import { setTryFaucet, faucetPrompt } from '../actions';
+import {setTryFaucet, faucetPrompt} from '../actions/Wallet/actions';
 
 import DailyFaucetBlock from './DailyFaucetBlock.js';
+import {connect} from "react-redux";
 
 class DailyFaucetPrompt extends Component {
 	constructor(props){
@@ -14,50 +15,38 @@ class DailyFaucetPrompt extends Component {
 			showPrompt: false
 		}
 
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
 		this.togglePrompt = this.togglePrompt.bind(this);
 		this.onFaucetReceive = this.onFaucetReceive.bind(this);
 		this.onFaucetCancel = this.onFaucetCancel.bind(this);
 
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let showPrompt = newState.Wallet.dailyFaucetPrompt;
-		this.setState({showPrompt: showPrompt});
-	}
 	componentDidMount(){
-		this.stateDidUpdate();
+        // let showPrompt = @ToDo.dailyFaucetPrompt;
+        this.setState({showPrompt: showPrompt});
 	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
+
 	togglePrompt(){
 		this.setState({showPrompt: !this.state.showPrompt})
 	}
 	onFaucetReceive(){
-		this.props.store.dispatch(faucetPrompt(false));
-		this.props.store.dispatch(setTryFaucet(false));
+		this.props.faucetPrompt(false);
+		this.props.setTryFaucet(false);
 		this.setState({showPrompt: false})
 	}
 	onFaucetCancel(){
-		this.props.store.dispatch(faucetPrompt(false));
-		this.props.store.dispatch(setTryFaucet(false));
+		this.props.faucetPrompt(false);
+		this.props.setTryFaucet(false);
 		this.setState({showPrompt: false})
 	}
-	render() {
 
+	render() {
 		return (
 			<div>
 				{this.state.showPrompt ? 
 				<Modal isOpen={this.state.showPrompt} toggle={this.togglePrompt} className={this.props.className}>
 					<ModalBody style={{margin: "auto", width: "90%"}} className="text-center">
-						<DailyFaucetBlock Core={this.props.Core} store={this.props.store} onFaucetReceive={this.onFaucetReceive} onFaucetCancel={this.onFaucetCancel} />
+						<DailyFaucetBlock onFaucetReceive={this.onFaucetReceive} onFaucetCancel={this.onFaucetCancel} />
 					</ModalBody>
 				</Modal> 
 				: 
@@ -67,4 +56,9 @@ class DailyFaucetPrompt extends Component {
 	}
 }
 
-export default DailyFaucetPrompt;
+const mapDispatchToProps = {
+    setTryFaucet,
+	faucetPrompt
+}
+
+export default connect(null, mapDispatchToProps)(DailyFaucetPrompt);

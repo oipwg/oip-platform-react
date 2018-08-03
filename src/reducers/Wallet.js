@@ -1,30 +1,4 @@
-import * as actions from '../actions'
-
-const Coin = (state = {
-	balance: 0,
-	usd: 0,
-	addresses: []
-}, action) => {
-	switch (action.type){
-		case actions.UPDATE_BALANCE:
-			return {
-				...state,
-				balance: action.balance
-			}
-		case actions.UPDATE_USD:
-			return {
-				...state,
-				usd: action.usd
-			}
-		case actions.UPDATE_ADDRESSES:
-			return {
-				...state,
-				addresses: action.addresses
-			}
-		default:
-			return state
-	}
-}
+import * as actions from '../actions/Wallet/actions'
 
 export const Wallet = (state = {
 	swapPrompt: false,
@@ -33,13 +7,26 @@ export const Wallet = (state = {
 	tryFaucet: true
 }, action) => {
 	switch (action.type) {
-		case actions.UPDATE_BALANCE:
-		case actions.UPDATE_ADDRESSES:
-		case actions.UPDATE_USD:
-			return {
-				...state,
-				[action.coin]: Coin(state[action.coin], action)
-			}
+        case actions.SET_CRYPTO_BALANCES:
+            return {
+                ...state,
+                cryptoBalances: action.balances
+            }
+        case actions.ERROR_FETCHING_BALANCE:
+            return {
+                ...state,
+                errorFetchingBalance: action.err
+            }
+        case actions.SET_MNEMONIC:
+            return {
+                ...state,
+                mnemonic: action.mem
+            }
+        case actions.SET_WALLET:
+            return {
+                ...state,
+                wallet: action.wallet
+            }
 		case actions.PROMPT_SWAP:
 			return {
 				...state,
@@ -60,9 +47,13 @@ export const Wallet = (state = {
 				...state,
 				tryFaucet: action.tryFaucet
 			}
-		case actions.PROMPT_BUY:
 		case actions.UPDATE_WALLET:
 			return action.walletState
+		case actions.SET_WALLET_ADDRESSES:
+			return {
+				...state,
+				addresses: action.addresses
+			}
 		default:
 			return state
 	}

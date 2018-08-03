@@ -27,30 +27,15 @@ class PublisherIcon extends Component {
 			this.updateAvatar(nextProps)
 	}
 	updateAvatar(props){
-		if (!props.id || !props.Core)
+		if (!props.id)
 			return;
 
 		this.setDiceBearAvatar(props)
-
-		var _this = this;
-
-		props.Core.Index.getPublisher(props.id, (success) => {
-			if (success.emailmd5 && success.emailmd5 !== ""){
-				_this.image.onerror = (error) => {
-					_this.image.onerror = () => {};
-
-					_this.setDiceBearAvatar(props);
-				}
-
-				_this.setState({avatarSrc: "https://www.gravatar.com/avatar/" + success.emailmd5 + "?s=200&r=pg&d=404"});
-			}
-		}, (error) => {  });
 	}
 	setDiceBearAvatar(props){
 		if (!props.id)
 			return
 
-		var size = props.small ? 64 : 200;
 		var randomTrueFalse = isNaN(props.id.slice(17,18));
 		var gender = randomTrueFalse ? "male" : "female";
 
@@ -59,10 +44,11 @@ class PublisherIcon extends Component {
 		})
 	}
 	render() {
-		return (
-			<div style={this.props.style} className="userImage">
-				<img ref={image => this.image = image} style={this.props.style} src={this.state.avatarSrc} />
-			</div>
+		return (<img style={{width: this.props.width, maxWidth: this.props.maxWidth, height: this.props.height, maxHeight: this.props.maxHeight}}
+					 className={ this.props.className ? this.props.className + " border-0 publisher-image" : "border-0 publisher-image"}
+                     ref={image => this.image = image}
+                     src={this.state.avatarSrc}
+                     alt="Pub Icon" />
 		);
 	}
 }

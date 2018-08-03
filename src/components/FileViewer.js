@@ -1,60 +1,66 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import AudioContainer from './audioContainer.js';
-import VideoPlayer from './videoPlayer.js';
-import ImageContainer from './imageContainer.js';
+import AudioContainer from './AudioContainer.js';
+import VideoPlayer from './VideoPlayer.js';
+import ImageContainer from './ImageContainer.js';
 import ViewerJSPlayer from './ViewerJSPlayer.js';
-import MarkdownContainer from './markdownContainer.js';
-import HTMLContainer from './htmlContainer.js';
-import CodeContainer from './codeContainer.js';
-import STLContainer from './stlContainer.js';
+import HTMLContainer from './HtmlContainer.js';
+import CodeContainer from './CodeContainer.js';
+import STLContainer from './StlContainer.js';
+import MarkdownContainer from './MarkdownContainer';
+import TextViewer from './TextViewer';
 
 var PLAYERS = [
 	AudioContainer, 
 	VideoPlayer, 
 	ImageContainer, 
 	ViewerJSPlayer,
-	MarkdownContainer,
-	HTMLContainer, 
+	HTMLContainer,
 	CodeContainer,
-	STLContainer
+	STLContainer,
+	MarkdownContainer,
+    TextViewer
 ];
 
 class FileViewer extends Component {
 	constructor(props){
 		super(props);
 
-		this.state = {
-			ActiveFile: {}
-		};
-
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
+		this.buildIPFSShortURL = this.buildIPFSShortURL.bind(this);
+		this.buildIPFSURL = this.buildIPFSURL.bind(this);
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let CurrentArtifact = newState.CurrentArtifact;
-		let active = newState.FilePlaylist.active;
-		let currentFile = newState.FilePlaylist[active];
+    buildIPFSShortURL(location, fileName) {
+        if (!location || !fileName)
+            return "";
 
-		if (currentFile && this.state !== currentFile){
-			this.setState({CurrentArtifact: CurrentArtifact, ActiveFile: currentFile});
-		}
-	}
-	componentWillUnmount(){
-		this.unsubscribe();
-	}
+        return location + "/" + fileName;
+    }
+
+    buildIPFSURL(hash, fname) {
+        let trailURL = "";
+        if (!fname) {
+            let parts = hash.split('/');
+            if (parts.length == 2) {
+                trailURL = parts[0] + "/" + encodeURIComponent(parts[1]);
+            } else {
+                trailURL = hash;
+            }
+        } else {
+            trailURL = hash + "/" + encodeURIComponent(fname);
+        }
+        return "https://gateway.ipfs.io/ipfs/" + trailURL;
+    }
+
 	render() {
 		let extension, fileViewerComponent;
 
-		if (this.state.ActiveFile.info && this.state.ActiveFile.info.getFilename()){
-			extension = this.props.Core.util.getExtension(this.state.ActiveFile.info.getFilename()).toLowerCase();
+		if (this.props.activeFile && this.props.activeFile.info && this.props.activeFile.info.getFilename()){
+            let splitFilename = this.props.activeFile.info.getFilename().split(".");
+            let indexToGrab = splitFilename.length - 1;
+
+            extension = splitFilename[indexToGrab].toLowerCase();
 		}
 
 		if (extension){
@@ -62,7 +68,34 @@ class FileViewer extends Component {
 				if (Player.SUPPORTED_FILE_TYPES){
 					for (var SupportedFileType of Player.SUPPORTED_FILE_TYPES){
 						if (extension === SupportedFileType){
-							fileViewerComponent = React.createElement(Player, {Core: this.props.Core, store: this.props.store})
+							fileViewerComponent = React.createElement(Player,
+								{
+								    artifact: this.props.artifact,
+									activeFile: this.props.activeFile,
+                                    buildIPFSShortURL: this.buildIPFSShortURL,
+                                    buildIPFSURL: this.buildIPFSURL,
+                                    // For AudioContainer
+                                    volumeControls: this.props.volumeControls,
+									filePlaylist: this.props.filePlaylist,
+									active: this.props.active,
+									// Dispatch function for AudioContainer
+									updateFileCurrentTime: this.props.updateFileCurrentTime,
+									isPlayableFile: this.props.isPlayableFile,
+									isSeekableFile: this.props.isSeekableFile,
+									updateFileDuration: this.props.updateFileDuration,
+									setVolume: this.props.setVolume,
+									setMute: this.props.setMute,
+									playlistNext: this.props.playlistNext,
+									isPlayingFile: this.props.isPlayingFile,
+                                    setCurrentFile: this.props.setCurrentFile,
+                                    // For Payment Buttons
+                                    buyInProgress: this.props.buyInProgress,
+                                    buyError: this.props.buyError,
+                                    paymentError: this.props.paymentError,
+                                    paymentInProgress: this.props.paymentInProgress,
+                                    payForFile: this.props.payForFile,
+                                    buyFile: this.props.buyFile
+								})
 						}
 					}
 				}
@@ -76,5 +109,28 @@ class FileViewer extends Component {
 		return fileViewerComponent;
 	}
 }
+
+FileViewer.propTypes = {
+    artifact: PropTypes.object,
+    activeFile: PropTypes.object,
+    volumeControls: PropTypes.object,
+    filePlaylist: PropTypes.object,
+    active: PropTypes.string,
+    updateFileCurrentTime: PropTypes.func,
+    isPlayableFile: PropTypes.func,
+    isSeekableFile: PropTypes.func,
+    updateFileDuration: PropTypes.func,
+    setVolume: PropTypes.func,
+    setMute: PropTypes.func,
+    playlistNext: PropTypes.func,
+    isPlayingFile: PropTypes.func,
+    setCurrentFile: PropTypes.func,
+    buyInProgress: PropTypes.func,
+    buyError: PropTypes.func,
+    paymentError: PropTypes.func,
+    paymentInProgress: PropTypes.func,
+    payForFile: PropTypes.func,
+    buyFile: PropTypes.func
+};
 
 export default FileViewer;

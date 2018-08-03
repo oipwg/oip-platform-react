@@ -31,10 +31,11 @@ class TipButtons extends Component {
 				<Popover placement="top" isOpen={this.state.popoverOpen} target="TipPopover" toggle={this.toggle}>
 					<PopoverHeader style={{textAlign: "center"}}>Send Tip</PopoverHeader>
 					<PopoverBody>
-						<TipButton amount={0.001} fiat={"USD"} artifact={this.props.artifact} Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
-						<TipButton amount={0.01} fiat={"USD"} artifact={this.props.artifact} Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
-						<TipButton amount={0.10} fiat={"USD"} artifact={this.props.artifact} Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
-						<TipButton type={"custom"} artifact={this.props.artifact} Core={this.props.Core} store={this.props.store} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
+						{/*pass in functions from Core?*/}
+						<TipButton amount={0.001} fiat={"USD"} artifact={this.props.artifact} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
+						<TipButton amount={0.01} fiat={"USD"} artifact={this.props.artifact} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
+						<TipButton amount={0.10} fiat={"USD"} artifact={this.props.artifact} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
+						<TipButton type={"custom"} artifact={this.props.artifact} piwik={this.props.piwik} NotificationSystem={this.props.NotificationSystem} />
 					</PopoverBody>
 				</Popover>
 			</div>

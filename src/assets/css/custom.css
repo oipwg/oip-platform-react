@@ -1,0 +1,14 @@
+html, body, #root, #root>div, #root>div>.Main {
+    height: 100%
+}
+.navbar-header {
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.07);
+}
+.navbar-brand-img {
+    height: 32px;
+    margin: auto;
+}
+.ProgressBar-elapsed {
+    transition: width 0.5s linear;
+}
+

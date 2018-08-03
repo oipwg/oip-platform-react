@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
-
-import { tipFunc } from '../actions'
 
 class TipButton extends Component {
 	constructor(props){
@@ -32,16 +29,15 @@ class TipButton extends Component {
 			else if (this.props.amount)
 				amount = this.props.amount
 
-			this.props.store.dispatch(tipFunc(this.props.Core, this.props.artifact, amount, this.props.piwik, this.props.NotificationSystem, function(success){
-				_this.setState({tipping: false, tipSuccess: true, tipError: false});
-			}, function(error){
-				_this.setState({tipping: false, tipSuccess: false, tipError: true});
-				console.error(error);
-			}));
+            //@TODO Tip
 		}
 	}
 	render() {
-		let text = this.props.amount ? "$" + this.props.Core.util.createPriceString(this.props.amount) : "Other";
+
+		// let text = this.props.amount ? "$" + @ToDo.util.createPriceString(this.props.amount) : "Other";
+		//temporary
+		let text = "Other";
+
 		let color = "success";
 
 		if (this.state.tipping){
@@ -60,7 +56,11 @@ class TipButton extends Component {
 		}
 
 		return (
-			<button className={"btn-margin-right btn btn-sm btn-outline-" + color} onClick={this.tip}>{this.state.customStart ? "" : <span className="fa fa-send-o"></span>} {this.state.customStart ? <input ref="custom" type="number" style={{width: "30px"}} /> : text}{this.state.customStart ? <span className="fa fa-send-o"></span> : ""}</button>
+			<button
+				className={"btn-margin-right btn btn-sm btn-outline-" + color}
+				onClick={this.tip}>{this.state.customStart ? "" : <span className="fa fa-send-o"></span>}
+				{this.state.customStart ? <input ref="custom" type="number" style={{width: "30px"}} /> : text}
+				{this.state.customStart ? <span className="fa fa-send-o"></span> : ""}</button>
 		);
 	}
 }

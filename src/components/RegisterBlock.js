@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-
-import {
-  Redirect
-} from 'react-router-dom'
-
-import { register } from '../actions';
-
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import validator from 'validator';
+
 
 import ButtonCheckbox from './ButtonCheckbox.js';
 import ReCAPTCHA from 'react-google-recaptcha';
+import {createAccount} from "../actions/User/thunks";
+import {resetRegisterState} from "../actions/User/actions";
+
+import RegisterErrorModal from "./RegisterErrorModal";
 
 const STATUS = { 
 	NO_INPUT: "NO_INPUT",
@@ -50,7 +50,10 @@ class RegisterBlock extends Component {
 			passwordConfirm: "",
 			recaptcha: "",
 			registrationStatus: STATUS.WAITING,
-			redirectToLogin: false
+			redirectToLogin: false,
+            redirectToHome: false,
+            store_in_keystore: false,
+            keystore_url: "https://mk1.alexandria.io/keystore/"
 		}
 
 		this.register = this.register.bind(this);
@@ -61,31 +64,28 @@ class RegisterBlock extends Component {
 		this.updateVerify = this.updateVerify.bind(this);
 		this.recaptcha = this.recaptcha.bind(this);
 		this.loginClick = this.loginClick.bind(this);
-		this.stateDidUpdate = this.stateDidUpdate.bind(this);
-
-		let _this = this;
-
-		this.unsubscribe = this.props.store.subscribe(() => {
-			_this.stateDidUpdate();
-		});
+		this.handleStorageClick = this.handleStorageClick.bind(this)
+        this.toggleErrorModal = this.toggleErrorModal.bind(this)
 	}
-	stateDidUpdate(){
-		let newState = this.props.store.getState();
 
-		let User = newState.User;
-
-		this.setState({
-			User
-		});
-	}
 	componentWillUnmount(){
-		this.unsubscribe();
 		this.showRecaptcha = false;
 	}
 	componentDidMount(){
-		this.stateDidUpdate();
+        this.setState({ User: this.props.User });
 		this.showRecaptcha = true;
 	}
+
+	toggleErrorModal() {
+	    this.props.resetRegisterState()
+        this.username.value= ""
+        this.email.value = ""
+        this.setState({recaptcha: ""})
+    }
+
+	handleStorageClick(e) {
+            this.setState({store_in_keystore: ((e.target.name === "keystore"))})
+    }
 	register(){
 		this.setState({registrationStatus: STATUS.PENDING});
 
@@ -120,23 +120,10 @@ class RegisterBlock extends Component {
 		// If we are not ready, abort.
 		if (abort){
 			this.setState({registrationStatus: STATUS.WAITING});
-			return;
 		}
 
-		// If we are ready, go ahead and start the registration process.
-
-		this.props.store.dispatch(register(this.props.Core, this.state.username, this.state.email, this.state.password, this.state.recaptcha, (success) => {
-			console.log(success);
-			this.setState({registrationStatus: STATUS.SUCCESS});
-		}, (error) => {
-			this.setState({registrationStatus: STATUS.ERROR});
-			console.log(error)
-		}));
-
-		try {
-			localStorage.setItem("username", this.state.email);
-			localStorage.setItem("pw", this.state.password);
-		} catch (e) {}
+        this.props.createAccount(this.state.email, this.state.password,
+            {store_in_keystore: this.state.store_in_keystore, keystore_url: this.state.keystore_url, discover: false})
 
 	}
 	updateUsername(){
@@ -224,26 +211,24 @@ class RegisterBlock extends Component {
 			this.setState({recaptcha: response, recaptchaState: STATUS.INVALID})
 	}
 	loginClick(){
-		if (this.props.onLoginClick){
-			this.props.onLoginClick();
-		} else {
-			this.setState({redirectToLogin: true});
-		}
+       this.setState({redirectToLogin: true})
 	}
 	render() {
 		var RegisterBtnTxt = "Register";
 
-		if (this.state.registrationStatus === STATUS.PENDING){
+		if (this.props.User.registerStart){
 			RegisterBtnTxt = "Registering..."
-		} else if (this.state.registrationStatus === STATUS.SUCCESS){
+		} else if (this.props.User.registerSuccess){
 			RegisterBtnTxt = "Register Success!"
-		} else if (this.state.registrationStatus === STATUS.ERROR){
+		} else if (this.props.User.registerError){
 			RegisterBtnTxt = "Register Error!"
 		}
 		return (
 	    	<div>
-				<h2>Please Register</h2>
-				<hr className="colorgraph" />
+                {this.props.User.isLoggedIn ? <Redirect to="/" push /> : ""}
+                {this.state.redirectToLogin ? <Redirect to="/login" push /> : ""}
+                <h2>Please Register</h2>
+				<hr className="" />
 				<div className="form-group">
 					<input ref={username => this.username = username} onInput={this.updateUsername} type="text" className={"form-control input-lg" + (this.state.usernameState === STATUS.INVALID ? " is-invalid" : "") + (this.state.usernameState === STATUS.VALID ? " is-valid" : "")} placeholder="Username*" tabIndex="1" />
 					{this.state.usernameState === STATUS.INVALID ? <div className="invalid-feedback" id="feedback_username">
@@ -312,6 +297,10 @@ class RegisterBlock extends Component {
 						</div> : ""}
 					</div>
 				</div>
+                <div className="row d-flex justify-content-center">
+                    <button name="local" type="button" onClick={this.handleStorageClick} className={"btn btn" + (this.state.store_in_keystore ? "-outline-success" : "-success") + " btn-sm m-2"}>Store locally</button>
+                    <button name="keystore" type="button" onClick={this.handleStorageClick} className={"btn btn" + (this.state.store_in_keystore ? "-info" : "-outline-info") + " btn-sm m-2"}>Store in keystore</button>
+                </div>
 				<div className="row">
 					<div className="col-12 text-center" style={{fontSize: "13.5px", padding: "0px"}}>
 						<p>
@@ -319,7 +308,7 @@ class RegisterBlock extends Component {
 							<br />
 							<strong>Password recovery is NOT possible</strong>
 							<br />
-							(passwords never touch our servers)
+							(We never see your password!)
 						</p>
 					</div>
 					<div className="col-12" style={{margin: "0px 0px"}}>
@@ -334,7 +323,7 @@ class RegisterBlock extends Component {
 				<div className="row">
 					<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}>
 						{this.showRecaptcha ? <ReCAPTCHA sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" onChange={this.recaptcha} /> : ""}
-						{this.state.recaptchaState === STATUS.INVALID ? 
+						{this.state.recaptchaState === STATUS.INVALID ?
 							<p style={{color: "#dc3545", fontSize: "13.5px", marginTop: "5px", marginBottom: "0px"}}>Your recaptcha is invalid!</p>
 							: ""}
 					</div>
@@ -345,15 +334,26 @@ class RegisterBlock extends Component {
 						By <strong>Registering</strong>, you agree to the <a href="/terms_and_conditions" data-toggle="modal" data-target="#t_and_c_m" data-ytta-id="-">Terms and Conditions</a>, including our Cookie Use.<p></p>
 					</div>
 				</div>
-				<hr className="colorgraph" />
+				<hr className="" />
+                <RegisterErrorModal isOpen={this.props.User.registerError} errMessage={this.props.User.registerErrorMessage} toggle={this.toggleErrorModal} />
 				<div className="row">
-					{this.state.redirectToLogin ? <Redirect to="/login" push /> : ""}
-					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-secondary btn-block btn-lg" onClick={this.loginClick}>Login</button></div>
-					<div className="col-xs-12 col-md-9 order-1 order-sm-2"><button id="register" className="btn btn-success btn-block btn-lg" onClick={this.register} tabIndex="5">{RegisterBtnTxt}</button></div>
+					<div className="col-xs-12 col-md-3 order-2 order-sm-1"><button className="btn btn-outline-primary btn-block btn-lg" onClick={this.props.modal ? this.props.onLoginClick : this.loginClick}>Login</button></div>
+					<div className="col-xs-12 col-md-9 order-1 order-sm-2"><button id="register" className={"btn btn" + (this.props.User.registerError ? "-danger" : "-success") + " btn-block btn-lg"} onClick={this.register} tabIndex="5">{RegisterBtnTxt}</button></div>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default RegisterBlock;
+const mapDispatchToProps = {
+    createAccount,
+    resetRegisterState
+};
+
+function mapStateToProps(state) {
+	return {
+        User: state.User,
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterBlock);

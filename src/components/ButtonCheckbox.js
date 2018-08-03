@@ -4,8 +4,8 @@ class ButtonCheckbox extends Component {
 	render() {
 		return (
 			<span className="button-checkbox">
-				<button style={this.props.style} type="button" className={"btn btn-" + (this.props.toggleState ? "" : "outline-") + (this.props.color ? this.props.color : "primary") + (this.props.toggleState ? "" : "")} onClick={this.props.onClick}>
-				<i className={"fa fa-" + (this.props.toggleState ? "check-square-o" : "square-o")} style={this.props.iconStyle}></i> {this.props.text}
+				<button type="button" className={"btn btn" + (this.props.toggleState ? "-success" : "-danger btn-outline-danger") } onClick={this.props.onClick}>
+				{this.props.text}
 			</button>
 			</span>
 		);

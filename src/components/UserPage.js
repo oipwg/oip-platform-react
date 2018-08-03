@@ -1,35 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import SidebarContainer from './sidebarContainer.js';
-import PublishContainer from './publishContainer.js';
-import MyArtifactsContainer from './myArtifactsContainer.js';
-import AnalyticsContainer from './analyticsContainer.js';
-import WalletContainer from './walletContainer.js';
-import SettingsContainer from './settingsContainer.js';
-import ViewArtifactContainer from './viewArtifactContainer.js';
-import EditArtifactContainer from './editArtifactContainer.js';
+import PublishContainer from './PublishContainer.js';
+import MyArtifactsContainer from './MyArtifactsContainer.js';
+import AnalyticsContainer from './AnalyticsContainer.js';
+import SettingsContainer from './SettingsContainer.js';
+import ViewArtifactContainer from './ViewArtifactContainer.js';
+import EditArtifactContainer from './EditArtifactContainer.js';
+import WalletWrapper from './WalletWrapper.js';
 
-class UserPage extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-
-		}
-	}
-	componentDidMount(){
-		
-	}
-	componentWillUnmount() {
-		
-	}
-	render() {
+const UserPage = (props) => {
 		return (
-			<SidebarContainer>
+			<div className="user-page-wrapper h-100">
 			{(() => {
-				switch(this.props.match.params.page){
+				switch(props.match.params.page){
 					case "artifacts":
-						switch(this.props.match.params.type){
+						switch(props.match.params.type){
 							case 'view':
 								return <ViewArtifactContainer />
 							case 'edit':
@@ -42,16 +27,15 @@ class UserPage extends Component {
 					case "upload":
 						return <PublishContainer />
 					case "wallet":
-						return <WalletContainer Core={this.props.Core} store={this.props.store} NotificationSystem={this.state.NotificationSystem} />
+						return <WalletWrapper wallet={props.wallet}/>
 					case "settings":
 						return <SettingsContainer />
 					default:
 						return <div>404</div>
 				}
 			})()}
-		</SidebarContainer>
+		</div>
 		);
-	}
 }
 
 export default UserPage;
