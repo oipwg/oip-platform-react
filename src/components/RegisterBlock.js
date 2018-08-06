@@ -322,7 +322,7 @@ class RegisterBlock extends Component {
 				</div>
 				<div className="row">
 					<div style={{margin: "0px auto", marginTop: "10px", marginBottom: "-5px"}}>
-						{this.showRecaptcha ? <ReCAPTCHA sitekey="6LdpKBYUAAAAACnfrr-0wEfMrLXURVs-pV5vhvM_" onChange={this.recaptcha} /> : ""}
+						{this.showRecaptcha ? <ReCAPTCHA sitekey="6LdZnGgUAAAAALEwTXUJ9xzm30Ny_jqmgtKDYBo6" onChange={this.recaptcha} /> : ""}
 						{this.state.recaptchaState === STATUS.INVALID ?
 							<p style={{color: "#dc3545", fontSize: "13.5px", marginTop: "5px", marginBottom: "0px"}}>Your recaptcha is invalid!</p>
 							: ""}
