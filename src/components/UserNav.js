@@ -29,7 +29,7 @@ class UserNav extends React.Component {
                         {this.props.pubName}
                     </button>
                     <div style={{left: -26}} className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <Link className="dropdown-item d-flex align-items-center justify-content-start" to="/user/upload" ><i style={{color: 'red', width: 20}} className="fas fa-cloud-upload-alt mr-2"/>Upload</Link>
+                        {/*<Link className="dropdown-item d-flex align-items-center justify-content-start" to="/user/upload" ><i style={{color: 'red', width: 20}} className="fas fa-cloud-upload-alt mr-2"/>Upload</Link>*/}
                         <Link className="dropdown-item d-flex align-items-center justify-content-start" to="/user/wallet"><i style={{color: 'green', width: 20}} className="fas fa-wallet mr-2"/>Wallet</Link>
                         <Link className="dropdown-item d-flex align-items-center justify-content-start" to="/"><i style={{color: 'grey', width: 20}} className="fas fa-home mr-2"/>Home</Link>
                         <Link className="dropdown-item d-flex align-items-center justify-content-start" to="/user/settings"><i style={{color: 'grey', width: 20}} className="fas fa-cogs mr-2"/>Settings</Link>
