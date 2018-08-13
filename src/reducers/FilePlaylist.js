@@ -73,11 +73,11 @@ const file = (state = {
 				paymentInProgress: false,
 				paymentError: true
 			}
-		case actions.CLEAR_PAY_PROGRESS_ERROR:
+		case actions.PAYMENT_CLEAR:
 			return {
 				...state,
 				paymentInProgress: false,
-				paymentError: false
+				paymentError: false,
 			}
 		case actions.BUY_IN_PROGRESS:
 			return {

@@ -8,7 +8,7 @@ export const UPDATE_IS_SEEKABLE = 'UPDATE_IS_SEEKABLE'
 export const UPDATE_DURATION = 'UPDATE_DURATION'
 export const PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS'
 export const PAYMENT_ERROR = 'PAYMENT_ERROR'
-export const CLEAR_PAY_PROGRESS_ERROR = 'CLEAR_PAY_PROGRESS_ERROR'
+export const PAYMENT_CLEAR = 'PAYMENT_CLEAR'
 export const SET_ACTIVE_FILE_IN_PLAYLIST = 'SET_ACTIVE_FILE_IN_PLAYLIST'
 export const BUY_IN_PROGRESS = 'BUY_IN_PROGRESS'
 export const BUY_ERROR = 'BUY_ERROR'
@@ -66,8 +66,8 @@ export const paymentError = uid => ({
     uid
 })
 
-export const clearPaymentProgressError = uid => ({
-    type: CLEAR_PAY_PROGRESS_ERROR,
+export const paymentClear = uid => ({
+    type: PAYMENT_CLEAR,
     uid
 })
 
