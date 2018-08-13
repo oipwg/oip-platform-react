@@ -107,10 +107,6 @@ class BuyFileButton extends Component {
         }
         return (
             <div style={{display: disallowBuy ? "" : "inline-block", paddingLeft: "3px"}}>
-                {this.state.refillModal ? <RefillModal addresses={this.state.addresses} supportedCoins={this.state.supportedCoins}
-                                                       account={this.props.account} wallet={this.props.wallet} ap={this.state.ap}
-                                                       cryptoBalances={this.props.wallet.cryptoBalances}
-                                                       isOpen={this.state.refillModal} toggleModal={this.toggleRefillModal}/> : ""}
                 { disallowBuy ? "" :
                     <button className={"pad-5 btn btn-" + buyBtnType} onClick={() => this.buyFile()} style={this.props.btnStyle}>
                         <span className="icon icon-download" style={{marginRight: "5px"}}/> {buyString}
@@ -138,8 +134,5 @@ function mapStateToProps(state) {
         wallet: state.Wallet
     }
 }
-const mapDispatchToProps = {
-    loginPrompt
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(BuyFileButton)
+export default connect(mapStateToProps)(BuyFileButton)
