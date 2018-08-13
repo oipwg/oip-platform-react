@@ -1,17 +1,21 @@
-export const UPDATE_BALANCE = 'UPDATE_BALANCE'
-export const UPDATE_ADDRESSES = 'UPDATE_ADDRESSES'
-export const UPDATE_USD = 'UPDATE_USD'
 export const PROMPT_SWAP = 'PROMPT_SWAP'
 export const PROMPT_BUY = 'PROMPT_BUY'
 export const PROMPT_DAILY_FAUCET = 'PROMPT_DAILY_FAUCET'
 export const SET_TRY_FAUCET = 'SET_TRY_FAUCET'
-export const UPDATE_WALLET = 'UPDATE_WALLET'
 
 export const SET_CRYPTO_BALANCES = "SET_CRYPTO_BALANCES"
 export const ERROR_FETCHING_BALANCE = "ERROR_FETCHING_BALANCE"
 export const SET_WALLET = "SET_WALLET"
 export const SET_MNEMONIC = "SET_MNEMONIC"
 export const SET_WALLET_ADDRESSES = "SET_WALLET_ADDRESSES"
+
+export const BUY_IN_PROGRESS = 'BUY_IN_PROGRESS'
+export const BUY_ERROR = 'BUY_ERROR'
+export const PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS'
+export const PAYMENT_ERROR = 'PAYMENT_ERROR'
+export const PAYMENT_CLEAR = 'PAYMENT_CLEAR'
+export const PAY_FOR_FILE = 'PAY_FOR_FILE'
+export const BUY_FILE = 'BUY_FILE'
 // -------------------------------------------------------------------------------------------------
 export const setWalletAddresses = (addresses) => ({
     type: SET_WALLET_ADDRESSES,
@@ -58,8 +62,38 @@ export const setTryFaucet = (newValue) => ({
     tryFaucet: newValue
 })
 
-export const updateWallet = walletState => ({
-    type: UPDATE_WALLET,
-    walletState
+export const payForFile = uid => ({
+    type: PAY_FOR_FILE,
+    uid
 })
 
+export const buyFile = uid => ({
+    type: BUY_FILE,
+    uid
+})
+
+export const paymentInProgress = uid => ({
+    type: PAYMENT_IN_PROGRESS,
+    uid
+})
+
+export const paymentError = uid => ({
+    type: PAYMENT_ERROR,
+    uid
+})
+
+export const paymentClear = uid => ({
+    type: PAYMENT_CLEAR,
+    uid
+})
+
+export const buyError = uid => ({
+    type: BUY_ERROR,
+    uid
+})
+
+
+export const buyInProgress = uid => ({
+    type: BUY_IN_PROGRESS,
+    uid
+})

@@ -47,13 +47,53 @@ export const Wallet = (state = {
 				...state,
 				tryFaucet: action.tryFaucet
 			}
-		case actions.UPDATE_WALLET:
-			return action.walletState
 		case actions.SET_WALLET_ADDRESSES:
 			return {
 				...state,
 				addresses: action.addresses
 			}
+        case actions.PAYMENT_IN_PROGRESS:
+            return {
+                ...state,
+                paymentInProgress: true,
+                paymentError: false
+            }
+        case actions.PAYMENT_ERROR:
+            return {
+                ...state,
+                paymentInProgress: false,
+                paymentError: true
+            }
+        case actions.PAYMENT_CLEAR:
+            return {
+                ...state,
+                paymentInProgress: false,
+                paymentError: false,
+            }
+        case actions.BUY_IN_PROGRESS:
+            return {
+                ...state,
+                buyInProgress: true,
+                buyError: false
+            }
+        case actions.BUY_ERROR:
+            return {
+                ...state,
+                buyInProgress: false,
+                buyError: true
+            }
+        case actions.PAY_FOR_FILE:
+            return {
+                ...state,
+                hasPaid: true,
+                paymentInProgress: false,
+                paymentError: false
+            }
+        case actions.BUY_FILE:
+            return {
+                ...state,
+                owned: true
+            }
 		default:
 			return state
 	}
