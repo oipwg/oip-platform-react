@@ -15,18 +15,19 @@ import {
 import {loginPrompt} from '../User/actions'
 import {ArtifactPaymentBuilder} from 'oip-account'
 
-export const fetchCryptoBalances = (wallet) => (dispatch) => {
-    wallet.getCoinBalances()
-        .then(balances => {
-            dispatch(setCryptoBalances(balances))
-        })
-        .catch(err => {
-            dispatch(errorFetchingBalance(err))
-        })
+export const getCoinBalances = (options) => async (dispatch, getState) => {
+    let wallet = getState().Wallet.wallet
+    try {
+        let balances = await wallet.getCoinBalances(options)
+        dispatch(setCryptoBalances(balances))
+    } catch (err) {
+        dispatch(errorFetchingBalance(err))
+    }
 }
 
-export const fetchWalletAddresses =  (wallet) =>  (dispatch) => {
-    let coins = wallet.getCoins();
+export const getWalletAddresses =  () =>  (dispatch, getState) => {
+    let wallet = getState().Wallet.wallet
+    let coins = wallet.getCoins()
     let addr = {}
     for (let coin in coins) {
         addr[coin] = coins[coin].getAddress(0, 0, 0).getPublicAddress()
@@ -138,6 +139,13 @@ export const handleCoinbaseModalEvents = (event) => (dispatch, getState) => {
     }
 }
 
+export const listenForWebsocketUpdates = () => (dispatch, getState) => {
+    let wallet = getState().Wallet.wallet
+    wallet.onWebsocketUpdate((addr) => {
+        console.log("Websocket update: ", addr.getPublicAddress())
+        dispatch(getCoinBalances({discover: false}))
+    })
+}
 
 // -------------------------------------------------------------------------------------------------
 // @ToDo::PROMPT SWAP

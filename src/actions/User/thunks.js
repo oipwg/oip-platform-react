@@ -1,6 +1,5 @@
 import {Account} from 'oip-account'
-import {fetchCryptoBalances, fetchWalletAddresses} from "../Wallet/thunks";
-import {loginPrompt} from './actions'
+import {getCoinBalances, getWalletAddresses, listenForWebsocketUpdates} from "../Wallet/thunks";
 
 import {
     setAccount,
@@ -41,8 +40,10 @@ export const accountLogin = (username, pw, options, acc) => dispatch => {
             dispatch(setAccount(account))
             dispatch(setWallet(account.wallet))
             dispatch(setMnemonic(account.wallet.getMnemonic()))
-            dispatch(fetchCryptoBalances(account.wallet))
-            dispatch(fetchWalletAddresses(account.wallet))
+            //ToDo: set discover to true after server fix
+            dispatch(getCoinBalances({discover:false}))
+            dispatch(getWalletAddresses())
+            dispatch(listenForWebsocketUpdates)
         })
         .catch( err => {
             if (!options.store_in_keystore) {
