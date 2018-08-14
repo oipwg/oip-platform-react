@@ -55,7 +55,9 @@ import LoginPrompt from './components/LoginPrompt.js'
 import SwapPrompt from './components/SwapPrompt.js'
 import BuyPrompt from './components/BuyPrompt.js'
 import DailyFaucetPrompt from './components/DailyFaucetPrompt.js';
-import Account from "oip-account";
+
+import CoinbaseModal from './components/CoinbaseModal'
+import {handleCoinbaseModalEvents} from "./actions/Wallet/thunks";
 
 const history = createBrowserHistory()
 
@@ -88,10 +90,21 @@ class App extends Component {
 
                         {/*LoginPrompt is causing react-warning-keys*/}
                         <LoginPrompt />
+
 						{/*<DailyFaucetPrompt />*/}
 						<SwapPrompt />
 						<BuyPrompt />
-                        {/*NotificationSysten is causing react-warning-keys*/}
+						{this.props.Wallet.coinbaseModal ? <CoinbaseModal
+                            currency={this.props.Wallet.coinbaseModalVars.currency}
+                            amount={this.props.Wallet.coinbaseModalVars.amount}
+                            isOpen={this.props.Wallet.coinbaseModal}
+                            address={this.props.Wallet.coinbaseModalVars.address}
+                            onClose={ () => {this.props.store.dispatch(handleCoinbaseModalEvents("close"))}}
+                            onSuccess={ () => {this.props.store.dispatch(handleCoinbaseModalEvents("success"))}}
+                            onCancel={ () => {this.props.store.dispatch(handleCoinbaseModalEvents("cancel"))}}
+						/> : null}
+
+						{/*NotificationSysten is causing react-warning-keys*/}
 						{/*<NotificationSystem ref="NotificationSystem" />*/}
 
 						{/* Include all components that need to be rendered in the main container content */}

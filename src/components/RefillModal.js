@@ -16,31 +16,17 @@ export default class RefillModal extends React.Component {
             sp: []
         };
 
-        this.handleButtonEvent = this.handleButtonEvent.bind(this)
+        this.handleSelectPurchaseAmount = this.handleSelectPurchaseAmount.bind(this)
         this.toggleCoinbaseModal = this.toggleCoinbaseModal.bind(this)
-        this.handleCoinSelector = this.handleCoinSelector.bind(this)
+        this.handleSelectCoin = this.handleSelectCoin.bind(this)
         this.onCoinbaseClose = this.onCoinbaseClose.bind(this)
         this.onCoinbaseCancel = this.onCoinbaseCancel.bind(this)
         this.onCoinbaseSuccess = this.onCoinbaseSuccess.bind(this)
     }
-    componentDidMount() {
-        let addrs = this.props.addresses;
-        let sp = this.props.supportedCoins;
-        let coin_support = false;
-        for (let coin of sp) {
-            if (Object.keys(addrs).includes(coin))
-                coin_support = true;
-        }
-        this.setState({
-            addrs,
-            sp,
-            coin_support,
-            coin: sp[0]
-        })
-    }
-    onCoinbaseClose(data) {
-        setTimeout(() => {this.props.pff(this.props.ak)}, 3000);
+    componentDidMount() {}
 
+    onCoinbaseClose(data) {
+        console.log("Close: ", data)
     }
     onCoinbaseCancel(data) {
         console.log("Cancel: ", data)
@@ -48,7 +34,7 @@ export default class RefillModal extends React.Component {
     onCoinbaseSuccess(data) {
         console.log("Success: ", data)
     }
-    handleButtonEvent(e) {
+    handleSelectPurchaseAmount(e) {
         this.setState({
             amount: e.target.name
         })
@@ -57,7 +43,7 @@ export default class RefillModal extends React.Component {
     toggleCoinbaseModal() {
         this.setState({coinbaseModal: !this.state.coinbaseModal})
     }
-    handleCoinSelector(e) {
+    handleSelectCoin(e) {
         this.setState({
             coin: e.target.alt
         })
@@ -85,10 +71,10 @@ export default class RefillModal extends React.Component {
                                                 This file only supports FLO payments. Coinbase does not yet support FLO:(
                                         </div> :
                                             <div className="btn-group" role="group" aria-label="Basic example">
-                                                <button onClick={this.handleButtonEvent} name="1" type="button" className="btn btn-dark">$1</button>
-                                                <button onClick={this.handleButtonEvent} name="2" type="button" className="btn btn-dark">$2</button>
-                                                <button onClick={this.handleButtonEvent} name="5" type="button" className="btn btn-dark">$5</button>
-                                                <button onClick={this.handleButtonEvent} name="10" type="button" className="btn btn-dark">$10</button>
+                                                <button onClick={this.handleSelectPurchaseAmount} name="1" type="button" className="btn btn-dark">$1</button>
+                                                <button onClick={this.handleSelectPurchaseAmount} name="2" type="button" className="btn btn-dark">$2</button>
+                                                <button onClick={this.handleSelectPurchaseAmount} name="5" type="button" className="btn btn-dark">$5</button>
+                                                <button onClick={this.handleSelectPurchaseAmount} name="10" type="button" className="btn btn-dark">$10</button>
                                                 <button onClick={this.toggleCoinbaseModal} name="buy" type="button" className="btn btn-primary">Buy</button>
                                             </div>
                                         }
@@ -97,13 +83,13 @@ export default class RefillModal extends React.Component {
                                 <div className="col-3">
                                     <div className="row no-gutters d-flex border-left align-items-center h-100">
                                         <div className="col-12">
-                                            <img className="pl-4" src={btc} onClick={this.handleCoinSelector} alt="btc" style={{height: (this.state.coin === "btc") ? "66px" : "60px"}} />
+                                            <img className="pl-4" src={btc} onClick={this.handleSelectCoin} alt="btc" style={{height: (this.state.coin === "btc") ? "66px" : "60px"}} />
                                         </div>
                                         <div className="col-12">
-                                            <img className="pl-4" src={ltc} onClick={this.handleCoinSelector} alt="ltc" style={{height: (this.state.coin === "ltc") ? "66px" : "60px"}} />
+                                            <img className="pl-4" src={ltc} onClick={this.handleSelectCoin} alt="ltc" style={{height: (this.state.coin === "ltc") ? "66px" : "60px"}} />
                                         </div>
                                         <div className="col-12">
-                                            <img className="pl-4" src={flo} onClick={this.handleCoinSelector} alt="flo" style={{height: (this.state.coin === "flo") ? "66px" : "60px"}} />
+                                            <img className="pl-4" src={flo} onClick={this.handleSelectCoin} alt="flo" style={{height: (this.state.coin === "flo") ? "66px" : "60px"}} />
                                         </div>
                                     </div>
                                 </div>

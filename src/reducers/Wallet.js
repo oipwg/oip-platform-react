@@ -4,7 +4,9 @@ export const Wallet = (state = {
 	swapPrompt: false,
 	buyPrompt: false,
 	dailyFaucetPrompt: false,
-	tryFaucet: true
+	tryFaucet: true,
+	coinbaseModal: false,
+	coinbaseModalVars: {}
 }, action) => {
 	switch (action.type) {
         case actions.SET_CRYPTO_BALANCES:
@@ -51,6 +53,17 @@ export const Wallet = (state = {
 			return {
 				...state,
 				addresses: action.addresses
+			}
+		case actions.TOGGLE_COINBASE_MODAL:
+			return {
+				...state,
+				coinbaseModal: action.bool
+			}
+		case actions.SET_COINBASE_MODAL_VARS:
+			return {
+				...state,
+				coinbaseModalVars: action.vars,
+				coinbaseModal: true
 			}
 		default:
 			return state

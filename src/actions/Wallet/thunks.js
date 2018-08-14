@@ -1,14 +1,16 @@
 import {
     setCryptoBalances,
     errorFetchingBalance,
-    setWalletAddresses} from "./actions"
+    setWalletAddresses, setCoinbaseModalVars, toggleCoinbaseModal
+} from "./actions"
 import {
     paymentInProgress,
     buyInProgress,
     payForFile,
     buyFile,
     paymentError,
-    buyError
+    buyError,
+    paymentClear
 } from '../FilePlaylist/actions'
 import {loginPrompt} from '../User/actions'
 import {ArtifactPaymentBuilder} from 'oip-account'
@@ -52,36 +54,90 @@ const waitForLogin = (dispatch, getState) => {
     })
 }
 
+const waitForCoinbase = (dispatch, getState, coin) => {
+    return new Promise((resolve, reject) => {
+        const wallet = getState().Wallet
+
+        wallet.wallet.onWebsocketUpdate((address) => {
+            //@ToDo: Update coin balance onWebsocketUpdate (subscribe when logged in)
+            wallet.wallet.getCoinBalances({discover: false})
+
+            if (address.getPublicAddress() === wallet.addresses[coin]){
+                resolve()
+            }
+        })
+
+        let promptTimeout = setInterval(() => {
+            if (!wallet.coinbaseModal) {
+                clearInterval(promptTimeout)
+                reject()
+            }
+        }, 1000)
+    })
+}
+
 export const payForArtifactFile = (artifact, file, type) => async (dispatch, getState) => {
     await waitForLogin(dispatch, getState)
-    console.log(file.key, type)
 
     if (type === "view") {dispatch(paymentInProgress(file.key))}
     else if (type === "buy") {dispatch(buyInProgress(file.key))}
 
-    let wallet = getState().Wallet.wallet
-    let apb = new ArtifactPaymentBuilder(wallet, artifact, file.info, type)
+    let wallet = getState().Wallet
+    let apb = new ArtifactPaymentBuilder(wallet.wallet, artifact, file.info, type)
 
     let preprocess = await apb.getPaymentAddressAndAmount()
-    console.log(preprocess)
+
+    if (!preprocess.success && preprocess.error_type === "PAYMENT_COIN_SELECT"){
+        let coin;
+        if (apb.getSupportedCoins().includes("ltc") || apb.getSupportedCoins().includes("btc")) {
+            coin = apb.getSupportedCoins().includes("ltc") ? "ltc" : "btc"
+            dispatch(setCoinbaseModalVars({
+                currency: apb.getSupportedCoins().includes("ltc") ? "ltc" : "btc",
+                amount: 1,
+                address: wallet.addresses[coin === "ltc" ? "litecoin" : "bitcoin"]
+            }))
+        } else {
+            if (type === "view") {dispatch(paymentError(file.key))}
+            else if (type === "buy") {dispatch(buyError(file.key))}
+        }
+        try {
+            await waitForCoinbase(dispatch, getState, coin)
+        } catch (err) {
+            console.log("Error waiting for coinbase \n", err)
+        }
+    }
+
+    preprocess = await apb.getPaymentAddressAndAmount()
+
     if (preprocess.success) {
         try {
-            let pay = await apb.pay()
+            await apb.pay()
             if (type === "view") {dispatch(payForFile(file.key))}
             else if (type === "buy") {dispatch(buyFile(file.key))}
-            console.log(pay)
         } catch (err) {
             if (type === "view") {dispatch(paymentError(file.key))}
             else if (type === "buy") {dispatch(buyError(file.key))}
-            console.log("Error sending payment \n ", err)
         }
     } else {
         if (type === "view") {dispatch(paymentError(file.key))}
         else if (type === "buy") {dispatch(buyError(file.key))}
-        return preprocess
     }
-
 }
+
+export const handleCoinbaseModalEvents = (event) => (dispatch, getState) => {
+    switch (event) {
+        case "close":
+            dispatch(paymentClear(getState().FilePlaylist.active))
+            break
+        case "success":
+            dispatch(toggleCoinbaseModal(false))
+            break
+        case "cancel":
+            dispatch(paymentClear(getState().FilePlaylist.active))
+            break
+    }
+}
+
 
 // -------------------------------------------------------------------------------------------------
 // @ToDo::PROMPT SWAP
