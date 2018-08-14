@@ -177,7 +177,7 @@ class AudioContainer extends Component {
 		if (this.props.filePlaylist){
 			playlistLen = Object.keys(this.props.filePlaylist).length - 1;
 		}
-		console.log("IPFS Hash: ", !!ipfsHash)
+		
 		return (
 			<div className="audio-container" style={{paddingTop: "20px", backgroundColor: this.state.bgColor, height: "100%", position: "relative", overflow: "hidden", minHeight: "65vh", maxHeight: "100%"}}>
 				<audio
