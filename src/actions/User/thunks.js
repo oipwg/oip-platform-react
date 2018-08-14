@@ -1,5 +1,6 @@
-import Account from 'oip-account'
+import {Account} from 'oip-account'
 import {fetchCryptoBalances, fetchWalletAddresses} from "../Wallet/thunks";
+import {loginPrompt} from './actions'
 
 import {
     setAccount,

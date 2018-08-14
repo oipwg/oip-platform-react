@@ -9,13 +9,6 @@ export const SET_WALLET = "SET_WALLET"
 export const SET_MNEMONIC = "SET_MNEMONIC"
 export const SET_WALLET_ADDRESSES = "SET_WALLET_ADDRESSES"
 
-export const BUY_IN_PROGRESS = 'BUY_IN_PROGRESS'
-export const BUY_ERROR = 'BUY_ERROR'
-export const PAYMENT_IN_PROGRESS = 'PAYMENT_IN_PROGRESS'
-export const PAYMENT_ERROR = 'PAYMENT_ERROR'
-export const PAYMENT_CLEAR = 'PAYMENT_CLEAR'
-export const PAY_FOR_FILE = 'PAY_FOR_FILE'
-export const BUY_FILE = 'BUY_FILE'
 // -------------------------------------------------------------------------------------------------
 export const setWalletAddresses = (addresses) => ({
     type: SET_WALLET_ADDRESSES,
@@ -62,38 +55,3 @@ export const setTryFaucet = (newValue) => ({
     tryFaucet: newValue
 })
 
-export const payForFile = uid => ({
-    type: PAY_FOR_FILE,
-    uid
-})
-
-export const buyFile = uid => ({
-    type: BUY_FILE,
-    uid
-})
-
-export const paymentInProgress = uid => ({
-    type: PAYMENT_IN_PROGRESS,
-    uid
-})
-
-export const paymentError = uid => ({
-    type: PAYMENT_ERROR,
-    uid
-})
-
-export const paymentClear = uid => ({
-    type: PAYMENT_CLEAR,
-    uid
-})
-
-export const buyError = uid => ({
-    type: BUY_ERROR,
-    uid
-})
-
-
-export const buyInProgress = uid => ({
-    type: BUY_IN_PROGRESS,
-    uid
-})

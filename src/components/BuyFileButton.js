@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux'
+import {payForArtifactFile} from "../actions/Wallet/thunks";
 
 class BuyFileButton extends Component {
     constructor(props){
@@ -18,9 +19,14 @@ class BuyFileButton extends Component {
             if (this.props.file.info.getType() === 'Audio') {
                 this.props.isPlayingFile(this.props.file.key, !this.props.file.isPlaying)
             }
-            if (this.props.file.key !== this.props.activeFile.key) {this.props.setCurrentFile(this.props.artifact, this.props.file)}
+            if (!this.props.activeFile) {this.props.setCurrentFile(this.props.artifact, this.props.file)}
+            else {if (this.props.file.key !== this.props.activeFile.key) {this.props.setCurrentFile(this.props.artifact, this.props.file)}}
             return
         }
+
+        this.props.payForArtifactFile(this.props.artifact, this.props.file, "buy")
+        if (!this.props.activeFile) {this.props.setCurrentFile(this.props.artifact, this.props.file)}
+        else {if (this.props.file.key !== this.props.activeFile.key) {this.props.setCurrentFile(this.props.artifact, this.props.file)}}
     }
 
     createPriceString(price){
@@ -135,4 +141,6 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(BuyFileButton)
+const mapDispatchToProps = {payForArtifactFile}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuyFileButton)

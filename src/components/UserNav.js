@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Account from 'oip-account'
+import {Account} from 'oip-account'
 
 class UserNav extends React.Component {
     constructor(props){
